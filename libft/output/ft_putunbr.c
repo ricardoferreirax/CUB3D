@@ -1,0 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putunbr.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/17 12:00:54 by pfreire-          #+#    #+#             */
+/*   Updated: 2025/08/19 11:54:44 by pfreire-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "output.h"
+
+/**
+ * @brief Prints an unsigned integer to stdout.
+ *
+ * @param nb Unsigned integer to print.
+ */
+void	ft_putunbr(unsigned int nb)
+{
+	if (nb >= 10)
+	{
+		ft_putunbr(nb / 10);
+		ft_putunbr(nb % 10);
+	}
+	if (nb < 10)
+	{
+		ft_putchar(nb + '0');
+	}
+}

@@ -1,0 +1,27 @@
+[
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-fsanitize=undefined",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/main.o",
+      "main.c"
+    ],
+    "directory": "/var/home/pedro/Code/CUB3D",
+    "file": "/var/home/pedro/Code/CUB3D/main.c",
+    "output": "/var/home/pedro/Code/CUB3D/objs/main.o"
+  }
+]
