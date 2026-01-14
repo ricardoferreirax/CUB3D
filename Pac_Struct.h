@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/12/23 21:44:08 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/01/12 16:29:52 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include "string.h"
 #include "libft/libft.h"
 #include <fcntl.h>
+#include <math.h>
 
 #define SPEED 75,75757625
 #define PLAYER 'M'
@@ -56,6 +57,14 @@ typedef struct s_image
 	int				*img_ptr;
 }					t_image;
 
+typedef struct s_anim
+{
+	t_image *up;
+	t_image *down;
+	t_image *left;
+	t_image *right;
+}	t_anim;
+
 typedef struct s_window
 {
 	void			*win_ptr;
@@ -71,6 +80,7 @@ typedef struct s_player
 	t_pos pos;
 	int lives;
 	int speed_multiplier;
+	t_anim anim;
 
 }	t_player;
 
@@ -106,6 +116,8 @@ typedef struct s_ghost
 	t_point target_tile;
 	int global_dot_counter_call;
 	int speed_multiplier;
+	int is_steping_on_pacdot;
+	t_anim anim;
 
 } t_ghost;
 
@@ -125,5 +137,8 @@ typedef struct s_game
 	int level;
 }	t_game;
 
+
+int xtile(char **map);
+int ytile(char **map);
 
 #endif // !DEBUG

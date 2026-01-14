@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/12/24 12:48:46 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/01/12 13:57:24 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,45 @@ mlx_get_data_addr(s->win.frame_buffer.img_ptr,
 	s->win.frame_buffer.heigth = s->win.height;
 }
 
+int	close_game(t_game *param)
+{
+	(void)param;
+	ft_printf("CLOSING GAME\n");
+	exit(EXIT_SUCCESS);
+}
+
+
+int	gameloop(t_game *game)
+{
+	(void)game;
+	return (0);
+}
+
+int	keyloop(int key, t_game *game)
+{
+	if (key == 0 && game->debug_mode)
+		ft_printf("test");
+	if (key == 'q' || key == 65307)
+		ft_printf("test");
+	else if (key == 0 || key == 0)
+	{
+		ft_printf("test");
+	}
+	else if (key == 0 || key == 0)
+	{ 
+		ft_printf("test");
+	}
+	else if (key == 0 || key == 0)
+	{ 
+		ft_printf("test");
+	}
+	else if (key == 0 || key == 0)
+	{ 
+		ft_printf("test");
+	}
+	return (0);
+}
+
 char **map_parser(char **argv)
 {
 	int fd = open(argv[1], O_RDONLY);
@@ -48,6 +87,20 @@ char **map_parser(char **argv)
 	return line_test;
 }
 
+void init_null(t_game *game)
+{
+	// game->win = NULL;
+	game->ghost = NULL;
+	game->dot = NULL;
+	// game->player = NULL;
+}
+
+void init_game(t_game *game)
+{
+	init_null(game);
+	init_window(game);
+}
+
 int main(int argc, char **argv)
 {
 	t_game *game;
@@ -55,7 +108,12 @@ int main(int argc, char **argv)
 		return(ft_printf("Wrong args\n"), -1);
 	game = malloc(sizeof(t_game));
 	game->map = map_parser(argv);
+	init_game(game);
 	game->mlx_ptr = mlx_init();
 	init_window(game);
+	mlx_key_hook(game->win.win_ptr, keyloop, game);
+	mlx_loop_hook(game->mlx_ptr, gameloop, game);
+	mlx_hook(game->win.win_ptr, 17, 0, close_game, game);
+	mlx_loop(game->mlx_ptr);
 
 }

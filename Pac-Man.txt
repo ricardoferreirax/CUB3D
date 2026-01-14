@@ -4,13 +4,15 @@ P - Player (Pac-Man)
 D - Pac Dots
 E - Energizer
 W - Wrap Portal
-B - Blinky's Scatter target tile
-P - Pinky's Scatter target tile
-I - Inky's Scatter target tile
-C - Clyde Scatter target tile
+B - Blinky's Scatter target tile, L for Blindy itself (set up automatically)
+P - Pinky's Scatter target tile, I for Pinky itself
+I - Inky's Scatter target tile, K for Inky itself
+C - Clyde Scatter target tile, Y for Clyde itself
 M - Monster Pen (required for game to work || make the pattern either present or absent, no inbetween)
 . - Void tile (Out of Bounds but still part of the screen)
 
+
+A valid map must have three empty rows at top for Highscore and 2 Empty ones at the bottom for lifes and levels || do it by hand
 
 .P........................B.
 ............................
