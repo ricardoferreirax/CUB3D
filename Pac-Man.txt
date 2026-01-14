@@ -8,7 +8,7 @@ B - Blinky's Scatter target tile, L for Blindy itself (set up automatically)
 P - Pinky's Scatter target tile, I for Pinky itself
 I - Inky's Scatter target tile, K for Inky itself
 C - Clyde Scatter target tile, Y for Clyde itself
-M - Monster Pen (required for game to work || make the pattern either present or absent, no inbetween)
+M - Monster Pen (required for game to work || make the pattern either present or absent, no inbetween) 8x5,
 . - Void tile (Out of Bounds but still part of the screen)
 
 

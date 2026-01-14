@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/12/23 21:38:01 by pfreire-         ###   ########.fr        #
+#    Updated: 2026/01/14 15:36:28 by pfreire-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,13 @@ INCS    = -Iinclude -Ilibft
 LIBFT   = libft/libft.a
 MLX_PATH = minilibx-linux
 MLX = $(MLX_PATH)/libmlx.a
-SRC_FILES = main.c
+SRC_FILES = main.c \
+	aux_funcs.c  \
+	ghosts.c \
+	init/init.c \
+	init/init_aux_funcs.c \
+	init/init_ghosts.c
+
 OBJ_DIR   = objs
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 

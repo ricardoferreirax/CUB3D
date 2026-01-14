@@ -43,6 +43,7 @@ char which_ghost(t_ghost *ghost)
 		return 'K';
 	if(ghost->name == CLYDE)
 		return 'Y';
+	return '?';
 }
 
 void move(char** map, t_ghost *ghost, int dx, int dy)

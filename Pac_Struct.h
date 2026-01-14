@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/12 16:29:52 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/01/14 15:35:38 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #include <math.h>
 
 #define SPEED 75,75757625
-#define PLAYER 'M'
+#define PLAYER 'J'
 #define WALL '1'
 #define OPEN_SPACE '0'
 #define PACDOT 'D'
@@ -32,6 +32,8 @@
 #define WRAP_PORTS 'W'
 #define BLINKY_T 'B'
 #define PINKY_T 'P'
+#define INKY_T 'I'
+#define CLYDE_T 'C'
 
 typedef struct s_point
 {
@@ -59,10 +61,10 @@ typedef struct s_image
 
 typedef struct s_anim
 {
-	t_image *up;
-	t_image *down;
-	t_image *left;
-	t_image *right;
+	t_image *up[2];
+	t_image *down[2];
+	t_image *left[2];
+	t_image *right[2];
 }	t_anim;
 
 typedef struct s_window
@@ -118,7 +120,8 @@ typedef struct s_ghost
 	int speed_multiplier;
 	int is_steping_on_pacdot;
 	t_anim anim;
-
+	int invalid_dir;
+	char **mental_map;
 } t_ghost;
 
 typedef struct s_game
@@ -141,4 +144,8 @@ typedef struct s_game
 int xtile(char **map);
 int ytile(char **map);
 
+void print_2d(char **map);
+t_point chose_next_move(t_ghost *ghost, char **map);
+//init.c and init_aux_funcs.c
+void init_game(t_game *game);
 #endif // !DEBUG

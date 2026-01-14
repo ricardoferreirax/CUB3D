@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/12 13:57:24 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/01/14 16:10:08 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,22 @@ int	close_game(t_game *param)
 	exit(EXIT_SUCCESS);
 }
 
-
 int	gameloop(t_game *game)
 {
-	(void)game;
+	int i = 0;
+	while(i < 4)
+	{
+		t_point next_move = chose_next_move(&game->ghost[i], game->ghost->mental_map);
+		if(game->ghost[i].is_steping_on_pacdot)
+			game->map[game->ghost[i].pos.tile_pos.y][game->ghost[i].pos.tile_pos.x] = 'D';
+		else
+			game->map[game->ghost[i].pos.tile_pos.y][game->ghost[i].pos.tile_pos.x] = '0';
+		game->ghost[i].pos.tile_pos.x += next_move.x;
+		game->ghost[i].pos.tile_pos.y += next_move.y;
+		game->map[game->ghost[i].pos.tile_pos.y][game->ghost[i].pos.tile_pos.x] = 'L';
+		print_2d(game->ghost[i].mental_map);
+		i++;
+	}
 	return (0);
 }
 
@@ -74,12 +86,11 @@ char **map_parser(char **argv)
 	int fd = open(argv[1], O_RDONLY);
 	if(fd < 0)
 		return NULL;
-	char **line_test = ft_calloc(sizeof(char *), 25);
+	char **line_test = ft_calloc(sizeof(char *), 100);
 	char *line;
 	int i = 0;
-	while(i < 25)
+	while((line = get_next_line(fd)))
 	{
-		line = get_next_line(fd);
 		line_test[i] = ft_strdup(line);
 		free(line);
 		i++;
@@ -87,18 +98,21 @@ char **map_parser(char **argv)
 	return line_test;
 }
 
-void init_null(t_game *game)
+
+
+void print_2d(char **map)
 {
-	// game->win = NULL;
-	game->ghost = NULL;
-	game->dot = NULL;
-	// game->player = NULL;
+	int i = 0;
+	while(map && map[i])
+	{
+		ft_printf("%s", map[i]);
+		i++;
+	}
 }
 
-void init_game(t_game *game)
+void	clear_terminal(void)
 {
-	init_null(game);
-	init_window(game);
+	write(1, "\033[H\033[J", 6);
 }
 
 int main(int argc, char **argv)
@@ -109,11 +123,19 @@ int main(int argc, char **argv)
 	game = malloc(sizeof(t_game));
 	game->map = map_parser(argv);
 	init_game(game);
-	game->mlx_ptr = mlx_init();
-	init_window(game);
-	mlx_key_hook(game->win.win_ptr, keyloop, game);
-	mlx_loop_hook(game->mlx_ptr, gameloop, game);
-	mlx_hook(game->win.win_ptr, 17, 0, close_game, game);
-	mlx_loop(game->mlx_ptr);
+	while(1)
+	{
+		gameloop(game);
+		print_2d(game->map);
+		usleep(100000);
+		clear_terminal();
+		// sleep(5);
+	}
+	// game->mlx_ptr = mlx_init();
+	// init_window(game);
+	// mlx_key_hook(game->win.win_ptr, keyloop, game);
+	// mlx_loop_hook(game->mlx_ptr, gameloop, game);
+	// mlx_hook(game->win.win_ptr, 17, 0, close_game, game);
+	// mlx_loop(game->mlx_ptr);
 
 }
