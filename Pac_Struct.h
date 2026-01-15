@@ -22,6 +22,7 @@
 #include "libft/libft.h"
 #include <fcntl.h>
 #include <math.h>
+#include <time.h>
 
 #define SPEED 75,75757625
 #define PLAYER 'J'
@@ -61,6 +62,7 @@ typedef struct s_image
 
 typedef struct s_anim
 {
+	//each char has only 2 animations for each cardinal direction
 	t_image *up[2];
 	t_image *down[2];
 	t_image *left[2];
@@ -104,16 +106,38 @@ typedef enum e_state
 {
 	CHASE,
 	SCATTER,
-	FRIGHTENED,
-	EATEN,
+	FRIGHT,
 	SPAWN
 }	e_state;
 
+typedef struct s_elroy_level
+{
+	//Elroy becomes active when few dots are left in the maze
+	int dots_left;
+	//It gains more speed and it stays in chase mode
+	int speed_multiplier;
+}	t_elroy_level;
+
+typedef struct s_elroy
+{
+	//Only Blinky can become Elroy Cruiser
+	int is_blinky;
+	//Elroy has two levels, check table for exact values btu Elroy becomes stronger the less dots there are
+	t_elroy_level one;
+	t_elroy_level two;
+}	t_elroy;
+
 typedef struct s_ghost
 {
-
+	//Self Explaining, it is the ghost's name
 	e_ghost name;
 	t_pos pos;
+	//dot_counter for the penhouse (not effective for Blinky since he's always out of the penhouse)
+	//At game start Pinky, Inky and Clyde make a Queue to leave the penhouse in this order, only one counter can be active at a time see end of struct for more info
+	//They can get out in 2 ways, if the dot_counter reaches a certain level or the Player stalls untill the timeout timer (t_time->timeout_timer) triggers
+	//the dot_counter goes only up and only resets at level start
+	//when the dot_counter limit is reached it gets deactivated but not reset 
+	//when the player dies these dot_counter's stay deactivated, the game refers to the global dot counter instead
 	int dot_counter;
 	t_point target_tile;
 	int global_dot_counter_call;
@@ -122,7 +146,22 @@ typedef struct s_ghost
 	t_anim anim;
 	int invalid_dir;
 	char **mental_map;
+	int elroy_cruiser;
+	e_state state;
 } t_ghost;
+//At game start one of the penhouse ghost will activate it's counter, it will count up each dot pacman eats
+//if pacman eats all the dots it gets out, but if the ghost is forced out by timeout its dot counter is not reset and the next ghost dot counter starts counting.
+
+
+typedef struct s_time
+{
+	double level_time;
+	double mode_timer;
+	//starts when ghosts are in the pen and pac-man refuses to eat dots
+	double timeout_timer;
+	int energizer;
+	double frightened_time;
+}	t_timer;
 
 typedef struct s_game
 {
@@ -135,6 +174,8 @@ typedef struct s_game
 	t_player player;
 	int timeout;
 	double timer;
+	// wen pacman loses a life the ghost's personal dot counter gets deactivated. This Global counter will dictate when a ghost goes out
+	// The global counter will check exactly for the values 7, 17 and 32 to release the ghosts. If this value is not exactly it it will no release them
 	int global_dot_counter;
 	int score;
 	int level;
@@ -146,6 +187,7 @@ int ytile(char **map);
 
 void print_2d(char **map);
 t_point chose_next_move(t_ghost *ghost, char **map);
+t_point find_c(char **map,  char c);
 //init.c and init_aux_funcs.c
 void init_game(t_game *game);
 #endif // !DEBUG

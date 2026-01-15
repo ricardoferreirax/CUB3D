@@ -23,24 +23,45 @@ void	init_window(t_game *s)
 	s->win.frame_buffer.img_ptr = mlx_new_image(s->mlx_ptr, s->win.width,
 			s->win.height);
 	s->win.frame_buffer.img_addr = \
-mlx_get_data_addr(s->win.frame_buffer.img_ptr,
-			&s->win.frame_buffer.bpp, &s->win.frame_buffer.l_len,
-			&s->win.frame_buffer.endian);
-	s->win.frame_buffer.width = s->win.width;
-	s->win.frame_buffer.heigth = s->win.height;
-}
-
-int	close_game(t_game *param)
-{
+mlx_get_data_addr(s->win.frame_buffer.img_ptr, &s->win.frame_buffer.bpp, &s->win.frame_buffer.l_len, &s->win.frame_buffer.endian); s->win.frame_buffer.width = s->win.width; s->win.frame_buffer.heigth = s->win.height; } int	close_game(t_game *param) {
 	(void)param;
 	ft_printf("CLOSING GAME\n");
 	exit(EXIT_SUCCESS);
 }
 
-int	gameloop(t_game *game)
+void new_target(t_game *game, t_ghost *ghost, e_state state)
+{
+	if(state == SCATTER)
+		ghost->target_tile = find_c(game->map, 'S');
+	if(state == CHASE)
+		ghost->target_tile = find_c(game->map, 'J');
+	if(state == SCATTER)
+	{
+		if(ghost->name == BLINKY)
+			ghost->target_tile = find_c(game->map, 'B');
+		if(ghost->name == PINKY)
+			ghost->target_tile = find_c(game->map, 'P');
+		if(ghost->name == INKY)
+			ghost->target_tile = find_c(game->map, 'I');
+		if(ghost->name == CLYDE)
+			ghost->target_tile = find_c(game->map, 'C');
+	}
+}
+
+void update_target(t_game *game)
 {
 	int i = 0;
 	while(i < 4)
+	{
+		new_target(game, &game->ghost[i], game->ghost[i].state);
+		i++;
+	}
+}
+
+int	gameloop(t_game *game)
+{
+	int i = 0;
+	while(i < 1)
 	{
 		t_point next_move = chose_next_move(&game->ghost[i], game->ghost->mental_map);
 		if(game->ghost[i].is_steping_on_pacdot)
@@ -53,6 +74,7 @@ int	gameloop(t_game *game)
 		print_2d(game->ghost[i].mental_map);
 		i++;
 	}
+	// update_target(game);
 	return (0);
 }
 
@@ -127,7 +149,7 @@ int main(int argc, char **argv)
 	{
 		gameloop(game);
 		print_2d(game->map);
-		usleep(100000);
+		usleep(200000);
 		clear_terminal();
 		// sleep(5);
 	}
