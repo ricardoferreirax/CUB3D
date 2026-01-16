@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Pac_Struct.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/12/23 21:44:08 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/01/16 21:24:03 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,12 @@ typedef struct s_position
 	t_point pixel_pos;
 	t_point tile_pos;
 }	t_pos;
-
-
+	
 typedef struct s_image
 {
 	char			*img_addr;
 	int				width;
-	int				heigth;
+	int				height;
 	int				bpp;
 	int				l_len;
 	int				endian;
@@ -71,7 +70,6 @@ typedef struct s_player
 	t_pos pos;
 	int lives;
 	int speed_multiplier;
-
 }	t_player;
 
 typedef struct s_pacdot
@@ -99,31 +97,49 @@ typedef enum e_state
 
 typedef struct s_ghost
 {
-
 	e_ghost name;
 	t_pos pos;
 	int dot_counter;
 	t_point target_tile;
 	int global_dot_counter_call;
 	int speed_multiplier;
-
 } t_ghost;
+
+// execution - map
+typedef struct s_map
+{
+	char	**grid;
+	int		width;
+	int		height;
+}	t_map;
+
+// execution - view of player
+typedef struct s_view
+{
+	double	x;
+	double	y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+}	t_view;
 
 typedef struct s_game
 {
 	bool debug_mode;
-	void *mlx_ptr;
-	t_window win;
-	char **map;
 	t_ghost *ghost;
 	t_pacdot *dot;
-	t_player player;
 	int timeout;
 	double timer;
 	int global_dot_counter;
 	int score;
 	int level;
+	void *mlx_ptr; //
+	t_window win; //
+	char **map; //
+	t_player player; // 
+	t_view		view; //
+	// t_image frame_buffer;
 }	t_game;
-
 
 #endif // !DEBUG

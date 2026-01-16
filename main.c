@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/12/24 12:48:46 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/01/16 21:27:00 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ mlx_get_data_addr(s->win.frame_buffer.img_ptr,
 			&s->win.frame_buffer.bpp, &s->win.frame_buffer.l_len,
 			&s->win.frame_buffer.endian);
 	s->win.frame_buffer.width = s->win.width;
-	s->win.frame_buffer.heigth = s->win.height;
+	s->win.frame_buffer.height = s->win.height;
 }
 
 char **map_parser(char **argv)
@@ -57,5 +57,6 @@ int main(int argc, char **argv)
 	game->map = map_parser(argv);
 	game->mlx_ptr = mlx_init();
 	init_window(game);
-
+	// start_execution(game);
+	return (0);
 }
