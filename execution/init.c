@@ -6,11 +6,21 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:45:09 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/17 20:53:33 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/17 21:31:16 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
+
+// int	game_loop(t_game *g)
+// {
+// 	if (g->key.esc)
+// 		exit_game(EXIT_QUIT, g);
+// 	clear_framebuffer(g);
+// 	render_3d(g);
+// 	mlx_put_image_to_window(g->mlx_ptr, g->win.win_ptr, g->win.frame_buffer.img_ptr, 0, 0);
+// 	return (0);
+// }
 
 void	start_execution(t_game *game)
 {

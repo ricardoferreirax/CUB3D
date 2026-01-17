@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 20:39:32 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/17 20:44:49 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/17 21:27:55 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	handle_close(t_game *g)
 {
-	exit_game(EXIT_QUIT, g);
+	(void)g;
+	exit(0);
 	return (0);
 }
+

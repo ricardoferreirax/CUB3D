@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 15:14:27 by pfreire-          #+#    #+#             */
-/*   Updated: 2025/08/19 11:42:34 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/01/17 21:22:33 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*isolate_line(char *line, char *buffer)
 	return (line);
 }
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen_gnl(const char *str)
 {
 	size_t	i;
 
@@ -59,7 +59,7 @@ char	*gnl_strjoin(char *s1, char *s2)
 
 	j = 0;
 	i = 0;
-	joined = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	joined = malloc(ft_strlen_gnl(s1) + ft_strlen_gnl(s2) + 1);
 	if (!joined)
 		return (NULL);
 	if (s1)
@@ -88,7 +88,7 @@ char	*ft_strchr(const char *s, int b)
 	if (!s)
 		return (NULL);
 	if ((char)b == '\0')
-		return ((char *)s + ft_strlen(s));
+		return ((char *)s + ft_strlen_gnl(s));
 	while (s[i] != '\0')
 	{
 		if (s[i] == (char)b)

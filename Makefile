@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2025/12/23 21:38:01 by pfreire-         ###   ########.fr        #
+#    Updated: 2026/01/17 21:20:04 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,25 @@ CC      = cc
 CFLAGS  = -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion -Wformat=2 -Wstrict-aliasing=2 \
 		-fno-omit-frame-pointer \
 		-g -fsanitize=undefined 
-MLX_CFLAGS= -Wall -Wextra -Werror
+		
+#  MLX_CFLAGS= -Wall -Wextra -Werror
+
+MLX_CFLAGS = -Wall -Wextra -Werror \
+	-Wno-return-type \
+	-Wno-sign-compare \
+	-Wno-unused-parameter \
+	-Wno-parentheses \
+	-Wno-unused-variable \
+	-Wno-unused-but-set-variable
+
 INCS    = -Iinclude -Ilibft
 
 LIBFT   = libft/libft.a
 MLX_PATH = minilibx-linux
 MLX = $(MLX_PATH)/libmlx.a
-SRC_FILES = main.c
+SRC_FILES = execution/init.c hooks/handle_close.c hooks/handle_keys.c main.c \
+            utils/free.c
+			
 OBJ_DIR   = objs
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
@@ -39,8 +51,11 @@ $(OBJ_DIR)/%.o: %.c
 $(LIBFT):
 	$(MAKE) -C libft
 
+# $(MLX):
+# 	make -C $(MLX_PATH) CFLAGS="$(MLX_CFLAGS)"
+
 $(MLX):
-	make -C $(MLX_PATH) CFLAGS="$(MLX_CFLAGS)"
+	$(MAKE) -C $(MLX_PATH) -f Makefile.gen CC=$(CC) CFLAGS="$(MLX_CFLAGS)"
 
 clean:
 	rm -rf $(OBJ_DIR)
