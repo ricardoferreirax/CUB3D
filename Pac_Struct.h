@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/16 21:24:03 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/17 13:21:59 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,14 @@
 #define WRAP_PORTS 'W'
 #define BLINKY_T 'B'
 #define PINKY_T 'P'
+
+// exit codes
+# define EXIT_OK        0
+# define EXIT_QUIT      1
+# define EXIT_MALLOC    2
+# define EXIT_MLX       3
+# define EXIT_MAP       4
+# define EXIT_INPUT     5
 
 typedef struct s_point
 {
@@ -143,3 +151,6 @@ typedef struct s_game
 }	t_game;
 
 #endif // !DEBUG
+
+void	exit_game(int errcode, t_game *g);
+void	free_game(t_game *g);

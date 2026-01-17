@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/16 21:27:00 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/17 13:27:25 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,19 @@
 void	init_window(t_game *s)
 {
 	s->win.ntilesx = 28;
-	s->win.ntilesy = 25; 
+	s->win.ntilesy = 25;
 	s->win.width = 8 * 28;
 	s->win.height = 8 * 25;
-	s->win.win_ptr = mlx_new_window(s->mlx_ptr, s->win.width, s->win.height,
-			"Pac-Man");
-	s->win.frame_buffer.img_ptr = mlx_new_image(s->mlx_ptr, s->win.width,
-			s->win.height);
-	s->win.frame_buffer.img_addr = \
-mlx_get_data_addr(s->win.frame_buffer.img_ptr,
-			&s->win.frame_buffer.bpp, &s->win.frame_buffer.l_len,
-			&s->win.frame_buffer.endian);
+	s->win.win_ptr = mlx_new_window(s->mlx_ptr, s->win.width, s->win.height, "Pac-Man");
+	if (!s->win.win_ptr)
+		exit_game(EXIT_MLX, s);
+	s->win.frame_buffer.img_ptr = mlx_new_image(s->mlx_ptr, s->win.width, s->win.height);
+	if (!s->win.frame_buffer.img_ptr)
+		exit_game(EXIT_MLX, s);
+	s->win.frame_buffer.img_addr = mlx_get_data_addr(s->win.frame_buffer.img_ptr,
+		&s->win.frame_buffer.bpp, &s->win.frame_buffer.l_len, &s->win.frame_buffer.endian);
+	if (!s->win.frame_buffer.img_addr)
+		exit_game(EXIT_MLX, s);
 	s->win.frame_buffer.width = s->win.width;
 	s->win.frame_buffer.height = s->win.height;
 }
@@ -51,11 +53,19 @@ char **map_parser(char **argv)
 int main(int argc, char **argv)
 {
 	t_game *game;
-	if((argc > 3 || argc == 1) || (argc == 3 && (ft_strcmp(argv[2], "debug_mode=y") != 0)))
-		return(ft_printf("Wrong args\n"), -1);
+
+	if ((argc > 3 || argc == 1)
+		|| (argc == 3 && (ft_strcmp(argv[2], "debug_mode=y") != 0)))
+		return (ft_printf("Wrong args\n"), -1);
 	game = malloc(sizeof(t_game));
+	if (!game)
+		exit_game(EXIT_MALLOC, NULL);
 	game->map = map_parser(argv);
+	if (!game->map)
+		exit_game(EXIT_MAP, game);
 	game->mlx_ptr = mlx_init();
+	if (!game->mlx_ptr)
+		exit_game(EXIT_MLX, game);
 	init_window(game);
 	// start_execution(game);
 	return (0);
