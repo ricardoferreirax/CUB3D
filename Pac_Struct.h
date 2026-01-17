@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/17 13:21:59 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/17 20:54:21 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,16 @@
 # define EXIT_MLX       3
 # define EXIT_MAP       4
 # define EXIT_INPUT     5
+
+// keycodes
+# define KEY_ESC   65307
+# define KEY_W     119
+# define KEY_A     97
+# define KEY_S     115
+# define KEY_D     100
+# define KEY_LEFT  65361
+# define KEY_RIGHT 65363
+# define KEY_H     104
 
 typedef struct s_point
 {
@@ -132,6 +142,18 @@ typedef struct s_view
 	double	plane_y;
 }	t_view;
 
+// keys
+typedef struct s_key
+{
+	int	w;
+	int	a;
+	int	s;
+	int	d;
+	int	left;
+	int	right;
+	int	esc;
+}	t_key;
+
 typedef struct s_game
 {
 	bool debug_mode;
@@ -147,10 +169,20 @@ typedef struct s_game
 	char **map; //
 	t_player player; // 
 	t_view		view; //
+	t_key 	key; //
 	// t_image frame_buffer;
 }	t_game;
 
 #endif // !DEBUG
 
+// execution
+void	start_execution(t_game *game);
+
+// free and exit
 void	exit_game(int errcode, t_game *g);
 void	free_game(t_game *g);
+
+// hooks
+int	handle_close(t_game *g);
+int	handle_key_press(int keycode, t_game *g);
+int	handle_key_release(int keycode, t_game *g);
