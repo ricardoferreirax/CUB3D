@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/17 20:54:21 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/17 22:15:29 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,30 @@ typedef struct s_ghost
 	int speed_multiplier;
 } t_ghost;
 
+typedef struct s_raycasting
+{
+	double	*z_buffer; // size = window width
+
+	// per column ray
+	double	camera_x;
+	double	ray_dir_x;
+	double	ray_dir_y;
+
+	// dda
+	int		map_x;
+	int		map_y;
+	int		step_x;
+	int		step_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+
+	// draw
+	int		draw_start;
+	int		draw_end;
+}	t_raycasting;
+
 // execution - map
 typedef struct s_map
 {
@@ -156,6 +180,16 @@ typedef struct s_key
 
 typedef struct s_game
 {
+	// o que eu preciso para a execução
+	void *mlx_ptr;
+	t_window win;
+	t_map   map;
+	t_view	view;
+	t_key 	key;
+	t_raycasting ray;
+	// char **map;
+
+	t_player player;
 	bool debug_mode;
 	t_ghost *ghost;
 	t_pacdot *dot;
@@ -164,19 +198,13 @@ typedef struct s_game
 	int global_dot_counter;
 	int score;
 	int level;
-	void *mlx_ptr; //
-	t_window win; //
-	char **map; //
-	t_player player; // 
-	t_view		view; //
-	t_key 	key; //
-	// t_image frame_buffer;
 }	t_game;
 
 #endif // !DEBUG
 
 // execution
 void	start_execution(t_game *game);
+void	init_execution(t_game *g);
 
 // free and exit
 void	exit_game(int errcode, t_game *g);

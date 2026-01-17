@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 13:16:57 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/17 13:22:05 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/17 22:30:03 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,27 @@ void	free_game(t_game *g)
 
 	if (!g)
 		return ;
+	// zbuffer
+	// if (g->ray.z_buffer)
+	// 	free(g->ray.z_buffer);
+	
 	// imagem do frame buffer
-	if (g->win.frame_buffer.img_ptr && g->mlx_ptr)
+	if (g->mlx_ptr && g->win.frame_buffer.img_ptr)
 		mlx_destroy_image(g->mlx_ptr, g->win.frame_buffer.img_ptr);
 	// window
-	if (g->win.win_ptr && g->mlx_ptr)
+	if (g->mlx_ptr && g->win.win_ptr)
 		mlx_destroy_window(g->mlx_ptr, g->win.win_ptr);
 	// mapa
-	if (g->map)
+	if (g->map.grid)
 	{
 		i = 0;
-		while (g->map[i])
-			free(g->map[i++]);
-		free(g->map);
+		while (g->map.grid[i])
+			free(g->map.grid[i++]);
+		free(g->map.grid);
+		g->map.grid = NULL;
 	}
-	// outras structs
+
+	// outras cenas 
 	free(g);
 }
+

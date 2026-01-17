@@ -6,31 +6,91 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:45:09 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/17 21:31:16 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/17 22:33:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 
-// int	game_loop(t_game *g)
-// {
-// 	if (g->key.esc)
-// 		exit_game(EXIT_QUIT, g);
-// 	clear_framebuffer(g);
-// 	render_3d(g);
-// 	mlx_put_image_to_window(g->mlx_ptr, g->win.win_ptr, g->win.frame_buffer.img_ptr, 0, 0);
-// 	return (0);
-// }
-
-void	start_execution(t_game *game)
+static void	init_keys(t_game *g)
 {
-	if (!game || !game->mlx_ptr || !game->win.win_ptr
-		|| !game->win.frame_buffer.img_ptr || !game->win.frame_buffer.img_addr)
-		exit_game(EXIT_MLX, game);
-	// init_3d(game);
-	mlx_hook(game->win.win_ptr, 2, 1L << 0, handle_key_press, game);
-	mlx_hook(game->win.win_ptr, 3, 1L << 1, handle_key_release, game);
-	mlx_hook(game->win.win_ptr, 17, 0, handle_close, game);
-	// mlx_loop_hook(game->mlx_ptr, game_loop, game);
-	mlx_loop(game->mlx_ptr);
+	g->key.w = 0;
+	g->key.a = 0;
+	g->key.s = 0;
+	g->key.d = 0;
+	g->key.left = 0;
+	g->key.right = 0;
+	g->key.esc = 0;
+}
+
+static void	init_view(t_game *g)
+{
+	// posição inicial provisória
+	g->view.x = 1.5;
+	g->view.y = 1.5;
+
+	// direção inicial (olhar para +X)
+	g->view.dir_x = 1.0;
+	g->view.dir_y = 0.0;
+
+	// plano da camara (fov ~66°)
+	g->view.plane_x = 0.0;
+	g->view.plane_y = 0.66;
+}
+
+static void	init_window_struct(t_game *g)
+{
+	// window
+	g->win.win_ptr = NULL;
+	g->win.width = 0;
+	g->win.height = 0;
+	g->win.ntilesx = 0;
+	g->win.ntilesy = 0;
+
+	// frame buffer 
+	g->win.frame_buffer.img_ptr = NULL;
+	g->win.frame_buffer.img_addr = NULL;
+	g->win.frame_buffer.bpp = 0;
+	g->win.frame_buffer.l_len = 0;
+	g->win.frame_buffer.endian = 0;
+	g->win.frame_buffer.width = 0;
+	g->win.frame_buffer.height = 0;
+}
+
+static void	init_map_struct(t_game *g)
+{
+	g->map.grid = NULL;
+	g->map.width = 0;
+	g->map.height = 0;
+}
+
+static void	init_raycasting(t_game *g)
+{
+	g->ray.z_buffer = NULL;
+	g->ray.camera_x = 0.0;
+	g->ray.ray_dir_x = 0.0;
+	g->ray.ray_dir_y = 0.0;
+	g->ray.map_x = 0;
+	g->ray.map_y = 0;
+	g->ray.step_x = 0;
+	g->ray.step_y = 0;
+	g->ray.side_dist_x = 0.0;
+	g->ray.side_dist_y = 0.0;
+	g->ray.delta_dist_x = 0.0;
+	g->ray.delta_dist_y = 0.0;
+	g->ray.draw_start = 0;
+	g->ray.draw_end = 0;
+}
+
+void	init_execution(t_game *g)
+{
+	if (!g)
+		return ;
+	g->mlx_ptr = NULL;
+
+	init_window_struct(g);
+	init_map_struct(g);
+	init_keys(g);
+	init_view(g);
+	init_raycasting(g);
 }

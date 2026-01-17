@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/17 21:14:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/17 22:21:04 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ int main(int argc, char **argv)
 	game = malloc(sizeof(t_game));
 	if (!game)
 		exit_game(EXIT_MALLOC, NULL);
-	// init_game_defaults(game);
-	game->map = map_parser(argv);
-	if (!game->map)
+	init_execution(game);
+	game->map.grid = map_parser(argv);
+	if (!game->map.grid)
 		exit_game(EXIT_MAP, game);
 	game->mlx_ptr = mlx_init();
 	if (!game->mlx_ptr)
