@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/17 22:15:29 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/18 16:01:02 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,13 +204,18 @@ typedef struct s_game
 
 // execution
 void	start_execution(t_game *game);
-void	init_execution(t_game *g);
+void	init_defaults(t_game *g);
+void	init_map_dims(t_game *g);
+int	game_loop(t_game *g);
+
+void	init_mlx(t_game *game);
 
 // free and exit
 void	exit_game(int errcode, t_game *g);
 void	free_game(t_game *g);
 
 // hooks
+void	init_hooks(t_game *g);
 int	handle_close(t_game *g);
 int	handle_key_press(int keycode, t_game *g);
 int	handle_key_release(int keycode, t_game *g);

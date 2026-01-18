@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:45:09 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/17 22:33:28 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/18 15:56:31 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,11 @@ static void	init_raycasting(t_game *g)
 	g->ray.draw_end = 0;
 }
 
-void	init_execution(t_game *g)
+void	init_defaults(t_game *g)
 {
 	if (!g)
 		return ;
 	g->mlx_ptr = NULL;
-
 	init_window_struct(g);
 	init_map_struct(g);
 	init_keys(g);

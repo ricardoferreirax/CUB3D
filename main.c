@@ -6,68 +6,62 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/17 22:21:04 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/18 16:00:25 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Pac_Struct.h"
 
-void	init_window(t_game *s)
+char	**map_parser(char **argv)
 {
-	s->win.ntilesx = 28;
-	s->win.ntilesy = 25;
-	s->win.width = 8 * 28;
-	s->win.height = 8 * 25;
-	s->win.win_ptr = mlx_new_window(s->mlx_ptr, s->win.width, s->win.height, "Pac-Man");
-	if (!s->win.win_ptr)
-		exit_game(EXIT_MLX, s);
-	s->win.frame_buffer.img_ptr = mlx_new_image(s->mlx_ptr, s->win.width, s->win.height);
-	if (!s->win.frame_buffer.img_ptr)
-		exit_game(EXIT_MLX, s);
-	s->win.frame_buffer.img_addr = mlx_get_data_addr(s->win.frame_buffer.img_ptr,
-		&s->win.frame_buffer.bpp, &s->win.frame_buffer.l_len, &s->win.frame_buffer.endian);
-	if (!s->win.frame_buffer.img_addr)
-		exit_game(EXIT_MLX, s);
-	s->win.frame_buffer.width = s->win.width;
-	s->win.frame_buffer.height = s->win.height;
-}
+	int		fd;
+	char	**grid;
+	char	*line;
+	int		i;
 
-char **map_parser(char **argv)
-{
-	int fd = open(argv[1], O_RDONLY);
-	if(fd < 0)
-		return NULL;
-	char **line_test = ft_calloc(sizeof(char *), 25);
-	char *line;
-	int i = 0;
-	while(i < 25)
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+		return (NULL);
+	grid = ft_calloc(26, sizeof(char *));
+	if (!grid)
+		return (close(fd), NULL);
+	i = 0;
+	while (i < 25)
 	{
 		line = get_next_line(fd);
-		line_test[i] = ft_strdup(line);
+		if (!line)
+			break ;
+		grid[i] = ft_strdup(line);
 		free(line);
+		if (!grid[i])
+		{
+			while (i > 0)
+				free(grid[--i]);
+			free(grid);
+			return (close(fd), NULL);
+		}
 		i++;
 	}
-	return line_test;
+	grid[i] = NULL;
+	close(fd);
+	return (grid);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_game *game;
+	t_game	*game;
 
 	if ((argc > 3 || argc == 1)
-		|| (argc == 3 && (ft_strcmp(argv[2], "debug_mode=y") != 0)))
+		|| (argc == 3 && ft_strcmp(argv[2], "debug_mode=y") != 0))
 		return (ft_printf("Wrong args\n"), -1);
 	game = malloc(sizeof(t_game));
 	if (!game)
 		exit_game(EXIT_MALLOC, NULL);
-	init_execution(game);
+	init_defaults(game);
 	game->map.grid = map_parser(argv);
 	if (!game->map.grid)
 		exit_game(EXIT_MAP, game);
-	game->mlx_ptr = mlx_init();
-	if (!game->mlx_ptr)
-		exit_game(EXIT_MLX, game);
-	init_window(game);
+	init_mlx(game);
 	start_execution(game);
 	return (0);
 }
