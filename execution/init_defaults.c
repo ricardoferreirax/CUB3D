@@ -1,27 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_defaults.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:45:09 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/18 15:56:31 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/18 20:56:20 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
-
-static void	init_keys(t_game *g)
-{
-	g->key.w = 0;
-	g->key.a = 0;
-	g->key.s = 0;
-	g->key.d = 0;
-	g->key.left = 0;
-	g->key.right = 0;
-	g->key.esc = 0;
-}
 
 static void	init_view(t_game *g)
 {
@@ -78,6 +67,8 @@ static void	init_raycasting(t_game *g)
 	g->ray.side_dist_y = 0.0;
 	g->ray.delta_dist_x = 0.0;
 	g->ray.delta_dist_y = 0.0;
+	g->ray.side = 0;
+	g->ray.perp_wall_dist = 0.0;
 	g->ray.draw_start = 0;
 	g->ray.draw_end = 0;
 }

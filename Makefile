@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/01/18 15:59:26 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/01/18 16:35:17 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,8 @@ INCS    = -Iinclude -Ilibft
 LIBFT   = libft/libft.a
 MLX_PATH = minilibx-linux
 MLX = $(MLX_PATH)/libmlx.a
-SRC_FILES = execution/init_defaults.c execution/start_cub3d.c execution/init_map_dims.c \
-			execution/init_mlx.c hooks/handle_close.c hooks/handle_keys.c \
+SRC_FILES = execution/init_defaults.c execution/start_execution.c execution/init_map_3d.c \
+			execution/init_mlx.c execution/render_3d.c hooks/handle_close.c hooks/handle_keys.c \
 			hooks/init_hooks.c utils/free.c main.c
 
 OBJ_DIR   = objs

@@ -6,18 +6,21 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 14:59:32 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/17 20:49:09 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/18 20:56:40 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 
-static void	print_help(void)
+void	init_keys(t_game *g)
 {
-	ft_putstr("\nCommands:\n");
-	ft_putstr(" - Move: W A S D\n");
-	ft_putstr(" - Rotate: Left / Right\n");
-	ft_putstr(" - ESC: quit\n");
+	g->key.w = 0;
+	g->key.a = 0;
+	g->key.s = 0;
+	g->key.d = 0;
+	g->key.left = 0;
+	g->key.right = 0;
+	g->key.esc = 0;
 }
 
 int	handle_key_press(int keycode, t_game *g)
@@ -36,8 +39,6 @@ int	handle_key_press(int keycode, t_game *g)
 		g->key.left = 1;
 	else if (keycode == KEY_RIGHT)
 		g->key.right = 1;
-	else if (keycode == KEY_H)
-		print_help();
 	return (0);
 }
 

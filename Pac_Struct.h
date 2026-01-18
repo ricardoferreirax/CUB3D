@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/18 16:01:02 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/18 21:11:52 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include "string.h"
 #include "libft/libft.h"
 #include <fcntl.h>
+#include <math.h>
 
 #define SPEED 75,75757625
 #define PLAYER 'M'
@@ -70,7 +71,7 @@ typedef struct s_image
 	int				bpp;
 	int				l_len;
 	int				endian;
-	int				*img_ptr;
+	void			*img_ptr;
 }					t_image;
 
 typedef struct s_window
@@ -141,6 +142,11 @@ typedef struct s_raycasting
 	double	side_dist_y;
 	double	delta_dist_x;
 	double	delta_dist_y;
+	
+	int		side; // 0 = hit on X side, 1 = hit on Y side
+
+	// wall distance
+	double	perp_wall_dist;
 
 	// draw
 	int		draw_start;
@@ -186,6 +192,7 @@ typedef struct s_game
 	t_map   map;
 	t_view	view;
 	t_key 	key;
+	t_image	render;
 	t_raycasting ray;
 	// char **map;
 
@@ -205,10 +212,16 @@ typedef struct s_game
 // execution
 void	start_execution(t_game *game);
 void	init_defaults(t_game *g);
-void	init_map_dims(t_game *g);
 int	game_loop(t_game *g);
 
 void	init_mlx(t_game *game);
+
+// render 3d
+void	render_3d(t_game *g);
+
+// init map 3d
+void	init_map_3d(t_game *g);
+void	init_player_from_map(t_game *g);
 
 // free and exit
 void	exit_game(int errcode, t_game *g);
@@ -219,3 +232,4 @@ void	init_hooks(t_game *g);
 int	handle_close(t_game *g);
 int	handle_key_press(int keycode, t_game *g);
 int	handle_key_release(int keycode, t_game *g);
+void	init_keys(t_game *g);
