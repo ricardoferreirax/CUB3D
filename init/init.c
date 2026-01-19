@@ -24,7 +24,7 @@ void init_null(t_game *game)
 void init_ghost(t_game *game, t_ghost *ghost)
 {
 	ghost->is_steping_on_pacdot = 0;
-	ghost->mental_map = copy_map(game->map);
+	ghost->mental_map = copy_map(game->map.grid);
 	ghost->state = SCATTER;
 	if(ghost->name == BLINKY)
 		init_blinky(game, ghost);

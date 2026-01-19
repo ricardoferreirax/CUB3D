@@ -22,6 +22,7 @@
 #include "libft/libft.h"
 #include <fcntl.h>
 #include <math.h>
+#include <sys/time.h>
 
 
 #define UPDATE_F 16666

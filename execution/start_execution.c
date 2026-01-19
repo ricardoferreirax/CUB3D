@@ -14,11 +14,12 @@
 
 int	game_loop(t_game *g)
 {
-	if (g->key.esc)
-		exit_game(EXIT_QUIT, g);
-	// clear_framebuffer(g);
-	render_3d(g);
-	mlx_put_image_to_window(g->mlx_ptr, g->win.win_ptr, g->render.img_ptr, 0, 0);
+	(void)g;
+	// if (g->key.esc)
+	// 	exit_game(EXIT_QUIT, g);
+	// // clear_framebuffer(g);
+	// render_3d(g);
+	// mlx_put_image_to_window(g->mlx_ptr, g->win.win_ptr, g->render.img_ptr, 0, 0);
 	return (0);
 }
 
