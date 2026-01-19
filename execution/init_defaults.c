@@ -76,7 +76,7 @@ void	init_defaults(t_game *g)
 	g->mlx_ptr = NULL;
 	init_window_struct(g);
 	init_map_struct(g);
-	init_keys(g);
+	// init_keys(g);
 	init_view(g);
 	init_raycasting(g);
 }

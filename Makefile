@@ -12,7 +12,7 @@
 
 NAME    = cub3d
 
-CC      = cc
+CC      = clang-12
 CFLAGS  = -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion -Wformat=2 -Wstrict-aliasing=2 \
 		-fno-omit-frame-pointer \
 		-g -fsanitize=undefined 
@@ -32,7 +32,7 @@ INCS    = -Iinclude -Ilibft
 LIBFT   = libft/libft.a
 MLX_PATH = minilibx-linux
 MLX = $(MLX_PATH)/libmlx.a
-SRC_FILES = code/main.c \
+SRC_FILES = main.c \
 	code/aux_funcs.c  \
 	code/ghosts.c \
 	code/init/init.c \
@@ -42,7 +42,8 @@ SRC_FILES = code/main.c \
 	execution/init_defaults.c \
 	execution/start_execution.c execution/init_map_3d.c \
 	execution/init_mlx.c execution/render_3d.c hooks/handle_close.c hooks/handle_keys.c \
-	hooks/init_hooks.c utils/free.c main.c
+	hooks/init_hooks.c \
+	utils/free.c 
 
 OBJ_DIR   = objs
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
@@ -64,7 +65,7 @@ $(LIBFT):
 # 	make -C $(MLX_PATH) CFLAGS="$(MLX_CFLAGS)"
 
 $(MLX):
-	$(MAKE) -C $(MLX_PATH) -f Makefile.gen CC=$(CC) CFLAGS="$(MLX_CFLAGS)"
+	$(MAKE) -C $(MLX_PATH)
 
 clean:
 	rm -rf $(OBJ_DIR)

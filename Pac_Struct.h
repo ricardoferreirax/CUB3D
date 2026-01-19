@@ -23,8 +23,11 @@
 #include <fcntl.h>
 #include <math.h>
 
+
+#define UPDATE_F 16666
+#define MAX_UPDATES 5
 #define SPEED 75,75757625
-#define PLAYER 'M'
+#define PLAYER 'J'
 #define WALL '1'
 #define OPEN_SPACE '0'
 #define PACDOT 'D'
@@ -32,6 +35,8 @@
 #define WRAP_PORTS 'W'
 #define BLINKY_T 'B'
 #define PINKY_T 'P'
+#define INKY_T 'I'
+#define CLYDE_T 'C'
 
 // exit codes
 # define EXIT_OK        0
@@ -95,6 +100,16 @@ typedef struct s_player
 	int speed_multiplier;
 }	t_player;
 
+
+typedef struct s_anim
+{
+	//each char has only 2 animations for each cardinal direction
+	t_image *up[2];
+	t_image *down[2];
+	t_image *left[2];
+	t_image *right[2];
+}	t_anim;
+
 typedef struct s_pacdot
 {
 	t_pos pos;
@@ -118,15 +133,49 @@ typedef enum e_state
 	SPAWN
 }	e_state;
 
+typedef struct s_elroy_level
+{
+	//Elroy becomes active when few dots are left in the maze
+	int dots_left;
+	//It gains more speed and it stays in chase mode
+	int speed_multiplier;
+}	t_elroy_level;
+
+typedef struct s_elroy
+{
+	//Only Blinky can become Elroy Cruiser
+	int is_blinky;
+	//Elroy has two levels, check table for exact values btu Elroy becomes stronger the less dots there are
+	t_elroy_level one;
+	t_elroy_level two;
+}	t_elroy;
+
 typedef struct s_ghost
 {
+	//Self Explaining, it is the ghost's name
 	e_ghost name;
 	t_pos pos;
+	//dot_counter for the penhouse (not effective for Blinky since he's always out of the penhouse)
+	//At game start Pinky, Inky and Clyde make a Queue to leave the penhouse in this order, only one counter can be active at a time see end of struct for more info
+	//They can get out in 2 ways, if the dot_counter reaches a certain level or the Player stalls untill the timeout timer (t_time->timeout_timer) triggers
+	//the dot_counter goes only up and only resets at level start
+	//when the dot_counter limit is reached it gets deactivated but not reset 
+	//when the player dies these dot_counter's stay deactivated, the game refers to the global dot counter instead
 	int dot_counter;
 	t_point target_tile;
 	int global_dot_counter_call;
 	int speed_multiplier;
+	int is_steping_on_pacdot;
+	t_anim anim;
+	int invalid_dir;
+	char **mental_map;
+	t_elroy cruiser;
+	e_state state;
 } t_ghost;
+//At game start one of the penhouse ghost will activate it's counter, it will count up each dot pacman eats
+//if pacman eats all the dots it gets out, but if the ghost is forced out by timeout its dot counter is not reset and the next ghost dot counter starts counting.
+
+
 
 typedef struct s_raycasting
 {
@@ -167,17 +216,19 @@ typedef struct s_view
 	double	plane_y; // plano (da camera de visao - fov) perpendicular à direção do player (eixo Y)
 }	t_view;
 
-// keys
-typedef struct s_key
+
+typedef struct s_time
 {
-	int	w;
-	int	a;
-	int	s;
-	int	d;
-	int	left;
-	int	right;
-	int	esc;
-}	t_key;
+	double level_time;
+	double mode_timer;
+	//starts when ghosts are in the pen and pac-man refuses to eat dots
+	double timeout_timer;
+	int energizer;
+	double frightened_time;
+	//timers related to making sure the game updates at 60Hz
+	long last_time_up;
+	long accumulator;
+}	t_timer;
 
 typedef struct s_game
 {
@@ -186,18 +237,16 @@ typedef struct s_game
 	t_window win;
 	t_map   map;
 	t_view	view;
-	t_key 	key;
 	t_image	render;
 	t_raycasting ray;
 	t_player player;
 	
-	// char **map;
 
 	bool debug_mode;
 	t_ghost *ghost;
 	t_pacdot *dot;
-	int timeout;
-	double timer;
+	double timeout;
+	t_timer timer;
 	int global_dot_counter;
 	int score;
 	int level;
@@ -229,3 +278,17 @@ int	handle_close(t_game *g);
 int	handle_key_press(int keycode, t_game *g);
 int	handle_key_release(int keycode, t_game *g);
 void	init_keys(t_game *g);
+
+
+int xtile(char **map);
+int ytile(char **map);
+
+void print_2d(char **map);
+t_point chose_next_move(t_ghost *ghost, char **map);
+t_point find_c(char **map,  char c);
+//init.c and init_aux_funcs.c
+void init_game(t_game *game);
+
+long get_time_us(void);
+
+int	gameloop(t_game *game);
