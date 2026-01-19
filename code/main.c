@@ -12,6 +12,11 @@
 
 #include "Pac_Struct.h"
 
+void	clear_terminal(void)
+{
+	write(1, "\033[H", 3);
+}
+
 void	init_window(t_game *s)
 {
 	s->win.ntilesx = 28;
@@ -58,10 +63,10 @@ void update_target(t_game *game)
 	}
 }
 
-int	gameloop(t_game *game)
+void update_game(t_game *game)
 {
 	int i = 0;
-	while(i < 1)
+	while(i < 4)
 	{
 		t_point next_move = chose_next_move(&game->ghost[i], game->ghost->mental_map);
 		if(game->ghost[i].is_steping_on_pacdot)
@@ -71,9 +76,44 @@ int	gameloop(t_game *game)
 		game->ghost[i].pos.tile_pos.x += next_move.x;
 		game->ghost[i].pos.tile_pos.y += next_move.y;
 		game->map[game->ghost[i].pos.tile_pos.y][game->ghost[i].pos.tile_pos.x] = 'L';
-		print_2d(game->ghost[i].mental_map);
 		i++;
 	}
+}
+
+void render_game(t_game *game)
+{
+	clear_terminal();
+	print_2d(game->map);
+	return;
+}
+
+int	gameloop(t_game *game)
+{
+	long now;
+	long delta;
+	int updates = 0;
+	now = get_time_us(); 
+
+	if(game->timer.last_time_up == 0)
+	{
+		game->timer.last_time_up = now;
+		return 0;
+	}
+	delta = now - game->timer.last_time_up;
+	if(delta > 250000)
+		delta = 250000;
+
+	game->timer.accumulator += delta;
+	while(game->timer.accumulator >= UPDATE_F && updates < MAX_UPDATES)
+	{
+		update_game(game);
+		game->timer.accumulator -= UPDATE_F;
+		updates++;
+	}
+	render_game(game);
+	return 0;
+
+
 	// update_target(game);
 	return (0);
 }
@@ -121,7 +161,6 @@ char **map_parser(char **argv)
 }
 
 
-
 void print_2d(char **map)
 {
 	int i = 0;
@@ -132,10 +171,6 @@ void print_2d(char **map)
 	}
 }
 
-void	clear_terminal(void)
-{
-	write(1, "\033[H\033[J", 6);
-}
 
 int main(int argc, char **argv)
 {
@@ -145,19 +180,11 @@ int main(int argc, char **argv)
 	game = malloc(sizeof(t_game));
 	game->map = map_parser(argv);
 	init_game(game);
-	while(1)
-	{
-		gameloop(game);
-		print_2d(game->map);
-		usleep(200000);
-		clear_terminal();
-		// sleep(5);
-	}
-	// game->mlx_ptr = mlx_init();
-	// init_window(game);
-	// mlx_key_hook(game->win.win_ptr, keyloop, game);
-	// mlx_loop_hook(game->mlx_ptr, gameloop, game);
+	game->mlx_ptr = mlx_init();
+	init_window(game);
+	mlx_key_hook(game->win.win_ptr, keyloop, game);
+	mlx_loop_hook(game->mlx_ptr, gameloop, game);
 	// mlx_hook(game->win.win_ptr, 17, 0, close_game, game);
-	// mlx_loop(game->mlx_ptr);
+	mlx_loop(game->mlx_ptr);
 
 }

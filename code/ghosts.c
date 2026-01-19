@@ -60,6 +60,8 @@ t_point chose_next_move(t_ghost *ghost, char **map)
 		}
 		i++;
 	}
+	if(best_dir == -1)
+		best_dir = (ghost->invalid_dir + 2) %4;
 	ghost->invalid_dir = (best_dir + 2) % 4;
 	t_point dir;
 	dir.y = direction[best_dir][0];

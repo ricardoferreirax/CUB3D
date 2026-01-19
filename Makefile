@@ -22,12 +22,13 @@ INCS    = -Iinclude -Ilibft
 LIBFT   = libft/libft.a
 MLX_PATH = minilibx-linux
 MLX = $(MLX_PATH)/libmlx.a
-SRC_FILES = main.c \
-	aux_funcs.c  \
-	ghosts.c \
-	init/init.c \
-	init/init_aux_funcs.c \
-	init/init_ghosts.c
+SRC_FILES = code/main.c \
+	code/aux_funcs.c  \
+	code/ghosts.c \
+	code/init/init.c \
+	code/init/init_aux_funcs.c \
+	code/init/init_ghosts.c \
+	code/time.c
 
 OBJ_DIR   = objs
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))

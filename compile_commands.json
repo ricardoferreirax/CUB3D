@@ -17,12 +17,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/main.o",
-      "main.c"
+      "objs/code/main.o",
+      "code/main.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/main.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/main.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/code/main.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/code/main.o"
   },
   {
     "arguments": [
@@ -42,12 +42,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/aux_funcs.o",
-      "aux_funcs.c"
+      "objs/code/aux_funcs.o",
+      "code/aux_funcs.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/aux_funcs.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/aux_funcs.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/code/aux_funcs.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/code/aux_funcs.o"
   },
   {
     "arguments": [
@@ -67,12 +67,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/ghosts.o",
-      "ghosts.c"
+      "objs/code/ghosts.o",
+      "code/ghosts.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/ghosts.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/ghosts.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/code/ghosts.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/code/ghosts.o"
   },
   {
     "arguments": [
@@ -92,12 +92,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/init/init.o",
-      "init/init.c"
+      "objs/code/init/init.o",
+      "code/init/init.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/init/init.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/init/init.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/code/init/init.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/code/init/init.o"
   },
   {
     "arguments": [
@@ -117,12 +117,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/init/init_aux_funcs.o",
-      "init/init_aux_funcs.c"
+      "objs/code/init/init_aux_funcs.o",
+      "code/init/init_aux_funcs.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/init/init_aux_funcs.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/init/init_aux_funcs.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/code/init/init_aux_funcs.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/code/init/init_aux_funcs.o"
   },
   {
     "arguments": [
@@ -142,11 +142,36 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/init/init_ghosts.o",
-      "init/init_ghosts.c"
+      "objs/code/init/init_ghosts.o",
+      "code/init/init_ghosts.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/init/init_ghosts.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/init/init_ghosts.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/code/init/init_ghosts.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/code/init/init_ghosts.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/cc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-fsanitize=undefined",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/code/time.o",
+      "code/time.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/code/time.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/code/time.o"
   }
 ]

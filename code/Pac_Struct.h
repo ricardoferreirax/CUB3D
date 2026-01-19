@@ -6,24 +6,26 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/14 15:35:38 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/01/16 14:39:51 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PAC_STRUCT_H
 #define PAC_STRUCT_H
 
-#include "minilibx-linux/mlx.h"
-#include "minilibx-linux/mlx_int.h"
+#include "../minilibx-linux/mlx.h"
+#include "../minilibx-linux/mlx_int.h"
 #include "stdlib.h"
 #include "unistd.h"
 #include "stdio.h"
 #include "string.h"
-#include "libft/libft.h"
+#include "../libft/libft.h"
 #include <fcntl.h>
 #include <math.h>
-#include <time.h>
+#include <sys/time.h>
 
+#define UPDATE_F 16666
+#define MAX_UPDATES 5
 #define SPEED 75,75757625
 #define PLAYER 'J'
 #define WALL '1'
@@ -84,8 +86,8 @@ typedef struct s_player
 	t_pos pos;
 	int lives;
 	int speed_multiplier;
+	int dir;
 	t_anim anim;
-
 }	t_player;
 
 typedef struct s_pacdot
@@ -146,7 +148,7 @@ typedef struct s_ghost
 	t_anim anim;
 	int invalid_dir;
 	char **mental_map;
-	int elroy_cruiser;
+	t_elroy cruiser;
 	e_state state;
 } t_ghost;
 //At game start one of the penhouse ghost will activate it's counter, it will count up each dot pacman eats
@@ -161,6 +163,9 @@ typedef struct s_time
 	double timeout_timer;
 	int energizer;
 	double frightened_time;
+	//timers related to making sure the game updates at 60Hz
+	long last_time_up;
+	long accumulator;
 }	t_timer;
 
 typedef struct s_game
@@ -173,7 +178,7 @@ typedef struct s_game
 	t_pacdot *dot;
 	t_player player;
 	int timeout;
-	double timer;
+	t_timer timer;
 	// wen pacman loses a life the ghost's personal dot counter gets deactivated. This Global counter will dictate when a ghost goes out
 	// The global counter will check exactly for the values 7, 17 and 32 to release the ghosts. If this value is not exactly it it will no release them
 	int global_dot_counter;
@@ -190,4 +195,6 @@ t_point chose_next_move(t_ghost *ghost, char **map);
 t_point find_c(char **map,  char c);
 //init.c and init_aux_funcs.c
 void init_game(t_game *game);
+
+long get_time_us(void);
 #endif // !DEBUG
