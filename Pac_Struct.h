@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/19 05:34:32 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/19 05:55:11 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,28 +131,21 @@ typedef struct s_ghost
 typedef struct s_raycasting
 {
 	double	*z_buffer; // array para armazenar a distância da parede
-
-	double	camera_x; // posição no ecran (-1 a 1)
-	
-	// direçao do raio 
+	double	camera_x; // posição no ecra (-1 a 1) 
 	double	ray_dir_x; 
 	double	ray_dir_y;
-
-	// dda
 	int		map_x;
 	int		map_y;
-	int		step_x;
-	int		step_y;
-	double	side_dist_x;
-	double	side_dist_y;
-	double	delta_dist_x;
-	double	delta_dist_y;
-
+	int		step_x;  // +1 ou -1 para indicar a direção no eixo x
+	int		step_y; // +1 ou -1 para indicar a direção no eixo y
+	double	side_dist_x; // distancia do ray atual até a proxima linha vertical (até a proxima parede no eixo x)
+	double	side_dist_y; // distancia do ray atual até a proxima linha horizontal (até a proxima parede no eixo y)
+	double	delta_dist_x; // distancia que o ray tem que percorrer para ir de uma linha vertical para a proxima (no eixo x) - distancia entre linhas verticais
+	double	delta_dist_y; // distancia que o ray tem que percorrer para ir de uma linha horizontal para a proxima (no eixo y) - distancia entre linhas horizontais
 	int		hit_side; // 0 = parede vertical, 1 = parede horizontal
-
 	double	perp_wall_dist; // distancia perpendicular a parede
 
-	// draw
+	// drawing limits
 	int		draw_start;
 	int		draw_end;
 }	t_raycasting;
@@ -168,13 +161,10 @@ typedef struct s_map
 // execution - view of player
 typedef struct s_view
 {
-	// direcao para onde o player esta a olhar
-	double	dir_x;
-	double	dir_y;
-	
-	// plano da camara de visao (fov)
-	double	plane_x;
-	double	plane_y;
+	double	dir_x; // direção para onde o player está a olhar (eixo X)
+	double	dir_y; // direção para onde o player está a olhar (eixo Y)
+	double	plane_x; // plano (da camera de visao - fov) perpendicular à direção do player (eixo X)
+	double	plane_y; // plano (da camera de visao - fov) perpendicular à direção do player (eixo Y)
 }	t_view;
 
 // keys
