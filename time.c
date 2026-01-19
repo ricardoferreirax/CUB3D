@@ -18,3 +18,4 @@ long get_time_us(void)
 	gettimeofday(&tv, NULL);
 	return(tv.tv_sec * 1000000L + tv.tv_usec);
 }
+

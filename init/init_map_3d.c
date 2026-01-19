@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Pac_Struct.h"
+#include "initializer.h"
 
 void	init_player_from_map(t_game *g)
 {

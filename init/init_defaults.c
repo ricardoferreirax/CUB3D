@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Pac_Struct.h"
+#include "initializer.h"
 
 static void	init_view(t_game *g)
 {

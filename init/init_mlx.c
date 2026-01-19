@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Pac_Struct.h"
+#include "initializer.h"
 
 // static void	init_window(t_game *s)
 // {
@@ -32,16 +32,16 @@
 // 	s->win.frame_buffer.height = s->win.height;
 // }
 
-void	init_window(t_game *s)
-{
-	s->win.ntilesx = 28;
-	s->win.ntilesy = 25;
-	s->win.width = 8 * 28;
-	s->win.height = 8 * 25;
-	s->win.win_ptr = mlx_new_window(s->mlx_ptr, s->win.width, s->win.height, "Pac-Man");
-	if (!s->win.win_ptr)
-		exit_game(EXIT_MLX, s);
-}
+// void	init_window(t_game *s)
+// {
+// 	s->win.ntilesx = 28;
+// 	s->win.ntilesy = 25;
+// 	s->win.width = 8 * 28;
+// 	s->win.height = 8 * 25;
+// 	s->win.win_ptr = mlx_new_window(s->mlx_ptr, s->win.width, s->win.height, "Pac-Man");
+// 	if (!s->win.win_ptr)
+// 		exit_game(EXIT_MLX, s);
+// }
 
 void	init_render(t_game *g)
 {

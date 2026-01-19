@@ -32,6 +32,7 @@ INCS    = -Iinclude -Ilibft
 LIBFT   = libft/libft.a
 MLX_PATH = minilibx-linux
 MLX = $(MLX_PATH)/libmlx.a
+
 SRC_FILES = main.c \
 	aux_funcs.c  \
 	ghosts.c \
@@ -39,9 +40,12 @@ SRC_FILES = main.c \
 	init/init_aux_funcs.c \
 	init/init_ghosts.c \
 	time.c \
-	execution/init_defaults.c \
-	execution/start_execution.c execution/init_map_3d.c \
-	execution/init_mlx.c execution/render_3d.c hooks/handle_close.c hooks/handle_keys.c \
+	init/init_defaults.c \
+	execution/start_execution.c \
+	init/init_map_3d.c \
+	init/init_mlx.c execution/render_3d.c \
+	hooks/handle_close.c \
+	hooks/handle_keys.c \
 	hooks/init_hooks.c \
 	utils/free.c 
 

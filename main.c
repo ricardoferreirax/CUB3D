@@ -17,22 +17,22 @@ void	clear_terminal(void)
 	write(1, "\033[H", 3);
 }
 
-// void	init_window(t_game *s)
-// {
-// 	s->win.ntilesx = 28;
-// 	s->win.ntilesy = 25; 
-// 	s->win.width = 8 * 28;
-// 	s->win.height = 8 * 25;
-// 	s->win.win_ptr = mlx_new_window(s->mlx_ptr, s->win.width, s->win.height,
-// 			"Pac-Man");
-// 	s->win.frame_buffer.img_ptr = mlx_new_image(s->mlx_ptr, s->win.width,
-// 			s->win.height);
-// 	s->win.frame_buffer.img_addr = \
-// mlx_get_data_addr(s->win.frame_buffer.img_ptr, &s->win.frame_buffer.bpp, &s->win.frame_buffer.l_len, &s->win.frame_buffer.endian); s->win.frame_buffer.width = s->win.width; s->win.frame_buffer.heigth = s->win.height; } int	close_game(t_game *param) {
-// 	(void)param;
-// 	ft_printf("CLOSING GAME\n");
-// 	exit(EXIT_SUCCESS);
-// }
+void	init_window(t_game *s)
+{
+	s->win.ntilesx = 28;
+	s->win.ntilesy = 25; 
+	s->win.width = 8 * 28;
+	s->win.height = 8 * 25;
+	s->win.win_ptr = mlx_new_window(s->mlx_ptr, s->win.width, s->win.height,
+			"Pac-Man");
+	s->win.frame_buffer.img_ptr = mlx_new_image(s->mlx_ptr, s->win.width,
+			s->win.height);
+	s->win.frame_buffer.img_addr = \
+mlx_get_data_addr(s->win.frame_buffer.img_ptr, &s->win.frame_buffer.bpp, &s->win.frame_buffer.l_len, &s->win.frame_buffer.endian); s->win.frame_buffer.width = s->win.width; s->win.frame_buffer.height = s->win.height; } int	close_game(t_game *param) {
+	(void)param;
+	ft_printf("CLOSING GAME\n");
+	exit(EXIT_SUCCESS);
+}
 
 void new_target(t_game *game, t_ghost *ghost, e_state state)
 {
@@ -181,8 +181,8 @@ int main(int argc, char **argv)
 	game->map.grid = map_parser(argv);
 	init_game(game);
 	game->mlx_ptr = mlx_init();
-	// init_window(game);
-	mlx_key_hook(game->win.win_ptr, keyloop, game);
+	init_window(game);
+	// mlx_key_hook(game->win.win_ptr, keyloop, game);
 	mlx_loop_hook(game->mlx_ptr, gameloop, game);
 	// mlx_hook(game->win.win_ptr, 17, 0, close_game, game);
 	mlx_loop(game->mlx_ptr);

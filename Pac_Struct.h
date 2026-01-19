@@ -292,4 +292,5 @@ void init_game(t_game *game);
 
 long get_time_us(void);
 
+void	init_window(t_game *s);
 int	gameloop(t_game *game);
