@@ -1,0 +1,42 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_ghosts.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/14 15:28:58 by pfreire-          #+#    #+#             */
+/*   Updated: 2026/01/14 15:53:35 by pfreire-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "initializer.h"
+
+
+void init_blinky(t_game *game, t_ghost *blinky)
+{
+	blinky->target_tile = find_c(game->map, 'B');
+	blinky->pos.tile_pos = find_c(blinky->mental_map, 'S');
+	blinky->invalid_dir = 3;
+}
+
+void init_pinky(t_game *game, t_ghost *pinky)
+{
+	pinky->target_tile = find_c(game->map, 'P');
+	pinky->pos.tile_pos = find_c(pinky->mental_map, 'S');
+	pinky->invalid_dir = 3;
+}
+
+void init_inky(t_game *game, t_ghost *inky)
+{
+	inky->target_tile = find_c(game->map, 'I');
+	inky->pos.tile_pos = find_c(inky->mental_map, 'S');
+	inky->invalid_dir = 3;
+}
+
+void init_clyde(t_game *game, t_ghost *clyde)
+{
+	clyde->target_tile = find_c(game->map, 'C');
+	clyde->pos.tile_pos = find_c(clyde->mental_map, 'S');
+	clyde->invalid_dir = 3;
+}
