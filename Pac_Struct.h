@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/18 21:11:52 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/19 05:34:32 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,11 @@ typedef struct s_window
 
 typedef struct s_player
 {
-	t_pos pos;
+	// vou precisar para a execução 3D
+	double	pos_x;
+	double	pos_y;
+	
+	t_pos pos; // para o 2d (tile/pixel)
 	int lives;
 	int speed_multiplier;
 }	t_player;
@@ -126,11 +130,12 @@ typedef struct s_ghost
 
 typedef struct s_raycasting
 {
-	double	*z_buffer; // size = window width
+	double	*z_buffer; // array para armazenar a distância da parede
 
-	// per column ray
-	double	camera_x;
-	double	ray_dir_x;
+	double	camera_x; // posição no ecran (-1 a 1)
+	
+	// direçao do raio 
+	double	ray_dir_x; 
 	double	ray_dir_y;
 
 	// dda
@@ -142,11 +147,10 @@ typedef struct s_raycasting
 	double	side_dist_y;
 	double	delta_dist_x;
 	double	delta_dist_y;
-	
-	int		side; // 0 = hit on X side, 1 = hit on Y side
 
-	// wall distance
-	double	perp_wall_dist;
+	int		hit_side; // 0 = parede vertical, 1 = parede horizontal
+
+	double	perp_wall_dist; // distancia perpendicular a parede
 
 	// draw
 	int		draw_start;
@@ -164,10 +168,11 @@ typedef struct s_map
 // execution - view of player
 typedef struct s_view
 {
-	double	x;
-	double	y;
+	// direcao para onde o player esta a olhar
 	double	dir_x;
 	double	dir_y;
+	
+	// plano da camara de visao (fov)
 	double	plane_x;
 	double	plane_y;
 }	t_view;
@@ -194,9 +199,10 @@ typedef struct s_game
 	t_key 	key;
 	t_image	render;
 	t_raycasting ray;
+	t_player player;
+	
 	// char **map;
 
-	t_player player;
 	bool debug_mode;
 	t_ghost *ghost;
 	t_pacdot *dot;

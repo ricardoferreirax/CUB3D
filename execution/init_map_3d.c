@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 15:51:43 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/18 16:35:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/19 05:23:57 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	init_player_from_map(t_game *g)
 		{
 			if (g->map.grid[y][x] == 'M')
 			{
-				g->view.x = x + 0.5;
-				g->view.y = y + 0.5;
+				g->player.pos_x = x + 0.5;
+				g->player.pos_y = y + 0.5;
 				g->view.dir_x = 1.0;
 				g->view.dir_y = 0.0;
 				g->view.plane_x = 0.0;
@@ -40,6 +40,7 @@ void	init_player_from_map(t_game *g)
 	}
 	exit_game(EXIT_MAP, g);
 }
+
 
 void	init_map_3d(t_game *g)
 {
