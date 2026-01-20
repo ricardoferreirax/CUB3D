@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:45:09 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/20 14:30:41 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/20 16:57:33 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,19 @@ static void	init_map_struct(t_game *g)
 	g->map.height = 0;
 }
 
+static void	init_player_raycast_state(t_game *g)
+{
+	g->player.target_map_x = -1;
+	g->player.target_map_y = -1;
+	g->player.target_tile = '0';
+	g->player.target_wall_dir = 0;
+	g->player.target_dist = 0.0;
+}
+
 static void	init_raycasting(t_game *g)
 {
 	g->ray.z_buffer = NULL;
+
 	g->ray.camera_x = 0.0;
 	g->ray.ray_dir_x = 0.0;
 	g->ray.ray_dir_y = 0.0;
@@ -52,7 +62,7 @@ static void	init_raycasting(t_game *g)
 	g->ray.side_dist_y = 0.0;
 	g->ray.delta_dist_x = 0.0;
 	g->ray.delta_dist_y = 0.0;
-	g->ray.hit_side = 0;
+	g->ray.hit_side = -1;
 	g->ray.perp_wall_dist = 0.0;
 	g->ray.draw_start = 0;
 	g->ray.draw_end = 0;
@@ -67,4 +77,5 @@ void	init_defaults(t_game *g)
 	init_map_struct(g);
 	// init_keys(g);
 	init_raycasting(g);
+	init_player_raycast_state(g);
 }
