@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/14 16:10:08 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/01/20 16:43:00 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void update_game(t_game *game)
 void render_game(t_game *game)
 {
 	clear_terminal();
+	process_raycasting(game);
 	print_2d(game->map.grid);
 	return;
 }
@@ -106,14 +107,13 @@ int	gameloop(t_game *game)
 	game->timer.accumulator += delta;
 	while(game->timer.accumulator >= UPDATE_F && updates < MAX_UPDATES)
 	{
-		update_game(game);
+		// update_game(game);
 		game->timer.accumulator -= UPDATE_F;
 		updates++;
 	}
 	render_game(game);
 	return 0;
-
-
+	
 	// update_target(game);
 	return (0);
 }
@@ -182,9 +182,9 @@ int main(int argc, char **argv)
 	init_game(game);
 	game->mlx_ptr = mlx_init();
 	init_window(game);
-	// mlx_key_hook(game->win.win_ptr, keyloop, game);
+	mlx_key_hook(game->win.win_ptr, keyloop, game);
 	mlx_loop_hook(game->mlx_ptr, gameloop, game);
-	// mlx_hook(game->win.win_ptr, 17, 0, close_game, game);
+	mlx_hook(game->win.win_ptr, 17, 0, close_game, game);
 	mlx_loop(game->mlx_ptr);
 
 }

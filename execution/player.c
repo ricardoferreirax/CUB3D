@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_map_3d.c                                      :+:      :+:    :+:   */
+/*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/18 15:51:43 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/19 05:23:57 by rmedeiro         ###   ########.fr       */
+/*   Created: 2026/01/20 16:44:24 by rmedeiro          #+#    #+#             */
+/*   Updated: 2026/01/20 16:44:38 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "initializer.h"
+# include "../Pac_Struct.h"
 
 void	init_player_from_map(t_game *g)
 {
@@ -27,10 +27,10 @@ void	init_player_from_map(t_game *g)
 			{
 				g->player.pos_x = x + 0.5;
 				g->player.pos_y = y + 0.5;
-				g->view.dir_x = 1.0;
-				g->view.dir_y = 0.0;
-				g->view.plane_x = 0.0;
-				g->view.plane_y = 0.66;
+				g->player.dir_x = 1.0;
+				g->player.dir_y = 0.0;
+				g->player.plane_x = 0.0;
+				g->player.plane_y = 0.66;
 				g->map.grid[y][x] = '0';
 				return ;
 			}
@@ -39,26 +39,4 @@ void	init_player_from_map(t_game *g)
 		y++;
 	}
 	exit_game(EXIT_MAP, g);
-}
-
-
-void	init_map_3d(t_game *g)
-{
-	int	y;
-	int	x;
-	int	max_w;
-
-	y = 0;
-	max_w = 0;
-	while (g->map.grid[y])
-	{
-		x = 0;
-		while (g->map.grid[y][x] && g->map.grid[y][x] != '\n')
-			x++;
-		if (x > max_w)
-			max_w = x;
-		y++;
-	}
-	g->map.height = y;
-	g->map.width = max_w;
 }

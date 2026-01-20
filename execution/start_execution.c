@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 22:32:24 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/18 21:13:38 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/20 14:23:15 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	start_execution(t_game *g)
 {
 	if (!g || !g->mlx_ptr)
 		exit_game(EXIT_MLX, g);
-	init_map_3d(g); // inicializar o mapa 3D
+	setup_map_grid(g); // inicializar o mapa 3D
 	init_player_from_map(g); // inicializar a posição do player a partir do mapa
 	init_raycasting(g);
 	init_hooks(g);

@@ -6,22 +6,11 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:45:09 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/19 05:37:28 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/20 14:30:41 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "initializer.h"
-
-static void	init_view(t_game *g)
-{
-	// direção inicial (olhar para +X)
-	g->view.dir_x = 1.0;
-	g->view.dir_y = 0.0;
-
-	// plano da camara (fov ~66°)
-	g->view.plane_x = 0.0;
-	g->view.plane_y = 0.66;
-}
 
 static void	init_window_struct(t_game *g)
 {
@@ -77,6 +66,5 @@ void	init_defaults(t_game *g)
 	init_window_struct(g);
 	init_map_struct(g);
 	// init_keys(g);
-	init_view(g);
 	init_raycasting(g);
 }

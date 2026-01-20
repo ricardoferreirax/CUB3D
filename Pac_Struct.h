@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/19 05:55:11 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/20 15:13:26 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,18 @@ typedef struct s_window
 typedef struct s_player
 {
 	// vou precisar para a execução 3D
-	double	pos_x;
-	double	pos_y;
+	double	pos_x; // posição do player no mapa (eixo X)
+	double	pos_y; // posição do player no mapa (eixo Y)
+	double	dir_x; // direção para onde o player está a olhar (eixo X)
+	double	dir_y; // direção para onde o player está a olhar (eixo Y)
+	double	plane_x; // plano (da camera de visao - fov) perpendicular à direção do player (eixo X)
+	double	plane_y; // plano (da camera de visao - fov) perpendicular à direção do player (eixo Y)
+
+	int		target_map_x;  	// coordenadas do tile que o player está a apontar no eixo x
+	int		target_map_y;  	// coordenadas do tile que o player está a apontar no eixo y
+	char	target_tile;    // id do tile que o player está a apontar
+	char	target_wall_dir; // 'N', 'S', 'E', 'W'
+	double	target_dist;   // distância perpendicular
 	
 	t_pos pos; // para o 2d (tile/pixel)
 	int lives;
@@ -208,16 +218,6 @@ typedef struct s_map
 	int		height;
 }	t_map;
 
-// execution - view of player
-typedef struct s_view
-{
-	double	dir_x; // direção para onde o player está a olhar (eixo X)
-	double	dir_y; // direção para onde o player está a olhar (eixo Y)
-	double	plane_x; // plano (da camera de visao - fov) perpendicular à direção do player (eixo X)
-	double	plane_y; // plano (da camera de visao - fov) perpendicular à direção do player (eixo Y)
-}	t_view;
-
-
 typedef struct s_time
 {
 	double level_time;
@@ -237,7 +237,6 @@ typedef struct s_game
 	void *mlx_ptr;
 	t_window win;
 	t_map   map;
-	t_view	view;
 	t_image	render;
 	t_raycasting ray;
 	t_player player;
@@ -260,13 +259,17 @@ void	start_execution(t_game *game);
 void	init_defaults(t_game *g);
 int	game_loop(t_game *g);
 
+int	register_hit(t_game *g, int screen_x, int hit_found);
+
 void	init_mlx(t_game *game);
 
 // render 3d
-void	render_3d(t_game *g);
+void	process_raycasting(t_game *g);
 
 // init map 3d
-void	init_map_3d(t_game *g);
+void	setup_map_grid(t_game *g);
+char	map_tile(t_game *g, int y, int x);
+
 void	init_player_from_map(t_game *g);
 
 // free and exit
@@ -278,7 +281,6 @@ void	init_hooks(t_game *g);
 int	handle_close(t_game *g);
 int	handle_key_press(int keycode, t_game *g);
 int	handle_key_release(int keycode, t_game *g);
-void	init_keys(t_game *g);
 
 
 int xtile(char **map);
