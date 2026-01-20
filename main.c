@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/20 16:43:00 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/20 17:29:35 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,9 @@ void update_game(t_game *game)
 
 void render_game(t_game *game)
 {
-	clear_terminal();
+	// clear_terminal();
 	process_raycasting(game);
+	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr, game->win.frame_buffer.img_ptr, 0, 0);
 	print_2d(game->map.grid);
 	return;
 }
@@ -182,9 +183,15 @@ int main(int argc, char **argv)
 	init_game(game);
 	game->mlx_ptr = mlx_init();
 	init_window(game);
-	mlx_key_hook(game->win.win_ptr, keyloop, game);
+	start_execution(game);
+	mlx_hook(game->win.win_ptr, 2, 1L << 0, handle_key_press, game);
+	mlx_hook(game->win.win_ptr, 3, 1L << 1, handle_key_release, game);
+	mlx_hook(game->win.win_ptr, 17, 0, handle_close, game);
 	mlx_loop_hook(game->mlx_ptr, gameloop, game);
-	mlx_hook(game->win.win_ptr, 17, 0, close_game, game);
 	mlx_loop(game->mlx_ptr);
-
+	
+	// mlx_key_hook(game->win.win_ptr, keyloop, game);
+	// mlx_loop_hook(game->mlx_ptr, gameloop, game);
+	// mlx_hook(game->win.win_ptr, 17, 0, close_game, game);
+	return (0);
 }

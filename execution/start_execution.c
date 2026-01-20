@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 22:32:24 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/20 16:53:00 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/20 17:25:43 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,16 @@
 // 	return (0);
 // }
 
-void	init_raycasting(t_game *g)
-{
-	g->ray.z_buffer = malloc(sizeof(double) * g->render.width);
-	if (!g->ray.z_buffer)
-		exit_game(EXIT_MALLOC, g);
-}
-
 void	start_execution(t_game *g)
 {
 	if (!g || !g->mlx_ptr)
 		exit_game(EXIT_MLX, g);
 	setup_map_grid(g); // inicializar o mapa 3D
 	init_player_from_map(g); // inicializar a posição do player a partir do mapa
-	init_raycasting(g);
-	init_hooks(g);
-	mlx_loop(g->mlx_ptr);
+	g->render.width = g->render.width;
+	g->render.height = g->render.height;
+	g->ray.z_buffer = malloc(sizeof(double) * g->render.width);
+	if (!g->ray.z_buffer)
+		exit_game(EXIT_MALLOC, g);
+		
 }

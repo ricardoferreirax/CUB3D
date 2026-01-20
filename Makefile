@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/01/20 16:45:52 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/01/20 17:15:22 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,6 @@ SRC_FILES = main.c \
 	execution/player.c \
 	hooks/handle_close.c \
 	hooks/handle_keys.c \
-	hooks/init_hooks.c \
 	utils/free.c 
 
 OBJ_DIR   = objs

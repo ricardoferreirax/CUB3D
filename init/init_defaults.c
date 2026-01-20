@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:45:09 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/20 16:57:33 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/20 17:17:52 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	init_defaults(t_game *g)
 	g->mlx_ptr = NULL;
 	init_window_struct(g);
 	init_map_struct(g);
-	// init_keys(g);
+	init_keys(g);
 	init_raycasting(g);
 	init_player_raycast_state(g);
 }

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/20 15:13:26 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/20 17:19:17 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,6 +231,17 @@ typedef struct s_time
 	long accumulator;
 }	t_timer;
 
+typedef struct s_key
+{
+	int	w;
+	int	a;
+	int	s;
+	int	d;
+	int	left;
+	int	right;
+	int	esc;
+}	t_key;
+
 typedef struct s_game
 {
 	// o que eu preciso para a execução
@@ -240,6 +251,7 @@ typedef struct s_game
 	t_image	render;
 	t_raycasting ray;
 	t_player player;
+	t_key	key;
 	
 
 	bool debug_mode;
@@ -257,9 +269,10 @@ typedef struct s_game
 // execution
 void	start_execution(t_game *game);
 void	init_defaults(t_game *g);
-int	game_loop(t_game *g);
 
 int	register_hit(t_game *g, int screen_x, int hit_found);
+
+void	init_keys(t_game *g);
 
 void	init_mlx(t_game *game);
 
@@ -277,7 +290,6 @@ void	exit_game(int errcode, t_game *g);
 void	free_game(t_game *g);
 
 // hooks
-void	init_hooks(t_game *g);
 int	handle_close(t_game *g);
 int	handle_key_press(int keycode, t_game *g);
 int	handle_key_release(int keycode, t_game *g);
