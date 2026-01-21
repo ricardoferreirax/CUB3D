@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:48:50 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/21 11:38:14 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/21 11:41:52 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,14 @@ int	register_hit(t_game *g, int screen_x, int hit_found)
 	else
 		g->player.target_dist = g->ray.side_dist_y - g->ray.delta_dist_y;
 	return (1);
+}
+
+void	put_pixel(t_image *img, int x, int y, int color)
+{
+	char	*dst;
+
+	if (x < 0 || y < 0 || x >= img->width || y >= img->height)
+		return ;
+	dst = img->img_addr + (y * img->l_len + x * (img->bpp / 8));
+	*(unsigned int *)dst = (unsigned int)color;
 }

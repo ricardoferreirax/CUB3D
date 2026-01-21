@@ -6,11 +6,27 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/21 11:38:49 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/21 11:41:07 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
+
+static void	draw_vertical_line(t_game *g, int x)
+{
+	int	y;
+	int	color;
+
+	color = 0x00FF0000; // vermelho
+	if (g->ray.hit_side == 1)
+		color = 0x00AA0000; // darker >:)
+	y = g->ray.draw_start;
+	while (y <= g->ray.draw_end)
+	{
+		put_pixel(&g->win.frame_buffer, x, y, color);
+		y++;
+	}
+}
 
 static void	calc_draw_limits(t_game *g)
 {
@@ -110,7 +126,7 @@ void	process_raycasting(t_game *g)
 
 	screen_x = 0;
 	hit_found = 0;
-	//clear_frame(g, 0x00111111, 0x00333333); // limpa o frame com as cores do ceiling e do floor
+	// clear_frame(g, 0x00111111, 0x00333333); // limpa o frame com as cores do ceiling e do floor
 	while (screen_x < g->render.width)
 	{
 		init_ray(g, screen_x);
@@ -118,7 +134,7 @@ void	process_raycasting(t_game *g)
 		perform_dda(g);
 		calc_wall_distance(g);
 		calc_draw_limits(g);
-		//draw_vertical_line(g, screen_x); // regista o tile atingido no centro do ecrã, só no raio do centro
+		draw_vertical_line(g, screen_x); // regista o tile atingido no centro do ecrã, só no raio do centro
 		hit_found = register_hit(g, screen_x, hit_found);
 		g->ray.z_buffer[screen_x] = g->ray.perp_wall_dist;
 		screen_x++;
