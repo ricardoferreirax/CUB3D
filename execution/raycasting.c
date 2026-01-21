@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/21 11:41:07 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/21 11:49:48 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,22 @@ static void	calc_draw_limits(t_game *g)
 {
 	int	line_h;
 
-	line_h = (int)(g->render.height / g->ray.perp_wall_dist);
-	g->ray.draw_start = -line_h / 2 + g->render.height / 2;
-	g->ray.draw_end = line_h / 2 + g->render.height / 2;
-
+	line_h = (int)(g->win.height / g->ray.perp_wall_dist);
+	g->ray.draw_start = -line_h / 2 + g->win.height / 2;
+	g->ray.draw_end = line_h / 2 + g->win.height / 2;
 	if (g->ray.draw_start < 0)
 		g->ray.draw_start = 0;
-	if (g->ray.draw_end >= g->render.height)
-		g->ray.draw_end = g->render.height - 1;
+	if (g->ray.draw_end >= g->win.height)
+		g->ray.draw_end = g->win.height - 1;
 }
 
 static void	calc_wall_distance(t_game *g)
 {
 	if (g->ray.hit_side == 0)
 		g->ray.perp_wall_dist = g->ray.side_dist_x - g->ray.delta_dist_x;
-	else
+	else // hit_side == 1
 		g->ray.perp_wall_dist = g->ray.side_dist_y - g->ray.delta_dist_y;
-
-	// evitar div/0 e valores negativos :3
-	if (g->ray.perp_wall_dist < 1e-6)
+	if (g->ray.perp_wall_dist < 1e-6) // evitar div/0 e valores negativos :3
 		g->ray.perp_wall_dist = 1e-6;
 }
 
@@ -85,7 +82,7 @@ static void	calculate_dda_step(t_game *g)
 		g->ray.step_x = -1;
 		g->ray.side_dist_x = (g->player.pos_x - g->ray.map_x) * g->ray.delta_dist_x;
 	}
-	else
+	else // ray_dir_x >= 0
 	{
 		g->ray.step_x = 1;
 		g->ray.side_dist_x = (g->ray.map_x + 1.0 - g->player.pos_x) * g->ray.delta_dist_x;
@@ -95,7 +92,7 @@ static void	calculate_dda_step(t_game *g)
 		g->ray.step_y = -1;
 		g->ray.side_dist_y = (g->player.pos_y - g->ray.map_y) * g->ray.delta_dist_y;
 	}
-	else
+	else // ray_dir_y >= 0
 	{
 		g->ray.step_y = 1;
 		g->ray.side_dist_y = (g->ray.map_y + 1.0 - g->player.pos_y) * g->ray.delta_dist_y;
@@ -104,7 +101,7 @@ static void	calculate_dda_step(t_game *g)
 
 static void	init_ray(t_game *g, int x)
 {
-	g->ray.camera_x = 2.0 * x / (double)g->render.width - 1.0;
+	g->ray.camera_x = 2.0 * x / (double)g->win.width - 1.0;
 	g->ray.ray_dir_x = g->player.dir_x + g->player.plane_x * g->ray.camera_x;
 	g->ray.ray_dir_y = g->player.dir_y + g->player.plane_y * g->ray.camera_x;
 	g->ray.map_x = (int)g->player.pos_x;
@@ -126,15 +123,15 @@ void	process_raycasting(t_game *g)
 
 	screen_x = 0;
 	hit_found = 0;
-	// clear_frame(g, 0x00111111, 0x00333333); // limpa o frame com as cores do ceiling e do floor
-	while (screen_x < g->render.width)
+	// clear_frame(g, 0x00111111, 0x00333333);
+	while (screen_x < g->win.width)
 	{
 		init_ray(g, screen_x);
 		calculate_dda_step(g);
 		perform_dda(g);
 		calc_wall_distance(g);
 		calc_draw_limits(g);
-		draw_vertical_line(g, screen_x); // regista o tile atingido no centro do ecrã, só no raio do centro
+		draw_vertical_line(g, screen_x);
 		hit_found = register_hit(g, screen_x, hit_found);
 		g->ray.z_buffer[screen_x] = g->ray.perp_wall_dist;
 		screen_x++;

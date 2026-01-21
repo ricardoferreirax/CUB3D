@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 14:45:09 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/20 17:17:52 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/21 21:06:22 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 
 static void	init_window_struct(t_game *g)
 {
-	// window
 	g->win.win_ptr = NULL;
 	g->win.width = 0;
 	g->win.height = 0;
 	g->win.ntilesx = 0;
 	g->win.ntilesy = 0;
 
-	// frame buffer 
 	g->win.frame_buffer.img_ptr = NULL;
 	g->win.frame_buffer.img_addr = NULL;
 	g->win.frame_buffer.bpp = 0;
@@ -50,7 +48,6 @@ static void	init_player_raycast_state(t_game *g)
 static void	init_raycasting(t_game *g)
 {
 	g->ray.z_buffer = NULL;
-
 	g->ray.camera_x = 0.0;
 	g->ray.ray_dir_x = 0.0;
 	g->ray.ray_dir_y = 0.0;
@@ -68,12 +65,25 @@ static void	init_raycasting(t_game *g)
 	g->ray.draw_end = 0;
 }
 
+static void	init_render_struct(t_game *g)
+{
+	g->render.width = 0;
+	g->render.height = 0;
+	g->render.img_ptr = NULL;
+	g->render.img_addr = NULL;
+	g->render.bpp = 0;
+	g->render.l_len = 0;
+	g->render.endian = 0;
+}
+
+
 void	init_defaults(t_game *g)
 {
 	if (!g)
 		return ;
 	g->mlx_ptr = NULL;
 	init_window_struct(g);
+	init_render_struct(g);
 	init_map_struct(g);
 	init_keys(g);
 	init_raycasting(g);

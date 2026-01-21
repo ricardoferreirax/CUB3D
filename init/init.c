@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/14 16:08:47 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/01/21 21:08:08 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void init_ghost(t_game *game, t_ghost *ghost)
 void init_game(t_game *game)
 {
 	// init_null(game);
-	// init_window(game);
+	//init_window(game);
 	game->ghost = malloc(sizeof(t_ghost) * 4);
 	game->ghost[0].name = BLINKY;
 	game->ghost[1].name = PINKY;

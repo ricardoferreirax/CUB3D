@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/21 11:20:49 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/21 21:21:55 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	init_window(t_game *s)
 {
 	s->win.ntilesx = 28;
 	s->win.ntilesy = 25; 
-	s->win.width = 8 * 28;
-	s->win.height = 8 * 25;
+	s->win.width = 800;
+	s->win.height = 600;
 	s->win.win_ptr = mlx_new_window(s->mlx_ptr, s->win.width, s->win.height,
 			"Pac-Man");
 	s->win.frame_buffer.img_ptr = mlx_new_image(s->mlx_ptr, s->win.width,
@@ -82,6 +82,8 @@ void update_game(t_game *game)
 
 void render_game(t_game *game)
 {
+	if (game->key.esc)
+		exit_game(EXIT_QUIT, game);
 	// clear_terminal();
 	process_raycasting(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr, game->win.frame_buffer.img_ptr, 0, 0);

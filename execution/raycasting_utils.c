@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:48:50 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/21 11:41:52 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/21 11:46:55 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,25 @@ void	put_pixel(t_image *img, int x, int y, int color)
 		return ;
 	dst = img->img_addr + (y * img->l_len + x * (img->bpp / 8));
 	*(unsigned int *)dst = (unsigned int)color;
+}
+
+void	clear_frame(t_game *g, int ceil_color, int floor_color)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < g->render.height)
+	{
+		x = 0;
+		while (x < g->render.width)
+		{
+			if (y < g->render.height / 2)
+				put_pixel(&g->win.frame_buffer, x, y, ceil_color);
+			else
+				put_pixel(&g->win.frame_buffer, x, y, floor_color);
+			x++;
+		}
+		y++;
+	}
 }

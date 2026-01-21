@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 15:53:44 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/20 14:23:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/21 21:18:52 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	init_mlx(t_game *g)
 	g->mlx_ptr = mlx_init();
 	if (!g->mlx_ptr)
 		exit_game(EXIT_MLX, g);
+
 	init_window(g);
 	init_render(g);
 }
