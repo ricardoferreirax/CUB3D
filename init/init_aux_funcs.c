@@ -12,24 +12,25 @@
 
 #include "initializer.h"
 
-static void block_spawn(char **map)
-{
-	int i = 0;
-	while(map && map[i])
-	{
-		int j = 0;
-		while(map[i][j])
-		{
-			if((map[i][j] == 'S' || map[i][j] == 'J'))
-			{
-				map[i - 1][j - 1] = '1';
-				map[i - 1][j + 1] = '1';
-			}
-			j++;
-		}
-		i++;
-	}
-}
+
+// static void block_spawn(char **map)
+// {
+// 	int i = 0;
+// 	while(map && map[i])
+// 	{
+// 		int j = 0;
+// 		while(map[i][j])
+// 		{
+// 			if((map[i][j] == 'S' || map[i][j] == 'J'))
+// 			{
+// 				map[i - 1][j - 1] = '1';
+// 				map[i - 1][j + 1] = '1';
+// 			}
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
 
 char **copy_map(char **map)
 {
@@ -52,10 +53,10 @@ char **copy_map(char **map)
 		i++;
 	}
 	copy[i] = NULL;
-	block_spawn(copy);
-	ft_printf("Ghost map:\n");
-	print_2d(copy);
-	ft_printf("--------___--");
+	// block_spawn(copy);
+	// ft_printf("Ghost map:\n");
+	// print_2d(copy);
+	// ft_printf("--------___--");
 	return copy;
 }
 

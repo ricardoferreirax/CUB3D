@@ -25,7 +25,7 @@
 #include <sys/time.h>
 
 
-#define UPDATE_F 16666
+#define UPDATE_F 166660
 #define MAX_UPDATES 5
 #define SPEED 75,75757625
 #define PLAYER 'J'

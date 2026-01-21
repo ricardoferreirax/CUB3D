@@ -69,13 +69,20 @@ void update_game(t_game *game)
 	while(i < 4)
 	{
 		t_point next_move = chose_next_move(&game->ghost[i], game->ghost->mental_map);
-		if(game->ghost[i].is_steping_on_pacdot)
-			game->map.grid[game->ghost[i].pos.tile_pos.y][game->ghost[i].pos.tile_pos.x] = 'D';
-		else
-			game->map.grid[game->ghost[i].pos.tile_pos.y][game->ghost[i].pos.tile_pos.x] = '0';
-		game->ghost[i].pos.tile_pos.x += next_move.x;
-		game->ghost[i].pos.tile_pos.y += next_move.y;
-		game->map.grid[game->ghost[i].pos.tile_pos.y][game->ghost[i].pos.tile_pos.x] = 'L';
+		game->ghost[i].pos.pixel_pos.x += next_move.x;
+		game->ghost[i].pos.pixel_pos.y += next_move.y;
+		game->ghost[i].pos.tile_pos.x = game->ghost[i].pos.pixel_pos.x / 8;
+		game->ghost[i].pos.tile_pos.y = game->ghost[i].pos.pixel_pos.y / 8;
+		char c;
+		if(i == 0)
+			c = 'L';
+		if(i == 1)
+			c = 'N';
+		if(i == 2)
+			c = 'K';
+		if(i == 3)
+			c = 'Y';
+		game->map.grid[game->ghost[i].pos.tile_pos.y][game->ghost[i].pos.tile_pos.x] = c;
 		i++;
 	}
 }
@@ -84,6 +91,7 @@ void render_game(t_game *game)
 {
 	clear_terminal();
 	print_2d(game->map.grid);
+	(void)game;
 	return;
 }
 
