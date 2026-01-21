@@ -1,16 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_3d.c                                        :+:      :+:    :+:   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/20 14:18:38 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/21 11:19:13 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
+
+static void	calc_wall_distance(t_game *g)
+{
+	if (g->ray.hit_side == 0)
+		g->ray.perp_wall_dist = g->ray.side_dist_x - g->ray.delta_dist_x;
+	else
+		g->ray.perp_wall_dist = g->ray.side_dist_y - g->ray.delta_dist_y;
+
+	// evitar div/0 e valores negativos :3
+	if (g->ray.perp_wall_dist < 1e-6)
+		g->ray.perp_wall_dist = 1e-6;
+}
 
 static void	perform_dda(t_game *g)
 {
@@ -89,11 +101,11 @@ void	process_raycasting(t_game *g)
 		init_ray(g, screen_x);
 		calculate_dda_step(g);
 		perform_dda(g);
+		calc_wall_distance(g);
 		hit_found = register_hit(g, screen_x, hit_found); // regista o tile atingido no centro do ecrã, só no raio do centro
-		// calc_wall_distance(g);
+		g->ray.z_buffer[screen_x] = g->ray.perp_wall_dist;
 		// calc_draw_limits(g);
 		// draw_vertical_line(g, screen_x);
-		// g->ray.z_buffer[screen_x] = g->ray.perp_wall_dist;
 		screen_x++;
 	}
 }

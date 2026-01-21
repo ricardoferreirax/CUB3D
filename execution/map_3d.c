@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:47:54 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/20 16:49:08 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/20 17:42:52 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,18 @@ static int	line_len_no_nl(const char *s)
 	return (i);
 }
 
+static int	in_bounds(t_game *g, int y, int x)
+{
+	return (y >= 0 && y < g->map.height && x >= 0 && x < g->map.width);
+}
+
 char	map_tile(t_game *g, int y, int x)
 {
-	if (!g || !g->map.grid)
-		return (OPEN_SPACE);
-	if (y < 0 || y >= g->map.height || !g->map.grid[y])
-		return (OPEN_SPACE);
-	if (x < 0 || x >= line_len_no_nl(g->map.grid[y]))
-		return (OPEN_SPACE);
+	if (!in_bounds(g, y, x))
+		return (WALL); // trata fora do mapa como parede
+	if (!g->map.grid[y] || x >= (int)ft_strlen(g->map.grid[y])
+		|| g->map.grid[y][x] == '\n' || g->map.grid[y][x] == '\0')
+		return (WALL);
 	return (g->map.grid[y][x]);
 }
 

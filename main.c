@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/20 17:29:35 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/21 11:20:49 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	gameloop(t_game *game)
 {
 	long now;
 	long delta;
-	int updates = 0;
+	// int updates = 0;
 	now = get_time_us(); 
 
 	if(game->timer.last_time_up == 0)
@@ -106,12 +106,12 @@ int	gameloop(t_game *game)
 		delta = 250000;
 
 	game->timer.accumulator += delta;
-	while(game->timer.accumulator >= UPDATE_F && updates < MAX_UPDATES)
-	{
-		// update_game(game);
-		game->timer.accumulator -= UPDATE_F;
-		updates++;
-	}
+	// while(game->timer.accumulator >= UPDATE_F && updates < MAX_UPDATES)
+	// {
+	// 	update_game(game);
+	// 	game->timer.accumulator -= UPDATE_F;
+	// 	updates++;
+	// }
 	render_game(game);
 	return 0;
 	
@@ -119,30 +119,30 @@ int	gameloop(t_game *game)
 	return (0);
 }
 
-int	keyloop(int key, t_game *game)
-{
-	if (key == 0 && game->debug_mode)
-		ft_printf("test");
-	if (key == 'q' || key == 65307)
-		ft_printf("test");
-	else if (key == 0 || key == 0)
-	{
-		ft_printf("test");
-	}
-	else if (key == 0 || key == 0)
-	{ 
-		ft_printf("test");
-	}
-	else if (key == 0 || key == 0)
-	{ 
-		ft_printf("test");
-	}
-	else if (key == 0 || key == 0)
-	{ 
-		ft_printf("test");
-	}
-	return (0);
-}
+// int	keyloop(int key, t_game *game)
+// {
+// 	if (key == 0 && game->debug_mode)
+// 		ft_printf("test");
+// 	if (key == 'q' || key == 65307)
+// 		ft_printf("test");
+// 	else if (key == 0 || key == 0)
+// 	{
+// 		ft_printf("test");
+// 	}
+// 	else if (key == 0 || key == 0)
+// 	{ 
+// 		ft_printf("test");
+// 	}
+// 	else if (key == 0 || key == 0)
+// 	{ 
+// 		ft_printf("test");
+// 	}
+// 	else if (key == 0 || key == 0)
+// 	{ 
+// 		ft_printf("test");
+// 	}
+// 	return (0);
+// }
 
 char **map_parser(char **argv)
 {
