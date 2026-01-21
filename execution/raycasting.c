@@ -6,11 +6,25 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/21 11:19:13 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/21 11:38:49 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
+
+static void	calc_draw_limits(t_game *g)
+{
+	int	line_h;
+
+	line_h = (int)(g->render.height / g->ray.perp_wall_dist);
+	g->ray.draw_start = -line_h / 2 + g->render.height / 2;
+	g->ray.draw_end = line_h / 2 + g->render.height / 2;
+
+	if (g->ray.draw_start < 0)
+		g->ray.draw_start = 0;
+	if (g->ray.draw_end >= g->render.height)
+		g->ray.draw_end = g->render.height - 1;
+}
 
 static void	calc_wall_distance(t_game *g)
 {
@@ -96,16 +110,17 @@ void	process_raycasting(t_game *g)
 
 	screen_x = 0;
 	hit_found = 0;
+	//clear_frame(g, 0x00111111, 0x00333333); // limpa o frame com as cores do ceiling e do floor
 	while (screen_x < g->render.width)
 	{
 		init_ray(g, screen_x);
 		calculate_dda_step(g);
 		perform_dda(g);
 		calc_wall_distance(g);
-		hit_found = register_hit(g, screen_x, hit_found); // regista o tile atingido no centro do ecrã, só no raio do centro
+		calc_draw_limits(g);
+		//draw_vertical_line(g, screen_x); // regista o tile atingido no centro do ecrã, só no raio do centro
+		hit_found = register_hit(g, screen_x, hit_found);
 		g->ray.z_buffer[screen_x] = g->ray.perp_wall_dist;
-		// calc_draw_limits(g);
-		// draw_vertical_line(g, screen_x);
 		screen_x++;
 	}
 }
