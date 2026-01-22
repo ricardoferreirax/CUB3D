@@ -25,7 +25,7 @@
 #include <sys/time.h>
 
 
-#define UPDATE_F 166660
+#define UPDATE_F 16666
 #define MAX_UPDATES 5
 #define SPEED 75,75757625
 #define PLAYER 'J'
@@ -56,6 +56,11 @@
 # define KEY_LEFT  65361
 # define KEY_RIGHT 65363
 # define KEY_H     104
+//Cardinal Directions
+#define DIR_UP 0;
+#define DIR_LEFT 1;
+#define DIR_DOWN 2;
+#define DIR_RIGHT 3;
 
 typedef struct s_point
 {
@@ -90,18 +95,6 @@ typedef struct s_window
 	t_image			frame_buffer;
 }					t_window;
 
-typedef struct s_player
-{
-	// vou precisar para a execução 3D
-	double	pos_x;
-	double	pos_y;
-	
-	t_pos pos; // para o 2d (tile/pixel)
-	int lives;
-	int speed_multiplier;
-}	t_player;
-
-
 typedef struct s_anim
 {
 	//each char has only 2 animations for each cardinal direction
@@ -111,10 +104,25 @@ typedef struct s_anim
 	t_image *right[2];
 }	t_anim;
 
+typedef struct s_player
+{
+	// vou precisar para a execução 3D
+	double	pos_x;
+	double	pos_y;
+	
+	t_pos pos; // para o 2d (tile/pixel)
+	int lives;
+	int speed_multiplier;
+	// 4 cardinal directions, 2 frames per animation
+	t_image *frames[4][2];
+}	t_player;
+
 typedef struct s_pacdot
 {
 	t_pos pos;
 	bool eaten;
+	t_image sprite;
+	bool is_energizer;
 }	t_pacdot;
 
 typedef enum e_ghost
@@ -167,7 +175,8 @@ typedef struct s_ghost
 	int global_dot_counter_call;
 	int speed_multiplier;
 	int is_steping_on_pacdot;
-	t_anim anim;
+	//$ cardinal directions, 2 frames per animation
+	t_image *frames[4][2];
 	int invalid_dir;
 	char **mental_map;
 	t_elroy cruiser;

@@ -69,6 +69,7 @@ void update_game(t_game *game)
 	while(i < 4)
 	{
 		t_point next_move = chose_next_move(&game->ghost[i], game->ghost->mental_map);
+		game->map.grid[game->ghost[i].pos.tile_pos.y][game->ghost[i].pos.tile_pos.x] = '0';
 		game->ghost[i].pos.pixel_pos.x += next_move.x;
 		game->ghost[i].pos.pixel_pos.y += next_move.y;
 		game->ghost[i].pos.tile_pos.x = game->ghost[i].pos.pixel_pos.x / 8;
@@ -171,14 +172,14 @@ char **map_parser(char **argv)
 
 void print_2d(char **map)
 {
-	int i = 0;
-	while(map && map[i])
-	{
-		ft_printf("%s", map[i]);
-		i++;
-	}
-}
+    char buffer[4096];
+    int offset = 0;
 
+    for (int i = 0; map[i]; i++)
+        offset += sprintf(buffer + offset, "%s", map[i]);
+
+    write(1, buffer, offset);
+}
 
 int main(int argc, char **argv)
 {
