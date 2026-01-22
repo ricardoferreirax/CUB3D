@@ -187,7 +187,10 @@ int main(int argc, char **argv)
 	if((argc > 3 || argc == 1) || (argc == 3 && (ft_strcmp(argv[2], "debug_mode=y") != 0)))
 		return(ft_printf("Wrong args\n"), -1);
 	game = malloc(sizeof(t_game));
+	if(!game)
+		return(ft_dprintf(2, "No Memory, Download more RAM\n"), -1);
 	game->map.grid = map_parser(argv);
+	game->debug_mode = false;
 	init_game(game);
 	game->mlx_ptr = mlx_init();
 	init_window(game);

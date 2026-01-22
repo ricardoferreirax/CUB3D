@@ -102,6 +102,8 @@ typedef struct s_anim
 	t_image *down[2];
 	t_image *left[2];
 	t_image *right[2];
+	//Death animation for player only
+	t_image *death[12];
 }	t_anim;
 
 typedef struct s_player

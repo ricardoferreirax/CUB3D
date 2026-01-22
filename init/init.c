@@ -14,10 +14,15 @@
 
 void init_null(t_game *game)
 {
-	// game->win = NULL;
-	game->ghost = NULL;
-	game->dot = NULL;
-	// game->player = NULL;
+	game->win.win_ptr = NULL;
+	game->win.frame_buffer.img_ptr = NULL;
+	game->win.frame_buffer.img_addr = NULL;
+	int i = -1;
+	while(++i < 4)
+	{
+		game->player.frames[i][0] = NULL;
+		game->player.frames[i][1] = NULL;
+	}
 }
 
 
@@ -38,13 +43,9 @@ void init_ghost(t_game *game, t_ghost *ghost)
 
 void init_game(t_game *game)
 {
-	// init_null(game);
+	init_null(game);
 	// init_window(game);
 	game->ghost = malloc(sizeof(t_ghost) * 4);
-	game->ghost[0].name = BLINKY;
-	game->ghost[1].name = PINKY;
-	game->ghost[2].name = INKY;
-	game->ghost[3].name = CLYDE;
 	int i = -1;
 	while (++i < 4)
 		init_ghost(game, &game->ghost[i]);
