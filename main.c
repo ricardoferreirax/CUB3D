@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/21 21:21:55 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/21 21:59:09 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,6 @@
 void	clear_terminal(void)
 {
 	write(1, "\033[H", 3);
-}
-
-void	init_window(t_game *s)
-{
-	s->win.ntilesx = 28;
-	s->win.ntilesy = 25; 
-	s->win.width = 800;
-	s->win.height = 600;
-	s->win.win_ptr = mlx_new_window(s->mlx_ptr, s->win.width, s->win.height,
-			"Pac-Man");
-	s->win.frame_buffer.img_ptr = mlx_new_image(s->mlx_ptr, s->win.width,
-			s->win.height);
-	s->win.frame_buffer.img_addr = \
-mlx_get_data_addr(s->win.frame_buffer.img_ptr, &s->win.frame_buffer.bpp, &s->win.frame_buffer.l_len, &s->win.frame_buffer.endian); s->win.frame_buffer.width = s->win.width; s->win.frame_buffer.height = s->win.height; } int	close_game(t_game *param) {
-	(void)param;
-	ft_printf("CLOSING GAME\n");
-	exit(EXIT_SUCCESS);
 }
 
 void new_target(t_game *game, t_ghost *ghost, e_state state)
@@ -84,6 +67,7 @@ void render_game(t_game *game)
 {
 	if (game->key.esc)
 		exit_game(EXIT_QUIT, game);
+	apply_input(game);
 	// clear_terminal();
 	process_raycasting(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr, game->win.frame_buffer.img_ptr, 0, 0);
@@ -181,19 +165,20 @@ int main(int argc, char **argv)
 	if((argc > 3 || argc == 1) || (argc == 3 && (ft_strcmp(argv[2], "debug_mode=y") != 0)))
 		return(ft_printf("Wrong args\n"), -1);
 	game = malloc(sizeof(t_game));
+	if (!game)
+		exit_game(EXIT_MALLOC, NULL);
+	init_defaults(game);
 	game->map.grid = map_parser(argv);
-	init_game(game);
-	game->mlx_ptr = mlx_init();
-	init_window(game);
+	if (!game->map.grid)
+		exit_game(EXIT_MAP, game);
+	init_mlx(game);
+	
 	start_execution(game);
+	
 	mlx_hook(game->win.win_ptr, 2, 1L << 0, handle_key_press, game);
 	mlx_hook(game->win.win_ptr, 3, 1L << 1, handle_key_release, game);
 	mlx_hook(game->win.win_ptr, 17, 0, handle_close, game);
 	mlx_loop_hook(game->mlx_ptr, gameloop, game);
 	mlx_loop(game->mlx_ptr);
-	
-	// mlx_key_hook(game->win.win_ptr, keyloop, game);
-	// mlx_loop_hook(game->mlx_ptr, gameloop, game);
-	// mlx_hook(game->win.win_ptr, 17, 0, close_game, game);
 	return (0);
 }

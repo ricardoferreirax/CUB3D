@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:48:50 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/21 11:46:55 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/21 22:08:00 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,28 +48,30 @@ int	register_hit(t_game *g, int screen_x, int hit_found)
 void	put_pixel(t_image *img, int x, int y, int color)
 {
 	char	*dst;
+	int		bytes_per_pixel;
 
 	if (x < 0 || y < 0 || x >= img->width || y >= img->height)
 		return ;
-	dst = img->img_addr + (y * img->l_len + x * (img->bpp / 8));
+	bytes_per_pixel = img->bpp / 8;
+	dst = img->img_addr + (y * img->l_len + x * bytes_per_pixel);
 	*(unsigned int *)dst = (unsigned int)color;
 }
 
-void	clear_frame(t_game *g, int ceil_color, int floor_color)
+void	clear_image(t_image *img, int ceiling, int floor)
 {
-	int	x;
-	int	y;
+	int x;
+	int y;
 
 	y = 0;
-	while (y < g->render.height)
+	while (y < img->height)
 	{
 		x = 0;
-		while (x < g->render.width)
+		while (x < img->width)
 		{
-			if (y < g->render.height / 2)
-				put_pixel(&g->win.frame_buffer, x, y, ceil_color);
+			if (y < img->height / 2)
+				put_pixel(img, x, y, ceiling);
 			else
-				put_pixel(&g->win.frame_buffer, x, y, floor_color);
+				put_pixel(img, x, y, floor);
 			x++;
 		}
 		y++;

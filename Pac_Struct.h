@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/21 11:31:00 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/21 22:08:21 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,7 +277,9 @@ void	init_keys(t_game *g);
 void	init_mlx(t_game *game);
 
 void	put_pixel(t_image *img, int x, int y, int color);
-void	clear_frame(t_game *g, int ceil_color, int floor_color);
+void	clear_image(t_image *img, int ceiling, int floor);
+
+void	apply_input(t_game *g);
 
 // render 3d
 void	process_raycasting(t_game *g);
