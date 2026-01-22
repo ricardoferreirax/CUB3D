@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/21 22:08:21 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/22 14:41:11 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,28 +90,6 @@ typedef struct s_window
 	t_image			frame_buffer;
 }					t_window;
 
-typedef struct s_player
-{
-	// vou precisar para a execução 3D
-	double	pos_x; // posição do player no mapa (eixo X)
-	double	pos_y; // posição do player no mapa (eixo Y)
-	double	dir_x; // direção para onde o player está a olhar (eixo X)
-	double	dir_y; // direção para onde o player está a olhar (eixo Y)
-	double	plane_x; // plano (da camera de visao - fov) perpendicular à direção do player (eixo X)
-	double	plane_y; // plano (da camera de visao - fov) perpendicular à direção do player (eixo Y)
-
-	int		target_map_x;  	// coordenadas do tile que o player está a apontar no eixo x
-	int		target_map_y;  	// coordenadas do tile que o player está a apontar no eixo y
-	char	target_tile;    // id do tile que o player está a apontar
-	char	target_wall_dir; // 'N', 'S', 'E', 'W'
-	double	target_dist;   // distância perpendicular
-	
-	t_pos pos; // para o 2d (tile/pixel)
-	int lives;
-	int speed_multiplier;
-}	t_player;
-
-
 typedef struct s_anim
 {
 	//each char has only 2 animations for each cardinal direction
@@ -186,30 +164,6 @@ typedef struct s_ghost
 //At game start one of the penhouse ghost will activate it's counter, it will count up each dot pacman eats
 //if pacman eats all the dots it gets out, but if the ghost is forced out by timeout its dot counter is not reset and the next ghost dot counter starts counting.
 
-
-
-typedef struct s_raycasting
-{
-	double	*z_buffer; // array para armazenar a distância da parede
-	double	camera_x; // posição no ecra (-1 a 1) 
-	double	ray_dir_x; 
-	double	ray_dir_y;
-	int		map_x;
-	int		map_y;
-	int		step_x;  // +1 ou -1 para indicar a direção no eixo x
-	int		step_y; // +1 ou -1 para indicar a direção no eixo y
-	double	side_dist_x; // distancia do ray atual até a proxima linha vertical (até a proxima parede no eixo x)
-	double	side_dist_y; // distancia do ray atual até a proxima linha horizontal (até a proxima parede no eixo y)
-	double	delta_dist_x; // distancia que o ray tem que percorrer para ir de uma linha vertical para a proxima (no eixo x) - distancia entre linhas verticais
-	double	delta_dist_y; // distancia que o ray tem que percorrer para ir de uma linha horizontal para a proxima (no eixo y) - distancia entre linhas horizontais
-	int		hit_side; // 0 = parede vertical, 1 = parede horizontal
-	double	perp_wall_dist; // distancia perpendicular a parede
-
-	// drawing limits
-	int		draw_start;
-	int		draw_end;
-}	t_raycasting;
-
 // execution - map
 typedef struct s_map
 {
@@ -242,6 +196,69 @@ typedef struct s_key
 	int	esc;
 }	t_key;
 
+typedef struct s_raycasting
+{
+	double	*z_buffer; // array para armazenar a distância da parede
+	double	camera_x; // posição no ecra (-1 a 1) 
+	double	ray_dir_x; 
+	double	ray_dir_y;
+	int		map_x;
+	int		map_y;
+	int		step_x;  // +1 ou -1 para indicar a direção no eixo x
+	int		step_y; // +1 ou -1 para indicar a direção no eixo y
+	double	side_dist_x; // distancia do ray atual até a proxima linha vertical (até a proxima parede no eixo x)
+	double	side_dist_y; // distancia do ray atual até a proxima linha horizontal (até a proxima parede no eixo y)
+	double	delta_dist_x; // distancia que o ray tem que percorrer para ir de uma linha vertical para a proxima (no eixo x) - distancia entre linhas verticais
+	double	delta_dist_y; // distancia que o ray tem que percorrer para ir de uma linha horizontal para a proxima (no eixo y) - distancia entre linhas horizontais
+	int		hit_side; // 0 = parede vertical, 1 = parede horizontal
+	double	perp_wall_dist; // distancia perpendicular a parede
+
+	// drawing limits
+	int		draw_start;
+	int		draw_end;
+}	t_raycasting;
+
+typedef struct s_backcast
+{
+	int		is_floor;
+
+	double	ray0_x;
+	double	ray0_y;
+	double	ray1_x;
+	double	ray1_y;
+
+	double	cam_z;
+	double	p;
+	double	row_dist;
+
+	double	step_x;
+	double	step_y;
+
+	double	world_x;
+	double	world_y;
+}	t_backcast;
+
+typedef struct s_player
+{
+	// vou precisar para a execução 3D
+	double	pos_x; // posição do player no mapa (eixo X)
+	double	pos_y; // posição do player no mapa (eixo Y)
+	double	dir_x; // direção para onde o player está a olhar (eixo X)
+	double	dir_y; // direção para onde o player está a olhar (eixo Y)
+	double	plane_x; // plano (da camera de visao - fov) perpendicular à direção do player (eixo X)
+	double	plane_y; // plano (da camera de visao - fov) perpendicular à direção do player (eixo Y)
+
+	int		target_map_x;  	// coordenadas do tile que o player está a apontar no eixo x
+	int		target_map_y;  	// coordenadas do tile que o player está a apontar no eixo y
+	char	target_tile;    // id do tile que o player está a apontar
+	char	target_wall_dir; // 'N', 'S', 'E', 'W'
+	double	target_dist;   // distância perpendicular
+	
+	t_pos pos; // para o 2d (tile/pixel)
+	int lives;
+	int speed_multiplier;
+}	t_player;
+
 typedef struct s_game
 {
 	// o que eu preciso para a execução
@@ -253,7 +270,6 @@ typedef struct s_game
 	t_player player;
 	t_key	key;
 	
-
 	bool debug_mode;
 	t_ghost *ghost;
 	t_pacdot *dot;
@@ -280,6 +296,8 @@ void	put_pixel(t_image *img, int x, int y, int color);
 void	clear_image(t_image *img, int ceiling, int floor);
 
 void	apply_input(t_game *g);
+
+void	render_background(t_game *g);
 
 // render 3d
 void	process_raycasting(t_game *g);
