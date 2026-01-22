@@ -6,11 +6,28 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 21:52:01 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/22 15:05:00 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/22 15:06:12 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../Pac_Struct.h"
+
+static int	is_wall_tile(t_game *g, int map_y, int map_x)
+{
+	if (map_y < 0 || map_x < 0 || map_y >= g->map.height || map_x >= g->map.width)
+		return (1);
+	if (!g->map.grid || !g->map.grid[map_y])
+		return (1);
+	return (g->map.grid[map_y][map_x] == '1'); // WALL
+}
+
+static void	try_move(t_game *g, double next_x, double next_y)
+{
+	if (!is_wall_tile(g, (int)g->player.pos_y, (int)next_x))
+		g->player.pos_x = next_x;
+	if (!is_wall_tile(g, (int)next_y, (int)g->player.pos_x))
+		g->player.pos_y = next_y;
+}
 
 static void	rotate_view(t_game *g, double rot)
 {
