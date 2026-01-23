@@ -12,13 +12,18 @@
 
 #include "initializer.h"
 
+void init_anim(t_ghost *blinky)
+{
+	blinky->frames->up[0].x = 0;
+}
 
 void init_blinky(t_game *game, t_ghost *blinky)
-{
+{ 
 	blinky->target_tile = find_c(game->map.grid, 'B');
 	blinky->pos.tile_pos = find_c(blinky->mental_map, 'S');
 	blinky->pos.pixel_pos.x = blinky->pos.tile_pos.x * 8;
 	blinky->pos.pixel_pos.y = blinky->pos.tile_pos.y * 8;
+	init_anim(blinky);
 	blinky->invalid_dir = 3;
 }
 

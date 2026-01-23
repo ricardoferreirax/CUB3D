@@ -95,16 +95,36 @@ typedef struct s_window
 	t_image			frame_buffer;
 }					t_window;
 
-typedef struct s_anim
+// typedef struct s_anim
+// {
+// 	//each char has only 2 animations for each cardinal direction
+// 	t_image *up[2];
+// 	t_image *down[2];
+// 	t_image *left[2];
+// 	t_image *right[2];
+// 	//Death animation for player only
+// 	t_image *death[12];
+// }	t_anim;
+
+typedef struct s_sprite_red
 {
-	//each char has only 2 animations for each cardinal direction
-	t_image *up[2];
-	t_image *down[2];
-	t_image *left[2];
-	t_image *right[2];
-	//Death animation for player only
-	t_image *death[12];
-}	t_anim;
+	t_point coord;
+	int width;
+	int height;
+} t_sprite_ref;
+
+typedef struct s_anim_cord
+{
+	// Coordinates to find the sprites in the sprite sheet.
+	// Each entity has 2 animations per direction, they alternate
+	t_sprite_ref up[2];
+	t_sprite_ref left[2];
+	t_sprite_ref down[2];
+	t_sprite_ref rigth[2];
+	//Death animation ofr th eplayer has 12 frames
+	t_sprite_ref death[12];
+
+} t_anim;
 
 typedef struct s_player
 {
@@ -116,14 +136,14 @@ typedef struct s_player
 	int lives;
 	int speed_multiplier;
 	// 4 cardinal directions, 2 frames per animation
-	t_image *frames[4][2];
+	t_anim *frames;
 }	t_player;
 
 typedef struct s_pacdot
 {
 	t_pos pos;
 	bool eaten;
-	t_image sprite;
+	t_point sprite_cord;
 	bool is_energizer;
 }	t_pacdot;
 
@@ -177,8 +197,7 @@ typedef struct s_ghost
 	int global_dot_counter_call;
 	int speed_multiplier;
 	int is_steping_on_pacdot;
-	//$ cardinal directions, 2 frames per animation
-	t_image *frames[4][2];
+	t_anim *frames;
 	int invalid_dir;
 	char **mental_map;
 	t_elroy cruiser;
@@ -262,6 +281,7 @@ typedef struct s_game
 	int global_dot_counter;
 	int score;
 	int level;
+	t_image sprite_sheet;
 }	t_game;
 
 #endif // !DEBUG

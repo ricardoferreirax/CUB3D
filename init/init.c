@@ -20,11 +20,26 @@ void init_null(t_game *game)
 	int i = -1;
 	while(++i < 4)
 	{
-		game->player.frames[i][0] = NULL;
-		game->player.frames[i][1] = NULL;
+		int j = -1;
+		while(j++ < 4)
+		{
+		}
 	}
 }
 
+void	init_window(t_game *game)
+{
+	game->win.ntilesx = xtile(game->map.grid);
+	game->win.ntilesy = ytile(game->map.grid);
+	game->win.width = 8 * game->win.ntilesx;
+	game->win.height = 8 * game->win.ntilesy;
+	game->win.win_ptr = mlx_new_window(game->mlx_ptr, game->win.width, game->win.height, "Pac-Man");
+	game->win.frame_buffer.img_ptr = mlx_new_image(game->mlx_ptr, game->win.width, game->win.height);
+	game->win.frame_buffer.img_addr = mlx_get_data_addr(game->win.frame_buffer.img_ptr, &game->win.frame_buffer.bpp, &game->win.frame_buffer.l_len, &game->win.frame_buffer.endian);
+	game->win.frame_buffer.width = game->win.width;
+	game->win.frame_buffer.height = game->win.height;
+
+}
 
 void init_ghost(t_game *game, t_ghost *ghost)
 {
@@ -41,12 +56,17 @@ void init_ghost(t_game *game, t_ghost *ghost)
 		init_clyde(game, ghost);
 }
 
-void init_game(t_game *game)
+void init_ghosts(t_game *game)
 {
-	init_null(game);
-	// init_window(game);
 	game->ghost = malloc(sizeof(t_ghost) * 4);
 	int i = -1;
 	while (++i < 4)
 		init_ghost(game, &game->ghost[i]);
+}
+
+void init_game(t_game *game)
+{
+	init_null(game);
+	init_window(game);
+	init_ghosts(game);
 }
