@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/01/22 14:34:58 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/01/24 19:44:52 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,10 +43,12 @@ SRC_FILES = main.c \
 	init/init_defaults.c \
 	execution/start_execution.c \
 	execution/movement.c \
+	execution/color.c \
 	execution/background_cast.c \
 	init/init_mlx.c execution/raycasting.c \
 	execution/raycasting_utils.c execution/map_3d.c \
 	execution/player.c \
+	math/math.c \
 	hooks/handle_close.c \
 	hooks/handle_keys.c \
 	utils/free.c 

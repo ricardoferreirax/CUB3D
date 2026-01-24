@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/22 14:41:11 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/24 19:41:37 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,6 +307,10 @@ void	setup_map_grid(t_game *g);
 char	map_tile(t_game *g, int y, int x);
 
 void	init_player_from_map(t_game *g);
+
+int	checker_color(int tx, int ty, int is_floor);
+
+int	ft_is_even(int n);
 
 // free and exit
 void	exit_game(int errcode, t_game *g);

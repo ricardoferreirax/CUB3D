@@ -6,28 +6,27 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 12:25:22 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/22 15:15:10 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/24 19:44:10 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../Pac_Struct.h"
 
-static void	calc_background_horizon(t_game *g, t_backcast *b, int y)
+static void	background_calc_horizon(t_game *g, t_backcast *b, int y)
 {
 	int		mid;
 	double	p;
 
 	mid = g->win.height / 2;
+	b->cam_z = 0.5 * (double)g->win.height;
 	if (y > mid)
 	{
 		b->is_floor = 1;
-		b->cam_z = 0.5 * (double)g->win.height;
 		p = (double)(y - mid);
 	}
 	else
 	{
 		b->is_floor = 0;
-		b->cam_z = 0.5 * (double)g->win.height;
 		p = (double)(mid - y);
 	}
 	if (p < 1.0)
@@ -35,9 +34,29 @@ static void	calc_background_horizon(t_game *g, t_backcast *b, int y)
 	b->p = p;
 }
 
-void	background_init_row(t_game *g, t_backcast *b, int y)
+static void	background_draw_row(t_game *g, t_backcast *b, int y)
 {
-	calc_background_horizon(g, b, y);
+	int	x;
+	int	tx;
+	int	ty;
+	int	color;
+
+	x = 0;
+	while (x < g->win.width)
+	{
+		tx = (int)b->world_x;
+		ty = (int)b->world_y;
+		color = checker_color(tx, ty, b->is_floor);
+		put_pixel(&g->win.frame_buffer, x, y, color);
+		b->world_x += b->step_x;
+		b->world_y += b->step_y;
+		x++;
+	}
+}
+
+static void	background_init_row(t_game *g, t_backcast *b, int y)
+{
+	background_calc_horizon(g, b, y);
 	b->ray0_x = g->player.dir_x - g->player.plane_x;
 	b->ray0_y = g->player.dir_y - g->player.plane_y;
 	b->ray1_x = g->player.dir_x + g->player.plane_x;
@@ -53,39 +72,12 @@ void	render_background(t_game *g)
 {
 	t_backcast	b;
 	int			y;
-	int			x;
-	int			tx;
-	int			ty;
-	int			color;
 
 	y = 0;
 	while (y < g->win.height)
 	{
 		background_init_row(g, &b, y);
-		x = 0;
-		while (x < g->win.width)
-		{
-			tx = (int)b.world_x;
-			ty = (int)b.world_y;
-			if (b.is_floor)
-			{
-				if (((tx + ty) & 1) == 0)
-					color = 0x00303030;
-				else
-					color = 0x00404040;
-			}
-			else
-			{
-				if (((tx + ty) & 1) == 0)
-					color = 0x00101010;
-				else
-					color = 0x00181818;
-			}
-			put_pixel(&g->win.frame_buffer, x, y, color);
-			b.world_x += b.step_x;
-			b.world_y += b.step_y;
-			x++;
-		}
+		background_draw_row(g, &b, y);
 		y++;
 	}
 }
