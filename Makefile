@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/01/24 19:44:52 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/01/24 20:32:02 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,8 @@ SRC_FILES = main.c \
 	math/math.c \
 	hooks/handle_close.c \
 	hooks/handle_keys.c \
-	utils/free.c 
+	utils/free.c  \
+	utils/render_utils.c \
 
 OBJ_DIR   = objs
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))

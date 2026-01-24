@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/24 19:56:14 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/24 20:30:33 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,9 +121,11 @@ void	process_raycasting(t_game *g)
 	int	screen_x;
 	int	hit_found;
 
+	if (!g)
+		return ;
+	render_background(g);
 	screen_x = 0;
 	hit_found = 0;
-	render_background(g);
 	while (screen_x < g->win.width)
 	{
 		init_ray(g, screen_x);

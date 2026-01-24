@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 12:25:22 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/24 19:44:10 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/24 20:29:03 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	render_background(t_game *g)
 	t_backcast	b;
 	int			y;
 
+	if (!g)
+		return ;
 	y = 0;
 	while (y < g->win.height)
 	{

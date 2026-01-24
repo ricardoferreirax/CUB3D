@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:47:54 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/20 17:42:52 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/24 20:26:55 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 static int	line_len_no_nl(const char *s)
 {
-	int	i = 0;
+	int	i;
+
+	i = 0;
 	while (s && s[i] && s[i] != '\n')
 		i++;
 	return (i);
@@ -22,15 +24,24 @@ static int	line_len_no_nl(const char *s)
 
 static int	in_bounds(t_game *g, int y, int x)
 {
-	return (y >= 0 && y < g->map.height && x >= 0 && x < g->map.width);
+	if (!g)
+		return (0);
+	if (y < 0 || y >= g->map.height)
+		return (0);
+	if (x < 0 || x >= g->map.width)
+		return (0);
+	return (1);
 }
 
 char	map_tile(t_game *g, int y, int x)
 {
 	if (!in_bounds(g, y, x))
-		return (WALL); // trata fora do mapa como parede
-	if (!g->map.grid[y] || x >= (int)ft_strlen(g->map.grid[y])
-		|| g->map.grid[y][x] == '\n' || g->map.grid[y][x] == '\0')
+		return (WALL);
+	if (!g->map.grid || !g->map.grid[y])
+		return (WALL);
+	if (x >= (int)ft_strlen(g->map.grid[y]))
+		return (WALL);
+	if (g->map.grid[y][x] == '\n' || g->map.grid[y][x] == '\0')
 		return (WALL);
 	return (g->map.grid[y][x]);
 }
