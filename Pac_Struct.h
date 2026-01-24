@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/24 19:41:37 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/24 19:56:46 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,7 +286,7 @@ typedef struct s_game
 void	start_execution(t_game *game);
 void	init_defaults(t_game *g);
 
-int	register_hit(t_game *g, int screen_x, int hit_found);
+int	register_center_hit(t_game *g, int screen_x, int hit_found);
 
 void	init_keys(t_game *g);
 
