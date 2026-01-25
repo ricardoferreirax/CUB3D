@@ -6,72 +6,20 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/25 13:57:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/25 21:36:15 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Pac_Struct.h"
-
-void	clear_terminal(void)
-{
-	write(1, "\033[H", 3);
-}
-
-void new_target(t_game *game, t_ghost *ghost, e_state state)
-{
-	if(state == SCATTER)
-		ghost->target_tile = find_c(game->map.grid, 'S');
-	if(state == CHASE)
-		ghost->target_tile = find_c(game->map.grid, 'J');
-	if(state == SCATTER)
-	{
-		if(ghost->name == BLINKY)
-			ghost->target_tile = find_c(game->map.grid, 'B');
-		if(ghost->name == PINKY)
-			ghost->target_tile = find_c(game->map.grid, 'P');
-		if(ghost->name == INKY)
-			ghost->target_tile = find_c(game->map.grid, 'I');
-		if(ghost->name == CLYDE)
-			ghost->target_tile = find_c(game->map.grid, 'C');
-	}
-}
-
-void update_target(t_game *game)
-{
-	int i = 0;
-	while(i < 4)
-	{
-		new_target(game, &game->ghost[i], game->ghost[i].state);
-		i++;
-	}
-}
-
-void update_game(t_game *game)
-{
-	int i = 0;
-	while(i < 4)
-	{
-		t_point next_move = chose_next_move(&game->ghost[i], game->ghost->mental_map);
-		if(game->ghost[i].is_steping_on_pacdot)
-			game->map.grid[game->ghost[i].pos.tile_pos.y][game->ghost[i].pos.tile_pos.x] = 'D';
-		else
-			game->map.grid[game->ghost[i].pos.tile_pos.y][game->ghost[i].pos.tile_pos.x] = '0';
-		game->ghost[i].pos.tile_pos.x += next_move.x;
-		game->ghost[i].pos.tile_pos.y += next_move.y;
-		game->map.grid[game->ghost[i].pos.tile_pos.y][game->ghost[i].pos.tile_pos.x] = 'L';
-		i++;
-	}
-}
 
 void render_game(t_game *game)
 {
 	if (game->key.esc)
 		exit_game(EXIT_QUIT, game);
 	apply_input(game);
-	// clear_terminal();
 	process_raycasting(game);
-	print_2d(game->map.grid);
-	return;
+	// print_2d(game->map.grid);
+	return ;
 }
 
 int	gameloop(t_game *game)
@@ -79,8 +27,8 @@ int	gameloop(t_game *game)
 	long now;
 	long delta;
 	// int updates = 0;
+	
 	now = get_time_us(); 
-
 	if(game->timer.last_time_up == 0)
 	{
 		game->timer.last_time_up = now;
@@ -89,7 +37,6 @@ int	gameloop(t_game *game)
 	delta = now - game->timer.last_time_up;
 	if(delta > 250000)
 		delta = 250000;
-
 	game->timer.accumulator += delta;
 	// while(game->timer.accumulator >= UPDATE_F && updates < MAX_UPDATES)
 	// {
@@ -98,11 +45,103 @@ int	gameloop(t_game *game)
 	// 	updates++;
 	// }
 	render_game(game);
-	return 0;
-	
 	// update_target(game);
 	return (0);
 }
+
+char **map_parser(char **argv)
+{
+	int fd = open(argv[1], O_RDONLY);
+	if(fd < 0)
+		return NULL;
+	char **line_test = ft_calloc(sizeof(char *), 100);
+	char *line;
+	int i = 0;
+	while((line = get_next_line(fd)))
+	{
+		line_test[i] = ft_strdup(line);
+		free(line);
+		i++;
+	}
+	return line_test;
+}
+
+int main(int argc, char **argv)
+{
+	t_game *game;
+	if((argc > 3 || argc == 1) || (argc == 3 && (ft_strcmp(argv[2], "debug_mode=y") != 0)))
+		return(ft_printf("Wrong args\n"), -1);
+	game = malloc(sizeof(t_game));
+	if (!game)
+		exit_game(EXIT_MALLOC, NULL);
+	init_defaults(game);
+	game->map.grid = map_parser(argv);
+	if (!game->map.grid)
+		exit_game(EXIT_MAP, game);
+	init_mlx(game);
+	
+	start_execution(game);
+	
+	mlx_hook(game->win.win_ptr, 2, 1L << 0, handle_key_press, game);
+	mlx_hook(game->win.win_ptr, 3, 1L << 1, handle_key_release, game);
+	mlx_hook(game->win.win_ptr, 17, 0, handle_close, game);
+	mlx_loop_hook(game->mlx_ptr, gameloop, game);
+	mlx_loop(game->mlx_ptr);
+	return (0);
+}
+
+
+
+// void	clear_terminal(void)
+// {
+// 	write(1, "\033[H", 3);
+// }
+
+// void new_target(t_game *game, t_ghost *ghost, e_state state)
+// {
+// 	if(state == SCATTER)
+// 		ghost->target_tile = find_c(game->map.grid, 'S');
+// 	if(state == CHASE)
+// 		ghost->target_tile = find_c(game->map.grid, 'J');
+// 	if(state == SCATTER)
+// 	{
+// 		if(ghost->name == BLINKY)
+// 			ghost->target_tile = find_c(game->map.grid, 'B');
+// 		if(ghost->name == PINKY)
+// 			ghost->target_tile = find_c(game->map.grid, 'P');
+// 		if(ghost->name == INKY)
+// 			ghost->target_tile = find_c(game->map.grid, 'I');
+// 		if(ghost->name == CLYDE)
+// 			ghost->target_tile = find_c(game->map.grid, 'C');
+// 	}
+// }
+
+// void update_target(t_game *game)
+// {
+// 	int i = 0;
+// 	while(i < 4)
+// 	{
+// 		new_target(game, &game->ghost[i], game->ghost[i].state);
+// 		i++;
+// 	}
+// }
+
+// void update_game(t_game *game)
+// {
+// 	int i = 0;
+// 	while(i < 4)
+// 	{
+// 		t_point next_move = chose_next_move(&game->ghost[i], game->ghost->mental_map);
+// 		if(game->ghost[i].is_steping_on_pacdot)
+// 			game->map.grid[game->ghost[i].pos.tile_pos.y][game->ghost[i].pos.tile_pos.x] = 'D';
+// 		else
+// 			game->map.grid[game->ghost[i].pos.tile_pos.y][game->ghost[i].pos.tile_pos.x] = '0';
+// 		game->ghost[i].pos.tile_pos.x += next_move.x;
+// 		game->ghost[i].pos.tile_pos.y += next_move.y;
+// 		game->map.grid[game->ghost[i].pos.tile_pos.y][game->ghost[i].pos.tile_pos.x] = 'L';
+// 		i++;
+// 	}
+// }
 
 // int	keyloop(int key, t_game *game)
 // {
@@ -128,56 +167,3 @@ int	gameloop(t_game *game)
 // 	}
 // 	return (0);
 // }
-
-char **map_parser(char **argv)
-{
-	int fd = open(argv[1], O_RDONLY);
-	if(fd < 0)
-		return NULL;
-	char **line_test = ft_calloc(sizeof(char *), 100);
-	char *line;
-	int i = 0;
-	while((line = get_next_line(fd)))
-	{
-		line_test[i] = ft_strdup(line);
-		free(line);
-		i++;
-	}
-	return line_test;
-}
-
-
-void print_2d(char **map)
-{
-	int i = 0;
-	while(map && map[i])
-	{
-		ft_printf("%s", map[i]);
-		i++;
-	}
-}
-
-
-int main(int argc, char **argv)
-{
-	t_game *game;
-	if((argc > 3 || argc == 1) || (argc == 3 && (ft_strcmp(argv[2], "debug_mode=y") != 0)))
-		return(ft_printf("Wrong args\n"), -1);
-	game = malloc(sizeof(t_game));
-	if (!game)
-		exit_game(EXIT_MALLOC, NULL);
-	init_defaults(game);
-	game->map.grid = map_parser(argv);
-	if (!game->map.grid)
-		exit_game(EXIT_MAP, game);
-	init_mlx(game);
-	
-	start_execution(game);
-	
-	mlx_hook(game->win.win_ptr, 2, 1L << 0, handle_key_press, game);
-	mlx_hook(game->win.win_ptr, 3, 1L << 1, handle_key_release, game);
-	mlx_hook(game->win.win_ptr, 17, 0, handle_close, game);
-	mlx_loop_hook(game->mlx_ptr, gameloop, game);
-	mlx_loop(game->mlx_ptr);
-	return (0);
-}

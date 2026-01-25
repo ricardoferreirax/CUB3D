@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/25 13:44:24 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/25 21:47:48 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,17 +259,6 @@ typedef struct s_player
 	int speed_multiplier;
 }	t_player;
 
-typedef struct s_column
-{
-	double	perp_dist;   // distância perpendicular (para height)
-	int		line_h;      // altura da coluna (pixels)
-	int		draw_start;  // início y
-	int		draw_end;    // fim y
-	int		hit_side;    // 0 = vertical, 1 = horizontal
-	char	wall_dir;    // 'N','S','E','W'
-	char	tile;        // tile atingido 
-}	t_column;
-
 typedef struct s_game
 {
 	// o que eu preciso para a execução
@@ -278,7 +267,6 @@ typedef struct s_game
 	t_map   map;
 	t_image	render;
 	t_raycasting ray;
-	t_column col;
 	t_player player;
 	t_key	key;
 	
@@ -305,7 +293,6 @@ void	init_keys(t_game *g);
 void	init_mlx(t_game *game);
 
 void	put_pixel(t_image *img, int x, int y, int color);
-void	clear_image(t_image *img, int ceiling, int floor);
 
 void	apply_input(t_game *g);
 
@@ -337,7 +324,6 @@ int	handle_key_release(int keycode, t_game *g);
 int xtile(char **map);
 int ytile(char **map);
 
-void print_2d(char **map);
 t_point chose_next_move(t_ghost *ghost, char **map);
 t_point find_c(char **map,  char c);
 //init.c and init_aux_funcs.c
