@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 22:32:24 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/25 13:57:09 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/25 21:53:40 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	start_execution(t_game *g)
 {
-	if (!g || !g->mlx_ptr || !g->win.win_ptr)
+	if (!g || !g->mlx_ptr || !g->win.win_ptr || !g->win.frame_buffer.img_ptr)
 		exit_game(EXIT_MLX, g);
 	setup_map_grid(g);
 	init_player_from_map(g);

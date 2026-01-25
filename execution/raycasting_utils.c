@@ -6,21 +6,29 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:48:50 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/25 14:00:01 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/25 22:00:19 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../Pac_Struct.h"
 
+static int	is_center_column(t_game *g, int x)
+{
+	int	c0;
+	int	c1;
+
+	c0 = (g->win.width - 1) / 2;
+	c1 = g->win.width / 2;
+	return (x == c0 || x == c1);
+}
+
 static int	is_center_hit(t_game *g, int already_found, int screen_x)
 {
-	int		center_x;
 	char	tile;
 
-	center_x = g->win.width / 2;
-	if (already_found)
+	if (!g || already_found)
 		return (0);
-	if (screen_x != center_x)
+	if (!is_center_column(g, screen_x))
 		return (0);
 	tile = map_tile(g, g->ray.map_y, g->ray.map_x);
 	if (tile == OPEN_SPACE)
@@ -46,9 +54,6 @@ int	register_center_hit(t_game *g, int screen_x, int hit_found)
 		g->player.target_wall_dir = 'N';
 	else
 		g->player.target_wall_dir = 'S';
-	if (g->ray.hit_side == 0)
-		g->player.target_dist = g->ray.side_dist_x - g->ray.delta_dist_x;
-	else
-		g->player.target_dist = g->ray.side_dist_y - g->ray.delta_dist_y;
+	g->player.target_dist = g->ray.perp_wall_dist;
 	return (1);
 }

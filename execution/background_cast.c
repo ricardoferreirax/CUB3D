@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 12:25:22 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/25 13:58:45 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/25 21:59:04 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,30 +86,32 @@ void	render_background(t_game *g)
 
 void	put_pixel(t_image *img, int x, int y, int color)
 {
-	int	*buf;
-	int	stride;
+	char	*dst;
 
 	if (!img || !img->img_addr)
 		return ;
 	if (x < 0 || y < 0 || x >= img->width || y >= img->height)
 		return ;
-	buf = (int *)img->img_addr;
-	stride = img->l_len / 4;
-	buf[y * stride + x] = color;
+	dst = img->img_addr + (y * img->l_len) + (x * (img->bpp / 8));
+	*(unsigned int *)dst = (unsigned int)color;
 }
 
 static void	fill_row_fast(t_image *img, int y, int color)
 {
-	int	x;
-	int	*buf;
-	int	stride;
+	int				x;
+	unsigned int	*row;
+	int				stride;
 
-	buf = (int *)img->img_addr;
+	if (!img || !img->img_addr)
+		return ;
+	if (y < 0 || y >= img->height)
+		return ;
 	stride = img->l_len / 4;
+	row = (unsigned int *)img->img_addr + (y * stride);
 	x = 0;
 	while (x < img->width)
 	{
-		buf[y * stride + x] = color;
+		row[x] = (unsigned int)color;
 		x++;
 	}
 }
@@ -121,8 +123,8 @@ void	render_background(t_game *g)
 
 	if (!g)
 		return ;
-	y = 0;
 	mid = g->win.frame_buffer.height / 2;
+	y = 0;
 	while (y < g->win.frame_buffer.height)
 	{
 		if (y < mid)

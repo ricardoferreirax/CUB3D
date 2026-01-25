@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:47:54 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/25 13:53:43 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/25 21:54:27 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,14 @@ static int	in_bounds(t_game *g, int y, int x)
 
 char	map_tile(t_game *g, int y, int x)
 {
+	int	row_len;
+
 	if (!in_bounds(g, y, x))
 		return (WALL);
 	if (!g->map.grid || !g->map.grid[y])
 		return (WALL);
-	if (x >= (int)ft_strlen(g->map.grid[y]))
-		return (WALL);
-	if (g->map.grid[y][x] == '\n' || g->map.grid[y][x] == '\0')
+	row_len = line_len_no_nl(g->map.grid[y]);
+	if (x >= row_len)
 		return (WALL);
 	return (g->map.grid[y][x]);
 }

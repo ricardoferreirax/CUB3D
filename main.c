@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/25 21:36:15 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/25 21:55:27 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void render_game(t_game *game)
 int	gameloop(t_game *game)
 {
 	long now;
-	long delta;
 	// int updates = 0;
 	
 	now = get_time_us(); 
@@ -34,18 +33,7 @@ int	gameloop(t_game *game)
 		game->timer.last_time_up = now;
 		return 0;
 	}
-	delta = now - game->timer.last_time_up;
-	if(delta > 250000)
-		delta = 250000;
-	game->timer.accumulator += delta;
-	// while(game->timer.accumulator >= UPDATE_F && updates < MAX_UPDATES)
-	// {
-	// 	update_game(game);
-	// 	game->timer.accumulator -= UPDATE_F;
-	// 	updates++;
-	// }
 	render_game(game);
-	// update_target(game);
 	return (0);
 }
 
@@ -79,7 +67,6 @@ int main(int argc, char **argv)
 	if (!game->map.grid)
 		exit_game(EXIT_MAP, game);
 	init_mlx(game);
-	
 	start_execution(game);
 	
 	mlx_hook(game->win.win_ptr, 2, 1L << 0, handle_key_press, game);
