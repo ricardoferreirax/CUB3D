@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/24 19:56:46 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/25 13:44:24 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,6 +259,17 @@ typedef struct s_player
 	int speed_multiplier;
 }	t_player;
 
+typedef struct s_column
+{
+	double	perp_dist;   // distância perpendicular (para height)
+	int		line_h;      // altura da coluna (pixels)
+	int		draw_start;  // início y
+	int		draw_end;    // fim y
+	int		hit_side;    // 0 = vertical, 1 = horizontal
+	char	wall_dir;    // 'N','S','E','W'
+	char	tile;        // tile atingido 
+}	t_column;
+
 typedef struct s_game
 {
 	// o que eu preciso para a execução
@@ -267,6 +278,7 @@ typedef struct s_game
 	t_map   map;
 	t_image	render;
 	t_raycasting ray;
+	t_column col;
 	t_player player;
 	t_key	key;
 	

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/24 20:30:33 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/25 13:56:19 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static void	draw_vertical_line(t_game *g, int x)
 	int	y;
 	int	color;
 
-	color = 0x00FF0000; // vermelho
+	color = 0x00FF0000;
 	if (g->ray.hit_side == 1)
-		color = 0x00AA0000; // darker >:)
+		color = 0x00AA0000;
 	y = g->ray.draw_start;
 	while (y <= g->ray.draw_end)
 	{
@@ -32,7 +32,7 @@ static void	calc_draw_limits(t_game *g)
 {
 	int	line_h;
 
-	line_h = (int)(g->win.height / g->ray.perp_wall_dist);
+	line_h = (int)((double)g->win.height / g->ray.perp_wall_dist);
 	g->ray.draw_start = -line_h / 2 + g->win.height / 2;
 	g->ray.draw_end = line_h / 2 + g->win.height / 2;
 	if (g->ray.draw_start < 0)
@@ -45,9 +45,9 @@ static void	calc_wall_distance(t_game *g)
 {
 	if (g->ray.hit_side == 0)
 		g->ray.perp_wall_dist = g->ray.side_dist_x - g->ray.delta_dist_x;
-	else // hit_side == 1
+	else
 		g->ray.perp_wall_dist = g->ray.side_dist_y - g->ray.delta_dist_y;
-	if (g->ray.perp_wall_dist < 1e-6) // evitar div/0 e valores negativos :3
+	if (g->ray.perp_wall_dist < 1e-6)
 		g->ray.perp_wall_dist = 1e-6;
 }
 
@@ -62,13 +62,13 @@ static void	perform_dda(t_game *g)
 		{
 			g->ray.side_dist_x += g->ray.delta_dist_x;
 			g->ray.map_x += g->ray.step_x;
-			g->ray.hit_side = 0; // hit numa parede vertical (X)
+			g->ray.hit_side = 0;
 		}
-		else // side_dist_y <= side_dist_x
+		else
 		{
 			g->ray.side_dist_y += g->ray.delta_dist_y;
 			g->ray.map_y += g->ray.step_y;
-			g->ray.hit_side = 1; // hit numa parede horizontal (Y)
+			g->ray.hit_side = 1;
 		}
 		if (map_tile(g, g->ray.map_y, g->ray.map_x) == WALL)
 			wall_hit = 1;
@@ -80,22 +80,26 @@ static void	calculate_dda_step(t_game *g)
 	if (g->ray.ray_dir_x < 0)
 	{
 		g->ray.step_x = -1;
-		g->ray.side_dist_x = (g->player.pos_x - g->ray.map_x) * g->ray.delta_dist_x;
+		g->ray.side_dist_x = (g->player.pos_x - g->ray.map_x)
+			* g->ray.delta_dist_x;
 	}
-	else // ray_dir_x >= 0
+	else
 	{
 		g->ray.step_x = 1;
-		g->ray.side_dist_x = (g->ray.map_x + 1.0 - g->player.pos_x) * g->ray.delta_dist_x;
+		g->ray.side_dist_x = (g->ray.map_x + 1.0 - g->player.pos_x)
+			* g->ray.delta_dist_x;
 	}
 	if (g->ray.ray_dir_y < 0)
 	{
 		g->ray.step_y = -1;
-		g->ray.side_dist_y = (g->player.pos_y - g->ray.map_y) * g->ray.delta_dist_y;
+		g->ray.side_dist_y = (g->player.pos_y - g->ray.map_y)
+			* g->ray.delta_dist_y;
 	}
-	else // ray_dir_y >= 0
+	else
 	{
 		g->ray.step_y = 1;
-		g->ray.side_dist_y = (g->ray.map_y + 1.0 - g->player.pos_y) * g->ray.delta_dist_y;
+		g->ray.side_dist_y = (g->ray.map_y + 1.0 - g->player.pos_y)
+			* g->ray.delta_dist_y;
 	}
 }
 
@@ -138,4 +142,5 @@ void	process_raycasting(t_game *g)
 		g->ray.z_buffer[screen_x] = g->ray.perp_wall_dist;
 		screen_x++;
 	}
+	mlx_put_image_to_window(g->mlx_ptr, g->win.win_ptr, g->win.frame_buffer.img_ptr, 0, 0);
 }

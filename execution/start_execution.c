@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 22:32:24 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/21 22:01:31 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/25 13:57:09 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void	start_execution(t_game *g)
 {
-	if (!g || !g->mlx_ptr)
+	if (!g || !g->mlx_ptr || !g->win.win_ptr)
 		exit_game(EXIT_MLX, g);
-	setup_map_grid(g); // inicializar o mapa 3D
-	init_player_from_map(g); // inicializar a posição do player a partir do mapa
+	setup_map_grid(g);
+	init_player_from_map(g);
 	g->ray.z_buffer = malloc(sizeof(double) * g->win.width);
 	if (!g->ray.z_buffer)
-		exit_game(EXIT_MALLOC, g);	
+		exit_game(EXIT_MALLOC, g);
 }

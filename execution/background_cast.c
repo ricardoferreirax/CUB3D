@@ -6,13 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 12:25:22 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/24 20:29:03 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/25 13:58:45 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../Pac_Struct.h"
 
-static void	background_calc_horizon(t_game *g, t_backcast *b, int y)
+/* static void	background_calc_horizon(t_game *g, t_backcast *b, int y)
 {
 	int		mid;
 	double	p;
@@ -80,6 +80,55 @@ void	render_background(t_game *g)
 	{
 		background_init_row(g, &b, y);
 		background_draw_row(g, &b, y);
+		y++;
+	}
+} */
+
+void	put_pixel(t_image *img, int x, int y, int color)
+{
+	int	*buf;
+	int	stride;
+
+	if (!img || !img->img_addr)
+		return ;
+	if (x < 0 || y < 0 || x >= img->width || y >= img->height)
+		return ;
+	buf = (int *)img->img_addr;
+	stride = img->l_len / 4;
+	buf[y * stride + x] = color;
+}
+
+static void	fill_row_fast(t_image *img, int y, int color)
+{
+	int	x;
+	int	*buf;
+	int	stride;
+
+	buf = (int *)img->img_addr;
+	stride = img->l_len / 4;
+	x = 0;
+	while (x < img->width)
+	{
+		buf[y * stride + x] = color;
+		x++;
+	}
+}
+
+void	render_background(t_game *g)
+{
+	int	y;
+	int	mid;
+
+	if (!g)
+		return ;
+	y = 0;
+	mid = g->win.frame_buffer.height / 2;
+	while (y < g->win.frame_buffer.height)
+	{
+		if (y < mid)
+			fill_row_fast(&g->win.frame_buffer, y, 0x00111111);
+		else
+			fill_row_fast(&g->win.frame_buffer, y, 0x00333333);
 		y++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:48:50 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/24 20:30:04 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/25 14:00:01 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	is_center_hit(t_game *g, int already_found, int screen_x)
 {
-	int	center_x;
+	int		center_x;
 	char	tile;
 
 	center_x = g->win.width / 2;

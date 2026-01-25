@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/21 21:59:09 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/25 13:57:40 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void render_game(t_game *game)
 	apply_input(game);
 	// clear_terminal();
 	process_raycasting(game);
-	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr, game->win.frame_buffer.img_ptr, 0, 0);
 	print_2d(game->map.grid);
 	return;
 }

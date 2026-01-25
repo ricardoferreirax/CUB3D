@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/24 20:02:43 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/24 20:28:01 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/25 13:59:43 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,4 @@
 // 	*(unsigned int *)dst = (unsigned int)color;
 // }
 
-void	put_pixel(t_image *img, int x, int y, int color)
-{
-	int	*buf;
-	int	stride;
 
-	if (!img || !img->img_addr)
-		return ;
-	if (x < 0 || y < 0 || x >= img->width || y >= img->height)
-		return ;
-	buf = (int *)img->img_addr;
-	stride = img->l_len / 4;
-	buf[y * stride + x] = color;
-}
