@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/25 21:47:48 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/26 23:04:29 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@
 #define UPDATE_F 16666
 #define MAX_UPDATES 5
 #define SPEED 75,75757625
-#define PLAYER 'J'
-#define WALL '1'
-#define OPEN_SPACE '0'
 #define PACDOT 'D'
 #define ENERGIZER 'E'
 #define WRAP_PORTS 'W'
@@ -38,6 +35,13 @@
 #define PINKY_T 'P'
 #define INKY_T 'I'
 #define CLYDE_T 'C'
+
+#define PLAYER 'J'
+#define PLAYER_SPEED    0.06
+#define ROT_SPEED    0.05
+#define PLAYER_RADIUS   0.15
+#define WALL '1'
+#define OPEN_SPACE '0'
 
 // exit codes
 # define EXIT_OK        0
@@ -295,6 +299,10 @@ void	init_mlx(t_game *game);
 void	put_pixel(t_image *img, int x, int y, int color);
 
 void	apply_input(t_game *g);
+void	move_radius_check(t_game *g, double x_delta, double y_delta);
+void	player_rotation_controller(t_game *g);
+void	movement_controller(t_game *g);
+
 
 void	render_background(t_game *g);
 

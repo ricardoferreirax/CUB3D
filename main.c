@@ -6,11 +6,19 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/25 21:55:27 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/26 23:03:09 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Pac_Struct.h"
+
+void	apply_input(t_game *g)
+{
+	if (!g)
+		return ;
+	player_rotation_controller(g);
+	movement_controller(g);
+}
 
 void render_game(t_game *game)
 {
