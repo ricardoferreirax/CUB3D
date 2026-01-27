@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/25 13:56:19 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/27 20:19:23 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,6 @@ void	process_raycasting(t_game *g)
 
 	if (!g)
 		return ;
-	render_background(g);
 	screen_x = 0;
 	hit_found = 0;
 	while (screen_x < g->win.width)
@@ -142,5 +141,4 @@ void	process_raycasting(t_game *g)
 		g->ray.z_buffer[screen_x] = g->ray.perp_wall_dist;
 		screen_x++;
 	}
-	mlx_put_image_to_window(g->mlx_ptr, g->win.win_ptr, g->win.frame_buffer.img_ptr, 0, 0);
 }

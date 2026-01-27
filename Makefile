@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/01/26 23:06:55 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/01/27 20:20:26 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ SRC_FILES = main.c \
 	execution/player_rotation.c \
 	execution/player_movement.c \
 	execution/background_cast.c \
+	execution/render_frame.c \
 	init/init_mlx.c execution/raycasting.c \
 	execution/raycasting_utils.c execution/map_3d.c \
 	execution/player.c \
@@ -54,7 +55,6 @@ SRC_FILES = main.c \
 	hooks/handle_close.c \
 	hooks/handle_keys.c \
 	utils/free.c  \
-	utils/render_utils.c \
 
 OBJ_DIR   = objs
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))

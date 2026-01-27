@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/26 23:04:29 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/27 20:02:35 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,8 @@ typedef struct s_map
 	char	**grid;
 	int		width;
 	int		height;
+	int ceiling_color;
+	int floor_color;
 }	t_map;
 
 typedef struct s_time
@@ -298,13 +300,11 @@ void	init_mlx(t_game *game);
 
 void	put_pixel(t_image *img, int x, int y, int color);
 
-void	apply_input(t_game *g);
 void	move_radius_check(t_game *g, double x_delta, double y_delta);
 void	player_rotation_controller(t_game *g);
 void	movement_controller(t_game *g);
 
-
-void	render_background(t_game *g);
+void	render_frame(t_game *game);
 
 // render 3d
 void	process_raycasting(t_game *g);

@@ -6,42 +6,24 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/26 23:03:09 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/27 20:19:56 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Pac_Struct.h"
 
-void	apply_input(t_game *g)
-{
-	if (!g)
-		return ;
-	player_rotation_controller(g);
-	movement_controller(g);
-}
-
-void render_game(t_game *game)
-{
-	if (game->key.esc)
-		exit_game(EXIT_QUIT, game);
-	apply_input(game);
-	process_raycasting(game);
-	// print_2d(game->map.grid);
-	return ;
-}
-
 int	gameloop(t_game *game)
 {
-	long now;
-	// int updates = 0;
-	
-	now = get_time_us(); 
-	if(game->timer.last_time_up == 0)
+	long	now;
+
+	now = get_time_us();
+	if (game->timer.last_time_up == 0)
 	{
 		game->timer.last_time_up = now;
-		return 0;
+		return (0);
 	}
-	render_game(game);
+	game->timer.last_time_up = now;
+	render_frame(game);
 	return (0);
 }
 

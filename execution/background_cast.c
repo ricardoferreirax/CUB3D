@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 12:25:22 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/25 21:59:04 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/27 20:30:34 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,43 +94,4 @@ void	put_pixel(t_image *img, int x, int y, int color)
 		return ;
 	dst = img->img_addr + (y * img->l_len) + (x * (img->bpp / 8));
 	*(unsigned int *)dst = (unsigned int)color;
-}
-
-static void	fill_row_fast(t_image *img, int y, int color)
-{
-	int				x;
-	unsigned int	*row;
-	int				stride;
-
-	if (!img || !img->img_addr)
-		return ;
-	if (y < 0 || y >= img->height)
-		return ;
-	stride = img->l_len / 4;
-	row = (unsigned int *)img->img_addr + (y * stride);
-	x = 0;
-	while (x < img->width)
-	{
-		row[x] = (unsigned int)color;
-		x++;
-	}
-}
-
-void	render_background(t_game *g)
-{
-	int	y;
-	int	mid;
-
-	if (!g)
-		return ;
-	mid = g->win.frame_buffer.height / 2;
-	y = 0;
-	while (y < g->win.frame_buffer.height)
-	{
-		if (y < mid)
-			fill_row_fast(&g->win.frame_buffer, y, 0x00111111);
-		else
-			fill_row_fast(&g->win.frame_buffer, y, 0x00333333);
-		y++;
-	}
 }
