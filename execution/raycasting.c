@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/27 20:19:23 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/27 20:50:29 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	draw_vertical_line(t_game *g, int x)
 	y = g->ray.draw_start;
 	while (y <= g->ray.draw_end)
 	{
-		put_pixel(&g->win.frame_buffer, x, y, color);
+		put_pixel_fast(&g->win.frame_buffer, x, y, color);
 		y++;
 	}
 }

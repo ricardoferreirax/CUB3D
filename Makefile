@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/01/27 20:20:26 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/01/27 20:52:30 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,11 +42,10 @@ SRC_FILES = main.c \
 	time.c \
 	init/init_defaults.c \
 	execution/start_execution.c \
-	execution/color.c \
 	execution/player_collision.c \
 	execution/player_rotation.c \
 	execution/player_movement.c \
-	execution/background_cast.c \
+	execution/put_pixel.c  \
 	execution/render_frame.c \
 	init/init_mlx.c execution/raycasting.c \
 	execution/raycasting_utils.c execution/map_3d.c \

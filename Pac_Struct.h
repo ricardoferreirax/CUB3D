@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/27 20:02:35 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/27 20:56:21 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,56 +288,62 @@ typedef struct s_game
 
 #endif // !DEBUG
 
-// execution
+// =========================
+// Execution / Game loop
+// =========================
 void	start_execution(t_game *game);
 void	init_defaults(t_game *g);
+int		gameloop(t_game *game);
+long	get_time_us(void);
 
-int	register_center_hit(t_game *g, int screen_x, int hit_found);
+// =========================
+// Map & Player init
+// =========================
+void	setup_map_grid(t_game *g);
+char	map_tile(t_game *g, int y, int x);
+void	init_player_from_map(t_game *g);
 
+// =========================
+// Input & Movement
+// =========================
 void	init_keys(t_game *g);
-
-void	init_mlx(t_game *game);
-
-void	put_pixel(t_image *img, int x, int y, int color);
 
 void	move_radius_check(t_game *g, double x_delta, double y_delta);
 void	player_rotation_controller(t_game *g);
 void	movement_controller(t_game *g);
 
+// =========================
+// Rendering
+// =========================
 void	render_frame(t_game *game);
-
-// render 3d
 void	process_raycasting(t_game *g);
+int		register_center_hit(t_game *g, int screen_x, int hit_found);
+void	put_pixel_fast(t_image *img, int x, int y, int color);
 
-// init map 3d
-void	setup_map_grid(t_game *g);
-char	map_tile(t_game *g, int y, int x);
+// =========================
+// MLX / Window
+// =========================
+void	init_mlx(t_game *game);
+void	init_window(t_game *s);
 
-void	init_player_from_map(t_game *g);
+// =========================
+// Hooks
+// =========================
+int		handle_close(t_game *g);
+int		handle_key_press(int keycode, t_game *g);
+int		handle_key_release(int keycode, t_game *g);
 
-int	checker_color(int tx, int ty, int is_floor);
-
-int	ft_is_even(int n);
-
-// free and exit
+// =========================
+// Free & Exit
+// =========================
 void	exit_game(int errcode, t_game *g);
 void	free_game(t_game *g);
 
-// hooks
-int	handle_close(t_game *g);
-int	handle_key_press(int keycode, t_game *g);
-int	handle_key_release(int keycode, t_game *g);
+// =========================
+// Ghost / AI / Utils
+// =========================
+t_point	chose_next_move(t_ghost *ghost, char **map);
+t_point	find_c(char **map, char c);
 
-
-int xtile(char **map);
-int ytile(char **map);
-
-t_point chose_next_move(t_ghost *ghost, char **map);
-t_point find_c(char **map,  char c);
-//init.c and init_aux_funcs.c
-void init_game(t_game *game);
-
-long get_time_us(void);
-
-void	init_window(t_game *s);
-int	gameloop(t_game *game);
+int		xtile(char **map);
+int		ytile(char **map);
