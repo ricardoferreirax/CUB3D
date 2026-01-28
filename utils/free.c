@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 13:16:57 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/27 21:02:29 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/28 16:32:44 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,17 @@ void	free_game(t_game *g)
 	free(g);
 }
 
+void	free_tab_tab(char **tab)
+{
+	int	i;
 
+	if (!tab)
+		return ;
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}

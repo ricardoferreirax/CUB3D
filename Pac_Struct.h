@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/27 20:56:21 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/28 16:43:01 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 #define UPDATE_F 16666
 #define MAX_UPDATES 5
-#define SPEED 75,75757625
+#define SPEED 75.75757625
 #define PACDOT 'D'
 #define ENERGIZER 'E'
 #define WRAP_PORTS 'W'
@@ -35,13 +35,16 @@
 #define PINKY_T 'P'
 #define INKY_T 'I'
 #define CLYDE_T 'C'
-
+#define GHOST_SPAWN 'G'
 #define PLAYER 'J'
+#define WALL '1'
+#define OPEN_SPACE '0'
+#define FLOOR '.'
+#define VOID ' '
+
 #define PLAYER_SPEED    0.06
 #define ROT_SPEED    0.05
 #define PLAYER_RADIUS   0.15
-#define WALL '1'
-#define OPEN_SPACE '0'
 
 // exit codes
 # define EXIT_OK        0
@@ -300,8 +303,16 @@ long	get_time_us(void);
 // Map & Player init
 // =========================
 void	setup_map_grid(t_game *g);
+char	**map_rect(t_game *g);
+char	**map_read_file(const char *path);
+void	validate_map_chars(t_game *g);
+void	validate_map_closed(t_game *g);
+void	validate_map_flood_fill(t_game *g);
 char	map_tile(t_game *g, int y, int x);
 void	init_player_from_map(t_game *g);
+int	is_wall_tile(char t);
+int	is_void_tile(char t);
+int	is_solid_tile(char t);
 
 // =========================
 // Input & Movement
@@ -338,6 +349,7 @@ int		handle_key_release(int keycode, t_game *g);
 // =========================
 void	exit_game(int errcode, t_game *g);
 void	free_game(t_game *g);
+void	free_tab_tab(char **tab);
 
 // =========================
 // Ghost / AI / Utils

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/27 20:19:56 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/28 16:23:06 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,25 @@ int	gameloop(t_game *game)
 	return (0);
 }
 
-char **map_parser(char **argv)
+void	parse_map(t_game *g, const char *path)
 {
-	int fd = open(argv[1], O_RDONLY);
-	if(fd < 0)
-		return NULL;
-	char **line_test = ft_calloc(sizeof(char *), 100);
-	char *line;
-	int i = 0;
-	while((line = get_next_line(fd)))
-	{
-		line_test[i] = ft_strdup(line);
-		free(line);
-		i++;
-	}
-	return line_test;
+	char	**rect;
+
+	g->map.grid = map_read_file(path);
+	if (!g->map.grid)
+		exit_game(EXIT_MAP, g);
+	setup_map_grid(g);
+	rect = map_rect(g);
+	if (!rect)
+		exit_game(EXIT_MALLOC, g);
+	free_tab_tab(g->map.grid);
+	g->map.grid = rect;
+	validate_map_chars(g);
+	init_player_from_map(g);
+	validate_map_closed(g);
+	validate_map_flood_fill(g);
 }
+
 
 int main(int argc, char **argv)
 {
@@ -53,9 +56,7 @@ int main(int argc, char **argv)
 	if (!game)
 		exit_game(EXIT_MALLOC, NULL);
 	init_defaults(game);
-	game->map.grid = map_parser(argv);
-	if (!game->map.grid)
-		exit_game(EXIT_MAP, game);
+	parse_map(game, argv[1]);
 	init_mlx(game);
 	start_execution(game);
 	

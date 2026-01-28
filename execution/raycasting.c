@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/27 20:50:29 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/28 16:51:02 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,12 @@ static void	calc_wall_distance(t_game *g)
 
 static void	perform_dda(t_game *g)
 {
-	int	wall_hit;
+	int	steps;
+	int	max_steps;
 
-	wall_hit = 0;
-	while (!wall_hit)
+	steps = 0;
+	max_steps = g->map.width * g->map.height + 10;
+	while (steps < max_steps)
 	{
 		if (g->ray.side_dist_x < g->ray.side_dist_y)
 		{
@@ -70,9 +72,14 @@ static void	perform_dda(t_game *g)
 			g->ray.map_y += g->ray.step_y;
 			g->ray.hit_side = 1;
 		}
-		if (map_tile(g, g->ray.map_y, g->ray.map_x) == WALL)
-			wall_hit = 1;
+		if (g->ray.map_x < 0 || g->ray.map_x >= g->map.width
+			|| g->ray.map_y < 0 || g->ray.map_y >= g->map.height)
+			return ;
+		if (is_solid_tile(map_tile(g, g->ray.map_y, g->ray.map_x)))
+			return ;
+		steps++;
 	}
+	return ;
 }
 
 static void	calculate_dda_step(t_game *g)
