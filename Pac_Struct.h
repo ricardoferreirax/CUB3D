@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/29 22:12:57 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/29 22:16:44 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,7 +307,7 @@ long	get_time_us(void);
 void	setup_map_grid(t_game *g);
 char	**map_rectangular(t_game *g);
 char	**map_read_file(const char *path);
-void	apply_wrap_if_needed(t_game *g);
+void	wrap_port(t_game *g);
 void	validate_map_chars(t_game *g);
 void	validate_map_closed(t_game *g);
 char	map_tile(t_game *g, int y, int x);
@@ -315,6 +315,7 @@ void	init_player_from_map(t_game *g);
 int	is_wall_tile(char t);
 int	is_void_tile(char t);
 int	is_solid_tile(char t);
+int	is_walkable_tile(char t);
 int	is_valid_wrap_port(t_game *g, int y, int x);
 
 // =========================

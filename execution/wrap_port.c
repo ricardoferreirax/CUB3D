@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 21:54:56 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/29 22:12:38 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/29 22:15:07 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	wrap_row_is_active(t_game *g, int y)
 		&& map_tile(g, y, g->map.width - 1) == WRAP_PORTS);
 }
 
-void	apply_wrap_if_needed(t_game *g)
+void	wrap_port(t_game *g)
 {
 	int		y;
 	double	offset;
@@ -45,15 +45,9 @@ void	apply_wrap_if_needed(t_game *g)
 	y = (int)g->player.pos_y;
 	if (!wrap_row_is_active(g, y))
 		return ;
-
-	/* para não nascer colado ao sólido */
 	offset = PLAYER_RADIUS + 0.10;
-
-	/* saiu pela esquerda */
 	if (g->player.pos_x < 0.0)
 		g->player.pos_x = (double)(g->map.width - 1) - offset;
-
-	/* saiu pela direita */
 	else if (g->player.pos_x > (double)(g->map.width - 1))
 		g->player.pos_x = 0.0 + offset;
 }
