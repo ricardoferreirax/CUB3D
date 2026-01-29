@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:53:00 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/28 17:12:54 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/29 21:40:20 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,13 @@ static int	is_valid_map_char(char c)
 {
 	if (c == '\n')
 		return (1);
-	if (c == WALL || c == OPEN_SPACE || c == FLOOR || c == VOID)
+	if (c == WALL || c == OPEN_SPACE || c == PACDOT || c == VOID)
 		return (1);
-	if (c == WRAP_PORTS || c == PLAYER || c == ENERGIZER || c == GHOST_SPAWN)
+	if (c == ENERGIZER || c == WRAP_PORTS || c == GHOST_SPAWN)
+		return (1);
+	if (c == BLINKY_T || c == PINKY_T || c == INKY_T || c == CLYDE_T)
+		return (1);
+	if (c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == PLAYER)
 		return (1);
 	return (0);
 }
@@ -30,7 +34,6 @@ void	validate_map_chars(t_game *g)
 
 	if (!g || !g->map.grid)
 		exit_game(EXIT_MAP, g);
-
 	y = 0;
 	while (g->map.grid[y])
 	{

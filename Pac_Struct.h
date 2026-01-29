@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/28 17:15:16 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/29 21:57:17 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,20 @@
 #define UPDATE_F 16666
 #define MAX_UPDATES 5
 #define SPEED 75.75757625
-#define PACDOT 'D'
-#define ENERGIZER 'E'
-#define WRAP_PORTS 'W'
+
+#define ENERGIZER 'R'
+#define WRAP_PORTS 'D'
 #define BLINKY_T 'B'
 #define PINKY_T 'P'
 #define INKY_T 'I'
 #define CLYDE_T 'C'
 #define GHOST_SPAWN 'G'
+
 #define PLAYER 'J'
+
 #define WALL '1'
 #define OPEN_SPACE '0'
-#define FLOOR '.'
+#define PACDOT '.'
 #define VOID ' '
 
 #define PLAYER_SPEED    0.06
@@ -305,9 +307,9 @@ long	get_time_us(void);
 void	setup_map_grid(t_game *g);
 char	**map_rectangular(t_game *g);
 char	**map_read_file(const char *path);
+void	apply_wrap_if_needed(t_game *g);
 void	validate_map_chars(t_game *g);
 void	validate_map_closed(t_game *g);
-void	validate_map_flood_fill(t_game *g);
 char	map_tile(t_game *g, int y, int x);
 void	init_player_from_map(t_game *g);
 int	is_wall_tile(char t);

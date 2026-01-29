@@ -1,36 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_validate_closed.c                              :+:      :+:    :+:   */
+/*   map_player.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/28 11:58:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/29 22:06:40 by rmedeiro         ###   ########.fr       */
+/*   Created: 2026/01/29 21:11:27 by rmedeiro          #+#    #+#             */
+/*   Updated: 2026/01/29 22:05:42 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
-
-int	is_wall_tile(char t)
-{
-	return (t == WALL);
-}
-
-int	is_void_tile(char t)
-{
-	return (t == VOID);
-}
-
-int	is_solid_tile(char t)
-{
-	return (t == WALL || t == VOID);
-}
-
-int	is_walkable_tile(char t)
-{
-	return (t == OPEN_SPACE || t == PACDOT || t == ENERGIZER
-		|| t == WRAP_PORTS || t == PLAYER
-		|| t == 'N' || t == 'S' || t == 'E' || t == 'W');
-}
 

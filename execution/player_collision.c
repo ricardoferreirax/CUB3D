@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   borders.c                                          :+:      :+:    :+:   */
+/*   player_collision.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 22:42:10 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/26 22:46:09 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/29 22:05:25 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 static int	is_wall(t_game *g, int y, int x)
 {
-	char t = map_tile(g, y, x);
-	return (t == WALL || t == 'S');
+	char	t;
+
+	t = map_tile(g, y, x);
+	return (t == WALL || t == VOID);
 }
 
 static void	check_borders(t_game *g)
@@ -45,5 +47,6 @@ void	move_radius_check(t_game *g, double x_delta, double y_delta)
 {
 	g->player.pos_x += x_delta;
 	g->player.pos_y += y_delta;
+	apply_wrap_if_needed(g);
 	check_borders(g);
 }

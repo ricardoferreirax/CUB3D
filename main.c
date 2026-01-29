@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/28 17:14:21 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/29 21:16:01 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	parse_map(t_game *g, const char *path)
 	validate_map_chars(g);
 	init_player_from_map(g);
 	validate_map_closed(g);
-	validate_map_flood_fill(g);
 }
 
 int main(int argc, char **argv)

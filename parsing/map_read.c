@@ -6,13 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:33:47 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/28 17:11:44 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/29 21:04:56 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 
-static void	free_lines(char **lines, int n)
+static void	free_lines_partial(char **lines, int n)
 {
 	int	i;
 
@@ -68,7 +68,7 @@ char	**map_read_file(const char *path)
 		if (!lines[i])
 		{
 			close(fd);
-			free_lines(lines, i);
+			free_lines_partial(lines, i);
 			return (NULL);
 		}
 		i++;
