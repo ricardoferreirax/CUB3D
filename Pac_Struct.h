@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/29 21:57:17 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/29 22:12:57 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -315,6 +315,7 @@ void	init_player_from_map(t_game *g);
 int	is_wall_tile(char t);
 int	is_void_tile(char t);
 int	is_solid_tile(char t);
+int	is_valid_wrap_port(t_game *g, int y, int x);
 
 // =========================
 // Input & Movement
