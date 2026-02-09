@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 21:39:40 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/09 21:49:54 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/09 21:52:03 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,17 @@ static void	dda_step(t_game *g)
 	}
 }
 
-
+static int	validate_or_wrap_ray(t_game *g)
+{
+	if (g->ray.map_y < 0 || g->ray.map_y >= g->map.height)
+		return (0);
+	if (g->ray.map_x < 0 || g->ray.map_x >= g->map.width)
+	{
+		if (!try_wrap_ray_x(g))
+			return (0);
+	}
+	return (1);
+}
 
 int	perform_dda(t_game *g)
 {
