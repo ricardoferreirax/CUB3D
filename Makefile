@@ -6,13 +6,13 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/01/14 15:36:28 by pfreire-         ###   ########.fr        #
+#    Updated: 2026/01/29 22:25:26 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    = cub3d
 
-CC      = clang-12
+CC      = gcc
 CFLAGS  = -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion -Wformat=2 -Wstrict-aliasing=2 \
 		-fno-omit-frame-pointer \
 		-g -fsanitize=undefined 
@@ -42,12 +42,24 @@ SRC_FILES = main.c \
 	time.c \
 	init/init_defaults.c \
 	execution/start_execution.c \
-	init/init_map_3d.c \
-	init/init_mlx.c execution/render_3d.c \
+	execution/player_collision.c \
+	execution/player_rotation.c \
+	execution/player_movement.c \
+	execution/wrap_port.c \
+	execution/minimap.c \
+	execution/put_pixel.c  \
+	execution/render_frame.c \
+	parsing/map_dimensions.c \
+	parsing/map_read.c \
+	parsing/map_validate_closed.c \
+	parsing/map_player.c \
+	parsing/map_validate_chars.c \
+	init/init_mlx.c execution/raycasting.c \
+	execution/raycasting_utils.c \
+	math/math.c \
 	hooks/handle_close.c \
 	hooks/handle_keys.c \
-	hooks/init_hooks.c \
-	utils/free.c 
+	utils/free.c  \
 
 OBJ_DIR   = objs
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
@@ -55,7 +67,7 @@ OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES) $(LIBFT) $(MLX)
-	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) $(MLX) -lXext -lX11 -g -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) $(MLX) -lXext -lX11 -lm -g -o $(NAME)
 
 
 $(OBJ_DIR)/%.o: %.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_aux_funcs.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:21:39 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/14 15:51:48 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/01/25 21:24:14 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,17 @@ char **copy_map(char **map)
 		i++;
 	}
 	copy[i] = NULL;
+<<<<<<< HEAD
 	// block_spawn(copy);
 	// ft_printf("Ghost map:\n");
 	// print_2d(copy);
 	// ft_printf("--------___--");
+=======
+	block_spawn(copy);
+	ft_printf("Ghost map:\n");
+	//print_2d(copy);
+	ft_printf("--------___--");
+>>>>>>> ricardo
 	return copy;
 }
 

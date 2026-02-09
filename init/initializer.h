@@ -20,4 +20,5 @@ void init_clyde(t_game *game, t_ghost *clyde);
 void init_inky(t_game *game, t_ghost *inky);
 void init_pinky(t_game *game, t_ghost *pinky);
 void init_blinky(t_game *game, t_ghost *blinky);
+
 #endif

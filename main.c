@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/14 16:10:08 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/01/29 21:16:01 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,12 @@ void	render_game(t_game *game)
 	return ;
 }
 
+int	close_game(void *game)
+{
+	(void)game;
+	exit(1);
+}
+
 int	gameloop(t_game *game)
 {
 	long	now;
@@ -164,70 +170,27 @@ int	gameloop(t_game *game)
 	render_game(game);
 	return (0);
 	// update_target(game);
+
 	return (0);
 }
 
-int	keyloop(int key, t_game *game)
+void	parse_map(t_game *g, const char *path)
 {
-	if (key == 0 && game->debug_mode)
-		ft_printf("test");
-	if (key == 'q' || key == 65307)
-		ft_printf("test");
-	else if (key == 0 || key == 0)
-	{
-		ft_printf("test");
-	}
-	else if (key == 0 || key == 0)
-	{
-		ft_printf("test");
-	}
-	else if (key == 0 || key == 0)
-	{
-		ft_printf("test");
-	}
-	else if (key == 0 || key == 0)
-	{
-		ft_printf("test");
-	}
-	return (0);
-}
 
-char	**map_parser(char **argv)
-{
-	int		fd;
-	char	**line_test;
-	char	*line;
-	int		i;
+	char	**rect;
 
-	fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
-		return (NULL);
-	line_test = ft_calloc(sizeof(char *), 100);
-	i = 0;
-	while ((line = get_next_line(fd)))
-	{
-		line_test[i] = ft_strdup(line);
-		free(line);
-		i++;
-	}
-	return (line_test);
-}
-
-void	print_2d(char **map)
-{
-	char	buffer[4096];
-	int		offset;
-
-	offset = 0;
-	for (int i = 0; map[i]; i++)
-		offset += sprintf(buffer + offset, "%s", map[i]);
-	write(1, buffer, offset);
-}
-
-int	close_game(void *game)
-{
-	(void)game;
-	exit(1);
+	g->map.grid = map_read_file(path);
+	if (!g->map.grid)
+		exit_game(EXIT_MAP, g);
+	setup_map_grid(g);
+	rect = map_rectangular(g);
+	if (!rect)
+		exit_game(EXIT_MALLOC, g);
+	free_tab_tab(g->map.grid);
+	g->map.grid = rect;
+	validate_map_chars(g);
+	init_player_from_map(g);
+	validate_map_closed(g);
 }
 
 int	main(int argc, char **argv)
@@ -239,13 +202,21 @@ int	main(int argc, char **argv)
 		return (ft_printf("Wrong args\n"), -1);
 	game = malloc(sizeof(t_game));
 	if (!game)
-		return (ft_dprintf(2, "No Memory, Download more RAM\n"), -1);
-	game->map.grid = map_parser(argv);
+		return (ft_dprintf(3, "No Memory, Download more RAM\n"), exit_game(EXIT_MALLOC, NULL), -1);
+	parse_map(game, argv[1]);
 	game->debug_mode = false;
 	init_game(game);
+	parse_map(game, argv[1]);
 	game->mlx_ptr = mlx_init();
-	mlx_key_hook(game->win.win_ptr, keyloop, game);
-	mlx_loop_hook(game->mlx_ptr, gameloop, game);
+	start_execution(game);
+	mlx_hook(game->win.win_ptr, 2, 1L << 0, handle_key_press, game);
+	mlx_hook(game->win.win_ptr, 3, 1L << 1, handle_key_release, game);
 	mlx_hook(game->win.win_ptr, 17, 0, close_game, game);
+	mlx_loop_hook(game->mlx_ptr, gameloop, game);
 	mlx_loop(game->mlx_ptr);
+	
+
+	return (0);
 }
+
+

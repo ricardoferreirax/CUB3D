@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/14 16:08:47 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/01/21 21:08:08 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ int	init_spritesheet(t_game *game)
 
 void	init_game(t_game *game)
 {
+	// ft_bzero(game, sizeof(t_game));
 	init_null(game);
 	init_window(game);
 	init_ghosts(game);
