@@ -281,6 +281,7 @@ typedef struct s_game
 	
 
 	bool debug_mode;
+	t_image base; //save static sprite, no need to recalculate what does not change
 	t_ghost *ghost;
 	t_pacdot *dot;
 	double timeout;
