@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/29 22:16:44 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/01/29 22:31:25 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@
 #define INKY_T 'I'
 #define CLYDE_T 'C'
 #define GHOST_SPAWN 'G'
-
 #define PLAYER 'J'
-
 #define WALL '1'
 #define OPEN_SPACE '0'
 #define PACDOT '.'
@@ -47,6 +45,22 @@
 #define PLAYER_SPEED    0.06
 #define ROT_SPEED    0.05
 #define PLAYER_RADIUS   0.15
+
+//////// MINIMAP TEST ////////
+
+#define MINI_TILE    8     // tamanho de cada tile em pixels
+#define MINI_MARGIN  12    // margem do canto
+
+#define C_BG         0x00000000
+#define C_WALL       0x00000088
+#define C_WALL_SHADE 0x00000055
+#define C_DOT        0x00FFFFCC
+#define C_ENERGIZER  0x00FFFFFF
+#define C_PLAYER     0x00FFFF00
+#define C_PORT       0x0000CCFF
+
+////////////////////////////////
+
 
 // exit codes
 # define EXIT_OK        0
@@ -317,6 +331,7 @@ int	is_void_tile(char t);
 int	is_solid_tile(char t);
 int	is_walkable_tile(char t);
 int	is_valid_wrap_port(t_game *g, int y, int x);
+void	render_minimap_test(t_game *g);
 
 // =========================
 // Input & Movement

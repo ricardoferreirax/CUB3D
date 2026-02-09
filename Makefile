@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/01/29 21:56:18 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/01/29 22:25:26 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRC_FILES = main.c \
 	execution/player_rotation.c \
 	execution/player_movement.c \
 	execution/wrap_port.c \
+	execution/minimap.c \
 	execution/put_pixel.c  \
 	execution/render_frame.c \
 	parsing/map_dimensions.c \
