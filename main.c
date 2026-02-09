@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/29 21:16:01 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/09 20:54:25 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,15 @@ void	parse_map(t_game *g, const char *path)
 	validate_map_closed(g);
 }
 
+void	start_execution(t_game *g)
+{
+	if (!g || !g->mlx_ptr || !g->win.win_ptr || !g->win.frame_buffer.img_ptr)
+		exit_game(EXIT_MLX, g);
+	g->ray.z_buffer = malloc(sizeof(double) * g->win.width);
+	if (!g->ray.z_buffer)
+		exit_game(EXIT_MALLOC, g);
+}
+
 int main(int argc, char **argv)
 {
 	t_game *game;
@@ -65,81 +74,3 @@ int main(int argc, char **argv)
 	mlx_loop(game->mlx_ptr);
 	return (0);
 }
-
-
-
-// void	clear_terminal(void)
-// {
-// 	write(1, "\033[H", 3);
-// }
-
-// void new_target(t_game *game, t_ghost *ghost, e_state state)
-// {
-// 	if(state == SCATTER)
-// 		ghost->target_tile = find_c(game->map.grid, 'S');
-// 	if(state == CHASE)
-// 		ghost->target_tile = find_c(game->map.grid, 'J');
-// 	if(state == SCATTER)
-// 	{
-// 		if(ghost->name == BLINKY)
-// 			ghost->target_tile = find_c(game->map.grid, 'B');
-// 		if(ghost->name == PINKY)
-// 			ghost->target_tile = find_c(game->map.grid, 'P');
-// 		if(ghost->name == INKY)
-// 			ghost->target_tile = find_c(game->map.grid, 'I');
-// 		if(ghost->name == CLYDE)
-// 			ghost->target_tile = find_c(game->map.grid, 'C');
-// 	}
-// }
-
-// void update_target(t_game *game)
-// {
-// 	int i = 0;
-// 	while(i < 4)
-// 	{
-// 		new_target(game, &game->ghost[i], game->ghost[i].state);
-// 		i++;
-// 	}
-// }
-
-// void update_game(t_game *game)
-// {
-// 	int i = 0;
-// 	while(i < 4)
-// 	{
-// 		t_point next_move = chose_next_move(&game->ghost[i], game->ghost->mental_map);
-// 		if(game->ghost[i].is_steping_on_pacdot)
-// 			game->map.grid[game->ghost[i].pos.tile_pos.y][game->ghost[i].pos.tile_pos.x] = 'D';
-// 		else
-// 			game->map.grid[game->ghost[i].pos.tile_pos.y][game->ghost[i].pos.tile_pos.x] = '0';
-// 		game->ghost[i].pos.tile_pos.x += next_move.x;
-// 		game->ghost[i].pos.tile_pos.y += next_move.y;
-// 		game->map.grid[game->ghost[i].pos.tile_pos.y][game->ghost[i].pos.tile_pos.x] = 'L';
-// 		i++;
-// 	}
-// }
-
-// int	keyloop(int key, t_game *game)
-// {
-// 	if (key == 0 && game->debug_mode)
-// 		ft_printf("test");
-// 	if (key == 'q' || key == 65307)
-// 		ft_printf("test");
-// 	else if (key == 0 || key == 0)
-// 	{
-// 		ft_printf("test");
-// 	}
-// 	else if (key == 0 || key == 0)
-// 	{ 
-// 		ft_printf("test");
-// 	}
-// 	else if (key == 0 || key == 0)
-// 	{ 
-// 		ft_printf("test");
-// 	}
-// 	else if (key == 0 || key == 0)
-// 	{ 
-// 		ft_printf("test");
-// 	}
-// 	return (0);
-// }

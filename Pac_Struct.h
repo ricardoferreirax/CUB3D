@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/29 22:31:25 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/09 21:18:14 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,16 +187,6 @@ typedef struct s_ghost
 //At game start one of the penhouse ghost will activate it's counter, it will count up each dot pacman eats
 //if pacman eats all the dots it gets out, but if the ghost is forced out by timeout its dot counter is not reset and the next ghost dot counter starts counting.
 
-// execution - map
-typedef struct s_map
-{
-	char	**grid;
-	int		width;
-	int		height;
-	int ceiling_color;
-	int floor_color;
-}	t_map;
-
 typedef struct s_time
 {
 	double level_time;
@@ -221,6 +211,16 @@ typedef struct s_key
 	int	esc;
 }	t_key;
 
+// execution - map
+typedef struct s_map
+{
+	char	**grid;
+	int		width;
+	int		height;
+	int ceiling_color;
+	int floor_color;
+}	t_map;
+
 typedef struct s_raycasting
 {
 	double	*z_buffer; // array para armazenar a distância da parede
@@ -241,27 +241,8 @@ typedef struct s_raycasting
 	// drawing limits
 	int		draw_start;
 	int		draw_end;
+	int 	hit; // flag para indicar se o ray atingiu uma parede. 0 = não atingiu, 1 = atingiu
 }	t_raycasting;
-
-typedef struct s_backcast
-{
-	int		is_floor;
-
-	double	ray0_x;
-	double	ray0_y;
-	double	ray1_x;
-	double	ray1_y;
-
-	double	cam_z;
-	double	p;
-	double	row_dist;
-
-	double	step_x;
-	double	step_y;
-
-	double	world_x;
-	double	world_y;
-}	t_backcast;
 
 typedef struct s_player
 {
