@@ -31,7 +31,7 @@
 #define PLAYER 'J'
 #define WALL '1'
 #define OPEN_SPACE '0'
-#define PACDOT 'D'
+// #define PACDOT 'D'
 
 #define ENERGIZER 'R'
 #define WRAP_PORTS 'D'

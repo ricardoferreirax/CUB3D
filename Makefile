@@ -15,7 +15,8 @@ NAME    = cub3d
 CC      = clang-12
 CFLAGS  = -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion -Wformat=2 -Wstrict-aliasing=2 \
 		-fno-omit-frame-pointer \
-		-g -fsanitize=undefined 
+		-g 
+#-fsanitize=undefined 
 		
 #  MLX_CFLAGS= -Wall -Wextra -Werror
 

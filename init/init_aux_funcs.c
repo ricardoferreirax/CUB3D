@@ -53,17 +53,10 @@ char **copy_map(char **map)
 		i++;
 	}
 	copy[i] = NULL;
-<<<<<<< HEAD
 	// block_spawn(copy);
 	// ft_printf("Ghost map:\n");
 	// print_2d(copy);
 	// ft_printf("--------___--");
-=======
-	block_spawn(copy);
-	ft_printf("Ghost map:\n");
-	//print_2d(copy);
-	ft_printf("--------___--");
->>>>>>> ricardo
 	return copy;
 }
 

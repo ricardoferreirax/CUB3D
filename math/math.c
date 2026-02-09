@@ -18,3 +18,4 @@ int	ft_is_even(int n)
 		n = -n;
 	return ((n % 2) == 0);
 }
+

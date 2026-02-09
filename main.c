@@ -163,11 +163,11 @@ int	gameloop(t_game *game)
 	game->timer.accumulator += delta;
 	while (game->timer.accumulator >= UPDATE_F && updates < MAX_UPDATES)
 	{
-		update_game(game);
+		// update_game(game);
 		game->timer.accumulator -= UPDATE_F;
 		updates++;
 	}
-	render_game(game);
+	// render_game(game);
 	return (0);
 	// update_target(game);
 
@@ -205,9 +205,8 @@ int	main(int argc, char **argv)
 		return (ft_dprintf(3, "No Memory, Download more RAM\n"), exit_game(EXIT_MALLOC, NULL), -1);
 	parse_map(game, argv[1]);
 	game->debug_mode = false;
-	init_game(game);
-	parse_map(game, argv[1]);
 	game->mlx_ptr = mlx_init();
+	init_game(game);
 	start_execution(game);
 	mlx_hook(game->win.win_ptr, 2, 1L << 0, handle_key_press, game);
 	mlx_hook(game->win.win_ptr, 3, 1L << 1, handle_key_release, game);

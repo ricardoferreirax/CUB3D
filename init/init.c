@@ -12,30 +12,103 @@
 
 #include "initializer.h"
 
-void	init_null(t_game *game)
-{
-	int	i;
-	int	j;
+// static void	init_window_struct(t_game *g)
+// {
+// 	g->win.win_ptr = NULL;
+// 	g->win.width = 0;
+// 	g->win.height = 0;
+// 	g->win.ntilesx = 0;
+// 	g->win.ntilesy = 0;
+//
+// 	g->win.frame_buffer.img_ptr = NULL;
+// 	g->win.frame_buffer.img_addr = NULL;
+// 	g->win.frame_buffer.bpp = 0;
+// 	g->win.frame_buffer.l_len = 0;
+// 	g->win.frame_buffer.endian = 0;
+// 	g->win.frame_buffer.width = 0;
+// 	g->win.frame_buffer.height = 0;
+// }
 
-	game->win.win_ptr = NULL;
-	game->win.frame_buffer.img_ptr = NULL;
-	game->win.frame_buffer.img_addr = NULL;
-	i = -1;
-	while (++i < 4)
-	{
-		j = -1;
-		while (j++ < 4)
-		{
-		}
-	}
+// static void	init_map_struct(t_game *g)
+// {
+// 	g->map.grid = NULL;
+// 	g->map.width = 0;
+// 	g->map.height = 0;
+// }
+
+static void	init_player_raycast_state(t_game *g)
+{
+	g->player.target_map_x = -1;
+	g->player.target_map_y = -1;
+	g->player.target_tile = '0';
+	g->player.target_wall_dir = 0;
+	g->player.target_dist = 0.0;
+}
+
+static void	init_raycasting(t_game *g)
+{
+	g->ray.z_buffer = NULL;
+	g->ray.camera_x = 0.0;
+	g->ray.ray_dir_x = 0.0;
+	g->ray.ray_dir_y = 0.0;
+	g->ray.map_x = 0;
+	g->ray.map_y = 0;
+	g->ray.step_x = 0;
+	g->ray.step_y = 0;
+	g->ray.side_dist_x = 0.0;
+	g->ray.side_dist_y = 0.0;
+	g->ray.delta_dist_x = 0.0;
+	g->ray.delta_dist_y = 0.0;
+	g->ray.hit_side = -1;
+	g->ray.perp_wall_dist = 0.0;
+	g->ray.draw_start = 0;
+	g->ray.draw_end = 0;
+}
+
+static void	init_render_struct(t_game *g)
+{
+	g->render.width = 0;
+	g->render.height = 0;
+	g->render.img_ptr = NULL;
+	g->render.img_addr = NULL;
+	g->render.bpp = 0;
+	g->render.l_len = 0;
+	g->render.endian = 0;
+}
+
+void init_ints(t_game *game)
+{
+
+	game->global_dot_counter = 0;
+	game->timeout = 0;
+	game->score = 0;
+	game->level = 0;
+	game->timer.level_time = 0;
+	game->timer.mode_timer = 0;
+	game->timer.timeout_timer = 0;
+	game->timer.last_time_up = 0;
+	game->timer.accumulator = 0;
+}
+
+void	init_null(t_game *g)
+{
+	init_ints(g);
+	// init_window_struct(g);
+	init_render_struct(g);
+	// init_map_struct(g);
+	init_keys(g);
+	init_raycasting(g);
+	init_player_raycast_state(g);
 }
 
 void	init_window(t_game *game)
 {
 	game->win.ntilesx = xtile(game->map.grid);
 	game->win.ntilesy = ytile(game->map.grid);
-	game->win.width = TILE_SIZE * game->win.ntilesx;
-	game->win.height = TILE_SIZE * game->win.ntilesy;
+	// game->win.width = TILE_SIZE * game->win.ntilesx;
+	// game->win.height = TILE_SIZE * game->win.ntilesy;
+	game->win.width = 1280;
+	game->win.height = 800;
 	game->win.win_ptr = mlx_new_window(game->mlx_ptr, game->win.width,
 			game->win.height, "Pac-Man");
 	game->win.frame_buffer.img_ptr = mlx_new_image(game->mlx_ptr,
@@ -122,11 +195,24 @@ int	init_spritesheet(t_game *game)
 	return i;
 }
 
+void	init_render(t_game *g)
+{
+	g->render.width = g->win.width;
+	g->render.height = g->win.height;
+	g->render.img_ptr = mlx_new_image(g->mlx_ptr, g->render.width, g->render.height);
+	if (!g->render.img_ptr)
+		exit_game(EXIT_MLX, g);
+	g->render.img_addr = mlx_get_data_addr(g->render.img_ptr, &g->render.bpp, &g->render.l_len,
+		&g->render.endian);
+	if (!g->render.img_addr)
+		exit_game(EXIT_MLX, g);
+}
+
 void	init_game(t_game *game)
 {
-	// ft_bzero(game, sizeof(t_game));
 	init_null(game);
 	init_window(game);
-	init_ghosts(game);
-	init_spritesheet(game);
+	// init_ghosts(game);
+	// init_spritesheet(game);
+	init_render(game);
 }
