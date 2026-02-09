@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/09 21:18:14 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/09 21:48:10 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,6 +303,7 @@ void	setup_map_grid(t_game *g);
 char	**map_rectangular(t_game *g);
 char	**map_read_file(const char *path);
 void	wrap_port(t_game *g);
+int	try_wrap_ray_x(t_game *g);
 void	validate_map_chars(t_game *g);
 void	validate_map_closed(t_game *g);
 char	map_tile(t_game *g, int y, int x);
@@ -328,6 +329,8 @@ void	movement_controller(t_game *g);
 // =========================
 void	render_frame(t_game *game);
 void	process_raycasting(t_game *g);
+int	perform_dda(t_game *g);
+void	calculate_dda_step(t_game *g);
 int		register_center_hit(t_game *g, int screen_x, int hit_found);
 void	put_pixel_fast(t_image *img, int x, int y, int color);
 

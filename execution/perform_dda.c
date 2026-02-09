@@ -1,0 +1,78 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   perform_dda.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/09 21:39:40 by rmedeiro          #+#    #+#             */
+/*   Updated: 2026/02/09 21:49:54 by rmedeiro         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../Pac_Struct.h"
+
+void	calculate_dda_step(t_game *g)
+{
+	if (g->ray.ray_dir_x < 0)
+	{
+		g->ray.step_x = -1;
+		g->ray.side_dist_x = (g->player.pos_x - g->ray.map_x)
+			* g->ray.delta_dist_x;
+	}
+	else
+	{
+		g->ray.step_x = 1;
+		g->ray.side_dist_x = (g->ray.map_x + 1.0 - g->player.pos_x)
+			* g->ray.delta_dist_x;
+	}
+	if (g->ray.ray_dir_y < 0)
+	{
+		g->ray.step_y = -1;
+		g->ray.side_dist_y = (g->player.pos_y - g->ray.map_y)
+			* g->ray.delta_dist_y;
+	}
+	else
+	{
+		g->ray.step_y = 1;
+		g->ray.side_dist_y = (g->ray.map_y + 1.0 - g->player.pos_y)
+			* g->ray.delta_dist_y;
+	}
+}
+
+static void	dda_step(t_game *g)
+{
+	if (g->ray.side_dist_x < g->ray.side_dist_y)
+	{
+		g->ray.side_dist_x += g->ray.delta_dist_x;
+		g->ray.map_x += g->ray.step_x;
+		g->ray.hit_side = 0;
+	}
+	else
+	{
+		g->ray.side_dist_y += g->ray.delta_dist_y;
+		g->ray.map_y += g->ray.step_y;
+		g->ray.hit_side = 1;
+	}
+}
+
+
+
+int	perform_dda(t_game *g)
+{
+	int	steps;
+	int	max_steps;
+
+	steps = 0;
+	max_steps = g->map.width * g->map.height + 50;
+	while (steps < max_steps)
+	{
+		dda_step(g);
+		if (!validate_or_wrap_ray(g))
+			return (0);
+		if (is_solid_tile(map_tile(g, g->ray.map_y, g->ray.map_x)))
+			return (1);
+		steps++;
+	}
+	return (0);
+}

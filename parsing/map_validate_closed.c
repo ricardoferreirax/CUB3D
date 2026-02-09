@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:58:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/29 22:12:25 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/09 21:32:47 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	is_void_tile(char t)
 
 int	is_solid_tile(char t)
 {
-	return (t == WALL || t == VOID);
+	return (t == WALL);
 }
 
 int	is_walkable_tile(char t)

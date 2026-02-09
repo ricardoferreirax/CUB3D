@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.c                                       :+:      :+:    :+:   */
+/*   process_raycasting.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/09 21:20:52 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/09 21:47:33 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,65 +49,6 @@ static void	calc_wall_distance(t_game *g)
 		g->ray.perp_wall_dist = g->ray.side_dist_y - g->ray.delta_dist_y;
 	if (g->ray.perp_wall_dist < 1e-6)
 		g->ray.perp_wall_dist = 1e-6;
-}
-
-static void	perform_dda(t_game *g)
-{
-	int	steps;
-	int	max_steps;
-
-	steps = 0;
-	max_steps = g->map.width * g->map.height + 10;
-	while (steps < max_steps)
-	{
-		if (g->ray.side_dist_x < g->ray.side_dist_y)
-		{
-			g->ray.side_dist_x += g->ray.delta_dist_x;
-			g->ray.map_x += g->ray.step_x;
-			g->ray.hit_side = 0;
-		}
-		else
-		{
-			g->ray.side_dist_y += g->ray.delta_dist_y;
-			g->ray.map_y += g->ray.step_y;
-			g->ray.hit_side = 1;
-		}
-		if (g->ray.map_x < 0 || g->ray.map_x >= g->map.width
-			|| g->ray.map_y < 0 || g->ray.map_y >= g->map.height)
-			return ;
-		if (is_solid_tile(map_tile(g, g->ray.map_y, g->ray.map_x)))
-			return ;
-		steps++;
-	}
-	return ;
-}
-
-static void	calculate_dda_step(t_game *g)
-{
-	if (g->ray.ray_dir_x < 0)
-	{
-		g->ray.step_x = -1;
-		g->ray.side_dist_x = (g->player.pos_x - g->ray.map_x)
-			* g->ray.delta_dist_x;
-	}
-	else
-	{
-		g->ray.step_x = 1;
-		g->ray.side_dist_x = (g->ray.map_x + 1.0 - g->player.pos_x)
-			* g->ray.delta_dist_x;
-	}
-	if (g->ray.ray_dir_y < 0)
-	{
-		g->ray.step_y = -1;
-		g->ray.side_dist_y = (g->player.pos_y - g->ray.map_y)
-			* g->ray.delta_dist_y;
-	}
-	else
-	{
-		g->ray.step_y = 1;
-		g->ray.side_dist_y = (g->ray.map_y + 1.0 - g->player.pos_y)
-			* g->ray.delta_dist_y;
-	}
 }
 
 static void	init_ray(t_game *g, int x)

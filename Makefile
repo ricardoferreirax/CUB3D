@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/02/09 21:10:57 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/02/09 21:48:31 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,12 +48,14 @@ SRC_FILES = main.c \
 	execution/minimap.c \
 	execution/put_pixel.c  \
 	execution/render_frame.c \
+	execution/perform_dda.c \
 	parsing/map_dimensions.c \
 	parsing/map_read.c \
 	parsing/map_validate_closed.c \
 	parsing/map_player.c \
 	parsing/map_validate_chars.c \
-	init/init_mlx.c execution/raycasting.c \
+	init/init_mlx.c \
+	execution/process_raycasting.c \
 	execution/raycasting_utils.c \
 	math/math.c \
 	hooks/handle_close.c \

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 21:54:56 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/29 22:15:07 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/09 21:36:38 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,23 @@ static int	wrap_row_is_active(t_game *g, int y)
 		return (0);
 	return (map_tile(g, y, 0) == WRAP_PORTS
 		&& map_tile(g, y, g->map.width - 1) == WRAP_PORTS);
+}
+
+int	try_wrap_ray_x(t_game *g)
+{
+	if (!wrap_row_is_active(g, g->ray.map_y))
+		return (0);
+	if (g->ray.map_x < 0)
+	{
+		g->ray.map_x = g->map.width - 2;
+		return (1);
+	}
+	if (g->ray.map_x >= g->map.width)
+	{
+		g->ray.map_x = 1;
+		return (1);
+	}
+	return (0);
 }
 
 void	wrap_port(t_game *g)
