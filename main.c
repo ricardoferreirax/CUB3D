@@ -164,6 +164,7 @@ int	gameloop(t_game *game)
 	while (game->timer.accumulator >= UPDATE_F && updates < MAX_UPDATES)
 	{
 		// update_game(game);
+		render_frame(game);
 		game->timer.accumulator -= UPDATE_F;
 		updates++;
 	}
