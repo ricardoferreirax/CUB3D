@@ -14,26 +14,26 @@
 
 void	clear_terminal(void)
 {
-	write(1, "\033[H", 3);
+write(1, "\033[H", 3);
 }
 
 void new_target(t_game *game, t_ghost *ghost, e_state state)
 {
-	if(state == SCATTER)
-		ghost->target_tile = find_c(game->map.grid, 'S');
-	if(state == CHASE)
-		ghost->target_tile = find_c(game->map.grid, 'J');
-	if(state == SCATTER)
-	{
-		if(ghost->name == BLINKY)
-			ghost->target_tile = find_c(game->map.grid, 'B');
-		if(ghost->name == PINKY)
-			ghost->target_tile = find_c(game->map.grid, 'P');
-		if(ghost->name == INKY)
-			ghost->target_tile = find_c(game->map.grid, 'I');
-		if(ghost->name == CLYDE)
-			ghost->target_tile = find_c(game->map.grid, 'C');
-	}
+if(state == SCATTER)
+	ghost->target_tile = find_c(game->map.grid, 'S');
+if(state == CHASE)
+	ghost->target_tile = find_c(game->map.grid, 'J');
+if(state == SCATTER)
+{
+	if(ghost->name == BLINKY)
+		ghost->target_tile = find_c(game->map.grid, 'B');
+	if(ghost->name == PINKY)
+		ghost->target_tile = find_c(game->map.grid, 'P');
+	if(ghost->name == INKY)
+		ghost->target_tile = find_c(game->map.grid, 'I');
+	if(ghost->name == CLYDE)
+		ghost->target_tile = find_c(game->map.grid, 'C');
+}
 }
 
 void update_target(t_game *game)
@@ -71,11 +71,16 @@ void update_game(t_game *game)
 	}
 }
 
+void clear_frame(t_game *s)
+{
+	size_t bytes;
+	bytes = (size_t)(s->win.frame_buffer.l_len * s->win.frame_buffer.height);
+	ft_bzero(s->win.frame_buffer.img_addr, bytes);
+}
+
 void render_game(t_game *game)
 {
-	clear_terminal();
-	print_2d(game->map.grid);
-	(void)game;
+	clear_frame(game);
 	return;
 }
 
@@ -164,6 +169,12 @@ void print_2d(char **map)
     write(1, buffer, offset);
 }
 
+int close_game(void *game)
+{
+	(void) game;
+	exit(1);
+}
+
 int main(int argc, char **argv)
 {
 	t_game *game;
@@ -176,9 +187,9 @@ int main(int argc, char **argv)
 	game->debug_mode = false;
 	init_game(game);
 	game->mlx_ptr = mlx_init();
-	// mlx_key_hook(game->win.win_ptr, keyloop, game);
+	mlx_key_hook(game->win.win_ptr, keyloop, game);
 	mlx_loop_hook(game->mlx_ptr, gameloop, game);
-	// mlx_hook(game->win.win_ptr, 17, 0, close_game, game);
+	mlx_hook(game->win.win_ptr, 17, 0, close_game, game);
 	mlx_loop(game->mlx_ptr);
 
 }

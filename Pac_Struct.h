@@ -27,7 +27,7 @@
 
 #define UPDATE_F 16666
 #define MAX_UPDATES 5
-#define SPEED 75,75757625
+#define SPEED 75.5757625
 #define PLAYER 'J'
 #define WALL '1'
 #define OPEN_SPACE '0'
@@ -38,6 +38,7 @@
 #define PINKY_T 'P'
 #define INKY_T 'I'
 #define CLYDE_T 'C'
+#define TILE_SIZE 8
 
 // exit codes
 # define EXIT_OK        0
@@ -261,6 +262,12 @@ typedef struct s_time
 	long accumulator;
 }	t_timer;
 
+typedef struct s_sheet
+{
+	t_sprite_ref *sprites;
+	t_image sprite_img;
+}	t_sprite_sheet;
+
 typedef struct s_game
 {
 	// o que eu preciso para a execução
@@ -281,7 +288,7 @@ typedef struct s_game
 	int global_dot_counter;
 	int score;
 	int level;
-	t_image sprite_sheet;
+	t_sprite_sheet sprite_sheet;
 }	t_game;
 
 #endif // !DEBUG
