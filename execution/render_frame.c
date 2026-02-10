@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 19:44:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/29 22:25:07 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/09 22:10:31 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	fill_ceiling_color(t_image *img, int color, int horizon)
 	end = img->height / 2 - horizon;
 	if (end < 0) end = 0;
 	if (end > img->height) end = img->height;
-
 	y = 0;
 	while (y < end)
 		fill_row_fast(img, y++, color);
@@ -59,7 +58,6 @@ void	fill_floor_color(t_image *img, int color, int horizon)
 	start = img->height / 2 - horizon;
 	if (start < 0) start = 0;
 	if (start > img->height) start = img->height;
-
 	y = start;
 	while (y < img->height)
 		fill_row_fast(img, y++, color);
