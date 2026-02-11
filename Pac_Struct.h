@@ -340,6 +340,7 @@ typedef struct s_game
 	int global_dot_counter;
 	int score;
 	int level;
+	// SpriteShit is 200x186
 	t_sprite_sheet sprite_sheet;
 }	t_game;
 

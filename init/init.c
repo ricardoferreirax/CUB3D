@@ -237,7 +237,7 @@ void	fill_tile(t_game *g, t_image *tile, unsigned int color, t_point point)
 int which_tile(t_game *game, t_point coord)
 {
 	if(game->map.grid[coord.y][coord.x] != '1')
-		return(164);
+		return(90);
 	else
 		return(39);
 }
@@ -248,13 +248,12 @@ void put_tile_inbase(t_game *g, int tile_code, unsigned int color, t_point point
 	int tx;
 
 	ty = 0;
-	printf("Pointer: %p\n", (void *)&g->sprite_sheet.sprites[tile_code]);
 	while(ty < g->sprite_sheet.sprites[tile_code].height)
 	{
 		tx = 0;
 		while(tx < g->sprite_sheet.sprites[tile_code].width)
 		{
-			color = pixel_get(&g->sprite_sheet.sprite_img, g->sprite_sheet.sprites[tile_code].coord.x + tx, g->sprite_sheet.sprites[tile_code].coord.y + ty);
+			color = pixel_get(&g->sprite_sheet.sprite_img, g->sprite_sheet.sprites[tile_code].coord.x + 400 + tx, g->sprite_sheet.sprites[tile_code].coord.y + 186  + ty);
 			if((color >> 24) != 0xFF)
 				ft_pixel_put(&g->base, point.x * 8 + tx, point.y * 8 + ty, color);
 			tx++;
