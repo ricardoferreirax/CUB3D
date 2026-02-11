@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:53:00 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/29 21:40:20 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/11 12:15:24 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	is_valid_map_char(char c)
 		return (1);
 	if (c == BLINKY_T || c == PINKY_T || c == INKY_T || c == CLYDE_T)
 		return (1);
-	if (c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == PLAYER)
+	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 		return (1);
 	return (0);
 }

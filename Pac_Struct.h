@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/10 14:10:52 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/11 12:17:39 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,21 @@ typedef struct s_map
 	int floor_color;
 }	t_map;
 
+typedef struct s_textures
+{
+	// paths (read from .cub)
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+
+	// images loaded (MLX)
+	t_image	no_img;
+	t_image	so_img;
+	t_image	we_img;
+	t_image	ea_img;
+}	t_textures;
+
 typedef struct s_raycasting
 {
 	double	*z_buffer; // array para armazenar a distância da parede
@@ -267,7 +282,6 @@ typedef struct s_player
 
 typedef struct s_game
 {
-	// o que eu preciso para a execução
 	void *mlx_ptr;
 	t_window win;
 	t_map   map;
@@ -275,6 +289,7 @@ typedef struct s_game
 	t_raycasting ray;
 	t_player player;
 	t_key	key;
+	t_textures tex;
 	
 	bool debug_mode;
 	t_ghost *ghost;
@@ -302,6 +317,12 @@ long	get_time_us(void);
 void	setup_map_grid(t_game *g);
 char	**map_rectangular(t_game *g);
 char	**map_read_file(const char *path);
+char	**load_map_from_cub(t_game *g, const char *path);
+int	is_map_line(char *line);
+int	is_map_leading_char(char c);
+int	is_empty_line(char *s);
+int	is_whitespace(char c);
+
 void	wrap_port(t_game *g);
 int	try_wrap_ray_x(t_game *g);
 void	validate_map_chars(t_game *g);
@@ -315,11 +336,17 @@ int	is_walkable_tile(char t);
 int	is_valid_wrap_port(t_game *g, int y, int x);
 void	render_minimap_test(t_game *g);
 
+
+int	is_map_start_line(char *line);
+void	parse_texture(t_game *g, char *path);
+char	*skip_whitespace(char *s);
+void	strip_newline(char *s);
+
+
+
 // =========================
 // Input & Movement
 // =========================
-void	init_keys(t_game *g);
-
 void	move_radius_check(t_game *g, double x_delta, double y_delta);
 void	player_rotation_controller(t_game *g);
 void	movement_controller(t_game *g);

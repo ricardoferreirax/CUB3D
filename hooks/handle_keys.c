@@ -6,22 +6,11 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 14:59:32 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/20 17:17:22 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/10 14:26:39 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
-
-void	init_keys(t_game *g)
-{
-	g->key.w = 0;
-	g->key.a = 0;
-	g->key.s = 0;
-	g->key.d = 0;
-	g->key.left = 0;
-	g->key.right = 0;
-	g->key.esc = 0;
-}
 
 int	handle_key_press(int keycode, t_game *g)
 {

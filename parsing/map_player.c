@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 21:11:27 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/29 22:09:21 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/11 17:28:24 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,19 @@ static void	set_dir_plane_from_char(t_game *g, char c)
 	}
 }
 
+static int	is_spawn_dir(char c)
+{
+	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
+}
+
+static void	apply_player_spawn(t_game *g, int x, int y, char dir)
+{
+	g->player.pos_x = (double)x + 0.5;
+	g->player.pos_y = (double)y + 0.5;
+	set_dir_plane_from_char(g, dir);
+	g->map.grid[y][x] = OPEN_SPACE;
+}
+
 void	init_player_from_map(t_game *g)
 {
 	int		y;
@@ -50,7 +63,6 @@ void	init_player_from_map(t_game *g)
 
 	if (!g || !g->map.grid)
 		exit_game(EXIT_MAP, g);
-
 	count = 0;
 	y = 0;
 	while (y < g->map.height)
@@ -59,13 +71,10 @@ void	init_player_from_map(t_game *g)
 		while (x < g->map.width)
 		{
 			t = g->map.grid[y][x];
-			if (t == 'N' || t == 'S' || t == 'E' || t == 'W' || t == PLAYER)
+			if (is_spawn_dir(t))
 			{
 				count++;
-				g->player.pos_x = (double)x + 0.5;
-				g->player.pos_y = (double)y + 0.5;
-				set_dir_plane_from_char(g, t);
-				g->map.grid[y][x] = OPEN_SPACE;
+				apply_player_spawn(g, x, y, t);
 			}
 			x++;
 		}

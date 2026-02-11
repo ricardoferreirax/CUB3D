@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/02/10 14:11:44 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/02/11 12:01:27 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,6 @@ SRC_FILES = main.c \
 	init/init_aux_funcs.c \
 	init/init_ghosts.c \
 	time.c \
-	init/init_defaults.c \
 	execution/player_collision.c \
 	execution/player_rotation.c \
 	execution/player_movement.c \
@@ -49,11 +48,15 @@ SRC_FILES = main.c \
 	execution/put_pixel.c  \
 	execution/render_frame.c \
 	execution/perform_dda.c \
+	parsing/load_map.c \
+	parsing/map_read_utils.c \
 	parsing/map_dimensions.c \
 	parsing/map_read.c \
 	parsing/map_validate_closed.c \
 	parsing/map_player.c \
 	parsing/map_validate_chars.c \
+	parsing/parse_textures.c \
+	parsing/texture_utils.c \
 	init/init_mlx.c \
 	execution/process_raycasting.c \
 	execution/raycasting_utils.c \

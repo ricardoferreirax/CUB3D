@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:35:44 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/09 20:38:30 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/11 17:09:15 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,39 +31,6 @@ char	map_tile(t_game *g, int y, int x)
 	return (g->map.grid[y][x]);
 }
 
-char	**map_rectangular(t_game *g)
-{
-	char	**rect;
-	int		y;
-	int		x;
-	int		len;
-
-	rect = ft_calloc(g->map.height + 1, sizeof(char *));
-	if (!rect)
-		return (NULL);
-	y = 0;
-	while (y < g->map.height)
-	{
-		rect[y] = ft_calloc(g->map.width + 1, sizeof(char));
-		if (!rect[y])
-			return (free_tab_tab(rect), NULL);
-		len = line_len_no_nl(g->map.grid[y]);
-		x = 0;
-		while (x < g->map.width)
-		{
-			if (x < len)
-				rect[y][x] = g->map.grid[y][x];
-			else
-				rect[y][x] = VOID;
-			x++;
-		}
-		rect[y][g->map.width] = '\0';
-		y++;
-	}
-	rect[y] = NULL;
-	return (rect);
-}
-
 void	setup_map_grid(t_game *g)
 {
 	int	y;
@@ -83,4 +50,52 @@ void	setup_map_grid(t_game *g)
 	}
 	g->map.height = y;
 	g->map.width = max_w;
+}
+
+static int	normalize_map_row(t_game *g, char **rect, int y)
+{
+	int		x;
+	int		len;
+	char	c;
+
+	rect[y] = ft_calloc(g->map.width + 1, sizeof(char));
+	if (!rect[y])
+		return (0);
+	len = line_len_no_nl(g->map.grid[y]);
+	x = 0;
+	while (x < g->map.width)
+	{
+		if (x < len)
+		{
+			c = g->map.grid[y][x];
+			if (c == '\n' || c == VOID)
+				rect[y][x] = WALL;
+			else
+				rect[y][x] = c;
+		}
+		else
+			rect[y][x] = WALL;
+		x++;
+	}
+	rect[y][g->map.width] = '\0';
+	return (1);
+}
+
+char	**map_rectangular(t_game *g)
+{
+	char	**rect;
+	int		y;
+
+	rect = ft_calloc(g->map.height + 1, sizeof(char *));
+	if (!rect)
+		return (NULL);
+	y = 0;
+	while (y < g->map.height)
+	{
+		if (!normalize_map_row(g, rect, y))
+			return (free_tab_tab(rect), NULL);
+		y++;
+	}
+	rect[y] = NULL;
+	return (rect);
 }

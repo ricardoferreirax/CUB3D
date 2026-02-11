@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:58:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/09 21:32:47 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/11 17:27:32 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ int	is_solid_tile(char t)
 int	is_walkable_tile(char t)
 {
 	return (t == OPEN_SPACE || t == PACDOT || t == ENERGIZER
-		|| t == WRAP_PORTS || t == PLAYER
-		|| t == 'N' || t == 'S' || t == 'E' || t == 'W');
+		|| t == WRAP_PORTS || t == 'N' || t == 'S' || t == 'E' || t == 'W');
 }
 
 void	validate_map_closed(t_game *g)
@@ -39,6 +38,7 @@ void	validate_map_closed(t_game *g)
 	int		y;
 	int		x;
 	char	t;
+	int		check;
 
 	if (!g || !g->map.grid)
 		exit_game(EXIT_MAP, g);
@@ -49,17 +49,11 @@ void	validate_map_closed(t_game *g)
 		while (x < g->map.width)
 		{
 			t = map_tile(g, y, x);
-			if (is_walkable_tile(t))
-			{
-				if (t == WRAP_PORTS && is_valid_wrap_port(g, y, x))
-				{
-					x++;
-					continue;
-				}
-				if (map_tile(g, y, x + 1) == VOID || map_tile(g, y, x - 1) == VOID
-					|| map_tile(g, y + 1, x) == VOID || map_tile(g, y - 1, x) == VOID)
-					exit_game(EXIT_MAP, g);
-			}
+			check = is_walkable_tile(t)
+				&& !(t == WRAP_PORTS && is_valid_wrap_port(g, y, x));
+			if (check && (map_tile(g, y, x + 1) == VOID || map_tile(g, y, x - 1) == VOID
+				|| map_tile(g, y + 1, x) == VOID || map_tile(g, y - 1, x) == VOID))
+				exit_game(EXIT_MAP, g);
 			x++;
 		}
 		y++;

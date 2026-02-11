@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/09 20:54:25 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/11 12:05:47 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	parse_map(t_game *g, const char *path)
 {
 	char	**rect;
 
-	g->map.grid = map_read_file(path);
+	g->map.grid = load_map_from_cub(g, path);
 	if (!g->map.grid)
 		exit_game(EXIT_MAP, g);
 	setup_map_grid(g);
@@ -54,16 +54,29 @@ void	start_execution(t_game *g)
 		exit_game(EXIT_MALLOC, g);
 }
 
-int main(int argc, char **argv)
+void	init_defaults(t_game *g)
+{
+	if (!g)
+		return ;
+	ft_bzero(g, sizeof(t_game));
+	g->ray.hit_side = -1;
+	g->player.target_map_x = -1;
+	g->player.target_map_y = -1;
+	g->map.floor_color = -1;
+	g->map.ceiling_color = -1;
+}
+
+int main(int ac, char **av)
 {
 	t_game *game;
-	if((argc > 3 || argc == 1) || (argc == 3 && (ft_strcmp(argv[2], "debug_mode=y") != 0)))
+	if((ac > 3 || ac == 1) || (ac == 3 && (ft_strcmp(av[2], "debug_mode=y") != 0)))
 		return(ft_printf("Wrong args\n"), -1);
 	game = malloc(sizeof(t_game));
 	if (!game)
 		exit_game(EXIT_MALLOC, NULL);
 	init_defaults(game);
-	parse_map(game, argv[1]);
+	parse_texture(game, av[1]);
+	parse_map(game, av[1]);
 	init_mlx(game);
 	start_execution(game);
 	
