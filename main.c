@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/11 12:05:47 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/11 17:53:27 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	init_defaults(t_game *g)
 	g->player.target_map_y = -1;
 	g->map.floor_color = -1;
 	g->map.ceiling_color = -1;
+	g->map.floor_color = 0x00003366;
+	g->map.ceiling_color = 0x00003366;
 }
 
 int main(int ac, char **av)
