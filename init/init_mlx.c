@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 15:53:44 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/09 20:39:08 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/11 19:18:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	init_window(t_game *g)
 {
 	g->win.ntilesx = 28;
 	g->win.ntilesy = 25;
-	g->win.width = 1280;
-	g->win.height = 800;
+	g->win.width = 1600;
+	g->win.height = 900;
 	g->win.win_ptr = mlx_new_window(g->mlx_ptr, g->win.width, g->win.height, "Pac-Man");
 	if (!g->win.win_ptr)
 		exit_game(EXIT_MLX, g);

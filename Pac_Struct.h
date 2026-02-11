@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/11 12:17:39 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/11 18:52:56 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,6 +257,7 @@ typedef struct s_raycasting
 	int		draw_start;
 	int		draw_end;
 	int 	hit; // flag para indicar se o ray atingiu uma parede. 0 = não atingiu, 1 = atingiu
+	int line_h; // altura da linha a desenhar (calculada a partir da distância perpendicular)
 }	t_raycasting;
 
 typedef struct s_player
@@ -341,6 +342,9 @@ int	is_map_start_line(char *line);
 void	parse_texture(t_game *g, char *path);
 char	*skip_whitespace(char *s);
 void	strip_newline(char *s);
+void	texture_load_walls(t_game *g);
+t_image	*texture_pick_wall(t_game *g);
+unsigned int	tex_pixel(t_image *tex, int x, int y);
 
 
 
@@ -360,6 +364,7 @@ int	perform_dda(t_game *g);
 void	calculate_dda_step(t_game *g);
 int		register_center_hit(t_game *g, int screen_x, int hit_found);
 void	put_pixel_fast(t_image *img, int x, int y, int color);
+void	render_wall_column_textured(t_game *g, int screen_x);
 
 // =========================
 // MLX / Window

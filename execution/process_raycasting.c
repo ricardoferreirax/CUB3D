@@ -6,13 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/09 21:47:33 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/11 18:54:35 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 
-static void	draw_vertical_line(t_game *g, int x)
+/* static void	draw_vertical_line(t_game *g, int x)
 {
 	int	y;
 	int	color;
@@ -26,13 +26,16 @@ static void	draw_vertical_line(t_game *g, int x)
 		put_pixel_fast(&g->win.frame_buffer, x, y, color);
 		y++;
 	}
-}
+} */
 
 static void	calc_draw_limits(t_game *g)
 {
 	int	line_h;
 
 	line_h = (int)((double)g->win.height / g->ray.perp_wall_dist);
+	if (line_h < 1)
+		line_h = 1;
+	g->ray.line_h = line_h;
 	g->ray.draw_start = -line_h / 2 + g->win.height / 2;
 	g->ray.draw_end = line_h / 2 + g->win.height / 2;
 	if (g->ray.draw_start < 0)
@@ -72,6 +75,7 @@ void	process_raycasting(t_game *g)
 {
 	int	screen_x;
 	int	hit_found;
+	int	hit;
 
 	if (!g)
 		return ;
@@ -81,12 +85,15 @@ void	process_raycasting(t_game *g)
 	{
 		init_ray(g, screen_x);
 		calculate_dda_step(g);
-		perform_dda(g);
-		calc_wall_distance(g);
-		calc_draw_limits(g);
-		draw_vertical_line(g, screen_x);
-		hit_found = register_center_hit(g, screen_x, hit_found);
-		g->ray.z_buffer[screen_x] = g->ray.perp_wall_dist;
+		hit = perform_dda(g);
+		if (hit)
+		{
+			calc_wall_distance(g);
+			calc_draw_limits(g);
+			render_wall_column_textured(g, screen_x);
+			g->ray.z_buffer[screen_x] = g->ray.perp_wall_dist;
+			hit_found = register_center_hit(g, screen_x, hit_found);
+		}
 		screen_x++;
 	}
 }
