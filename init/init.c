@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/21 21:08:08 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/10 14:00:15 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,8 @@ static void	init_render_struct(t_game *g)
 	g->render.endian = 0;
 }
 
-void init_ints(t_game *game)
+void	init_ints(t_game *game)
 {
-
 	game->global_dot_counter = 0;
 	game->timeout = 0;
 	game->score = 0;
@@ -105,10 +104,8 @@ void	init_window(t_game *game)
 {
 	game->win.ntilesx = xtile(game->map.grid);
 	game->win.ntilesy = ytile(game->map.grid);
-	// game->win.width = TILE_SIZE * game->win.ntilesx;
-	// game->win.height = TILE_SIZE * game->win.ntilesy;
 	game->win.width = 1280;
-	game->win.height = 800;
+	game->win.height = 1080;
 	game->win.win_ptr = mlx_new_window(game->mlx_ptr, game->win.width,
 			game->win.height, "Pac-Man");
 	game->win.frame_buffer.img_ptr = mlx_new_image(game->mlx_ptr,
@@ -142,17 +139,20 @@ void	init_ghosts(t_game *game)
 	game->ghost = malloc(sizeof(t_ghost) * 4);
 	i = -1;
 	while (++i < 4)
+	{
+		game->ghost[i].name = BLINKY;
 		init_ghost(game, &game->ghost[i]);
+	}
 }
 
-int uselesstile(t_point point)
+int	uselesstile(t_point point)
 {
-	if(point.y == 55)
+	if (point.y == 55)
 	{
-		if(point.x == 154 || point.x == 163)
-			return 1;
+		if (point.x == 154 || point.x == 163)
+			return (1);
 	}
-	return 0;
+	return (0);
 }
 
 int	init_spritesheet(t_game *game)
@@ -166,10 +166,13 @@ int	init_spritesheet(t_game *game)
 	while (control.y <= 74)
 	{
 		control.x = 1;
-		while (control.x < 373)
+		while (control.x < 199)
 		{
-			if(!uselesstile(control))
+			if (!uselesstile(control))
 			{
+				// ft_printf("Sprite N: %d ", i);
+				// ft_printf("X: %d", control.x);
+				// ft_printf("Y: %d\n", control.y);
 				game->sprite_sheet.sprites[i].coord = control;
 				game->sprite_sheet.sprites[i].width = 8;
 				game->sprite_sheet.sprites[i].height = 8;
@@ -177,42 +180,97 @@ int	init_spritesheet(t_game *game)
 			}
 			control.x += 9;
 		}
+		// ft_printf("\n");
 		control.y += 9;
 	}
 	control.y = 83;
-	while(control.y <= 168)
+	while (control.y <= 168)
 	{
 		control.x = 1;
-		while(control.x < 574)
+		while (control.x < 170)
 		{
+			// ft_printf("Sprite N: %d", i);
+			// ft_printf(" X: %d", control.x);
+			// ft_printf(" Y: %d\n", control.y);
 			game->sprite_sheet.sprites[i].coord = control;
 			game->sprite_sheet.sprites[i].width = 16;
 			game->sprite_sheet.sprites[i].height = 16;
+			i++;
 			control.x += 17;
 		}
+		// ft_printf("\n");
 		control.y += 17;
 	}
-	return i;
+	return (i);
 }
 
 void	init_render(t_game *g)
 {
 	g->render.width = g->win.width;
 	g->render.height = g->win.height;
-	g->render.img_ptr = mlx_new_image(g->mlx_ptr, g->render.width, g->render.height);
+	g->render.img_ptr = mlx_new_image(g->mlx_ptr, g->render.width,
+			g->render.height);
 	if (!g->render.img_ptr)
 		exit_game(EXIT_MLX, g);
-	g->render.img_addr = mlx_get_data_addr(g->render.img_ptr, &g->render.bpp, &g->render.l_len,
-		&g->render.endian);
+	g->render.img_addr = mlx_get_data_addr(g->render.img_ptr, &g->render.bpp,
+			&g->render.l_len, &g->render.endian);
 	if (!g->render.img_addr)
 		exit_game(EXIT_MLX, g);
+}
+
+void	fill_tile(t_game *g, t_image *tile, unsigned int color, t_point point)
+{
+	int	ty;
+	int	tx;
+
+	ty = 0;
+	while (ty < tile->height)
+	{
+		tx = 0;
+		while (tx < tile->width)
+		{
+			color = pixel_get(tile, tx, ty);
+			if ((color >> 24) != 0xFF)
+				ft_pixel_put(&g->base, point.x + tx, point.y + ty, color);
+			tx++;
+		}
+		ty++;
+	}
+}
+
+int which_tile(t_game *game, t_point coord)
+{
+	if(game->map.grid[coord.y][coord.x] != '1')
+		return(0);
+}
+
+void	init_base(t_game *s)
+{
+	int				i;
+	int			tile;
+	t_point			point;
+	unsigned int	color;
+
+	i = 0;
+	color = 0;
+	point.x = 0;
+	point.y = 0;
+	while(s->map.grid[point.y])
+	{
+		point.x = 0;
+		while(s->map.grid[point.y][point.x])
+		{
+			tile = which_tile(s, point);
+		}
+	}
 }
 
 void	init_game(t_game *game)
 {
 	init_null(game);
 	init_window(game);
-	// init_ghosts(game);
-	// init_spritesheet(game);
+	init_ghosts(game);
+	init_spritesheet(game);
+	init_base(game);
 	init_render(game);
 }

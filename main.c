@@ -6,46 +6,16 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/29 21:16:01 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/10 14:00:15 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Pac_Struct.h"
 
-void	clear_terminal(void)
-{
-	write(1, "\033[H", 3);
-}
-
-void	ft_pixel_put(t_image *s, int x, int y, unsigned int color)
-{
-	char	*dest;
-
-	dest = s->img_addr + (y * s->l_len + x * (s->bpp / 8));
-	*(unsigned int *)dest = color;
-}
-
-int	pixeL_get_coord(t_sprite_sheet *sheet, int i, int x, int y)
-{
-	char	*dest;
-
-	dest = sheet->sprite_img.img_addr + ((sheet->sprites[i].coord.y + y)
-			* sheet->sprite_img.l_len + (sheet->sprites[i].coord.x + x)
-			* (sheet->sprite_img.bpp / 8));
-	return (*(unsigned int *)dest);
-}
-
-int	pixel_get(t_image *data, int x, int y)
-{
-	char	*dest;
-
-	dest = data->img_addr + (y * data->l_len + x * (data->bpp / 8));
-	return (*(unsigned int *)dest);
-}
 
 void	new_target(t_game *game, t_ghost *ghost, e_state state)
 {
-	if (state == SCATTER)
+	if (state == SPAWN)
 		ghost->target_tile = find_c(game->map.grid, 'S');
 	if (state == CHASE)
 		ghost->target_tile = find_c(game->map.grid, 'J');
@@ -131,10 +101,36 @@ void	render_base_into_buffer(t_game *s)
 	}
 }
 
+void render_player_into_buffer(t_game *game, t_point coord, int i)
+{
+	int x;
+	int y = 0;
+	unsigned int color;
+	y = 0;
+	while(y < game->sprite_sheet.sprites[i].height)
+	{
+		x = 0;
+		while(x < game->sprite_sheet.sprites[i].width)
+		{
+			color = pixeL_get_coord(&game->sprite_sheet, i, x, y);
+			if((color >> 24) != 0xFF)
+				ft_pixel_put(&game->win.frame_buffer, x + coord.x , y + coord.y, color);
+			x++;
+		}
+		y++;
+	}
+}
+
 void	render_game(t_game *game)
 {
+	t_point point;
+	point.x = 250;
+	point.y = 250;
 	clear_frame(game);
+	render_frame(game);
 	render_base_into_buffer(game);
+	// render_player_into_buffer(game, point, 10);
+	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr, game->win.frame_buffer.img_ptr, 0, 0);
 	return ;
 }
 
@@ -164,14 +160,11 @@ int	gameloop(t_game *game)
 	while (game->timer.accumulator >= UPDATE_F && updates < MAX_UPDATES)
 	{
 		// update_game(game);
-		render_frame(game);
 		game->timer.accumulator -= UPDATE_F;
 		updates++;
 	}
-	// render_game(game);
-	return (0);
+	render_game(game);
 	// update_target(game);
-
 	return (0);
 }
 
@@ -214,8 +207,6 @@ int	main(int argc, char **argv)
 	mlx_hook(game->win.win_ptr, 17, 0, close_game, game);
 	mlx_loop_hook(game->mlx_ptr, gameloop, game);
 	mlx_loop(game->mlx_ptr);
-	
-
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/29 22:31:25 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/10 10:58:56 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -417,4 +417,9 @@ int		xtile(char **map);
 int		ytile(char **map);
 
 void	init_game(t_game *game);
+
+
+int	pixel_get(t_image *data, int x, int y);
+int	pixeL_get_coord(t_sprite_sheet *sheet, int i, int x, int y);
+void	ft_pixel_put(t_image *s, int x, int y, unsigned int color);
 

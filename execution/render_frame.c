@@ -76,6 +76,5 @@ void	render_frame(t_game *game)
 	fill_floor_color(&game->win.frame_buffer, game->map.floor_color, 0);
 	process_raycasting(game);
 	render_minimap_test(game);
-	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr, game->win.frame_buffer.img_ptr, 0, 0);
 }
 
