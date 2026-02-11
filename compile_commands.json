@@ -670,5 +670,29 @@
     "directory": "/var/home/pedro/Code/42/CUB3D",
     "file": "/var/home/pedro/Code/42/CUB3D/utils/free.c",
     "output": "/var/home/pedro/Code/42/CUB3D/objs/utils/free.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/rendering/pixels.o",
+      "rendering/pixels.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/rendering/pixels.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/rendering/pixels.o"
   }
 ]

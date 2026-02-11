@@ -170,9 +170,6 @@ int	init_spritesheet(t_game *game)
 		{
 			if (!uselesstile(control))
 			{
-				// ft_printf("Sprite N: %d ", i);
-				// ft_printf("X: %d", control.x);
-				// ft_printf("Y: %d\n", control.y);
 				game->sprite_sheet.sprites[i].coord = control;
 				game->sprite_sheet.sprites[i].width = 8;
 				game->sprite_sheet.sprites[i].height = 8;
@@ -180,7 +177,6 @@ int	init_spritesheet(t_game *game)
 			}
 			control.x += 9;
 		}
-		// ft_printf("\n");
 		control.y += 9;
 	}
 	control.y = 83;
@@ -189,18 +185,18 @@ int	init_spritesheet(t_game *game)
 		control.x = 1;
 		while (control.x < 170)
 		{
-			// ft_printf("Sprite N: %d", i);
-			// ft_printf(" X: %d", control.x);
-			// ft_printf(" Y: %d\n", control.y);
 			game->sprite_sheet.sprites[i].coord = control;
 			game->sprite_sheet.sprites[i].width = 16;
 			game->sprite_sheet.sprites[i].height = 16;
 			i++;
 			control.x += 17;
 		}
-		// ft_printf("\n");
 		control.y += 17;
 	}
+	game->sprite_sheet.sprite_img.img_ptr = mlx_xpm_file_to_image(game->mlx_ptr, SPRITE_SHEET, &game->sprite_sheet.sprite_img.width, &game->sprite_sheet.sprite_img.height);
+	if (!game->sprite_sheet.sprite_img.img_ptr)
+		exit(ft_printf("Did not found SpriteSheet.xpm\n"));
+	game->sprite_sheet.sprite_img.img_addr = mlx_get_data_addr(game->sprite_sheet.sprite_img.img_ptr, &game->sprite_sheet.sprite_img.bpp, &game->sprite_sheet.sprite_img.l_len, &game->sprite_sheet.sprite_img.endian);
 	return (i);
 }
 
@@ -241,27 +237,56 @@ void	fill_tile(t_game *g, t_image *tile, unsigned int color, t_point point)
 int which_tile(t_game *game, t_point coord)
 {
 	if(game->map.grid[coord.y][coord.x] != '1')
-		return(0);
+		return(164);
+	else
+		return(39);
+}
+
+void put_tile_inbase(t_game *g, int tile_code, unsigned int color, t_point point)
+{
+	int ty;
+	int tx;
+
+	ty = 0;
+	printf("Pointer: %p\n", (void *)&g->sprite_sheet.sprites[tile_code]);
+	while(ty < g->sprite_sheet.sprites[tile_code].height)
+	{
+		tx = 0;
+		while(tx < g->sprite_sheet.sprites[tile_code].width)
+		{
+			color = pixel_get(&g->sprite_sheet.sprite_img, g->sprite_sheet.sprites[tile_code].coord.x + tx, g->sprite_sheet.sprites[tile_code].coord.y + ty);
+			if((color >> 24) != 0xFF)
+				ft_pixel_put(&g->base, point.x * 8 + tx, point.y * 8 + ty, color);
+			tx++;
+		}
+		ty++;
+	}
 }
 
 void	init_base(t_game *s)
 {
-	int				i;
 	int			tile;
 	t_point			point;
 	unsigned int	color;
 
-	i = 0;
 	color = 0;
 	point.x = 0;
 	point.y = 0;
+	s->base.img_ptr = mlx_new_image(s->mlx_ptr, s->win.width, s->win.height);
+	s->base.img_addr = mlx_get_data_addr(s->base.img_ptr, &s->base.bpp,
+			&s->base.l_len, &s->base.endian);
+	s->base.width = s->map.width * TILE_SIZE;
+	s->base.height = s->map.height * TILE_SIZE;
 	while(s->map.grid[point.y])
 	{
 		point.x = 0;
 		while(s->map.grid[point.y][point.x])
 		{
 			tile = which_tile(s, point);
+			put_tile_inbase(s, tile, color, point);
+			point.x++;
 		}
+		point.y++;
 	}
 }
 

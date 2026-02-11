@@ -61,6 +61,7 @@ SRC_FILES = main.c \
 	hooks/handle_close.c \
 	hooks/handle_keys.c \
 	utils/free.c  \
+	rendering/pixels.c \
 
 OBJ_DIR   = objs
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))

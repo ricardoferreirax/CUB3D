@@ -35,13 +35,13 @@
 char **copy_map(char **map)
 {
 	char **copy;
-	copy = ft_calloc(sizeof(char *), ytile(map));
+	copy = ft_calloc(sizeof(char *), ytile(map) + 1);
 	int i = 0;
 	while(map && map[i])
 	{
 		int j = 0;
-		copy[i] = malloc(sizeof(char) * ft_strlen(map[i]));
-		while(map[i][j])
+		copy[i] = ft_calloc(sizeof(char) , ft_strlen(map[i]) + 1);
+		while(map[i][j] != '\0')
 		{
 			if(map[i][j] == 'M')
 				copy[i][j] = '1';

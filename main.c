@@ -67,8 +67,7 @@ void	update_game(t_game *game)
 			c = 'K';
 		if (i == 3)
 			c = 'Y';
-		game->map.grid[game->ghost[i].pos.tile_pos.y][game->ghost[i].pos.tile_pos.x] = c;
-		i++;
+		game->map.grid[game->ghost[i].pos.tile_pos.y][game->ghost[i].pos.tile_pos.x] = c; i++;
 	}
 }
 
@@ -94,7 +93,7 @@ void	render_base_into_buffer(t_game *s)
 		{
 			color = pixel_get(&s->base, x, y);
 			if ((color >> 24) != 0xFF)
-				ft_pixel_put(&s->win.frame_buffer, x, y, color);
+				ft_pixel_put(&s->win.frame_buffer, x + s->win.width / 2, y + s->win.height / 2, color);
 			x++;
 		}
 		y++;
@@ -131,6 +130,7 @@ void	render_game(t_game *game)
 	render_base_into_buffer(game);
 	// render_player_into_buffer(game, point, 10);
 	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr, game->win.frame_buffer.img_ptr, 0, 0);
+	// mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr, game->base.img_ptr, 0,0);
 	return ;
 }
 
@@ -187,6 +187,16 @@ void	parse_map(t_game *g, const char *path)
 	validate_map_closed(g);
 }
 
+void print_2d(char **arr)
+{
+	int i = 0;
+	while(arr && arr[i])
+	{
+		ft_printf("%s\n", arr[i]);
+		i++;
+	}
+}
+
 int	main(int argc, char **argv)
 {
 	t_game	*game;
@@ -198,6 +208,7 @@ int	main(int argc, char **argv)
 	if (!game)
 		return (ft_dprintf(3, "No Memory, Download more RAM\n"), exit_game(EXIT_MALLOC, NULL), -1);
 	parse_map(game, argv[1]);
+	print_2d(game->map.grid);
 	game->debug_mode = false;
 	game->mlx_ptr = mlx_init();
 	init_game(game);
