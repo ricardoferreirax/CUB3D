@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:19:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/12 09:06:07 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/12 09:07:40 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,55 @@ void	set_texture_path(char **dst, char *value, t_game *g)
 		exit_game(EXIT_MALLOC, g);
 }
 
+void	parse_floor_ceiling_color(t_game *g, const char *s, int *dst)
+{
+	int	i;
+	int	r;
+	int	gc;
+	int	b;
 
+	if (*dst != -1)
+		exit_game(EXIT_MAP, g);
+	i = 0;
+	while (s[i] == ' ' || s[i] == '\t')
+		i++;
+	r = read_rgb(s, &i, g);
+	if (s[i] != ',')
+		exit_game(EXIT_MAP, g);
+	i++;
+	gc = read_rgb(s, &i, g);
+	if (s[i] != ',')
+		exit_game(EXIT_MAP, g);
+	i++;
+	b = read_rgb(s, &i, g);
+	while (s[i] == ' ' || s[i] == '\t')
+		i++;
+	if (s[i] && s[i] != '\n')
+		exit_game(EXIT_MAP, g);
+	*dst = rgb_to_int(r, gc, b);
+}
+
+void	parse_floor_ceiling_line(t_game *g, char id, char *value)
+{
+	value = skip_whitespace(value);
+	strip_newline(value);
+	if (!*value)
+		exit_game(EXIT_MAP, g);
+	if (id == 'F')
+	{
+		if (is_xpm_path(value))
+			set_texture_path(&g->tex.f, value, g);
+		else
+			parse_floor_ceiling_color(g, value, &g->map.floor_color);
+	}
+	else if (id == 'C')
+	{
+		if (is_xpm_path(value))
+			set_texture_path(&g->tex.c, value, g);
+		else
+			parse_floor_ceiling_color(g, value, &g->map.ceiling_color);
+	}
+}
 
 static void	parse_texture_line(t_game *g, char *line)
 {
