@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:19:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/12 09:07:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/12 09:11:34 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,14 @@ void	parse_floor_ceiling_line(t_game *g, char id, char *value)
 	if (id == 'F')
 	{
 		if (is_xpm_path(value))
-			set_texture_path(&g->tex.f, value, g);
+			set_texture_path(&g->tex.floor, value, g);
 		else
 			parse_floor_ceiling_color(g, value, &g->map.floor_color);
 	}
 	else if (id == 'C')
 	{
 		if (is_xpm_path(value))
-			set_texture_path(&g->tex.c, value, g);
+			set_texture_path(&g->tex.ceiling, value, g);
 		else
 			parse_floor_ceiling_color(g, value, &g->map.ceiling_color);
 	}
