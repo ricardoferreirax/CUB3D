@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/02/11 18:34:32 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/02/11 22:20:07 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRC_FILES = main.c \
 	execution/render_frame.c \
 	execution/perform_dda.c \
 	execution/render_wall_texture.c \
+	execution/render_floor_ceiling.c \
 	parsing/load_map.c \
 	parsing/map_read_utils.c \
 	parsing/map_dimensions.c \
@@ -60,6 +61,7 @@ SRC_FILES = main.c \
 	parsing/texture_utils.c \
 	parsing/texture_load.c \
 	parsing/texture_pick_wall.c \
+	parsing/parse_color.c \
 	init/init_mlx.c \
 	execution/process_raycasting.c \
 	execution/raycasting_utils.c \

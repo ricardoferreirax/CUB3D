@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/11 18:58:24 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/11 22:18:02 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ void	init_defaults(t_game *g)
 	g->player.target_map_y = -1;
 	g->map.floor_color = -1;
 	g->map.ceiling_color = -1;
-	g->map.floor_color = 0x000000;
-	g->map.ceiling_color = 0x000000;
 }
 
 int main(int ac, char **av)
@@ -81,6 +79,7 @@ int main(int ac, char **av)
 	parse_map(game, av[1]);
 	init_mlx(game);
 	texture_load_walls(game);
+	texture_load_floor_ceiling(game);
 	start_execution(game);
 	
 	mlx_hook(game->win.win_ptr, 2, 1L << 0, handle_key_press, game);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   load_textures.c                                    :+:      :+:    :+:   */
+/*   texture_load.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 17:59:33 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/11 18:11:01 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/12 09:05:48 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,3 +36,5 @@ void	texture_load_walls(t_game *g)
 	texture_load_xpm(g, &g->tex.we_img, g->tex.we);
 	texture_load_xpm(g, &g->tex.ea_img, g->tex.ea);
 }
+
+

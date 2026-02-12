@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/11 18:52:56 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/12 09:03:08 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,12 +228,16 @@ typedef struct s_textures
 	char	*so;
 	char	*we;
 	char	*ea;
+	char *floor;
+	char *ceiling;
 
 	// images loaded (MLX)
 	t_image	no_img;
 	t_image	so_img;
 	t_image	we_img;
 	t_image	ea_img;
+	t_image	floor_img;
+	t_image	ceiling_img;
 }	t_textures;
 
 typedef struct s_raycasting
@@ -339,13 +343,20 @@ void	render_minimap_test(t_game *g);
 
 
 int	is_map_start_line(char *line);
+int	read_rgb(const char *s, int *i, t_game *g);
+int rgb_to_int(int r, int g, int b);
+int	is_xpm_path(const char *s);
 void	parse_texture(t_game *g, char *path);
 char	*skip_whitespace(char *s);
 void	strip_newline(char *s);
 void	texture_load_walls(t_game *g);
+void	texture_load_floor_ceiling(t_game *g);
 t_image	*texture_pick_wall(t_game *g);
 unsigned int	tex_pixel(t_image *tex, int x, int y);
-
+void	parse_floor_ceiling_color(t_game *g, const char *s, int *dst);
+void	parse_floor_ceiling_line(t_game *g, char id, char *value);
+void	fill_floor_color(t_image *img, int color, int horizon);
+void	fill_ceiling_color(t_image *img, int color, int horizon);
 
 
 // =========================
@@ -365,6 +376,8 @@ void	calculate_dda_step(t_game *g);
 int		register_center_hit(t_game *g, int screen_x, int hit_found);
 void	put_pixel_fast(t_image *img, int x, int y, int color);
 void	render_wall_column_textured(t_game *g, int screen_x);
+void	render_floor(t_game *g);
+void	render_ceiling(t_game *g);
 
 // =========================
 // MLX / Window

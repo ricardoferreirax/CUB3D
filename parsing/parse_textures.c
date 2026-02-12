@@ -6,13 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:19:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/11 17:28:56 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/12 09:06:07 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 
-static void	set_texture_path(char **dst, char *value, t_game *g)
+void	set_texture_path(char **dst, char *value, t_game *g)
 {
 	value = skip_whitespace(value);
 	strip_newline(value);
@@ -24,6 +24,8 @@ static void	set_texture_path(char **dst, char *value, t_game *g)
 	if (!*dst)
 		exit_game(EXIT_MALLOC, g);
 }
+
+
 
 static void	parse_texture_line(t_game *g, char *line)
 {
@@ -40,7 +42,10 @@ static void	parse_texture_line(t_game *g, char *line)
 		set_texture_path(&g->tex.we, p + 2, g);
 	else if (!ft_strncmp(p, "EA", 2) && (p[2] == ' ' || p[2] == '\t'))
 		set_texture_path(&g->tex.ea, p + 2, g);
-	// floor and ceiling 
+	else if (*p == 'F' && (p[1] == ' ' || p[1] == '\t'))
+		parse_floor_ceiling_line(g, 'F', p + 1);
+	else if (*p == 'C' && (p[1] == ' ' || p[1] == '\t'))
+		parse_floor_ceiling_line(g, 'C', p + 1);
 }
 
 void	parse_texture(t_game *g, char *path)
