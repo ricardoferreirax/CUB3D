@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:17:53 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/12 09:05:32 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/12 09:09:09 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,22 @@ int	is_map_start_line(char *line)
 	return (is_map_line(line));
 }
 
+int	is_xpm_path(const char *s)
+{
+	int	i;
+	int	len;
 
+	if (!s)
+		return (0);
+	i = 0;
+	while (s[i] == ' ' || s[i] == '\t')
+		i++;
+	len = 0;
+	while (s[i + len] && s[i + len] != '\n' && s[i + len] != '\r'
+		&& s[i + len] != ' ' && s[i + len] != '\t')
+		len++;
+	if (len < 4)
+		return (0);
+	return (s[i + len - 4] == '.' && s[i + len - 3] == 'x'
+		&& s[i + len - 2] == 'p' && s[i + len - 1] == 'm');
+}

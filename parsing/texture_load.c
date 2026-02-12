@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 17:59:33 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/12 09:05:48 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/12 09:09:03 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,10 @@ void	texture_load_walls(t_game *g)
 	texture_load_xpm(g, &g->tex.ea_img, g->tex.ea);
 }
 
-
+void	texture_load_floor_ceiling(t_game *g)
+{
+	if (g->tex.floor)
+		texture_load_xpm(g, &g->tex.floor_img, g->tex.floor);
+	if (g->tex.ceiling)
+		texture_load_xpm(g, &g->tex.ceiling_img, g->tex.ceiling);
+}
