@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/11 22:37:10 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/12 13:39:11 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,16 @@ static void	calc_draw_limits(t_game *g)
 		g->ray.draw_end = g->win.height - 1;
 }
 
-static void	calc_wall_distance(t_game *g)
-{
-	double	perp;
-
-	if (g->ray.hit_side == 0)
-		perp = (g->ray.map_x - g->player.pos_x + (1 - g->ray.step_x) / 2.0) / g->ray.ray_dir_x;
-	else
-		perp = (g->ray.map_y - g->player.pos_y + (1 - g->ray.step_y) / 2.0) / g->ray.ray_dir_y;
-	if (perp < 1e-6)
-		perp = 1e-6;
-	g->ray.perp_wall_dist = perp;
+static void calc_wall_distance(t_game *g) 
+{ 
+	if (g->ray.hit_side == 0) 
+		g->ray.perp_wall_dist = g->ray.side_dist_x - g->ray.delta_dist_x; 
+	else 
+		g->ray.perp_wall_dist = g->ray.side_dist_y - g->ray.delta_dist_y; 
+	if (g->ray.perp_wall_dist < 1e-6) 
+ 		g->ray.perp_wall_dist = 1e-6; 
 }
+
 
 static void	init_ray(t_game *g, int x)
 {
