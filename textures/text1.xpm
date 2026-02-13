@@ -1,5 +1,5 @@
 /* XPM */
-static char *west[] = {
+static char *text1[] = {
 /* columns rows colors chars-per-pixel */
 "192 192 3 1 ",
 "  c black",
