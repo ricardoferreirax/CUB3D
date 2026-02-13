@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 22:16:24 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/13 11:39:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/13 12:17:10 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ static void	fc_row_setup(t_game *g, t_fc *fc, int y, int is_ceil)
 		p = mid - (double)y;
 	else
 		p = (double)y - mid;
-	if (p < 6.0 && p > -6.0)
+	if (p < 4.0 && p > -4.0)
 	{
     	if (p < 0.0) 
-			p = -6.0;
+			p = -4.0;
     	else 
-			p = 6.0;
+			p = 4.0;
 	}
 	fc->rowdist = (0.5 * (double)g->win.height) / p;
 	r0x = g->player.dir_x - g->player.plane_x;
@@ -38,6 +38,25 @@ static void	fc_row_setup(t_game *g, t_fc *fc, int y, int is_ceil)
 	fc->stepy = fc->rowdist * ((g->player.dir_y + g->player.plane_y) - r0y) / (double)g->win.width;
 	fc->fx = g->player.pos_x + fc->rowdist * r0x;
 	fc->fy = g->player.pos_y + fc->rowdist * r0y;
+}
+
+static void	fc_get_tex_coords(t_fc *fc, t_image *tex, int *tx, int *ty)
+{
+	double	u;
+	double	v;
+
+	u = fc->fx - floor(fc->fx);
+	v = fc->fy - floor(fc->fy);
+	*tx = (int)(u * (double)tex->width);
+	*ty = (int)(v * (double)tex->height);
+	if (*tx < 0)
+		*tx = 0;
+	if (*ty < 0)
+		*ty = 0;
+	if (*tx >= tex->width)
+		*tx = tex->width - 1;
+	if (*ty >= tex->height)
+		*ty = tex->height - 1;
 }
 
 static void	fc_draw_row(t_game *g, t_fc *fc, t_image *tex, int y)
@@ -51,24 +70,11 @@ static void	fc_draw_row(t_game *g, t_fc *fc, t_image *tex, int y)
 	x = 0;
 	while (x < g->win.width)
 	{
-		tx = (int)(fc->fx * (double)tex->width);
-		ty = (int)(fc->fy * (double)tex->height);
-		tx = tx % tex->width;
-		ty = ty % tex->height;
-		if (tx < 0)
-			tx += tex->width;
-		if (ty < 0) 
-			ty += tex->height;
+		fc_get_tex_coords(fc, tex, &tx, &ty);
 		row[x] = tex_pixel(tex, tx, ty);
-		if (x + 1 < g->win.width) 
-			row[x + 1] = row[x];
-		if (x + 2 < g->win.width) 
-			row[x + 2] = row[x];
-		if (x + 3 < g->win.width) 
-			row[x + 3] = row[x];
-		fc->fx += fc->stepx * 4.0;
-		fc->fy += fc->stepy * 4.0;
-		x += 4;
+		fc->fx += fc->stepx;
+		fc->fy += fc->stepy;
+		x++;
 	}
 }
 
