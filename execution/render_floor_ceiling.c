@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 22:16:24 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/13 11:23:00 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/13 11:39:40 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ static void	fc_row_setup(t_game *g, t_fc *fc, int y, int is_ceil)
 		p = mid - (double)y;
 	else
 		p = (double)y - mid;
-	if (p < 2.0 && p > -2.0)
+	if (p < 6.0 && p > -6.0)
 	{
-		if (p < 0.0)
-			p = -2.0;
-		else
-			p = 2.0;
+    	if (p < 0.0) 
+			p = -6.0;
+    	else 
+			p = 6.0;
 	}
 	fc->rowdist = (0.5 * (double)g->win.height) / p;
 	r0x = g->player.dir_x - g->player.plane_x;
