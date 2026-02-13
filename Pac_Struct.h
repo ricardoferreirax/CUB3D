@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/12 09:03:08 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/12 21:18:54 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,6 +240,15 @@ typedef struct s_textures
 	t_image	ceiling_img;
 }	t_textures;
 
+typedef struct s_fc
+{
+	double	fx;
+	double	fy;
+	double	stepx;
+	double	stepy;
+	double	rowdist;
+}	t_fc;
+
 typedef struct s_raycasting
 {
 	double	*z_buffer; // array para armazenar a distância da parede
@@ -357,6 +366,7 @@ void	parse_floor_ceiling_color(t_game *g, const char *s, int *dst);
 void	parse_floor_ceiling_line(t_game *g, char id, char *value);
 void	fill_floor_color(t_image *img, int color, int horizon);
 void	fill_ceiling_color(t_image *img, int color, int horizon);
+
 
 
 // =========================
