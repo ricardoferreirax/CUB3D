@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_textures.c                                   :+:      :+:    :+:   */
+/*   texture_parse_path.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:19:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/12 09:52:33 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 23:25:27 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
+#include "textures3D.h"
 
 void	set_texture_path(char **dst, char *value, t_game *g)
 {
@@ -104,10 +105,9 @@ void	parse_texture(t_game *g, char *path)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		exit_game(EXIT_MAP, g);
-
 	while ((line = get_next_line(fd)))
 	{
-		if (is_map_line(line))
+		if (map_is_map_line(line))
 		{
 			free(line);
 			break ;
@@ -116,7 +116,6 @@ void	parse_texture(t_game *g, char *path)
 		free(line);
 	}
 	close(fd);
-
 	if (!g->tex.no || !g->tex.so || !g->tex.we || !g->tex.ea)
 		exit_game(EXIT_MAP, g);
 }

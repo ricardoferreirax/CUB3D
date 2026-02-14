@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:40:08 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/14 22:04:45 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 23:00:31 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	find_map_start(char **file)
 	i = 0;
 	while (file && file[i])
 	{
-		if (is_map_line(file[i]))
+		if (map_is_map_line(file[i]))
 			return (i);
 		i++;
 	}
@@ -36,9 +36,9 @@ static int	find_map_end(char **file, int start)
 	last = -1;
 	while (file && file[i])
 	{
-		if (is_map_line(file[i]))
+		if (map_is_map_line(file[i]))
 			last = i;
-		else if (!is_empty_line(file[i]))
+		else if (!map_is_empty_line(file[i]))
 			break;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 22:23:30 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/09 21:28:08 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 22:49:30 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	draw_tile(t_game *g, int map_y, int map_x, int px, int py)
 {
 	char	t;
 
-	t = map_tile(g, map_y, map_x);
+	t = map_get_tile(g, map_y, map_x);
 
 	if (t == VOID)
 	{

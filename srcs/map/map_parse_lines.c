@@ -1,53 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_read_utils.c                                   :+:      :+:    :+:   */
+/*   map_parse_lines.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/11 11:37:56 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/11 17:21:58 by rmedeiro         ###   ########.fr       */
+/*   Created: 2026/02/14 22:38:39 by rmedeiro          #+#    #+#             */
+/*   Updated: 2026/02/14 23:05:30 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Pac_Struct.h"
+#include "../../Pac_Struct.h"
+#include "map3D.h"
 
-int	is_whitespace(char c)
-{
-	return (c == ' ' || c == '\t');
-}
-
-int	is_empty_line(char *s)
-{
-	int i = 0;
-
-	if (!s)
-		return (1);
-	while (s[i])
-	{
-		if (s[i] != '\n' && !is_whitespace(s[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-static int	is_cub_prefix(char *p)
+static int	map_is_cub_prefix(char *p)
 {
 	return (!ft_strncmp(p, "NO", 2) || !ft_strncmp(p, "SO", 2)
 		|| !ft_strncmp(p, "WE", 2) || !ft_strncmp(p, "EA", 2)
 		|| *p == 'F' || *p == 'C');
 }
 
-int	is_valid_map_char(char c)
+static int	map_is_valid_char_in_line(char c)
 {
-	return (c == '\n' || c == ' ' || c == '\t' || c == WALL || c == OPEN_SPACE 
-		|| c == PACDOT || c == WRAP_PORTS || c == GHOST_SPAWN || c == BLINKY_T 
-		|| c == PINKY_T || c == INKY_T || c == CLYDE_T || c == 'R' || c == 'N' 
-		|| c == 'S' || c == 'E' || c == 'W');
+	return (c == '\n' || c == ' ' || c == '\t' || c == WALL || c == OPEN_SPACE
+		|| c == PACDOT || c == WRAP_PORTS || c == GHOST_SPAWN || c == BLINKY_T
+		|| c == PINKY_T || c == INKY_T || c == CLYDE_T || c == ENERGIZER
+		|| c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
-int	is_map_line(char *line)
+int	map_is_map_line(char *line)
 {
 	char	*p;
 	int		has_tile;
@@ -55,18 +36,34 @@ int	is_map_line(char *line)
 	if (!line)
 		return (0);
 	p = skip_whitespace(line);
-	if (!*p || *p == '\n' || is_cub_prefix(p))
+	if (!*p || *p == '\n' || map_is_cub_prefix(p))
 		return (0);
 	has_tile = 0;
 	while (*p && *p != '\n')
 	{
 		if (*p != ' ' && *p != '\t')
 		{
-			if (!is_valid_map_char(*p))
+			if (!map_is_valid_char_in_line(*p))
 				return (0);
 			has_tile = 1;
 		}
 		p++;
 	}
 	return (has_tile);
+}
+
+int	map_is_empty_line(char *s)
+{
+	int	i;
+
+	if (!s)
+		return (1);
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] != '\n' && s[i] != ' ' && s[i] != '\t')
+			return (0);
+		i++;
+	}
+	return (1);
 }

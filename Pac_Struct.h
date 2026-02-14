@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/14 22:01:23 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 23:38:20 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@
 #include <math.h>
 #include <sys/time.h>
 
-# include "srcs/map/map3D.h"
-
+#include "srcs/map/map3D.h"
 
 #define UPDATE_F 16666
 #define MAX_UPDATES 5
@@ -105,6 +104,8 @@ typedef struct s_image
 	int				endian;
 	void			*img_ptr;
 }					t_image;
+
+# include "srcs/text/textures3D.h"
 
 typedef struct s_window
 {
@@ -207,26 +208,6 @@ typedef struct s_key
 	int	right;
 	int	esc;
 }	t_key;
-
-typedef struct s_textures
-{
-	// paths (read from .cub)
-	char	*no;
-	char	*so;
-	char	*we;
-	char	*ea;
-	char *floor;
-	char *ceiling;
-
-	// images loaded (MLX)
-	t_image	no_img;
-	t_image	so_img;
-	t_image	we_img;
-	t_image	ea_img;
-	t_image	floor_img;
-	t_image	ceiling_img;
-	t_image pacdot_img;
-}	t_textures;
 
 typedef struct s_fc
 {
@@ -347,27 +328,15 @@ void	map_setup_size(t_game *g);
 char	**map_rectangular(t_game *g);
 char	**map_read_file(const char *path);
 char	**load_map_from_cub(t_game *g, const char *path);
-int	is_map_line(char *line);
-int	is_empty_line(char *s);
-int	is_whitespace(char c);
 int	is_wall(t_game *g, int y, int x);
 
 void	wrap_port(t_game *g);
 int	try_wrap_ray_x(t_game *g);
-void	validate_map_chars(t_game *g);
-void	validate_map_closed(t_game *g);
-char	map_tile(t_game *g, int y, int x);
-void	init_player_from_map(t_game *g);
-int	is_wall_tile(char t);
-int	is_void_tile(char t);
-int	is_solid_tile(char t);
-int	is_walkable_tile(char t);
 int	is_valid_wrap_port(t_game *g, int y, int x);
 void	render_minimap_test(t_game *g);
 
 void	movement_controller(t_game *g);
 
-int	is_map_start_line(char *line);
 int	read_rgb(const char *s, int *i, t_game *g);
 int rgb_to_int(int r, int g, int b);
 int	is_xpm_path(const char *s);

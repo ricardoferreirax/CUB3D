@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_color.c                                      :+:      :+:    :+:   */
+/*   texture_parse_color.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 21:15:30 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/11 22:14:11 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 23:25:41 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
+#include "textures3D.h"
 
 int rgb_to_int(int r, int g, int b)
 {

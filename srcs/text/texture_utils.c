@@ -6,11 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:17:53 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/12 09:52:10 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 23:25:52 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
+#include "textures3D.h"
 
 void	strip_newline(char *s)
 {
@@ -33,7 +34,7 @@ char	*skip_whitespace(char *s)
 
 int	is_map_start_line(char *line)
 {
-	return (is_map_line(line));
+	return (map_is_map_line(line));
 }
 
 int	is_xpm_path(const char *s)

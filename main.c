@@ -6,11 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/14 21:45:19 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 23:27:49 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Pac_Struct.h"
+#include "srcs/text/textures3D.h"
+#include "srcs/map/map3D.h"
 
 int	gameloop(t_game *game)
 {
@@ -40,9 +42,9 @@ void	parse_map(t_game *g, const char *path)
 		exit_game(EXIT_MALLOC, g);
 	free_tab_tab(g->map.grid);
 	g->map.grid = rect;
-	validate_map_chars(g);
+	map_validate_chars(g);
 	init_player_from_map(g);
-	validate_map_closed(g);
+	map_validate_closed(g);
 }
 
 void	start_execution(t_game *g)

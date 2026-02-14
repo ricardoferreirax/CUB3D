@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:48:50 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/09 20:55:28 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 22:50:17 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	is_center_hit(t_game *g, int already_found, int screen_x)
 		return (0);
 	if (!is_center_column(g, screen_x))
 		return (0);
-	tile = map_tile(g, g->ray.map_y, g->ray.map_x);
+	tile = map_get_tile(g, g->ray.map_y, g->ray.map_x);
 	if (tile == OPEN_SPACE || tile == VOID)
 		return (0);
 	return (1);
@@ -42,7 +42,7 @@ int	register_center_hit(t_game *g, int screen_x, int hit_found)
 
 	if (!is_center_hit(g, hit_found, screen_x))
 		return (hit_found);
-	tile = map_tile(g, g->ray.map_y, g->ray.map_x);
+	tile = map_get_tile(g, g->ray.map_y, g->ray.map_x);
 	g->player.target_map_x = g->ray.map_x;
 	g->player.target_map_y = g->ray.map_y;
 	g->player.target_tile = tile;

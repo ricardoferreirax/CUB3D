@@ -6,11 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 17:59:33 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/14 20:39:33 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 23:25:36 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
+#include "textures3D.h"
 
 void	texture_load_xpm(t_game *g, t_image *img, const char *path)
 {

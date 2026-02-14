@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 22:42:10 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/14 20:57:52 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 22:47:53 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	is_wall(t_game *g, int y, int x)
 {
 	char	t;
 
-	t = map_tile(g, y, x);
+	t = map_get_tile(g, y, x);
 	return (t == WALL || t == VOID);
 }
 

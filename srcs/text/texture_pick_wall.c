@@ -6,11 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 18:13:52 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/11 22:15:26 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 23:25:47 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
+#include "textures3D.h"
 
 unsigned int	tex_pixel(t_image *tex, int x, int y)
 {

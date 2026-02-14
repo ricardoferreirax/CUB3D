@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/02/14 22:26:40 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/02/14 23:35:46 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,9 +46,14 @@ SRC_FILES = main.c \
 	srcs/map/map_dimensions.c \
 	srcs/map/map_player_spawn.c \
 	srcs/map/map_read.c \
-	srcs/map/map_validate_chars.c \
-	srcs/map/map_tiles.c \
+	srcs/map/map_validate_grid.c \
+	srcs/map/map_parse_lines.c \
 	srcs/map/map_utils.c \
+	srcs/text/texture_parse_path.c \
+	srcs/text/texture_parse_color.c \
+	srcs/text/texture_load.c \
+	srcs/text/texture_pick_wall.c \
+	srcs/text/texture_utils.c \
 	execution/player_collision.c \
 	execution/player_rotation.c \
 	execution/player_movement.c \
@@ -60,12 +65,6 @@ SRC_FILES = main.c \
 	execution/render_wall_texture.c \
 	execution/render_floor_ceiling.c \
 	execution/render_pacdots.c \
-	parsing/map_read_utils.c \
-	parsing/parse_textures.c \
-	parsing/texture_utils.c \
-	parsing/texture_load.c \
-	parsing/texture_pick_wall.c \
-	parsing/parse_color.c \
 	init/init_mlx.c \
 	execution/process_raycasting.c \
 	execution/raycasting_utils.c \
