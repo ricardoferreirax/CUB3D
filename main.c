@@ -6,12 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/14 23:27:49 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 23:50:26 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Pac_Struct.h"
 #include "srcs/text/textures3D.h"
+#include "srcs/render/render3D.h"
 #include "srcs/map/map3D.h"
 
 int	gameloop(t_game *game)

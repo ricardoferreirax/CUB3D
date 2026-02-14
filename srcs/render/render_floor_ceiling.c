@@ -6,11 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 22:16:24 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/13 12:17:10 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 23:52:53 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
+#include "render3D.h"
 
 static void	fc_row_setup(t_game *g, t_fc *fc, int y, int is_ceil)
 {

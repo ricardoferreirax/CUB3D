@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/14 23:38:20 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 23:54:53 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct s_image
 }					t_image;
 
 # include "srcs/text/textures3D.h"
+# include "srcs/render/render3D.h"
 
 typedef struct s_window
 {
@@ -209,15 +210,6 @@ typedef struct s_key
 	int	esc;
 }	t_key;
 
-typedef struct s_fc
-{
-	double	fx;
-	double	fy;
-	double	stepx;
-	double	stepy;
-	double	rowdist;
-}	t_fc;
-
 typedef struct s_pacdot
 {
 	double x;
@@ -241,30 +233,6 @@ typedef struct s_pacctx
 	int			y0;
 	int			y1;
 }	t_pacctx;
-
-typedef struct s_raycasting
-{
-	double	*z_buffer; // array para armazenar a distância da parede
-	double	camera_x; // posição no ecra (-1 a 1) 
-	double	ray_dir_x; 
-	double	ray_dir_y;
-	int		map_x;
-	int		map_y;
-	int		step_x;  // +1 ou -1 para indicar a direção no eixo x
-	int		step_y; // +1 ou -1 para indicar a direção no eixo y
-	double	side_dist_x; // distancia do ray atual até a proxima linha vertical (até a proxima parede no eixo x)
-	double	side_dist_y; // distancia do ray atual até a proxima linha horizontal (até a proxima parede no eixo y)
-	double	delta_dist_x; // distancia que o ray tem que percorrer para ir de uma linha vertical para a proxima (no eixo x) - distancia entre linhas verticais
-	double	delta_dist_y; // distancia que o ray tem que percorrer para ir de uma linha horizontal para a proxima (no eixo y) - distancia entre linhas horizontais
-	int		hit_side; // 0 = parede vertical, 1 = parede horizontal
-	double	perp_wall_dist; // distancia perpendicular a parede
-
-	// drawing limits
-	int		draw_start;
-	int		draw_end;
-	int 	hit; // flag para indicar se o ray atingiu uma parede. 0 = não atingiu, 1 = atingiu
-	int line_h; // altura da linha a desenhar (calculada a partir da distância perpendicular)
-}	t_raycasting;
 
 typedef struct s_player
 {
@@ -324,12 +292,6 @@ long	get_time_us(void);
 // =========================
 // Map & Player init
 // =========================
-void	map_setup_size(t_game *g);
-char	**map_rectangular(t_game *g);
-char	**map_read_file(const char *path);
-char	**load_map_from_cub(t_game *g, const char *path);
-int	is_wall(t_game *g, int y, int x);
-
 void	wrap_port(t_game *g);
 int	try_wrap_ray_x(t_game *g);
 int	is_valid_wrap_port(t_game *g, int y, int x);
@@ -337,15 +299,7 @@ void	render_minimap_test(t_game *g);
 
 void	movement_controller(t_game *g);
 
-int	read_rgb(const char *s, int *i, t_game *g);
-int rgb_to_int(int r, int g, int b);
-int	is_xpm_path(const char *s);
-void	parse_texture(t_game *g, char *path);
-char	*skip_whitespace(char *s);
-void	strip_newline(char *s);
-void	texture_load_walls(t_game *g);
-void	texture_load_floor_ceiling(t_game *g);
-t_image	*texture_pick_wall(t_game *g);
+
 unsigned int	tex_pixel(t_image *tex, int x, int y);
 void	parse_floor_ceiling_color(t_game *g, const char *s, int *dst);
 void	parse_floor_ceiling_line(t_game *g, char id, char *value);

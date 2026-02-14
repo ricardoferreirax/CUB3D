@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:48:48 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/14 23:27:32 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 23:46:53 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,3 +43,4 @@ int	map_is_empty_line(char *s);
 
 char	map_get_tile(t_game *g, int y, int x);
 int	map_tile_type(char t, int tile_type);
+char	**map_read_file(const char *path);

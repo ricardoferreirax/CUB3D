@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:20:35 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/14 23:32:12 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 23:48:39 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,12 @@ void			texture_load_floor_ceiling(t_game *g);
 void			load_pacdot_texture(t_game *g, char *path);
 unsigned int	tex_pixel(t_image *tex, int x, int y);
 t_image			*texture_pick_wall(t_game *g);
+
+int	read_rgb(const char *s, int *i, t_game *g);
+int rgb_to_int(int r, int g, int b);
+int	is_xpm_path(const char *s);
+void	strip_newline(char *s);
+void	texture_load_walls(t_game *g);
+void	texture_load_floor_ceiling(t_game *g);
 
 #endif

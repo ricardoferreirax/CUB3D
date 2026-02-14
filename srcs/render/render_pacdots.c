@@ -6,11 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 22:06:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/14 20:38:19 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 23:53:04 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
+#include "render3D.h"
 
 static unsigned int	pac_tex_px(t_image *t, int x, int y)
 {

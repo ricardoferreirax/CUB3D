@@ -6,11 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:48:50 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/14 22:50:17 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 23:52:49 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../Pac_Struct.h"
+#include "../Pac_Struct.h"
+#include "render3D.h"
 
 static int	is_center_column(t_game *g, int x)
 {
