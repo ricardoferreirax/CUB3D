@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 21:39:40 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/09 21:52:03 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 22:28:57 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,10 @@ int	perform_dda(t_game *g)
 		dda_step(g);
 		if (!validate_or_wrap_ray(g))
 			return (0);
-		if (is_solid_tile(map_tile(g, g->ray.map_y, g->ray.map_x)))
+		if (map_tile_type(map_tile(g, g->ray.map_y, g->ray.map_x), TILE_SOLID))
 			return (1);
 		steps++;
 	}
 	return (0);
 }
+

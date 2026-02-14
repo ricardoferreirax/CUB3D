@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/02/14 22:05:32 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/02/14 22:26:40 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,9 @@ SRC_FILES = main.c \
 	srcs/map/map_load.c \
 	srcs/map/map_dimensions.c \
 	srcs/map/map_player_spawn.c \
+	srcs/map/map_read.c \
+	srcs/map/map_validate_chars.c \
+	srcs/map/map_tiles.c \
 	srcs/map/map_utils.c \
 	execution/player_collision.c \
 	execution/player_rotation.c \
@@ -58,9 +61,6 @@ SRC_FILES = main.c \
 	execution/render_floor_ceiling.c \
 	execution/render_pacdots.c \
 	parsing/map_read_utils.c \
-	parsing/map_read.c \
-	parsing/map_validate_closed.c \
-	parsing/map_validate_chars.c \
 	parsing/parse_textures.c \
 	parsing/texture_utils.c \
 	parsing/texture_load.c \

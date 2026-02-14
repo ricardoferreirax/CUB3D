@@ -6,13 +6,14 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:33:47 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/11 12:02:35 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 22:10:57 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
+#include "map3D.h"
 
-static void	free_lines_partial(char **lines, int n)
+static void	map_free_lines(char **lines, int n)
 {
 	int	i;
 
@@ -24,7 +25,7 @@ static void	free_lines_partial(char **lines, int n)
 	free(lines);
 }
 
-static int	count_lines_file(const char *path)
+static int	map_count_file_lines(const char *path)
 {
 	int		fd;
 	int		count;
@@ -43,15 +44,31 @@ static int	count_lines_file(const char *path)
 	return (count);
 }
 
+static int	map_read_lines(int fd, char **lines, int n)
+{
+	int		i;
+	char	*line;
+
+	i = 0;
+	while (i < n && (line = get_next_line(fd)))
+	{
+		lines[i] = ft_strdup(line);
+		free(line);
+		if (!lines[i])
+			return (map_free_lines(lines, i), 0);
+		i++;
+	}
+	lines[i] = NULL;
+	return (1);
+}
+
 char	**map_read_file(const char *path)
 {
 	int		fd;
 	int		n;
-	int		i;
 	char	**lines;
-	char	*line;
 
-	n = count_lines_file(path);
+	n = map_count_file_lines(path);
 	if (n <= 0)
 		return (NULL);
 	lines = ft_calloc((size_t)n + 1, sizeof(char *));
@@ -60,20 +77,8 @@ char	**map_read_file(const char *path)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (free(lines), NULL);
-	i = 0;
-	while (i < n && (line = get_next_line(fd)))
-	{
-		lines[i] = ft_strdup(line);
-		free(line);
-		if (!lines[i])
-		{
-			close(fd);
-			free_lines_partial(lines, i);
-			return (NULL);
-		}
-		i++;
-	}
-	lines[i] = NULL;
+	if (!map_read_lines(fd, lines, n))
+		return (close(fd), map_free_lines(lines, n), NULL);
 	close(fd);
 	return (lines);
 }

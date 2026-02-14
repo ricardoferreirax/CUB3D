@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_validate_closed.c                              :+:      :+:    :+:   */
+/*   map_tiles.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/28 11:58:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/11 17:27:32 by rmedeiro         ###   ########.fr       */
+/*   Created: 2026/02/14 22:15:33 by rmedeiro          #+#    #+#             */
+/*   Updated: 2026/02/14 22:19:52 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Pac_Struct.h"
+#include "../../Pac_Struct.h"
+#include "map3D.h"
 
-int	is_wall_tile(char t)
+char	map_tile(t_game *g, int y, int x)
+{
+	if (!g || !g->map.grid)
+		return (VOID);
+	if (y < 0 || x < 0 || y >= g->map.height || x >= g->map.width)
+		return (VOID);
+	return (g->map.grid[y][x]);
+}
+
+/* int	is_wall_tile(char t)
 {
 	return (t == WALL);
 }
@@ -31,31 +41,21 @@ int	is_walkable_tile(char t)
 {
 	return (t == OPEN_SPACE || t == PACDOT || t == ENERGIZER
 		|| t == WRAP_PORTS || t == 'N' || t == 'S' || t == 'E' || t == 'W');
-}
+} */
 
-void	validate_map_closed(t_game *g)
+int	map_tile_type(char t, int tile_type)
 {
-	int		y;
-	int		x;
-	char	t;
-	int		check;
-
-	if (!g || !g->map.grid)
-		exit_game(EXIT_MAP, g);
-	y = 0;
-	while (y < g->map.height)
+	if (tile_type == TILE_WALL)
+		return (t == WALL);
+	if (tile_type == TILE_VOID)
+		return (t == VOID);
+	if (tile_type == TILE_SOLID)
+		return (t == WALL);
+	if (tile_type == TILE_WALKABLE)
 	{
-		x = 0;
-		while (x < g->map.width)
-		{
-			t = map_tile(g, y, x);
-			check = is_walkable_tile(t)
-				&& !(t == WRAP_PORTS && is_valid_wrap_port(g, y, x));
-			if (check && (map_tile(g, y, x + 1) == VOID || map_tile(g, y, x - 1) == VOID
-				|| map_tile(g, y + 1, x) == VOID || map_tile(g, y - 1, x) == VOID))
-				exit_game(EXIT_MAP, g);
-			x++;
-		}
-		y++;
+		return (t == OPEN_SPACE || t == PACDOT || t == ENERGIZER
+			|| t == WRAP_PORTS || t == 'N'
+			|| t == 'S' || t == 'E' || t == 'W');
 	}
+	return (0);
 }
