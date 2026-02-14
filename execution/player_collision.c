@@ -6,13 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 22:42:10 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/29 22:16:08 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 20:57:52 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 
-static int	is_wall(t_game *g, int y, int x)
+int	is_wall(t_game *g, int y, int x)
 {
 	char	t;
 

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/13 11:13:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 21:20:46 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@
 #define PLAYER_SPEED    0.06
 #define ROT_SPEED    0.05
 #define PLAYER_RADIUS   0.15
+
 
 //////// MINIMAP TEST ////////
 
@@ -121,12 +122,6 @@ typedef struct s_anim
 	t_image *left[2];
 	t_image *right[2];
 }	t_anim;
-
-typedef struct s_pacdot
-{
-	t_pos pos;
-	bool eaten;
-}	t_pacdot;
 
 typedef enum e_ghost
 {
@@ -238,6 +233,7 @@ typedef struct s_textures
 	t_image	ea_img;
 	t_image	floor_img;
 	t_image	ceiling_img;
+	t_image pacdot_img;
 }	t_textures;
 
 typedef struct s_fc
@@ -248,6 +244,30 @@ typedef struct s_fc
 	double	stepy;
 	double	rowdist;
 }	t_fc;
+
+typedef struct s_pacdot
+{
+	double x;
+	double y;
+	int active;
+	
+	t_pos pos;
+	bool eaten;
+}	t_pacdot;
+
+typedef struct s_pacctx
+{
+	t_pacdot	*dots;
+	int			count;
+	t_image		tex;
+	double		depth;
+	int			sx;
+	int			size;
+	int			x0;
+	int			x1;
+	int			y0;
+	int			y1;
+}	t_pacctx;
 
 typedef struct s_raycasting
 {
@@ -304,10 +324,13 @@ typedef struct s_game
 	t_player player;
 	t_key	key;
 	t_textures tex;
+	t_pacdot *pacdots;
+	int pacdot_count;
+	t_image pacdot_img;
+	t_pacctx pac;
 	
 	bool debug_mode;
 	t_ghost *ghost;
-	t_pacdot *dot;
 	double timeout;
 	t_timer timer;
 	int global_dot_counter;
@@ -333,9 +356,9 @@ char	**map_rectangular(t_game *g);
 char	**map_read_file(const char *path);
 char	**load_map_from_cub(t_game *g, const char *path);
 int	is_map_line(char *line);
-int	is_map_leading_char(char c);
 int	is_empty_line(char *s);
 int	is_whitespace(char c);
+int	is_wall(t_game *g, int y, int x);
 
 void	wrap_port(t_game *g);
 int	try_wrap_ray_x(t_game *g);
@@ -350,6 +373,7 @@ int	is_walkable_tile(char t);
 int	is_valid_wrap_port(t_game *g, int y, int x);
 void	render_minimap_test(t_game *g);
 
+void	movement_controller(t_game *g);
 
 int	is_map_start_line(char *line);
 int	read_rgb(const char *s, int *i, t_game *g);
@@ -366,6 +390,11 @@ void	parse_floor_ceiling_color(t_game *g, const char *s, int *dst);
 void	parse_floor_ceiling_line(t_game *g, char id, char *value);
 void	fill_floor_color(t_image *img, int color, int horizon);
 void	fill_ceiling_color(t_image *img, int color, int horizon);
+void	load_pacdot_texture(t_game *g, char *path);
+void	render_pacdots(t_game *g);
+void init_pacdots(t_game *g);
+void	texture_load_xpm(t_game *g, t_image *img, const char *path);
+void	init_assets(t_game *g);
 
 
 

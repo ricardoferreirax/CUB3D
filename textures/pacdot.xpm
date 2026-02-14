@@ -1,0 +1,43 @@
+/* pacdot_white_3d_alpha.xpm */
+static char *pacdot_xpm[] = {
+"32 32 7 1",
+". c None",
+"a c #FFFFFFFF",  /* branco opaco */
+"b c #F2FFFFFF",  /* branco ligeiro (alpha ~0xF2) */
+"c c #D8FFFFFF",  /* branco mais transparente (alpha ~0xD8) */
+"d c #FFDADADA",  /* sombra suave (opaca) */
+"e c #FFBEBEBE",  /* sombra forte (opaca) */
+"h c #FFFFFFFF",  /* highlight forte */
+"................................",
+"................................",
+"............hhhh................",
+".........hhhbbbbhhh.............",
+".......hhbbbbbbbbbbhh...........",
+"......hbbbbbbbbbbbbbbh..........",
+".....hbbbbbbbbbbbbbbbbh.........",
+"....hbbbbbbbbbbbbbbbbbbh........",
+"...hbbbbbbbbbbbbbbbbbbbbh.......",
+"...bbbbbbbbbbbbbbbbbbbbbb.......",
+"..bbbbbbbbbbbbbbbbbbbbbbbd......",
+"..bbbbbbbbbbbbbbbbbbbbbbbdd.....",
+"..bbbbbbbbbbbbbbbbbbbbbbddd.....",
+"..bbbbbbbbbbbbbbbbbbbbbbddd.....",
+"..bbbbbbbbbbbbbbbbbbbbbbddd.....",
+"..bbbbbbbbbbbbbbbbbbbbbbddd.....",
+"..bbbbbbbbbbbbbbbbbbbbbbddd.....",
+"..bbbbbbbbbbbbbbbbbbbbbbddd.....",
+"..bbbbbbbbbbbbbbbbbbbbbbddd.....",
+"..bbbbbbbbbbbbbbbbbbbbbbddd.....",
+"..bbbbbbbbbbbbbbbbbbbbbbbdd.....",
+"..bbbbbbbbbbbbbbbbbbbbbbbde.....",
+"...bbbbbbbbbbbbbbbbbbbbbbbe.....",
+"...hbbbbbbbbbbbbbbbbbbbbbe......",
+"....hbbbbbbbbbbbbbbbbbbbe.......",
+".....hbbbbbbbbbbbbbbbbbe........",
+"......hbbbbbbbbbbbbbbbe.........",
+".......hhbbbbbbbbbbbee..........",
+".........hhhbbbbeee.............",
+"............eeee................",
+"................................",
+"................................"
+};

@@ -6,13 +6,13 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/02/13 11:08:04 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/02/14 21:21:01 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    = cub3d
 
-CC      = gcc
+CC      = gcc -O3
 CFLAGS  = -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion -Wformat=2 -Wstrict-aliasing=2 \
 		-fno-omit-frame-pointer \
 		-g -fsanitize=undefined 
@@ -39,6 +39,8 @@ SRC_FILES = main.c \
 	init/init.c \
 	init/init_aux_funcs.c \
 	init/init_ghosts.c \
+	init/init_assets.c \
+	init/init_pacdots.c \
 	time.c \
 	execution/player_collision.c \
 	execution/player_rotation.c \
@@ -50,6 +52,7 @@ SRC_FILES = main.c \
 	execution/perform_dda.c \
 	execution/render_wall_texture.c \
 	execution/render_floor_ceiling.c \
+	execution/render_pacdots.c \
 	parsing/load_map.c \
 	parsing/map_read_utils.c \
 	parsing/map_dimensions.c \

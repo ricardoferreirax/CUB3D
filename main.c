@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/11 22:18:02 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/13 22:34:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,10 @@ int main(int ac, char **av)
 	init_mlx(game);
 	texture_load_walls(game);
 	texture_load_floor_ceiling(game);
+	init_assets(game);
+	init_pacdots(game);
+	//printf("PACDOT COUNT = %d\n", game->pacdot_count);
+
 	start_execution(game);
 	
 	mlx_hook(game->win.win_ptr, 2, 1L << 0, handle_key_press, game);

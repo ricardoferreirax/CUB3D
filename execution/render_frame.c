@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 19:44:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/11 22:21:25 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 20:38:42 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ void	fill_ceiling_color(t_image *img, int color, int horizon)
 	if (!img || !img->img_addr)
 		return ;
 	end = img->height / 2 - horizon;
-	if (end < 0) end = 0;
-	if (end > img->height) end = img->height;
+	if (end < 0) 
+		end = 0;
+	if (end > img->height) 
+		end = img->height;
 	y = 0;
 	while (y < end)
 		fill_row_fast(img, y++, color);
@@ -56,8 +58,10 @@ void	fill_floor_color(t_image *img, int color, int horizon)
 	if (!img || !img->img_addr)
 		return ;
 	start = img->height / 2 - horizon;
-	if (start < 0) start = 0;
-	if (start > img->height) start = img->height;
+	if (start < 0) 
+		start = 0;
+	if (start > img->height) 
+		start = img->height;
 	y = start;
 	while (y < img->height)
 		fill_row_fast(img, y++, color);
@@ -73,6 +77,7 @@ void	render_frame(t_game *game)
 	render_ceiling(game);
 	render_floor(game);
 	process_raycasting(game);
+	render_pacdots(game);
 	render_minimap_test(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr, game->win.frame_buffer.img_ptr, 0, 0);
 }

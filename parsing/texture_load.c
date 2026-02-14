@@ -6,13 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 17:59:33 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/12 09:52:28 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 20:39:33 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 
-static void	texture_load_xpm(t_game *g, t_image *img, const char *path)
+void	texture_load_xpm(t_game *g, t_image *img, const char *path)
 {
 	int	w;
 	int	h;
@@ -43,4 +43,17 @@ void	texture_load_floor_ceiling(t_game *g)
 		texture_load_xpm(g, &g->tex.floor_img, g->tex.floor);
 	if (g->tex.ceiling)
 		texture_load_xpm(g, &g->tex.ceiling_img, g->tex.ceiling);
+}
+
+void	load_pacdot_texture(t_game *g, char *path)
+{
+	int w;
+	int h;
+
+	g->pacdot_img.img_ptr = mlx_xpm_file_to_image(g->mlx_ptr, path, &w, &h);
+	if (!g->pacdot_img.img_ptr)
+		exit_game(EXIT_MLX, g);
+	g->pacdot_img.img_addr = mlx_get_data_addr(g->pacdot_img.img_ptr, &g->pacdot_img.bpp, &g->pacdot_img.l_len, &g->pacdot_img.endian);
+	g->pacdot_img.width = w;
+	g->pacdot_img.height = h;
 }

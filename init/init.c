@@ -6,20 +6,11 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/21 21:08:08 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/13 22:09:31 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "initializer.h"
-
-void init_null(t_game *game)
-{
-	// game->win = NULL;
-	game->ghost = NULL;
-	game->dot = NULL;
-	// game->player = NULL;
-}
-
 
 void init_ghost(t_game *game, t_ghost *ghost)
 {
