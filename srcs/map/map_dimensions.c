@@ -6,13 +6,14 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:35:44 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/11 17:09:15 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 22:04:36 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Pac_Struct.h"
+#include "../../Pac_Struct.h"
+#include "map3D.h"
 
-static int	line_len_no_nl(const char *s)
+static int	map_line_len(const char *s)
 {
 	int	i;
 
@@ -22,16 +23,7 @@ static int	line_len_no_nl(const char *s)
 	return (i);
 }
 
-char	map_tile(t_game *g, int y, int x)
-{
-	if (!g || !g->map.grid)
-		return (VOID);
-	if (y < 0 || x < 0 || y >= g->map.height || x >= g->map.width)
-		return (VOID);
-	return (g->map.grid[y][x]);
-}
-
-void	setup_map_grid(t_game *g)
+void	map_setup_size(t_game *g)
 {
 	int	y;
 	int	w;
@@ -43,7 +35,7 @@ void	setup_map_grid(t_game *g)
 	max_w = 0;
 	while (g->map.grid[y])
 	{
-		w = line_len_no_nl(g->map.grid[y]);
+		w = map_line_len(g->map.grid[y]);
 		if (w > max_w)
 			max_w = w;
 		y++;
@@ -52,7 +44,7 @@ void	setup_map_grid(t_game *g)
 	g->map.width = max_w;
 }
 
-static int	normalize_map_row(t_game *g, char **rect, int y)
+static int	map_fill_row(t_game *g, char **rect, int y)
 {
 	int		x;
 	int		len;
@@ -61,7 +53,7 @@ static int	normalize_map_row(t_game *g, char **rect, int y)
 	rect[y] = ft_calloc(g->map.width + 1, sizeof(char));
 	if (!rect[y])
 		return (0);
-	len = line_len_no_nl(g->map.grid[y]);
+	len = map_line_len(g->map.grid[y]);
 	x = 0;
 	while (x < g->map.width)
 	{
@@ -92,7 +84,7 @@ char	**map_rectangular(t_game *g)
 	y = 0;
 	while (y < g->map.height)
 	{
-		if (!normalize_map_row(g, rect, y))
+		if (!map_fill_row(g, rect, y))
 			return (free_tab_tab(rect), NULL);
 		y++;
 	}

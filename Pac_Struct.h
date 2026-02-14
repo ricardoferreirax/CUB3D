@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/14 21:20:46 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 22:01:23 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 #include <fcntl.h>
 #include <math.h>
 #include <sys/time.h>
+
+# include "srcs/map/map3D.h"
 
 
 #define UPDATE_F 16666
@@ -206,16 +208,6 @@ typedef struct s_key
 	int	esc;
 }	t_key;
 
-// execution - map
-typedef struct s_map
-{
-	char	**grid;
-	int		width;
-	int		height;
-	int ceiling_color;
-	int floor_color;
-}	t_map;
-
 typedef struct s_textures
 {
 	// paths (read from .cub)
@@ -351,7 +343,7 @@ long	get_time_us(void);
 // =========================
 // Map & Player init
 // =========================
-void	setup_map_grid(t_game *g);
+void	map_setup_size(t_game *g);
 char	**map_rectangular(t_game *g);
 char	**map_read_file(const char *path);
 char	**load_map_from_cub(t_game *g, const char *path);

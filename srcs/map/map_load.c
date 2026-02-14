@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   load_map.c                                         :+:      :+:    :+:   */
+/*   map_load.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:40:08 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/11 17:31:00 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/14 22:04:45 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Pac_Struct.h"
+#include "../../Pac_Struct.h"
+#include "map3D.h"
 
 static int	find_map_start(char **file)
 {
@@ -38,7 +39,7 @@ static int	find_map_end(char **file, int start)
 		if (is_map_line(file[i]))
 			last = i;
 		else if (!is_empty_line(file[i]))
-			break; // encontrou algo nao vazio que não e o mapa
+			break;
 		i++;
 	}
 	return (last);
@@ -96,7 +97,6 @@ char	**load_map_from_cub(t_game *g, const char *path)
 		free_tab_tab(file);
 		exit_game(EXIT_MAP, g);
 	}
-	// check_no_trailing_garbage(file, end);
 	map = extract_map(file, start, end, g);
 	free_tab_tab(file);
 	if (!map)
