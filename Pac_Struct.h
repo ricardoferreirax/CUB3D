@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/15 19:44:10 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/15 22:19:57 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,20 +220,6 @@ typedef struct s_pacdot
 	bool eaten;
 }	t_pacdot;
 
-typedef struct s_pacctx
-{
-	t_pacdot	*dots;
-	int			count;
-	t_image		tex;
-	double		depth;
-	int			sx;
-	int			size;
-	int			x0;
-	int			x1;
-	int			y0;
-	int			y1;
-}	t_pacctx;
-
 typedef struct s_player
 {
 	// vou precisar para a execução 3D
@@ -268,7 +254,6 @@ typedef struct s_game
 	t_pacdot *pacdots;
 	int pacdot_count;
 	t_image pacdot_img;
-	t_pacctx pac;
 	
 	bool debug_mode;
 	t_ghost *ghost;

@@ -6,18 +6,20 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 22:47:51 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/13 22:58:13 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/15 22:11:30 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 
-static int	pac_count(t_game *g)
+static int	pacdot_count_map(t_game *g)
 {
 	int	y;
 	int	x;
 	int	n;
 
+	if (!g || !g->map.grid)
+		return (0);
 	y = 0;
 	n = 0;
 	while (g->map.grid[y])
@@ -25,7 +27,7 @@ static int	pac_count(t_game *g)
 		x = 0;
 		while (g->map.grid[y][x])
 		{
-			if (g->map.grid[y][x] == '.')
+			if (g->map.grid[y][x] == PACDOT)
 				n++;
 			x++;
 		}
@@ -34,7 +36,7 @@ static int	pac_count(t_game *g)
 	return (n);
 }
 
-static void	pac_fill(t_game *g)
+static void	pacdot_fill_from_map(t_game *g)
 {
 	int	y;
 	int	x;
@@ -47,11 +49,11 @@ static void	pac_fill(t_game *g)
 		x = 0;
 		while (g->map.grid[y][x])
 		{
-			if (g->map.grid[y][x] == '.')
+			if (g->map.grid[y][x] == PACDOT)
 			{
-				g->pac.dots[i].x = (double)x + 0.5;
-				g->pac.dots[i].y = (double)y + 0.5;
-				g->pac.dots[i].active = 1;
+				g->pacdots[i].x = (double)x + 0.5;
+				g->pacdots[i].y = (double)y + 0.5;
+				g->pacdots[i].active = 1;
 				i++;
 			}
 			x++;
@@ -64,16 +66,14 @@ void	init_pacdots(t_game *g)
 {
 	int	n;
 
-	if (!g) return;
-	if (!g->map.grid) return;
-
-	n = pac_count(g);
-	g->pac.count = n;
-	if (n <= 0) return;
-
-	g->pac.dots = malloc(sizeof(t_pacdot) * n);
-	if (!g->pac.dots) exit_game(EXIT_MALLOC, g);
-
-	pac_fill(g);
+	if (!g || !g->map.grid)
+		return ;
+	n = pacdot_count_map(g);
+	g->pacdot_count = n;
+	if (n <= 0)
+		return ;
+	g->pacdots = malloc(sizeof(t_pacdot) * n);
+	if (!g->pacdots)
+		exit_game(EXIT_MALLOC, g);
+	pacdot_fill_from_map(g);
 }
-

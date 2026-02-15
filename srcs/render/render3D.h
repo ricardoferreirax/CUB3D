@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/15 21:25:14 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/15 22:30:26 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,33 @@ typedef struct s_fc
 	double	rowdist;
 }	t_fc;
 
+typedef struct s_spritebox
+{
+	double	depth;
+	int		screen_x;
+	int		size;
+	int		x0;
+	int		x1;
+	int		y0;
+	int		y1;
+}	t_spritebox;
+
 typedef struct s_raycasting
 {
 	double	*z_buffer;
 	double	camera_x;
 	double	ray_dir_x;
 	double	ray_dir_y;
-	int		map_x;
-	int		map_y;
-	int		step_x;
-	int		step_y;
 	double	side_dist_x;
 	double	side_dist_y;
 	double	delta_dist_x;
 	double	delta_dist_y;
-	int		hit_side;
 	double	perp_wall_dist;
-
+	int		hit_side;
+	int		map_x;
+	int		map_y;
+	int		step_x;
+	int		step_y;
 	int		draw_start;
 	int		draw_end;
 	int		hit;
@@ -66,3 +76,6 @@ void	parse_floor_ceiling_line(t_game *g, char id, char *value);
 void	fill_floor_color(t_image *img, int color, int horizon);
 void	fill_ceiling_color(t_image *img, int color, int horizon);
 void	convert_texture_coords(t_fc *fc, t_image *tex, int *tx, int *ty);
+void	sprite_draw(t_game *g, t_spritebox *b, t_image *tex);
+int	sprite_project(t_game *g, double x, double y, t_spritebox *b);
+int	sprite_build(t_game *g, t_spritebox *b, int size_div);
