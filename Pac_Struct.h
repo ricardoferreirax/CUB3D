@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/15 22:48:23 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/15 22:58:26 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,9 +277,6 @@ long	get_time_us(void);
 // =========================
 // Map & Player init
 // =========================
-void	wrap_port(t_game *g);
-int	try_wrap_ray_x(t_game *g);
-int	is_valid_wrap_port(t_game *g, int y, int x);
 void	render_minimap_test(t_game *g);
 
 void	movement_controller(t_game *g);
@@ -291,7 +288,6 @@ void init_pacdots(t_game *g);
 void	texture_load_xpm(t_game *g, t_image *img, const char *path);
 void	init_assets(t_game *g);
 
-int	wrap_row_is_active(t_game *g, int y);
 
 // =========================
 // Input & Movement

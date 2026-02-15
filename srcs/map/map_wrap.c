@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wrap_port.c                                        :+:      :+:    :+:   */
+/*   map_wrap.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 21:54:56 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/15 22:51:03 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/15 22:57:43 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 
-int	is_valid_wrap_port(t_game *g, int y, int x)
+int	map_is_wrap_port(t_game *g, int y, int x)
 {
 	if (map_get_tile(g, y, 0) != WRAP_PORTS)
 		return (0);
@@ -31,7 +31,7 @@ int	is_valid_wrap_port(t_game *g, int y, int x)
 	return (1);
 }
 
-int	wrap_row_is_active(t_game *g, int y)
+int	map_wrap_row_is_active(t_game *g, int y)
 {
 	if (!g || !g->map.grid)
 		return (0);
@@ -43,13 +43,13 @@ int	wrap_row_is_active(t_game *g, int y)
 		&& g->map.grid[y][g->map.width - 1] == WRAP_PORTS);
 }
 
-int	try_wrap_ray_x(t_game *g)
+int	map_wrap_ray_x(t_game *g)
 {
 	int	w;
 
 	if (!g)
 		return (0);
-	if (!wrap_row_is_active(g, g->ray.map_y))
+	if (!map_wrap_row_is_active(g, g->ray.map_y))
 		return (0);
 	w = g->map.width;
 	if (g->ray.map_x < 0)
@@ -65,7 +65,7 @@ int	try_wrap_ray_x(t_game *g)
 	return (1);
 }
 
-void	wrap_port(t_game *g)
+void	map_wrap_port(t_game *g)
 {
 	int		y;
 	int		w;
@@ -73,7 +73,7 @@ void	wrap_port(t_game *g)
 	if (!g)
 		return ;
 	y = (int)g->player.pos_y;
-	if (!wrap_row_is_active(g, y))
+	if (!map_wrap_row_is_active(g, y))
 		return ;
 	w = g->map.width;
 	if (g->player.pos_x < 0.0)
