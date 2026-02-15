@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/02/14 23:35:46 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/02/15 19:44:53 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,20 +54,21 @@ SRC_FILES = main.c \
 	srcs/text/texture_load.c \
 	srcs/text/texture_pick_wall.c \
 	srcs/text/texture_utils.c \
+	srcs/render/render_frame.c \
+	srcs/render/render_wall_texture.c \
+	srcs/render/render_pacdots.c \
+	srcs/render/render_floor_ceiling.c \
+	srcs/render/process_raycasting.c \
+	srcs/render/render_center_hit.c \
+	srcs/render/perform_dda.c \
+	srcs/render/render_fill_color.c \
 	execution/player_collision.c \
 	execution/player_rotation.c \
 	execution/player_movement.c \
 	execution/wrap_port.c \
 	execution/minimap.c \
 	execution/put_pixel.c  \
-	execution/render_frame.c \
-	execution/perform_dda.c \
-	execution/render_wall_texture.c \
-	execution/render_floor_ceiling.c \
-	execution/render_pacdots.c \
 	init/init_mlx.c \
-	execution/process_raycasting.c \
-	execution/raycasting_utils.c \
 	hooks/handle_close.c \
 	hooks/handle_keys.c \
 	utils/free.c  \

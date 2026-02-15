@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/14 23:54:53 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/15 19:44:10 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,11 +300,6 @@ void	render_minimap_test(t_game *g);
 void	movement_controller(t_game *g);
 
 
-unsigned int	tex_pixel(t_image *tex, int x, int y);
-void	parse_floor_ceiling_color(t_game *g, const char *s, int *dst);
-void	parse_floor_ceiling_line(t_game *g, char id, char *value);
-void	fill_floor_color(t_image *img, int color, int horizon);
-void	fill_ceiling_color(t_image *img, int color, int horizon);
 void	load_pacdot_texture(t_game *g, char *path);
 void	render_pacdots(t_game *g);
 void init_pacdots(t_game *g);
