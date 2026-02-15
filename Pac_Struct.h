@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/15 22:58:26 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/15 23:15:57 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #include <sys/time.h>
 
 #include "srcs/map/map3D.h"
+#include "srcs/player/player3D.h"
 
 #define UPDATE_F 16666
 #define MAX_UPDATES 5
@@ -266,48 +267,15 @@ typedef struct s_game
 
 #endif // !DEBUG
 
-// =========================
-// Execution / Game loop
-// =========================
 void	start_execution(t_game *game);
 void	init_defaults(t_game *g);
 int		gameloop(t_game *game);
 long	get_time_us(void);
 
-// =========================
-// Map & Player init
-// =========================
-void	render_minimap_test(t_game *g);
 
-void	movement_controller(t_game *g);
-
-
-void	load_pacdot_texture(t_game *g, char *path);
-void	render_pacdots(t_game *g);
 void init_pacdots(t_game *g);
-void	texture_load_xpm(t_game *g, t_image *img, const char *path);
 void	init_assets(t_game *g);
 
-
-// =========================
-// Input & Movement
-// =========================
-void	move_radius_check(t_game *g, double x_delta, double y_delta);
-void	player_rotation_controller(t_game *g);
-void	movement_controller(t_game *g);
-
-// =========================
-// Rendering
-// =========================
-void	render_frame(t_game *game);
-void	process_raycasting(t_game *g);
-int	perform_dda(t_game *g);
-void	calculate_dda_step(t_game *g);
-int		register_center_hit(t_game *g, int screen_x, int hit_found);
-void	put_pixel_fast(t_image *img, int x, int y, int color);
-void	render_wall_column_textured(t_game *g, int screen_x);
-void	render_floor(t_game *g);
-void	render_ceiling(t_game *g);
 
 // =========================
 // MLX / Window

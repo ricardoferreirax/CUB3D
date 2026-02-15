@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/02/15 22:55:15 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/02/15 23:06:25 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRC_FILES = main.c \
 	srcs/map/map_validate_grid.c \
 	srcs/map/map_parse_lines.c \
 	srcs/map/map_wrap.c \
+	srcs/map/minimap_test.c \
 	srcs/map/map_utils.c \
 	srcs/text/texture_parse_path.c \
 	srcs/text/texture_parse_color.c \
@@ -66,11 +67,9 @@ SRC_FILES = main.c \
 	srcs/render/render_center_hit.c \
 	srcs/render/perform_dda.c \
 	srcs/render/render_fill_color.c \
-	execution/player_collision.c \
-	execution/player_rotation.c \
-	execution/player_movement.c \
-	execution/minimap.c \
-	execution/put_pixel.c  \
+	srcs/player/player_collision.c \
+	srcs/player/player_rotation.c \
+	srcs/player/player_movement.c \
 	init/init_mlx.c \
 	hooks/handle_close.c \
 	hooks/handle_keys.c \

@@ -6,11 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 22:44:26 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/01/26 23:10:24 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/15 23:10:25 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Pac_Struct.h"
+#include "../../Pac_Struct.h"
+#include "player3D.h"
 
 static void	player_rotate_right(t_game *g)
 {

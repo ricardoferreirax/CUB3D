@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/15 22:30:26 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/15 23:14:07 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	put_pixel_fast(t_image *img, int x, int y, int color);
 void	render_wall_col(t_game *g, int screen_x);
 void	render_floor_texture(t_game *g);
 void	render_ceiling_texture(t_game *g);
+void	render_pacdots(t_game *g);
 
 unsigned int	tex_pixel(t_image *tex, int x, int y);
 void	parse_floor_ceiling_color(t_game *g, const char *s, int *dst);

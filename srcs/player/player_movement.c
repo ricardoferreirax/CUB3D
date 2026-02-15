@@ -6,11 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 22:56:32 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/14 21:21:11 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/15 23:10:19 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Pac_Struct.h"
+#include "../../Pac_Struct.h"
+#include "player3D.h"
 
 static void	player_move_left(t_game *g)
 {
