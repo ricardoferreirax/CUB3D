@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/15 23:15:57 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/15 23:21:22 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 #include "srcs/map/map3D.h"
 #include "srcs/player/player3D.h"
+#include "srcs/hooks/hooks.h"
 
 #define UPDATE_F 16666
 #define MAX_UPDATES 5
@@ -200,17 +201,6 @@ typedef struct s_time
 	long accumulator;
 }	t_timer;
 
-typedef struct s_key
-{
-	int	w;
-	int	a;
-	int	s;
-	int	d;
-	int	left;
-	int	right;
-	int	esc;
-}	t_key;
-
 typedef struct s_pacdot
 {
 	double x;
@@ -276,19 +266,11 @@ long	get_time_us(void);
 void init_pacdots(t_game *g);
 void	init_assets(t_game *g);
 
-
 // =========================
 // MLX / Window
 // =========================
 void	init_mlx(t_game *game);
 void	init_window(t_game *s);
-
-// =========================
-// Hooks
-// =========================
-int		handle_close(t_game *g);
-int		handle_key_press(int keycode, t_game *g);
-int		handle_key_release(int keycode, t_game *g);
 
 // =========================
 // Free & Exit

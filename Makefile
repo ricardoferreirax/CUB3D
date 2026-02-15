@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/02/15 23:06:25 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/02/15 23:17:52 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,9 +70,9 @@ SRC_FILES = main.c \
 	srcs/player/player_collision.c \
 	srcs/player/player_rotation.c \
 	srcs/player/player_movement.c \
+	srcs/hooks/handle_close.c \
+	srcs/hooks/handle_keys.c \
 	init/init_mlx.c \
-	hooks/handle_close.c \
-	hooks/handle_keys.c \
 	utils/free.c  \
 
 OBJ_DIR   = objs
