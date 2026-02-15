@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/15 19:44:20 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/15 21:25:14 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,13 @@ int	perform_dda(t_game *g);
 void	calculate_dda_step(t_game *g);
 int		register_center_hit(t_game *g, int screen_x, int hit_found);
 void	put_pixel_fast(t_image *img, int x, int y, int color);
-void	render_wall_column_textured(t_game *g, int screen_x);
-void	render_floor(t_game *g);
-void	render_ceiling(t_game *g);
+void	render_wall_col(t_game *g, int screen_x);
+void	render_floor_texture(t_game *g);
+void	render_ceiling_texture(t_game *g);
 
 unsigned int	tex_pixel(t_image *tex, int x, int y);
 void	parse_floor_ceiling_color(t_game *g, const char *s, int *dst);
 void	parse_floor_ceiling_line(t_game *g, char id, char *value);
 void	fill_floor_color(t_image *img, int color, int horizon);
 void	fill_ceiling_color(t_image *img, int color, int horizon);
+void	convert_texture_coords(t_fc *fc, t_image *tex, int *tx, int *ty);

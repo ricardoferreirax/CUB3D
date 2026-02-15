@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/14 23:52:45 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/15 19:54:34 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	process_raycasting(t_game *g)
 		{
 			calc_wall_distance(g);
 			calc_draw_limits(g);
-			render_wall_column_textured(g, screen_x);
+			render_wall_col(g, screen_x);
 			g->ray.z_buffer[screen_x] = g->ray.perp_wall_dist;
 			hit_found = register_center_hit(g, screen_x, hit_found);
 		}
