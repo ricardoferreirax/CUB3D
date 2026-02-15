@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 21:54:56 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/14 22:48:34 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/15 22:51:03 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,42 +31,53 @@ int	is_valid_wrap_port(t_game *g, int y, int x)
 	return (1);
 }
 
-static int	wrap_row_is_active(t_game *g, int y)
+int	wrap_row_is_active(t_game *g, int y)
 {
+	if (!g || !g->map.grid)
+		return (0);
 	if (y < 0 || y >= g->map.height)
 		return (0);
-	return (map_get_tile(g, y, 0) == WRAP_PORTS
-		&& map_get_tile(g, y, g->map.width - 1) == WRAP_PORTS);
+	if (g->map.width <= 1)
+		return (0);
+	return (g->map.grid[y][0] == WRAP_PORTS
+		&& g->map.grid[y][g->map.width - 1] == WRAP_PORTS);
 }
 
 int	try_wrap_ray_x(t_game *g)
 {
+	int	w;
+
+	if (!g)
+		return (0);
 	if (!wrap_row_is_active(g, g->ray.map_y))
 		return (0);
+	w = g->map.width;
 	if (g->ray.map_x < 0)
 	{
-		g->ray.map_x = g->map.width - 2;
+		g->ray.map_x = w - 1;
 		return (1);
 	}
-	if (g->ray.map_x >= g->map.width)
+	if (g->ray.map_x >= w)
 	{
-		g->ray.map_x = 1;
+		g->ray.map_x = 0;
 		return (1);
 	}
-	return (0);
+	return (1);
 }
 
 void	wrap_port(t_game *g)
 {
 	int		y;
-	double	offset;
+	int		w;
 
+	if (!g)
+		return ;
 	y = (int)g->player.pos_y;
 	if (!wrap_row_is_active(g, y))
 		return ;
-	offset = PLAYER_RADIUS + 0.10;
+	w = g->map.width;
 	if (g->player.pos_x < 0.0)
-		g->player.pos_x = (double)(g->map.width - 1) - offset;
-	else if (g->player.pos_x > (double)(g->map.width - 1))
-		g->player.pos_x = 0.0 + offset;
+		g->player.pos_x += (double)w;
+	else if (g->player.pos_x >= (double)w)
+		g->player.pos_x -= (double)w;
 }

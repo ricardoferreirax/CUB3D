@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/15 22:19:57 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/15 22:48:23 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,7 +291,7 @@ void init_pacdots(t_game *g);
 void	texture_load_xpm(t_game *g, t_image *img, const char *path);
 void	init_assets(t_game *g);
 
-
+int	wrap_row_is_active(t_game *g, int y);
 
 // =========================
 // Input & Movement
