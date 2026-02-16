@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 22:06:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/16 05:05:03 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/16 05:10:07 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,22 @@ void	render_pacdots(t_game *g)
 	}
 }
 
+void	render_energizers(t_game *g)
+{
+	t_sprite	box;
+	int			i;
 
+	if (!g || !g->energizers || g->energizer_count <= 0)
+		return ;
+	if (!g->energizer_img.img_addr || !g->ray.z_buffer)
+		return ;
+	i = 0;
+	while (i < g->energizer_count)
+	{
+		if (g->energizers[i].active
+			&& sprite_project(g, g->energizers[i].x, g->energizers[i].y, &box)
+			&& sprite_build(g, &box, 3))
+			sprite_draw(g, &box, &g->energizer_img);
+		i++;
+	}
+}
