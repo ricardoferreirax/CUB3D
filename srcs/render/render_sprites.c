@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 22:06:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/16 05:10:07 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/16 16:33:48 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,48 @@ void	render_energizers(t_game *g)
 			&& sprite_project(g, g->energizers[i].x, g->energizers[i].y, &box)
 			&& sprite_build(g, &box, 3))
 			sprite_draw(g, &box, &g->energizer_img);
+		i++;
+	}
+}
+
+t_image	*ghost_tex(t_game *g, t_ghost *gh)
+{
+	if (!g || !gh)
+		return (NULL);
+	if (gh->name == BLINKY)
+		return (&g->tex.blinky_img);
+	if (gh->name == PINKY)
+		return (&g->tex.pinky_img);
+	if (gh->name == INKY)
+		return (&g->tex.inky_img);
+	return (&g->tex.clyde_img);
+}
+
+static void	render_one_ghost(t_game *g, t_ghost *gh)
+{
+	t_sprite	box;
+	t_image		*tex;
+
+	tex = ghost_tex(g, gh);
+	if (!tex || !tex->img_addr)
+		return ;
+	if (!sprite_project(g, gh->wx, gh->wy, &box))
+		return ;
+	if (!sprite_build(g, &box, 2))
+		return ;
+	sprite_draw(g, &box, tex);
+}
+
+void	render_ghosts(t_game *g)
+{
+	int	i;
+
+	if (!g || !g->ray.z_buffer)
+		return ;
+	i = 0;
+	while (i < 4)
+	{
+		render_one_ghost(g, &g->ghosts[i]);
 		i++;
 	}
 }

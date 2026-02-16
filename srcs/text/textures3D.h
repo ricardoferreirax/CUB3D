@@ -6,14 +6,14 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:20:35 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/15 23:47:08 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/16 17:38:37 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TEXTURES3D_H
 # define TEXTURES3D_H
 
-typedef struct s_game	t_game;
+typedef struct s_ghost	t_ghost;
 
 typedef struct s_textures
 {
@@ -21,21 +21,36 @@ typedef struct s_textures
 	char	*so;
 	char	*we;
 	char	*ea;
+
 	char	*floor;
 	char	*ceiling;
-	char *pacdot;
-	char *energizer;
+
+	char	*pacdot;
+	char	*energizer;
+
+	char	*blinky;
+	char	*pinky;
+	char	*inky;
+	char	*clyde;
 
 	t_image	no_img;
 	t_image	so_img;
 	t_image	we_img;
 	t_image	ea_img;
+
 	t_image	floor_img;
 	t_image	ceiling_img;
+
 	t_image	pacdot_img;
+	t_image	energizer_img;
+
+	t_image	blinky_img;
+	t_image	pinky_img;
+	t_image	inky_img;
+	t_image	clyde_img;
+
 }	t_textures;
 
-/* protótipos (opcional aqui, ou num header separado) */
 void			parse_texture(t_game *g, char *path);
 void			texture_load_xpm(t_game *g, t_image *img, const char *path);
 void			texture_load_walls(t_game *g);

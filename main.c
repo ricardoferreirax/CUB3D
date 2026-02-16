@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/15 23:55:44 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/16 17:28:52 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int main(int ac, char **av)
 	init_assets(game);
 	init_pacdots(game);
 	init_energizers(game);
+	init_ghosts(game);
 	//printf("PACDOT COUNT = %d\n", game->pacdot_count);
 
 	start_execution(game);

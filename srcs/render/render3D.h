@@ -6,15 +6,16 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/16 04:58:58 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/16 17:22:59 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RENDER3D_H
 # define RENDER3D_H
 
-typedef struct s_image	t_image;
 typedef struct s_game	t_game;
+typedef struct s_image	t_image;
+typedef struct s_ghost	t_ghost;
 
 typedef struct s_fc
 {
@@ -71,6 +72,7 @@ void	render_floor_texture(t_game *g);
 void	render_ceiling_texture(t_game *g);
 void	render_pacdots(t_game *g);
 void	render_energizers(t_game *g);
+void	render_ghosts(t_game *g);
 
 unsigned int	tex_pixel(t_image *tex, int x, int y);
 void	parse_floor_ceiling_color(t_game *g, const char *s, int *dst);
@@ -81,3 +83,4 @@ void	convert_texture_coords(t_fc *fc, t_image *tex, int *tx, int *ty);
 void	sprite_draw(t_game *g, t_sprite *b, t_image *tex);
 int	sprite_project(t_game *g, double x, double y, t_sprite *b);
 int	sprite_build(t_game *g, t_sprite *b, int size_div);
+t_image	*ghost_tex(t_game *g, t_ghost *gh);

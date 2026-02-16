@@ -6,13 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/13 22:09:31 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/16 17:26:03 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "initializer.h"
 
-void init_ghost(t_game *game, t_ghost *ghost)
+/* void init_ghost(t_game *game, t_ghost *ghost)
 {
 	ghost->is_steping_on_pacdot = 0;
 	ghost->mental_map = copy_map(game->map.grid);
@@ -39,4 +39,4 @@ void init_game(t_game *game)
 	int i = -1;
 	while (++i < 4)
 		init_ghost(game, &game->ghost[i]);
-}
+} */

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/16 04:54:58 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/16 14:01:34 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ typedef struct s_elroy
 	t_elroy_level two;
 }	t_elroy;
 
-typedef struct s_ghost
+/* typedef struct s_ghost
 {
 	//Self Explaining, it is the ghost's name
 	e_ghost name;
@@ -153,9 +153,30 @@ typedef struct s_ghost
 	char **mental_map;
 	t_elroy cruiser;
 	e_state state;
-} t_ghost;
+} t_ghost; */
 //At game start one of the penhouse ghost will activate it's counter, it will count up each dot pacman eats
 //if pacman eats all the dots it gets out, but if the ghost is forced out by timeout its dot counter is not reset and the next ghost dot counter starts counting.
+
+typedef struct s_ghost
+{
+	e_ghost	name;
+
+	t_pos	pos;
+	double	wx;
+	double	wy;
+
+	int		dot_counter;
+	t_point	target_tile;
+	int		global_dot_counter_call;
+	int		speed_multiplier;
+	int		is_steping_on_pacdot;
+	t_anim	anim;
+	int		invalid_dir;
+	char	**mental_map;
+	t_elroy	cruiser;
+	e_state	state;
+
+}	t_ghost;
 
 typedef struct s_time
 {
@@ -219,6 +240,8 @@ typedef struct s_game
 	t_pacdot	*energizers;
 	int			energizer_count;
 	t_image		energizer_img;
+
+	t_ghost		ghosts[4]; 
 	
 	bool debug_mode;
 	t_ghost *ghost;
@@ -240,6 +263,7 @@ long	get_time_us(void);
 void init_pacdots(t_game *g);
 void	init_assets(t_game *g);
 void	init_energizers(t_game *g);
+void	init_ghosts(t_game *g);
 
 // =========================
 // MLX / Window

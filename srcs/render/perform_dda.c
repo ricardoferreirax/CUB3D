@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 21:39:40 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/15 22:59:06 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/16 07:15:26 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int	perform_dda(t_game *g)
 {
 	int	steps;
 	int	max_steps;
-
 	steps = 0;
 	max_steps = g->map.width * g->map.height + 50;
 	while (steps < max_steps)

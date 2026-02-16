@@ -3,17 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   init_ghosts.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:28:58 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/14 15:53:35 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/02/16 17:29:16 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "initializer.h"
+#include "../Pac_Struct.h"
+
+static void	ghost_set(t_game *g, e_ghost who, int x, int y)
+{
+	g->ghosts[who].name = who;
+	g->ghosts[who].wx = (double)x + 0.5;
+	g->ghosts[who].wy = (double)y + 0.5;
+	g->ghosts[who].pos.tile_pos.x = x;
+	g->ghosts[who].pos.tile_pos.y = y;
+}
+
+void	init_ghosts(t_game *g)
+{
+	int		x;
+	int		y;
+	char	t;
+
+	if (!g || !g->map.grid)
+		return ;
+	y = 0;
+	while (y < g->map.height)
+	{
+		x = 0;
+		while (x < g->map.width)
+		{
+			t = map_get_tile(g, y, x);
+			if (t == BLINKY_T) 
+				ghost_set(g, BLINKY, x, y);
+			else if (t == PINKY_T) 
+				ghost_set(g, PINKY, x, y);
+			else if (t == INKY_T) 
+				ghost_set(g, INKY, x, y);
+			else if (t == CLYDE_T) 
+				ghost_set(g, CLYDE, x, y);
+			if (t == BLINKY_T || t == PINKY_T || t == INKY_T || t == CLYDE_T)
+				g->map.grid[y][x] = OPEN_SPACE;
+			x++;
+		}
+		y++;
+	}
+}
 
 
-void init_blinky(t_game *game, t_ghost *blinky)
+
+/* void init_blinky(t_game *game, t_ghost *blinky)
 {
 	blinky->target_tile = find_c(game->map.grid, 'B');
 	blinky->pos.tile_pos = find_c(blinky->mental_map, 'S');
@@ -39,4 +80,4 @@ void init_clyde(t_game *game, t_ghost *clyde)
 	clyde->target_tile = find_c(game->map.grid, 'C');
 	clyde->pos.tile_pos = find_c(clyde->mental_map, 'S');
 	clyde->invalid_dir = 3;
-}
+} */

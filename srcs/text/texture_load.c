@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 17:59:33 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/15 23:52:10 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/16 13:53:01 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,8 @@ void	texture_load_sprites(t_game *g)
 		exit_game(EXIT_MAP, g);
 	texture_load_xpm(g, &g->pacdot_img, g->tex.pacdot);
 	texture_load_xpm(g, &g->energizer_img, g->tex.energizer);
+	texture_load_xpm(g, &g->tex.blinky_img, g->tex.blinky);
+	texture_load_xpm(g, &g->tex.pinky_img, g->tex.pinky);
+	texture_load_xpm(g, &g->tex.inky_img, g->tex.inky);
+	texture_load_xpm(g, &g->tex.clyde_img, g->tex.clyde);
 }
