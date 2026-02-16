@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 18:15:08 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/15 19:53:58 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/16 17:48:43 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 
 static int	wall_tex_x(t_game *g, t_image *tex)
 {
-	double	hit_x;
+	double	hit;
 	int		tx;
 
 	if (g->ray.hit_side == 0)
-		hit_x = g->player.pos_y + g->ray.perp_wall_dist * g->ray.ray_dir_y;
+		hit = g->player.pos_y + g->ray.perp_wall_dist * g->ray.ray_dir_y;
 	else
-		hit_x = g->player.pos_x + g->ray.perp_wall_dist * g->ray.ray_dir_x;
-	hit_x -= (int)hit_x;
-	tx = (int)(hit_x * (double)tex->width);
+		hit = g->player.pos_x + g->ray.perp_wall_dist * g->ray.ray_dir_x;
+	hit = fract_pos(hit);
+	tx = (int)(hit * (double)tex->width);
 	if (tx < 0)
 		tx = 0;
 	if (tx >= tex->width)

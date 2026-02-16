@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:18:28 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/15 23:06:02 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/16 17:48:52 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,23 @@ void	put_pixel_fast(t_image *img, int x, int y, int color)
 	buf[y * stride + x] = (unsigned int)color;
 }
 
+double	fract_pos(double x)
+{
+	int	i;
+
+	i = (int)x;
+	if (x < 0.0 && (double)i != x)
+		i -= 1;           /* isto faz o "floor" só para negativos */
+	return (x - (double)i);
+}
+
 void	convert_texture_coords(t_fc *fc, t_image *tex, int *tx, int *ty)
 {
 	double	u;
 	double	v;
 
-	u = fc->fx - (int)fc->fx;
-	v = fc->fy - (int)fc->fy;
+	u = fract_pos(fc->fx);
+	v = fract_pos(fc->fy);
 	*tx = (int)(u * (double)tex->width);
 	*ty = (int)(v * (double)tex->height);
 	if (*tx < 0)

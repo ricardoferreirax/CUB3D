@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/16 17:22:59 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/16 17:49:01 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	render_ceiling_texture(t_game *g);
 void	render_pacdots(t_game *g);
 void	render_energizers(t_game *g);
 void	render_ghosts(t_game *g);
+double	fract_pos(double x);
 
 unsigned int	tex_pixel(t_image *tex, int x, int y);
 void	parse_floor_ceiling_color(t_game *g, const char *s, int *dst);
