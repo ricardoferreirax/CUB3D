@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:48:48 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/15 23:15:06 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/16 04:54:25 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,21 @@
 # define TILE_VOID       2
 # define TILE_SOLID      3
 # define TILE_WALKABLE   4
+
+//////// MINIMAP TEST ////////
+
+#define MINI_TILE    8     // tamanho de cada tile em pixels
+#define MINI_MARGIN  12    // margem do canto
+
+#define C_BG         0x00000000
+#define C_WALL       0x00000088
+#define C_WALL_SHADE 0x00000055
+#define C_DOT        0x00FFFFCC
+#define C_ENERGIZER  0x00FFFFFF
+#define C_PLAYER     0x00FFFF00
+#define C_PORT       0x0000CCFF
+
+////////////////////////////////
 
 typedef struct s_game	t_game;
 

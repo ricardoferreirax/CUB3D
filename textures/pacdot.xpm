@@ -1,13 +1,13 @@
-/* pacdot_white_3d_alpha.xpm */
+/* pacdot.xpm */
 static char *pacdot_xpm[] = {
 "32 32 7 1",
 ". c None",
-"a c #FFFFFFFF",  /* branco opaco */
-"b c #F2FFFFFF",  /* branco ligeiro (alpha ~0xF2) */
-"c c #D8FFFFFF",  /* branco mais transparente (alpha ~0xD8) */
-"d c #FFDADADA",  /* sombra suave (opaca) */
-"e c #FFBEBEBE",  /* sombra forte (opaca) */
-"h c #FFFFFFFF",  /* highlight forte */
+"a c #FFFFFFFF",
+"b c #F2FFFFFF",
+"c c #D8FFFFFF",
+"d c #FFDADADA",
+"e c #FFBEBEBE",
+"h c #FFFFFFFF",
 "................................",
 "................................",
 "............hhhh................",

@@ -6,12 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 22:56:32 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/15 23:10:19 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/16 05:05:16 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "player3D.h"
+
 
 static void	player_move_left(t_game *g)
 {
@@ -20,6 +21,7 @@ static void	player_move_left(t_game *g)
 
 	dx =  g->player.dir_y * PLAYER_SPEED;
 	dy = -g->player.dir_x * PLAYER_SPEED;
+	//player_snap_for_move(g, dx, dy);
 	move_radius_check(g, dx, dy);
 }
 
@@ -30,6 +32,7 @@ static void	player_move_right(t_game *g)
 
 	dx = -g->player.dir_y * PLAYER_SPEED;
 	dy =  g->player.dir_x * PLAYER_SPEED;
+	//player_snap_for_move(g, dx, dy);
 	move_radius_check(g, dx, dy);
 }
 
@@ -40,6 +43,7 @@ static void	player_move_forward(t_game *g)
 
 	dx = g->player.dir_x * PLAYER_SPEED;
 	dy = g->player.dir_y * PLAYER_SPEED;
+	//player_snap_for_move(g, dx, dy);
 	move_radius_check(g, dx, dy);
 }
 
@@ -50,6 +54,7 @@ static void	player_move_backward(t_game *g)
 
 	dx = -g->player.dir_x * PLAYER_SPEED;
 	dy = -g->player.dir_y * PLAYER_SPEED;
+	//player_snap_for_move(g, dx, dy);
 	move_radius_check(g, dx, dy);
 }
 

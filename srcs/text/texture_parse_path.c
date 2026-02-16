@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:19:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/14 23:25:27 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/15 23:46:08 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,10 @@ static void	parse_texture_line(t_game *g, char *line)
 		parse_floor_ceiling_line(g, 'F', p + 1);
 	else if (*p == 'C' && (p[1] == ' ' || p[1] == '\t'))
 		parse_floor_ceiling_line(g, 'C', p + 1);
+	else if (!ft_strncmp(p, "PD", 2) && (p[2] == ' ' || p[2] == '\t'))
+		set_texture_path(&g->tex.pacdot, p + 2, g);
+	else if (!ft_strncmp(p, "EN", 2) && (p[2] == ' ' || p[2] == '\t'))
+		set_texture_path(&g->tex.energizer, p + 2, g);
 }
 
 void	parse_texture(t_game *g, char *path)
@@ -116,7 +120,7 @@ void	parse_texture(t_game *g, char *path)
 		free(line);
 	}
 	close(fd);
-	if (!g->tex.no || !g->tex.so || !g->tex.we || !g->tex.ea)
+	if (!g->tex.no || !g->tex.so || !g->tex.we || !g->tex.ea || !g->tex.pacdot || !g->tex.energizer)
 		exit_game(EXIT_MAP, g);
 }
 

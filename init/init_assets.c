@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 22:18:40 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/15 22:09:39 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/15 23:45:25 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 void	init_assets(t_game *g)
 {
-	if (!g)
-		return ;
-	if (!g->mlx_ptr)
+	if (!g || !g->mlx_ptr)
 		exit_game(EXIT_MLX, g);
-	texture_load_xpm(g, &g->pacdot_img, "./textures/pacdot.xpm");
-	if (!g->pacdot_img.img_addr)
-		exit_game(EXIT_MLX, g);
+	texture_load_walls(g);
+	texture_load_floor_ceiling(g);
+	texture_load_sprites(g);
 }

@@ -6,6 +6,9 @@ EA ./textures/text1.xpm
 F ./textures/text2.xpm
 C ./textures/text2.xpm
 
+PD ./textures/pacdot.xpm
+EN ./textures/energizer.xpm
+
 1111111111111111111111111111
 1............11............1
 1.1111.11111.11.11111.1111.1

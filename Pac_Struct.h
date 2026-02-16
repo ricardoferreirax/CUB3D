@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/15 23:21:22 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/16 04:54:58 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,27 +45,6 @@
 #define PACDOT '.'
 #define VOID ' '
 
-#define PLAYER_SPEED    0.06
-#define ROT_SPEED    0.05
-#define PLAYER_RADIUS   0.15
-
-
-//////// MINIMAP TEST ////////
-
-#define MINI_TILE    8     // tamanho de cada tile em pixels
-#define MINI_MARGIN  12    // margem do canto
-
-#define C_BG         0x00000000
-#define C_WALL       0x00000088
-#define C_WALL_SHADE 0x00000055
-#define C_DOT        0x00FFFFCC
-#define C_ENERGIZER  0x00FFFFFF
-#define C_PLAYER     0x00FFFF00
-#define C_PORT       0x0000CCFF
-
-////////////////////////////////
-
-
 // exit codes
 # define EXIT_OK        0
 # define EXIT_QUIT      1
@@ -73,16 +52,6 @@
 # define EXIT_MLX       3
 # define EXIT_MAP       4
 # define EXIT_INPUT     5
-
-// keycodes
-# define KEY_ESC   65307
-# define KEY_W     119
-# define KEY_A     97
-# define KEY_S     115
-# define KEY_D     100
-# define KEY_LEFT  65361
-# define KEY_RIGHT 65363
-# define KEY_H     104
 
 typedef struct s_point
 {
@@ -242,9 +211,14 @@ typedef struct s_game
 	t_player player;
 	t_key	key;
 	t_textures tex;
+	
 	t_pacdot *pacdots;
 	int pacdot_count;
 	t_image pacdot_img;
+
+	t_pacdot	*energizers;
+	int			energizer_count;
+	t_image		energizer_img;
 	
 	bool debug_mode;
 	t_ghost *ghost;
@@ -265,6 +239,7 @@ long	get_time_us(void);
 
 void init_pacdots(t_game *g);
 void	init_assets(t_game *g);
+void	init_energizers(t_game *g);
 
 // =========================
 // MLX / Window

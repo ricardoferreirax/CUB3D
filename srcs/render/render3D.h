@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/15 23:14:07 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/16 04:58:58 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_fc
 	double	rowdist;
 }	t_fc;
 
-typedef struct s_spritebox
+typedef struct s_sprite
 {
 	double	depth;
 	int		screen_x;
@@ -34,7 +34,7 @@ typedef struct s_spritebox
 	int		x1;
 	int		y0;
 	int		y1;
-}	t_spritebox;
+}	t_sprite;
 
 typedef struct s_raycasting
 {
@@ -70,6 +70,7 @@ void	render_wall_col(t_game *g, int screen_x);
 void	render_floor_texture(t_game *g);
 void	render_ceiling_texture(t_game *g);
 void	render_pacdots(t_game *g);
+void	render_energizers(t_game *g);
 
 unsigned int	tex_pixel(t_image *tex, int x, int y);
 void	parse_floor_ceiling_color(t_game *g, const char *s, int *dst);
@@ -77,6 +78,6 @@ void	parse_floor_ceiling_line(t_game *g, char id, char *value);
 void	fill_floor_color(t_image *img, int color, int horizon);
 void	fill_ceiling_color(t_image *img, int color, int horizon);
 void	convert_texture_coords(t_fc *fc, t_image *tex, int *tx, int *ty);
-void	sprite_draw(t_game *g, t_spritebox *b, t_image *tex);
-int	sprite_project(t_game *g, double x, double y, t_spritebox *b);
-int	sprite_build(t_game *g, t_spritebox *b, int size_div);
+void	sprite_draw(t_game *g, t_sprite *b, t_image *tex);
+int	sprite_project(t_game *g, double x, double y, t_sprite *b);
+int	sprite_build(t_game *g, t_sprite *b, int size_div);

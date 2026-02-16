@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/02/15 23:17:52 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/02/16 05:02:27 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRC_FILES = main.c \
 	init/init_ghosts.c \
 	init/init_assets.c \
 	init/init_pacdots.c \
+	init/init_energizers.c \
 	time.c \
 	srcs/map/map_load.c \
 	srcs/map/map_dimensions.c \
@@ -58,8 +59,8 @@ SRC_FILES = main.c \
 	srcs/text/texture_utils.c \
 	srcs/render/render_frame.c \
 	srcs/render/render_wall_texture.c \
+	srcs/render/draw_sprites.c \
 	srcs/render/render_sprites.c \
-	srcs/render/render_pacdots.c \
 	srcs/render/render_floor_texture.c \
 	srcs/render/render_ceiling_texture.c \
 	srcs/render/render_utils.c \

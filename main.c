@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/14 23:50:26 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/15 23:55:44 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int main(int ac, char **av)
 	texture_load_floor_ceiling(game);
 	init_assets(game);
 	init_pacdots(game);
+	init_energizers(game);
 	//printf("PACDOT COUNT = %d\n", game->pacdot_count);
 
 	start_execution(game);
