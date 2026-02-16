@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/16 14:01:34 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/16 22:26:33 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,8 +162,8 @@ typedef struct s_ghost
 	e_ghost	name;
 
 	t_pos	pos;
-	double	wx;
-	double	wy;
+	double	sprite_x;
+	double	sprite_y;
 
 	int		dot_counter;
 	t_point	target_tile;

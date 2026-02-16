@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:18:28 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/16 17:48:52 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/16 22:02:44 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,19 @@ double	fract_pos(double x)
 	if (x < 0.0 && (double)i != x)
 		i -= 1;           /* isto faz o "floor" só para negativos */
 	return (x - (double)i);
+}
+
+t_image	*ghost_tex(t_game *g, t_ghost *gh)
+{
+	if (!g || !gh)
+		return (NULL);
+	if (gh->name == BLINKY)
+		return (&g->tex.blinky_img);
+	if (gh->name == PINKY)
+		return (&g->tex.pinky_img);
+	if (gh->name == INKY)
+		return (&g->tex.inky_img);
+	return (&g->tex.clyde_img);
 }
 
 void	convert_texture_coords(t_fc *fc, t_image *tex, int *tx, int *ty)

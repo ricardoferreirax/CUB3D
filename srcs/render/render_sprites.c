@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 22:06:21 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/16 16:33:48 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/16 22:55:05 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,6 @@ void	render_energizers(t_game *g)
 	}
 }
 
-t_image	*ghost_tex(t_game *g, t_ghost *gh)
-{
-	if (!g || !gh)
-		return (NULL);
-	if (gh->name == BLINKY)
-		return (&g->tex.blinky_img);
-	if (gh->name == PINKY)
-		return (&g->tex.pinky_img);
-	if (gh->name == INKY)
-		return (&g->tex.inky_img);
-	return (&g->tex.clyde_img);
-}
-
 static void	render_one_ghost(t_game *g, t_ghost *gh)
 {
 	t_sprite	box;
@@ -74,7 +61,7 @@ static void	render_one_ghost(t_game *g, t_ghost *gh)
 	tex = ghost_tex(g, gh);
 	if (!tex || !tex->img_addr)
 		return ;
-	if (!sprite_project(g, gh->wx, gh->wy, &box))
+	if (!sprite_project(g, gh->sprite_x, gh->sprite_y, &box))
 		return ;
 	if (!sprite_build(g, &box, 2))
 		return ;

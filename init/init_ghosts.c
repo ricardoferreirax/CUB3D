@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:28:58 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/16 17:29:16 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/16 22:26:47 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static void	ghost_set(t_game *g, e_ghost who, int x, int y)
 {
 	g->ghosts[who].name = who;
-	g->ghosts[who].wx = (double)x + 0.5;
-	g->ghosts[who].wy = (double)y + 0.5;
+	g->ghosts[who].sprite_x = (double)x + 0.5;
+	g->ghosts[who].sprite_y = (double)y + 0.5;
 	g->ghosts[who].pos.tile_pos.x = x;
 	g->ghosts[who].pos.tile_pos.y = y;
 }
