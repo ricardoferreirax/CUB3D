@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 22:42:10 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/15 23:10:11 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/18 21:04:54 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,5 @@ void	move_radius_check(t_game *g, double x_delta, double y_delta)
 	g->player.pos_y += y_delta;
 	map_wrap_port(g);
 	check_borders(g);
+	player_eat_pacdots(g);
 }

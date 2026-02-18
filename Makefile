@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/02/16 16:35:51 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/02/18 21:05:25 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,7 @@ SRC_FILES = main.c \
 	srcs/player/player_collision.c \
 	srcs/player/player_rotation.c \
 	srcs/player/player_movement.c \
+	srcs/player/player_eat_pacdots.c \
 	srcs/hooks/handle_close.c \
 	srcs/hooks/handle_keys.c \
 	init/init_mlx.c \
