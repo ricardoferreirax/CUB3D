@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 22:13:51 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/18 16:20:28 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/18 20:58:07 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ int	sprite_project(t_game *g, double x, double y, t_sprite *b)
 
 int	sprite_build(t_game *g, t_sprite *b, int size_div)
 {
-	int	horizon;
+	int		horizon;
+	int		v_move_screen;
+	double	v_move_world;
 
 	b->size = (int)((double)g->win.height / b->depth);
 	if (b->size < 0)
@@ -54,8 +56,10 @@ int	sprite_build(t_game *g, t_sprite *b, int size_div)
 	if (b->size < 2)
 		return (0);
 	horizon = g->win.height / 2;
+	v_move_world = 0.10;
+	v_move_screen = (int)(v_move_world * ((double)g->win.height) / b->depth);
 	b->raw_x0 = b->screen_x - b->size / 2;
-	b->y1 = horizon + (b->size / 2);
+	b->y1 = horizon + (b->size / 2) + v_move_screen;
 	b->raw_y0 = b->y1 - b->size;
 	b->x0 = b->raw_x0;
 	b->x1 = b->raw_x0 + b->size;
@@ -70,9 +74,6 @@ int	sprite_build(t_game *g, t_sprite *b, int size_div)
 		b->y1 = g->win.height - 1;
 	return (b->x0 < b->x1 && b->y0 < b->y1);
 }
-
-
-
 
 static void	sprite_draw_col(t_game *g, t_sprite *b, int x, t_image *tex)
 {
@@ -103,7 +104,6 @@ static void	sprite_draw_col(t_game *g, t_sprite *b, int x, t_image *tex)
 		y++;
 	}
 }
-
 
 void	sprite_draw(t_game *g, t_sprite *b, t_image *tex)
 {
