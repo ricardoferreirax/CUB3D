@@ -1,6 +1,5 @@
 /* XPM */
-static char *Layer_1_pac_wall01[] = {
-/* columns rows colors chars-per-pixel */
+static char *wall01[] = {
 "192 192 3 1 ",
 "  c black",
 ". c #0000AE",

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 22:13:51 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/16 17:34:07 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/18 16:20:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ int	sprite_project(t_game *g, double x, double y, t_sprite *b)
 
 int	sprite_build(t_game *g, t_sprite *b, int size_div)
 {
-	int	mid;
-	int	o;
+	int	horizon;
 
 	b->size = (int)((double)g->win.height / b->depth);
 	if (b->size < 0)
@@ -54,41 +53,57 @@ int	sprite_build(t_game *g, t_sprite *b, int size_div)
 	b->size /= size_div;
 	if (b->size < 2)
 		return (0);
-	mid = g->win.height / 2 + 2;
-	o = b->size / 3;
-	b->y0 = mid + o;
-	b->y1 = b->y0 + b->size;
-	b->x0 = b->screen_x - b->size / 2;
-	b->x1 = b->screen_x + b->size / 2;
-	if (b->y0 < 0)
-		b->y0 = 0;
-	if (b->y1 >= g->win.height)
-		b->y1 = g->win.height - 1;
-	if (b->x0 < 0)
+	horizon = g->win.height / 2;
+	b->raw_x0 = b->screen_x - b->size / 2;
+	b->y1 = horizon + (b->size / 2);
+	b->raw_y0 = b->y1 - b->size;
+	b->x0 = b->raw_x0;
+	b->x1 = b->raw_x0 + b->size;
+	b->y0 = b->raw_y0;
+	if (b->x0 < 0) 
 		b->x0 = 0;
-	if (b->x1 >= g->win.width)
+	if (b->x1 >= g->win.width) 
 		b->x1 = g->win.width - 1;
+	if (b->y0 < 0) 
+		b->y0 = 0;
+	if (b->y1 >= g->win.height) 
+		b->y1 = g->win.height - 1;
 	return (b->x0 < b->x1 && b->y0 < b->y1);
 }
+
+
+
 
 static void	sprite_draw_col(t_game *g, t_sprite *b, int x, t_image *tex)
 {
 	int				y;
 	int				tx;
+	int				ty;
 	unsigned int	c;
 
-	tx = (x - b->x0) * tex->width / (b->x1 - b->x0);
+	tx = (x - b->raw_x0) * tex->width / b->size;
+
+	if (tx < 0) tx = 0;
+	if (tx >= tex->width) tx = tex->width - 1;
+
 	y = b->y0;
 	while (y < b->y1)
 	{
-		c = sprite_tex_px(tex, tx,
-				(y - b->y0) * tex->height / (b->y1 - b->y0));
+		ty = (y - b->raw_y0) * tex->height / b->size;
+
+		if (ty < 0) ty = 0;
+		if (ty >= tex->height) ty = tex->height - 1;
+
+		c = sprite_tex_px(tex, tx, ty);
+
 		if ((c & 0x00FFFFFF) != 0)
 			((unsigned int *)g->win.frame_buffer.img_addr)
 				[y * (g->win.frame_buffer.l_len >> 2) + x] = c;
+
 		y++;
 	}
 }
+
 
 void	sprite_draw(t_game *g, t_sprite *b, t_image *tex)
 {

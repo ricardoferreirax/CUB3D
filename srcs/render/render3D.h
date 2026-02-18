@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/16 22:54:20 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/18 13:51:19 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef struct s_sprite
 	int		x1;
 	int		y0;
 	int		y1;
+	int raw_x0;
+	int raw_y0;
 }	t_sprite;
 
 typedef struct s_raycasting

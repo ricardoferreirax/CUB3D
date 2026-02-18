@@ -1,0 +1,42 @@
+/* XPM */
+static char *floor_pacblue_glass[] = {
+"32 32 6 1",
+"a c #020508", /* preto azulado */
+"b c #071426", /* azul muito escuro */
+"c c #0A2A66", /* PACMAN BLUE */
+"d c #1344A3", /* azul brilho */
+"e c #2F6BFF", /* highlight vidro */
+"f c #AEB8BE", /* brilho cinza */
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"abbbbbbbbbbbbbbbbbbbbbbbbbbbbbba",
+"abccddccabccddccabccddccabccddcc",
+"abbccdcbabbccdcbabbccdcbabbccdcb",
+"abccddecabccddecabccddecabccddec",
+"abccffeeabccffeeabccffeeabccffee",
+"abccddecabccddecabccddecabccddec",
+"abbccdcbabbccdcbabbccdcbabbccdcb",
+"abccddccabccddccabccddccabccddcc",
+"abbbbbbbbbbbbbbbbbbbbbbbbbbbbbba",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"abbbbbbbbbbbbbbbbbbbbbbbbbbbbbba",
+"abccddccabccddccabccddccabccddcc",
+"abbccdcbabbccdcbabbccdcbabbccdcb",
+"abccddecabccddecabccddecabccddec",
+"abccffeeabccffeeabccffeeabccffee",
+"abccddecabccddecabccddecabccddec",
+"abbccdcbabbccdcbabbccdcbabbccdcb",
+"abccddccabccddccabccddccabccddcc",
+"abbbbbbbbbbbbbbbbbbbbbbbbbbbbbba",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+"abbbbbbbbbbbbbbbbbbbbbbbbbbbbbba",
+"abccddccabccddccabccddccabccddcc",
+"abbccdcbabbccdcbabbccdcbabbccdcb",
+"abccddecabccddecabccddecabccddec",
+"abccffeeabccffeeabccffeeabccffee",
+"abccddecabccddecabccddecabccddec",
+"abbccdcbabbccdcbabbccdcbabbccdcb",
+"abccddccabccddccabccddccabccddcc",
+"abbbbbbbbbbbbbbbbbbbbbbbbbbbbbba",
+"abbbbbbbbbbbbbbbbbbbbbbbbbbbbbba",
+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+};

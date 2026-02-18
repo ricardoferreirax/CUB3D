@@ -3,8 +3,8 @@ SO ./textures/text1.xpm
 WE ./textures/text1.xpm
 EA ./textures/text1.xpm
 
-F ./textures/text2.xpm
-C ./textures/text2.xpm
+F ./textures/floor.xpm
+C ./textures/wall01.xpm
 
 PD ./textures/pacdot.xpm
 EN ./textures/energizer.xpm
