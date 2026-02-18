@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/18 13:51:19 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/18 21:23:50 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_raycasting
 	double	delta_dist_y;
 	double	perp_wall_dist;
 	int		hit_side;
+	char hit_tile;
 	int		map_x;
 	int		map_y;
 	int		step_x;

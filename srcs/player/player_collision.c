@@ -6,20 +6,34 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 22:42:10 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/18 21:04:54 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/18 21:43:19 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "player3D.h"
 
-int	is_wall(t_game *g, int y, int x)
+int	is_wall_player(t_game *g, int y, int x)
+{
+	char	t;
+
+	t = map_get_tile(g, y, x);
+	if (t == WALL || t == VOID)
+		return (1);
+	if (t == GATE && !g->gate_passable)
+		return (1);
+	return (0);
+}
+
+
+int	is_wall_ghost(t_game *g, int y, int x)
 {
 	char	t;
 
 	t = map_get_tile(g, y, x);
 	return (t == WALL || t == VOID);
 }
+
 
 static void	check_borders(t_game *g)
 {
@@ -34,13 +48,13 @@ static void	check_borders(t_game *g)
 	minus_x = (int)(p->pos_x - PLAYER_RADIUS);
 	plus_y = (int)(p->pos_y + PLAYER_RADIUS);
 	minus_y = (int)(p->pos_y - PLAYER_RADIUS);
-	if (is_wall(g, (int)p->pos_y, minus_x))
+	if (is_wall_player(g, (int)p->pos_y, minus_x))
 		p->pos_x = (minus_x + 1) + PLAYER_RADIUS;
-	if (is_wall(g, (int)p->pos_y, plus_x))
+	if (is_wall_player(g, (int)p->pos_y, plus_x))
 		p->pos_x = plus_x - PLAYER_RADIUS;
-	if (is_wall(g, minus_y, (int)p->pos_x))
+	if (is_wall_player(g, minus_y, (int)p->pos_x))
 		p->pos_y = (minus_y + 1) + PLAYER_RADIUS;
-	if (is_wall(g, plus_y, (int)p->pos_x))
+	if (is_wall_player(g, plus_y, (int)p->pos_x))
 		p->pos_y = plus_y - PLAYER_RADIUS;
 }
 

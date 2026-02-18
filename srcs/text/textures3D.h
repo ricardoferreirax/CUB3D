@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:20:35 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/16 17:38:37 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/18 21:26:26 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,33 +21,29 @@ typedef struct s_textures
 	char	*so;
 	char	*we;
 	char	*ea;
-
 	char	*floor;
 	char	*ceiling;
-
 	char	*pacdot;
 	char	*energizer;
-
 	char	*blinky;
 	char	*pinky;
 	char	*inky;
 	char	*clyde;
+	char *gate;
 
 	t_image	no_img;
 	t_image	so_img;
 	t_image	we_img;
 	t_image	ea_img;
-
 	t_image	floor_img;
 	t_image	ceiling_img;
-
 	t_image	pacdot_img;
 	t_image	energizer_img;
-
 	t_image	blinky_img;
 	t_image	pinky_img;
 	t_image	inky_img;
 	t_image	clyde_img;
+	t_image gate_img;
 
 }	t_textures;
 

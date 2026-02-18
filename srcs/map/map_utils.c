@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:41:18 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/15 23:00:37 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/18 21:15:46 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	map_tile_type(char t, int tile_type)
 	if (tile_type == TILE_VOID)
 		return (t == VOID);
 	if (tile_type == TILE_SOLID)
-		return (t == WALL);
+		return (t == WALL || t == GATE);
 	if (tile_type == TILE_WALKABLE)
 	{
 		return (t == OPEN_SPACE || t == PACDOT || t == ENERGIZER
@@ -28,6 +28,7 @@ int	map_tile_type(char t, int tile_type)
 	}
 	return (0);
 }
+
 
 char	map_get_tile(t_game *g, int y, int x)
 {

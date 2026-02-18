@@ -6,24 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:18:28 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/16 22:02:44 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/18 21:21:38 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "render3D.h"
-
-// void	put_pixel(t_image *img, int x, int y, int color)
-// {
-// 	char	*dst;
-
-// 	if (!img || !img->img_addr)
-// 		return ;
-// 	if (x < 0 || y < 0 || x >= img->width || y >= img->height)
-// 		return ;
-// 	dst = img->img_addr + (y * img->l_len) + (x * (img->bpp / 8));
-// 	*(unsigned int *)dst = (unsigned int)color;
-// }
 
 void	put_pixel_fast(t_image *img, int x, int y, int color)
 {
@@ -45,7 +33,7 @@ double	fract_pos(double x)
 
 	i = (int)x;
 	if (x < 0.0 && (double)i != x)
-		i -= 1;           /* isto faz o "floor" só para negativos */
+		i -= 1;
 	return (x - (double)i);
 }
 

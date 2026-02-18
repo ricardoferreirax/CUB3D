@@ -12,6 +12,7 @@ GB ./textures/blinky.xpm
 GP ./textures/pinky.xpm
 GI ./textures/inky.xpm
 GC ./textures/clyde.xpm
+GT ./textures/gate1.xpm
 
 1111111111111111111111111111
 1............11............1

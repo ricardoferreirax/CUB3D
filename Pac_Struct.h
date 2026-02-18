@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/16 22:26:33 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/18 21:41:47 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 #define PINKY_T 'P'
 #define INKY_T 'I'
 #define CLYDE_T 'C'
-#define GHOST_SPAWN 'G'
+#define GATE 'G'
 #define PLAYER 'J'
 #define WALL '1'
 #define OPEN_SPACE '0'
@@ -242,6 +242,8 @@ typedef struct s_game
 	t_image		energizer_img;
 
 	t_ghost		ghosts[4]; 
+
+	int gate_passable;
 	
 	bool debug_mode;
 	t_ghost *ghost;

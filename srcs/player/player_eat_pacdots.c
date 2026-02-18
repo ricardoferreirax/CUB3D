@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 21:03:45 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/18 21:04:32 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/18 21:08:05 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,7 @@ void		player_eat_pacdots(t_game *g)
 
 	if (!g || !g->pacdots || g->pacdot_count <= 0)
 		return ;
-
-	/*
-	 * Raio de “comer” em unidades do mundo (tile = 1.0).
-	 * 0.20–0.35 costuma ficar bom.
-	 * Começa em 0.30.
-	 */
 	r = 0.30;
-
 	i = 0;
 	while (i < g->pacdot_count)
 	{

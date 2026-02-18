@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 21:39:40 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/16 07:15:26 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/18 21:24:48 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	perform_dda(t_game *g)
 {
 	int	steps;
 	int	max_steps;
+	char	t;
+
 	steps = 0;
 	max_steps = g->map.width * g->map.height + 50;
 	while (steps < max_steps)
@@ -77,10 +79,15 @@ int	perform_dda(t_game *g)
 		dda_step(g);
 		if (!validate_or_wrap_ray(g))
 			return (0);
-		if (map_tile_type(map_get_tile(g, g->ray.map_y, g->ray.map_x), TILE_SOLID))
+		t = map_get_tile(g, g->ray.map_y, g->ray.map_x);
+		if (map_tile_type(t, TILE_SOLID))
+		{
+			g->ray.hit_tile = t;
 			return (1);
+		}
 		steps++;
 	}
 	return (0);
 }
+
 

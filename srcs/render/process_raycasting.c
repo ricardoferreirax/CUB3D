@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/15 19:54:34 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/18 21:30:19 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static void calc_wall_distance(t_game *g)
  		g->ray.perp_wall_dist = 1e-6; 
 }
 
-
 static void	init_ray(t_game *g, int x)
 {
 	g->ray.camera_x = 2.0 * x / (double)g->win.width - 1.0;
@@ -47,11 +46,15 @@ static void	init_ray(t_game *g, int x)
 	g->ray.ray_dir_y = g->player.dir_y + g->player.plane_y * g->ray.camera_x;
 	g->ray.map_x = (int)g->player.pos_x;
 	g->ray.map_y = (int)g->player.pos_y;
-	if (g->ray.ray_dir_x == 0)
+	g->ray.hit = 0;
+	g->ray.hit_side = 0;
+	g->ray.hit_tile = VOID;
+	if (g->ray.ray_dir_x == 0.0)
 		g->ray.delta_dist_x = 1e30;
 	else
 		g->ray.delta_dist_x = fabs(1.0 / g->ray.ray_dir_x);
-	if (g->ray.ray_dir_y == 0)
+
+	if (g->ray.ray_dir_y == 0.0)
 		g->ray.delta_dist_y = 1e30;
 	else
 		g->ray.delta_dist_y = fabs(1.0 / g->ray.ray_dir_y);

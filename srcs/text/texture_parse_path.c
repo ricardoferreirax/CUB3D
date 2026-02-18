@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:19:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/16 17:28:02 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/18 21:31:11 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,8 @@ static void	parse_texture_line(t_game *g, char *line)
 		set_texture_path(&g->tex.inky, p + 2, g);
 	else if (!ft_strncmp(p, "GC", 2) && (p[2] == ' ' || p[2] == '\t'))
 		set_texture_path(&g->tex.clyde, p + 2, g);
+	else if (!ft_strncmp(p, "GT", 2) && (p[2] == ' ' || p[2] == '\t'))
+		set_texture_path(&g->tex.gate, p + 2, g);
 }
 
 void	parse_texture(t_game *g, char *path)
@@ -129,7 +131,7 @@ void	parse_texture(t_game *g, char *path)
 	}
 	close(fd);
 	if (!g->tex.no || !g->tex.so || !g->tex.we || !g->tex.ea || !g->tex.pacdot || !g->tex.energizer 
-		|| !g->tex.blinky || !g->tex.pinky || !g->tex.inky || !g->tex.clyde)
+		|| !g->tex.blinky || !g->tex.pinky || !g->tex.inky || !g->tex.clyde || !g->tex.gate)
 		exit_game(EXIT_MAP, g);
 }
 
