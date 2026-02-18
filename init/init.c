@@ -234,10 +234,25 @@ void	fill_tile(t_game *g, t_image *tile, unsigned int color, t_point point)
 	}
 }
 
+int which_wall(t_map map, t_point *coord)
+{
+	unsigned char mask;
+
+	mask = 0;
+	if(coord->y == 0 || map.grid[coord->y - 1][coord->x] == '1')
+		mask |= (1<< 3);
+	if(coord->y == map.height - 1 || map.grid[coord->y + 1][coord->x] == '1')
+		mask |= (1 << 1);
+	if(coord->x == 0 || map.grid[coord->y][coord->x - 1] == '1')
+		mask |= (1 << 2);
+	if(coord->x == map.width -1 || map.grid[coord->y][coord->x + 1] == '1')
+		mask |= (1 << 0);
+}
+
 int which_tile(t_game *game, t_point coord)
 {
 	if(game->map.grid[coord.y][coord.x] != '1')
-		return(90);
+		return(which_wall(game->map, &coord));
 	else
 		return(39);
 }
