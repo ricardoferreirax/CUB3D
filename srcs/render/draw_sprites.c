@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 22:13:51 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/18 20:58:07 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/20 21:39:34 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	sprite_project(t_game *g, double x, double y, t_sprite *b)
 	b->depth = inv * (-g->player.plane_y * dx + g->player.plane_x * dy);
 	if (b->depth <= 0.001)
 		return (0);
-	b->screen_x = (int)((g->win.width / 2.0) * (1.0 + (inv * (g->player.dir_y * dx
-			- g->player.dir_x * dy)) / b->depth));
+	b->screen_x = (int)((g->win.width / 2.0) * 
+		(1.0 + (inv * (g->player.dir_y * dx - g->player.dir_x * dy)) / b->depth));
 	return (1);
 }
 
@@ -75,39 +75,43 @@ int	sprite_build(t_game *g, t_sprite *b, int size_div)
 	return (b->x0 < b->x1 && b->y0 < b->y1);
 }
 
-static void	sprite_draw_col(t_game *g, t_sprite *b, int x, t_image *tex)
+static int	sprite_draw_col(t_game *g, t_sprite *b, int x, t_image *tex)
 {
 	int				y;
 	int				tx;
 	int				ty;
 	unsigned int	c;
+	int				drawn;
 
+	drawn = 0;
 	tx = (x - b->raw_x0) * tex->width / b->size;
-
-	if (tx < 0) tx = 0;
-	if (tx >= tex->width) tx = tex->width - 1;
-
+	if (tx < 0) 
+		tx = 0;
+	if (tx >= tex->width) 
+		tx = tex->width - 1;
 	y = b->y0;
 	while (y < b->y1)
 	{
 		ty = (y - b->raw_y0) * tex->height / b->size;
-
-		if (ty < 0) ty = 0;
-		if (ty >= tex->height) ty = tex->height - 1;
-
+		if (ty < 0) 
+			ty = 0;
+		if (ty >= tex->height) 
+			ty = tex->height - 1;
 		c = sprite_tex_px(tex, tx, ty);
-
 		if ((c & 0x00FFFFFF) != 0)
-			((unsigned int *)g->win.frame_buffer.img_addr)
-				[y * (g->win.frame_buffer.l_len >> 2) + x] = c;
-
+		{
+			((unsigned int *)g->win.frame_buffer.img_addr)[y * (g->win.frame_buffer.l_len >> 2) + x] = c;
+			drawn = 1;
+		}
 		y++;
 	}
+	return (drawn);
 }
 
 void	sprite_draw(t_game *g, t_sprite *b, t_image *tex)
 {
 	int	x;
+	int	drawn;
 
 	if (!g || !b || !tex || !tex->img_addr || !g->ray.z_buffer)
 		return ;
@@ -115,7 +119,11 @@ void	sprite_draw(t_game *g, t_sprite *b, t_image *tex)
 	while (x < b->x1)
 	{
 		if (b->depth < g->ray.z_buffer[x])
-			sprite_draw_col(g, b, x, tex);
+		{
+			drawn = sprite_draw_col(g, b, x, tex);
+			if (drawn)
+				g->ray.z_buffer[x] = b->depth;
+		}
 		x++;
 	}
 }

@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/02/18 21:05:25 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/02/19 22:14:43 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,7 @@ SRC_FILES = main.c \
 	srcs/render/render_utils.c \
 	srcs/render/process_raycasting.c \
 	srcs/render/render_center_hit.c \
+	srcs/render/render_all_sprites.c \
 	srcs/render/perform_dda.c \
 	srcs/render/render_fill_color.c \
 	srcs/player/player_collision.c \

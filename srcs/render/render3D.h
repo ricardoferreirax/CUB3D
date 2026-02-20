@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/18 21:23:50 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/19 22:13:54 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 typedef struct s_game	t_game;
 typedef struct s_image	t_image;
 typedef struct s_ghost	t_ghost;
+
+#define SPR_PACDOT     1
+#define SPR_ENERGIZER  2
+#define SPR_GHOST      3
 
 typedef struct s_fc
 {
@@ -88,3 +92,4 @@ void	sprite_draw(t_game *g, t_sprite *b, t_image *tex);
 int	sprite_project(t_game *g, double x, double y, t_sprite *b);
 int	sprite_build(t_game *g, t_sprite *b, int size_div);
 t_image	*ghost_tex(t_game *g, t_ghost *gh);
+void	render_all_sprites(t_game *g);

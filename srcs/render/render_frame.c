@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 19:44:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/16 14:00:25 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/19 22:14:19 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	render_frame(t_game *game)
 	render_ceiling_texture(game);
 	render_floor_texture(game);
 	process_raycasting(game);
+	render_all_sprites(game);
 	render_energizers(game);
 	render_pacdots(game);
 	render_ghosts(game);
