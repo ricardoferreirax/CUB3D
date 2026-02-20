@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 21:54:56 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/15 22:57:43 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/20 23:40:36 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,28 @@ int	map_wrap_row_is_active(t_game *g, int y)
 		return (0);
 	return (g->map.grid[y][0] == WRAP_PORTS
 		&& g->map.grid[y][g->map.width - 1] == WRAP_PORTS);
+}
+
+double	wrap_dx(t_game *g, double x, double y)
+{
+	double	dx;
+	double	w;
+	int		row;
+
+	dx = x - g->player.pos_x;
+	if (!g)
+		return (dx);
+	row = (int)g->player.pos_y;
+	if ((int)y != row)
+		return (dx);
+	if (!map_wrap_row_is_active(g, row))
+		return (dx);
+	w = (double)g->map.width;
+	if (dx > w / 2.0)
+		dx -= w;
+	else if (dx < -w / 2.0)
+		dx += w;
+	return (dx);
 }
 
 int	map_wrap_ray_x(t_game *g)

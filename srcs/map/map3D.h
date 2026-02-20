@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:48:48 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/16 17:38:31 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/20 23:40:52 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,5 @@ int	map_is_wrap_port(t_game *g, int y, int x);
 int	map_wrap_row_is_active(t_game *g, int y);
 int	map_wrap_ray_x(t_game *g);
 void	map_wrap_port(t_game *g);
+double	wrap_dx(t_game *g, double x, double y);
 void	render_minimap_test(t_game *g);

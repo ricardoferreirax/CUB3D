@@ -4,7 +4,7 @@ WE ./textures/text1.xpm
 EA ./textures/text1.xpm
 
 F ./textures/floor5.xpm
-C ./textures/wall01.xpm
+C ./textures/ceiling.xpm
 
 PD ./textures/pacdot.xpm
 EN ./textures/energizer.xpm

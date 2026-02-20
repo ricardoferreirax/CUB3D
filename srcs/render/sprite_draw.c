@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_sprites.c                                     :+:      :+:    :+:   */
+/*   sprite_draw.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 22:13:51 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/20 23:08:24 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/20 23:42:09 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	sprite_project(t_game *g, double x, double y, t_sprite *b)
 	double	dx;
 	double	dy;
 
-	dx = x - g->player.pos_x;
+	dx = wrap_dx(g, x, y);
 	dy = y - g->player.pos_y;
 	inv = (g->player.plane_x * g->player.dir_y) - (g->player.dir_x * g->player.plane_y);
 	if (inv == 0.0)
@@ -28,8 +28,8 @@ int	sprite_project(t_game *g, double x, double y, t_sprite *b)
 	b->depth = inv * (-g->player.plane_y * dx + g->player.plane_x * dy);
 	if (b->depth <= 0.001)
 		return (0);
-	b->screen_x = (int)((g->win.width / 2.0) * 
-		(1.0 + (inv * (g->player.dir_y * dx - g->player.dir_x * dy)) / b->depth));
+	b->screen_x = (int)((g->win.width / 2.0) 
+		* (1.0 + (inv * (g->player.dir_y * dx - g->player.dir_x * dy)) / b->depth));
 	return (1);
 }
 
