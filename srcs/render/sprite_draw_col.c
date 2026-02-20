@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 22:11:20 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/20 22:20:54 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/20 23:09:01 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,22 +43,25 @@ int	sprite_draw_col(t_game *g, t_sprite *b, int x, t_image *tex)
 {
 	int				y;
 	int				tx;
+	int				idx;
 	unsigned int	c;
-	int				drawn;
 
-	drawn = 0;
 	tx = sprite_tx(b, tex, x);
 	y = b->y0;
 	while (y < b->y1)
 	{
-		c = sprite_tex_px(tex, tx, sprite_ty(b, tex, y));
-		if ((c & 0x00FFFFFF) != 0)
+		idx = y * g->win.width + x;
+		if (b->depth < g->ray.sprite_z[idx])
 		{
-			((unsigned int *)g->win.frame_buffer.img_addr)
-				[y * (g->win.frame_buffer.l_len >> 2) + x] = c;
-			drawn = 1;
+			c = sprite_tex_px(tex, tx, sprite_ty(b, tex, y));
+			if ((c & 0x00FFFFFF) != 0)
+			{
+				((unsigned int *)g->win.frame_buffer.img_addr)
+					[y * (g->win.frame_buffer.l_len >> 2) + x] = c;
+				g->ray.sprite_z[idx] = b->depth;
+			}
 		}
 		y++;
 	}
-	return (drawn);
+	return (1);
 }

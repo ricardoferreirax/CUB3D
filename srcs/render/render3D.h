@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/20 22:18:19 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/20 23:03:49 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_sprite
 typedef struct s_raycasting
 {
 	double	*z_buffer;
+	double *sprite_z;
 	double	camera_x;
 	double	ray_dir_x;
 	double	ray_dir_y;

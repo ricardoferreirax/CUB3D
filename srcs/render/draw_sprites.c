@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 22:13:51 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/20 22:28:46 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/20 23:08:24 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,16 @@ int	sprite_build(t_game *g, t_sprite *b, int size_div)
 void	sprite_draw(t_game *g, t_sprite *b, t_image *tex)
 {
 	int	x;
-	int	drawn;
 
-	if (!g || !b || !tex || !tex->img_addr || !g->ray.z_buffer)
+	if (!g || !b || !tex || !tex->img_addr)
+		return ;
+	if (!g->ray.z_buffer || !g->ray.sprite_z)
 		return ;
 	x = b->x0;
 	while (x < b->x1)
 	{
 		if (b->depth < g->ray.z_buffer[x])
-		{
-			drawn = sprite_draw_col(g, b, x, tex);
-			if (drawn)
-				g->ray.z_buffer[x] = b->depth;
-		}
+			sprite_draw_col(g, b, x, tex);
 		x++;
 	}
 }

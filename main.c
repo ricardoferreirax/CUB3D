@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/18 21:42:35 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/20 23:04:23 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@ void	start_execution(t_game *g)
 		exit_game(EXIT_MLX, g);
 	g->ray.z_buffer = malloc(sizeof(double) * g->win.width);
 	if (!g->ray.z_buffer)
+		exit_game(EXIT_MALLOC, g);
+	g->ray.sprite_z = malloc(sizeof(double) * g->win.width * g->win.height);
+	if (!g->ray.sprite_z)
 		exit_game(EXIT_MALLOC, g);
 }
 
