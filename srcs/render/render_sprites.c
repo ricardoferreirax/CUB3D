@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_all_sprites.c                               :+:      :+:    :+:   */
+/*   render_sprites.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 22:09:52 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/20 22:17:34 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/20 22:46:34 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ static void	sprite_ref_store(t_sprite *r, int type, int idx, double dist2)
 	r->depth = dist2;
 }
 
-static int	sprite_refs_add_pacdots(t_game *g, t_sprite *list, int n, int cap)
+static int	add_collectables(t_game *g, t_sprite *list, int n)
 {
 	int	i;
 
 	i = 0;
-	while (i < g->pacdot_count && n < cap)
+	while (i < g->pacdot_count)
 	{
 		if (g->pacdots && g->pacdots[i].active)
 		{
@@ -45,15 +45,8 @@ static int	sprite_refs_add_pacdots(t_game *g, t_sprite *list, int n, int cap)
 		}
 		i++;
 	}
-	return (n);
-}
-
-static int	sprite_refs_add_energizers(t_game *g, t_sprite *list, int n, int cap)
-{
-	int	i;
-
 	i = 0;
-	while (i < g->energizer_count && n < cap)
+	while (i < g->energizer_count)
 	{
 		if (g->energizers && g->energizers[i].active)
 		{
@@ -66,12 +59,12 @@ static int	sprite_refs_add_energizers(t_game *g, t_sprite *list, int n, int cap)
 	return (n);
 }
 
-static int	sprite_refs_add_ghosts(t_game *g, t_sprite *list, int n, int cap)
+static int	add_ghosts(t_game *g, t_sprite *list, int n)
 {
 	int	i;
 
 	i = 0;
-	while (i < 4 && n < cap)
+	while (i < 4)
 	{
 		sprite_ref_store(&list[n], SPR_GHOST, i,
 			sprite_dist2(g, g->ghosts[i].sprite_x, g->ghosts[i].sprite_y));
@@ -181,9 +174,8 @@ void	render_all_sprites(t_game *g)
 	if (!refs)
 		return ;
 	n = 0;
-	n = sprite_refs_add_pacdots(g, refs, n, cap);
-	n = sprite_refs_add_energizers(g, refs, n, cap);
-	n = sprite_refs_add_ghosts(g, refs, n, cap);
+	n = add_collectables(g, refs, n);
+	n = add_ghosts(g, refs, n);
 	if (n > 1)
 		sprite_refs_sort_far_to_near(refs, n);
 	i = 0;
