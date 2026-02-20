@@ -6,18 +6,14 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 22:09:52 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/20 21:38:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/20 22:02:34 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "render3D.h"
 
-#define SPR_PACDOT     1
-#define SPR_ENERGIZER  2
-#define SPR_GHOST      3
-
-static double	dist2_to_player(t_game *g, double x, double y)
+static double	sprite_dist2(t_game *g, double x, double y)
 {
 	double	dx;
 	double	dy;
@@ -27,18 +23,14 @@ static double	dist2_to_player(t_game *g, double x, double y)
 	return (dx * dx + dy * dy);
 }
 
-/* Guardar "referência" dentro do próprio t_sprite:
-   raw_x0 = type, raw_y0 = idx, depth = dist2 (para sorting) */
-static void	set_ref(t_sprite *r, int type, int idx, double dist2)
+static void	sprite_ref_store(t_sprite *r, int type, int idx, double dist2)
 {
 	r->raw_x0 = type;
 	r->raw_y0 = idx;
 	r->depth = dist2;
 }
 
-/* ---- Construção da lista (por tipo) ---- */
-
-static int	add_pacdot_refs(t_game *g, t_sprite *list, int n, int cap)
+static int	sprite_refs_add_pacdots(t_game *g, t_sprite *list, int n, int cap)
 {
 	int	i;
 
@@ -47,8 +39,8 @@ static int	add_pacdot_refs(t_game *g, t_sprite *list, int n, int cap)
 	{
 		if (g->pacdots && g->pacdots[i].active)
 		{
-			set_ref(&list[n], SPR_PACDOT, i,
-				dist2_to_player(g, g->pacdots[i].x, g->pacdots[i].y));
+			sprite_ref_store(&list[n], SPR_PACDOT, i,
+				sprite_dist2(g, g->pacdots[i].x, g->pacdots[i].y));
 			n++;
 		}
 		i++;
@@ -56,7 +48,7 @@ static int	add_pacdot_refs(t_game *g, t_sprite *list, int n, int cap)
 	return (n);
 }
 
-static int	add_energizer_refs(t_game *g, t_sprite *list, int n, int cap)
+static int	sprite_refs_add_energizers(t_game *g, t_sprite *list, int n, int cap)
 {
 	int	i;
 
@@ -65,8 +57,8 @@ static int	add_energizer_refs(t_game *g, t_sprite *list, int n, int cap)
 	{
 		if (g->energizers && g->energizers[i].active)
 		{
-			set_ref(&list[n], SPR_ENERGIZER, i,
-				dist2_to_player(g, g->energizers[i].x, g->energizers[i].y));
+			sprite_ref_store(&list[n], SPR_ENERGIZER, i,
+				sprite_dist2(g, g->energizers[i].x, g->energizers[i].y));
 			n++;
 		}
 		i++;
@@ -74,22 +66,22 @@ static int	add_energizer_refs(t_game *g, t_sprite *list, int n, int cap)
 	return (n);
 }
 
-static int	add_ghost_refs(t_game *g, t_sprite *list, int n, int cap)
+static int	sprite_refs_add_ghosts(t_game *g, t_sprite *list, int n, int cap)
 {
 	int	i;
 
 	i = 0;
 	while (i < 4 && n < cap)
 	{
-		set_ref(&list[n], SPR_GHOST, i,
-			dist2_to_player(g, g->ghosts[i].sprite_x, g->ghosts[i].sprite_y));
+		sprite_ref_store(&list[n], SPR_GHOST, i,
+			sprite_dist2(g, g->ghosts[i].sprite_x, g->ghosts[i].sprite_y));
 		n++;
 		i++;
 	}
 	return (n);
 }
 
-static void	sort_refs_far_to_near(t_sprite *s, int n)
+static void	sprite_refs_sort_far_to_near(t_sprite *s, int n)
 {
 	int		i;
 	int		swapped;
@@ -116,87 +108,89 @@ static void	sort_refs_far_to_near(t_sprite *s, int n)
 	}
 }
 
-static double	ref_world_x(t_game *g, t_sprite *r)
+static int	ref_tex_and_div(t_game *g, t_sprite *r, t_image **tex)
 {
 	int	i;
 
 	i = r->raw_y0;
 	if (r->raw_x0 == SPR_PACDOT)
-		return (g->pacdots[i].x);
-	if (r->raw_x0 == SPR_ENERGIZER)
-		return (g->energizers[i].x);
-	return (g->ghosts[i].sprite_x);
-}
-
-static double	ref_world_y(t_game *g, t_sprite *r)
-{
-	int	i;
-
-	i = r->raw_y0;
-	if (r->raw_x0 == SPR_PACDOT)
-		return (g->pacdots[i].y);
-	if (r->raw_x0 == SPR_ENERGIZER)
-		return (g->energizers[i].y);
-	return (g->ghosts[i].sprite_y);
-}
-
-static int	ref_size_div(t_sprite *r)
-{
-	if (r->raw_x0 == SPR_PACDOT)
+	{
+		*tex = &g->pacdot_img;
 		return (6);
+	}
 	if (r->raw_x0 == SPR_ENERGIZER)
+	{
+		*tex = &g->energizer_img;
 		return (3);
+	}
+	*tex = ghost_tex(g, &g->ghosts[i]);
 	return (2);
 }
 
-static t_image	*ref_tex(t_game *g, t_sprite *r)
+static void	ref_world_xy(t_game *g, t_sprite *r, double *x, double *y)
 {
 	int	i;
 
 	i = r->raw_y0;
 	if (r->raw_x0 == SPR_PACDOT)
-		return (&g->pacdot_img);
+	{
+		*x = g->pacdots[i].x;
+		*y = g->pacdots[i].y;
+		return ;
+	}
 	if (r->raw_x0 == SPR_ENERGIZER)
-		return (&g->energizer_img);
-	return (ghost_tex(g, &g->ghosts[i]));
+	{
+		*x = g->energizers[i].x;
+		*y = g->energizers[i].y;
+		return ;
+	}
+	*x = g->ghosts[i].sprite_x;
+	*y = g->ghosts[i].sprite_y;
 }
 
-static void	draw_one_ref(t_game *g, t_sprite *r)
+static void	sprite_ref_draw(t_game *g, t_sprite *r)
 {
 	t_sprite	box;
 	t_image		*tex;
-	int			div;
+	double		x;
+	double		y;
 
-	tex = ref_tex(g, r);
-	div = ref_size_div(r);
+	ref_world_xy(g, r, &x, &y);
+	if (!sprite_project(g, x, y, &box))
+		return ;
+	if (!sprite_build(g, &box, ref_tex_and_div(g, r, &tex)))
+		return ;
 	if (!tex || !tex->img_addr)
-		return ;
-	if (!sprite_project(g, ref_world_x(g, r), ref_world_y(g, r), &box))
-		return ;
-	if (!sprite_build(g, &box, div))
 		return ;
 	sprite_draw(g, &box, tex);
 }
 
 void	render_all_sprites(t_game *g)
 {
-	t_sprite	refs[4096];
+	t_sprite	*refs;
+	int			cap;
 	int			n;
 	int			i;
 
 	if (!g || !g->ray.z_buffer)
 		return ;
-	n = 0;
-	n = add_pacdot_refs(g, refs, n, 4096);
-	n = add_energizer_refs(g, refs, n, 4096);
-	n = add_ghost_refs(g, refs, n, 4096);
-	if (n <= 0)
+	cap = g->pacdot_count + g->energizer_count + 4;
+	if (cap <= 0)
 		return ;
-	sort_refs_far_to_near(refs, n);
+	refs = (t_sprite *)malloc(sizeof(t_sprite) * cap);
+	if (!refs)
+		return ;
+	n = 0;
+	n = sprite_refs_add_pacdots(g, refs, n, cap);
+	n = sprite_refs_add_energizers(g, refs, n, cap);
+	n = sprite_refs_add_ghosts(g, refs, n, cap);
+	if (n > 1)
+		sprite_refs_sort_far_to_near(refs, n);
 	i = 0;
 	while (i < n)
 	{
-		draw_one_ref(g, &refs[i]);
+		sprite_ref_draw(g, &refs[i]);
 		i++;
 	}
+	free(refs);
 }
