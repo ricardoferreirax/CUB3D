@@ -6,22 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 22:13:51 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/20 21:54:17 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/20 22:28:46 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "render3D.h"
-
-static unsigned int	sprite_tex_px(t_image *t, int x, int y)
-{
-	int	s;
-
-	if (!t || !t->img_addr)
-		return (0);
-	s = t->l_len >> 2;
-	return (((unsigned int *)t->img_addr)[y * s + x]);
-}
 
 int	sprite_project(t_game *g, double x, double y, t_sprite *b)
 {
@@ -45,67 +35,24 @@ int	sprite_project(t_game *g, double x, double y, t_sprite *b)
 
 int	sprite_build(t_game *g, t_sprite *b, int size_div)
 {
-	int		horizon;
-	int		v_move_screen;
-	double	v_move_world;
+	int	h;
+	int	vmove;
 
 	b->size = (int)((double)g->win.height / b->depth);
 	if (b->size < 0)
 		b->size = -b->size;
-	b->size /= size_div;
+	b->size = b->size / size_div;
 	if (b->size < 2)
 		return (0);
-	horizon = g->win.height / 2;
-	v_move_world = 0.10;
-	v_move_screen = (int)(v_move_world * ((double)g->win.height) / b->depth);
+	h = g->win.height / 2;
+	vmove = (int)(0.10 * (double)g->win.height / b->depth);
 	b->raw_x0 = b->screen_x - b->size / 2;
-	b->y1 = horizon + (b->size / 2) + v_move_screen;
-	b->raw_y0 = b->y1 - b->size;
-	b->x0 = b->raw_x0;
-	b->x1 = b->raw_x0 + b->size;
-	b->y0 = b->raw_y0;
-	if (b->x0 < 0) 
-		b->x0 = 0;
-	if (b->x1 >= g->win.width) 
-		b->x1 = g->win.width - 1;
-	if (b->y0 < 0) 
-		b->y0 = 0;
-	if (b->y1 >= g->win.height) 
-		b->y1 = g->win.height - 1;
+	b->raw_y0 = h - b->size / 2 + vmove;
+	b->x0 = clampi(b->raw_x0, 0, g->win.width - 1);
+	b->x1 = clampi(b->raw_x0 + b->size, 0, g->win.width - 1);
+	b->y0 = clampi(b->raw_y0, 0, g->win.height - 1);
+	b->y1 = clampi(b->raw_y0 + b->size, 0, g->win.height - 1);
 	return (b->x0 < b->x1 && b->y0 < b->y1);
-}
-
-static int	sprite_draw_col(t_game *g, t_sprite *b, int x, t_image *tex)
-{
-	int				y;
-	int				tx;
-	int				ty;
-	unsigned int	c;
-	int				drawn;
-
-	drawn = 0;
-	tx = (x - b->raw_x0) * tex->width / b->size;
-	if (tx < 0) 
-		tx = 0;
-	if (tx >= tex->width) 
-		tx = tex->width - 1;
-	y = b->y0;
-	while (y < b->y1)
-	{
-		ty = (y - b->raw_y0) * tex->height / b->size;
-		if (ty < 0) 
-			ty = 0;
-		if (ty >= tex->height) 
-			ty = tex->height - 1;
-		c = sprite_tex_px(tex, tx, ty);
-		if ((c & 0x00FFFFFF) != 0)
-		{
-			((unsigned int *)g->win.frame_buffer.img_addr)[y * (g->win.frame_buffer.l_len >> 2) + x] = c;
-			drawn = 1;
-		}
-		y++;
-	}
-	return (drawn);
 }
 
 void	sprite_draw(t_game *g, t_sprite *b, t_image *tex)

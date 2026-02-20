@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 19:44:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/19 22:14:19 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/20 22:15:51 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ void	render_frame(t_game *game)
 	render_floor_texture(game);
 	process_raycasting(game);
 	render_all_sprites(game);
-	render_energizers(game);
-	render_pacdots(game);
-	render_ghosts(game);
 	render_minimap_test(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr, game->win.frame_buffer.img_ptr, 0, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/19 22:13:54 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/20 22:18:19 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,6 @@ void	put_pixel_fast(t_image *img, int x, int y, int color);
 void	render_wall_col(t_game *g, int screen_x);
 void	render_floor_texture(t_game *g);
 void	render_ceiling_texture(t_game *g);
-void	render_pacdots(t_game *g);
-void	render_energizers(t_game *g);
-void	render_ghosts(t_game *g);
 double	fract_pos(double x);
 
 unsigned int	tex_pixel(t_image *tex, int x, int y);
@@ -93,3 +90,5 @@ int	sprite_project(t_game *g, double x, double y, t_sprite *b);
 int	sprite_build(t_game *g, t_sprite *b, int size_div);
 t_image	*ghost_tex(t_game *g, t_ghost *gh);
 void	render_all_sprites(t_game *g);
+int	sprite_draw_col(t_game *g, t_sprite *b, int x, t_image *tex);
+int	clampi(int v, int lo, int hi);

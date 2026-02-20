@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:18:28 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/18 21:21:38 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/20 22:10:49 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,13 @@ void	convert_texture_coords(t_fc *fc, t_image *tex, int *tx, int *ty)
 		*tx = tex->width - 1;
 	if (*ty >= tex->height)
 		*ty = tex->height - 1;
+}
+
+int	clampi(int v, int lo, int hi)
+{
+	if (v < lo)
+		return (lo);
+	if (v > hi)
+		return (hi);
+	return (v);
 }
