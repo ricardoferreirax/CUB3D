@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 22:09:52 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/20 23:11:21 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/21 21:57:08 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,30 @@ static void	draw_ghosts(t_game *g)
 	}
 }
 
+static void	draw_open_gates(t_game *g)
+{
+	t_sprite	box;
+	int			i;
+
+	if (!g || !g->gates || !g->tex.gate_open_img.img_addr)
+		return ;
+	if (!g->gate_passable)
+		return ;
+	i = 0;
+	while (i < g->gate_count)
+	{
+		if (g->gates[i].active)
+		{
+			if (sprite_project(g, g->gates[i].x, g->gates[i].y, &box))
+			{
+				if (sprite_build(g, &box, 1))
+					sprite_draw(g, &box, &g->tex.gate_open_img);
+			}
+		}
+		i++;
+	}
+}
+
 void	render_all_sprites(t_game *g)
 {
 	if (!g || !g->ray.z_buffer || !g->ray.sprite_z)
@@ -88,4 +112,5 @@ void	render_all_sprites(t_game *g)
 	draw_pacdots(g);
 	draw_energizers(g);
 	draw_ghosts(g);
+	draw_open_gates(g);
 }

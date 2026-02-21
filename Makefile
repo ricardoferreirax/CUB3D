@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/02/21 21:40:16 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/02/21 21:51:03 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,12 +36,14 @@ MLX = $(MLX_PATH)/libmlx.a
 SRC_FILES = main.c \
 	aux_funcs.c  \
 	ghosts.c \
-	init/init.c \
-	init/init_aux_funcs.c \
-	init/init_ghosts.c \
-	init/init_assets.c \
-	init/init_pacdots.c \
-	init/init_energizers.c \
+	srcs/init/init.c \
+	srcs/init/init_mlx.c \
+	srcs/init/init_aux_funcs.c \
+	srcs/init/init_ghosts.c \
+	srcs/init/init_assets.c \
+	srcs/init/init_pacdots.c \
+	srcs/init/init_energizers.c \
+	srcs/init/init_gates.c \
 	time.c \
 	srcs/map/map_load.c \
 	srcs/map/map_dimensions.c \
@@ -76,7 +78,6 @@ SRC_FILES = main.c \
 	srcs/player/player_eat_pacdots.c \
 	srcs/hooks/handle_close.c \
 	srcs/hooks/handle_keys.c \
-	init/init_mlx.c \
 	utils/free.c  \
 
 OBJ_DIR   = objs

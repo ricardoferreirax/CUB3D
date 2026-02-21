@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_pacdots.c                                     :+:      :+:    :+:   */
+/*   init_energizers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/13 22:47:51 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/18 21:03:15 by rmedeiro         ###   ########.fr       */
+/*   Created: 2026/02/15 23:47:24 by rmedeiro          #+#    #+#             */
+/*   Updated: 2026/02/21 21:49:09 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Pac_Struct.h"
+#include "../../Pac_Struct.h"
 
-static int	pacdot_count_map(t_game *g)
+static int	energizer_count_map(t_game *g)
 {
 	int	y;
 	int	x;
 	int	n;
 
-	if (!g || !g->map.grid)
-		return (0);
 	y = 0;
 	n = 0;
 	while (g->map.grid[y])
@@ -27,7 +25,7 @@ static int	pacdot_count_map(t_game *g)
 		x = 0;
 		while (g->map.grid[y][x])
 		{
-			if (g->map.grid[y][x] == PACDOT)
+			if (g->map.grid[y][x] == ENERGIZER)
 				n++;
 			x++;
 		}
@@ -36,7 +34,7 @@ static int	pacdot_count_map(t_game *g)
 	return (n);
 }
 
-static void	pacdot_fill_from_map(t_game *g)
+static void	energizer_fill_map(t_game *g)
 {
 	int	y;
 	int	x;
@@ -49,11 +47,11 @@ static void	pacdot_fill_from_map(t_game *g)
 		x = 0;
 		while (g->map.grid[y][x])
 		{
-			if (g->map.grid[y][x] == PACDOT)
+			if (g->map.grid[y][x] == ENERGIZER)
 			{
-				g->pacdots[i].x = (double)x + 0.5;
-				g->pacdots[i].y = (double)y + 0.5;
-				g->pacdots[i].active = 1;
+				g->energizers[i].x = (double)x + 0.5;
+				g->energizers[i].y = (double)y + 0.5;
+				g->energizers[i].active = 1;
 				i++;
 			}
 			x++;
@@ -62,18 +60,18 @@ static void	pacdot_fill_from_map(t_game *g)
 	}
 }
 
-void	init_pacdots(t_game *g)
+void	init_energizers(t_game *g)
 {
 	int	n;
 
 	if (!g || !g->map.grid)
 		return ;
-	n = pacdot_count_map(g);
-	g->pacdot_count = n;
+	n = energizer_count_map(g);
+	g->energizer_count = n;
 	if (n <= 0)
 		return ;
-	g->pacdots = malloc(sizeof(t_pacdot) * n);
-	if (!g->pacdots)
+	g->energizers = malloc(sizeof(t_pacdot) * n);
+	if (!g->energizers)
 		exit_game(EXIT_MALLOC, g);
-	pacdot_fill_from_map(g);
+	energizer_fill_map(g);
 }

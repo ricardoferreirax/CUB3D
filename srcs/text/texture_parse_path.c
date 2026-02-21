@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:19:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/18 21:31:11 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/21 22:11:20 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,16 +99,18 @@ static void	parse_texture_line(t_game *g, char *line)
 		set_texture_path(&g->tex.pacdot, p + 2, g);
 	else if (!ft_strncmp(p, "EN", 2) && (p[2] == ' ' || p[2] == '\t'))
 		set_texture_path(&g->tex.energizer, p + 2, g);
-	else if (!ft_strncmp(p, "GB", 2) && (p[2] == ' ' || p[2] == '\t'))
+	else if (!ft_strncmp(p, "BL", 2) && (p[2] == ' ' || p[2] == '\t'))
 		set_texture_path(&g->tex.blinky, p + 2, g);
-	else if (!ft_strncmp(p, "GP", 2) && (p[2] == ' ' || p[2] == '\t'))
+	else if (!ft_strncmp(p, "PI", 2) && (p[2] == ' ' || p[2] == '\t'))
 		set_texture_path(&g->tex.pinky, p + 2, g);
-	else if (!ft_strncmp(p, "GI", 2) && (p[2] == ' ' || p[2] == '\t'))
+	else if (!ft_strncmp(p, "IN", 2) && (p[2] == ' ' || p[2] == '\t'))
 		set_texture_path(&g->tex.inky, p + 2, g);
-	else if (!ft_strncmp(p, "GC", 2) && (p[2] == ' ' || p[2] == '\t'))
+	else if (!ft_strncmp(p, "CL", 2) && (p[2] == ' ' || p[2] == '\t'))
 		set_texture_path(&g->tex.clyde, p + 2, g);
-	else if (!ft_strncmp(p, "GT", 2) && (p[2] == ' ' || p[2] == '\t'))
-		set_texture_path(&g->tex.gate, p + 2, g);
+	else if (!ft_strncmp(p, "GC", 2) && (p[2] == ' ' || p[2] == '\t'))
+    	set_texture_path(&g->tex.gate_close, p + 2, g);
+	else if (!ft_strncmp(p, "GO", 2) && (p[2] == ' ' || p[2] == '\t'))
+    	set_texture_path(&g->tex.gate_open, p + 2, g);
 }
 
 void	parse_texture(t_game *g, char *path)
@@ -131,8 +133,6 @@ void	parse_texture(t_game *g, char *path)
 	}
 	close(fd);
 	if (!g->tex.no || !g->tex.so || !g->tex.we || !g->tex.ea || !g->tex.pacdot || !g->tex.energizer 
-		|| !g->tex.blinky || !g->tex.pinky || !g->tex.inky || !g->tex.clyde || !g->tex.gate)
+		|| !g->tex.blinky || !g->tex.pinky || !g->tex.inky || !g->tex.clyde || !g->tex.gate_close || !g->tex.gate_open)
 		exit_game(EXIT_MAP, g);
 }
-
-

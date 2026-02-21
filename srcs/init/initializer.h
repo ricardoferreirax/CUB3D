@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_assets.c                                      :+:      :+:    :+:   */
+/*   initializer.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/13 22:18:40 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/15 23:45:25 by rmedeiro         ###   ########.fr       */
+/*   Created: 2026/01/14 15:25:02 by pfreire-          #+#    #+#             */
+/*   Updated: 2026/02/21 21:49:50 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Pac_Struct.h"
+#ifndef INITIALIZER_H
+#define INITIALIZER_H
+#include "../../Pac_Struct.h"
 
-void	init_assets(t_game *g)
-{
-	if (!g || !g->mlx_ptr)
-		exit_game(EXIT_MLX, g);
-	texture_load_walls(g);
-	texture_load_floor_ceiling(g);
-	texture_load_sprites(g);
-}
+char **copy_map(char **map);
+t_point find_c(char **map,  char c);
+void init_clyde(t_game *game, t_ghost *clyde);
+void init_inky(t_game *game, t_ghost *inky);
+void init_pinky(t_game *game, t_ghost *pinky);
+void init_blinky(t_game *game, t_ghost *blinky);
+#endif

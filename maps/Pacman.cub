@@ -8,11 +8,12 @@ C ./textures/ceiling.xpm
 
 PD ./textures/pacdot.xpm
 EN ./textures/energizer.xpm
-GB ./textures/blinky.xpm
-GP ./textures/pinky.xpm
-GI ./textures/inky.xpm
-GC ./textures/clyde.xpm
-GT ./textures/gate1.xpm
+BL ./textures/blinky.xpm
+PI ./textures/pinky.xpm
+IN ./textures/inky.xpm
+CL ./textures/clyde.xpm
+GC ./textures/gate_closed.xpm
+GO ./textures/gate_open.xpm
 
 1111111111111111111111111111
 1............11............1
