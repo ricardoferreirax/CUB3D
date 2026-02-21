@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/02/20 23:41:35 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/02/21 21:40:16 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRC_FILES = main.c \
 	srcs/map/map_read.c \
 	srcs/map/map_validate_grid.c \
 	srcs/map/map_parse_lines.c \
+	srcs/map/map_gate_iteraction.c \
 	srcs/map/map_wrap.c \
 	srcs/map/minimap_test.c \
 	srcs/map/map_utils.c \

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 18:13:52 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/18 21:25:39 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/21 21:29:18 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_image	*texture_pick_wall(t_game *g)
 {
 	if (g->ray.hit_tile == GATE)
 		return (&g->tex.gate_img);
-
 	if (g->ray.hit_side == 0)
 	{
 		if (g->ray.ray_dir_x > 0)

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 23:18:06 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/16 17:38:54 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/21 21:37:43 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define KEY_D     100
 # define KEY_LEFT  65361
 # define KEY_RIGHT 65363
+# define KEY_E     101
 # define KEY_H     104
 
 typedef struct s_game	t_game;
@@ -33,6 +34,8 @@ typedef struct s_key
 	int	left;
 	int	right;
 	int	esc;
+	int	e;
+	int	e_lock;
 }	t_key;
 
 int		handle_close(t_game *g);

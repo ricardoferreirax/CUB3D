@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 22:13:51 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/20 23:42:09 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/21 21:23:25 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	sprite_project(t_game *g, double x, double y, t_sprite *b)
 	double	dx;
 	double	dy;
 
-	dx = wrap_dx(g, x, y);
+	dx = sprite_wrap_offset_x(g, x, y);
 	dy = y - g->player.pos_y;
 	inv = (g->player.plane_x * g->player.dir_y) - (g->player.dir_x * g->player.plane_y);
 	if (inv == 0.0)

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 21:54:56 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/20 23:40:36 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/21 21:11:49 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,26 @@ int	map_wrap_row_is_active(t_game *g, int y)
 		&& g->map.grid[y][g->map.width - 1] == WRAP_PORTS);
 }
 
-double	wrap_dx(t_game *g, double x, double y)
+double	sprite_wrap_offset_x(t_game *game, double world_x, double world_y)
 {
-	double	dx;
-	double	w;
-	int		row;
+	double	offset_x;
+	double	map_w;
+	int		player_row;
 
-	dx = x - g->player.pos_x;
-	if (!g)
-		return (dx);
-	row = (int)g->player.pos_y;
-	if ((int)y != row)
-		return (dx);
-	if (!map_wrap_row_is_active(g, row))
-		return (dx);
-	w = (double)g->map.width;
-	if (dx > w / 2.0)
-		dx -= w;
-	else if (dx < -w / 2.0)
-		dx += w;
-	return (dx);
+	offset_x = world_x - game->player.pos_x;
+	if (!game)
+		return (offset_x);
+	player_row = (int)game->player.pos_y;
+	if ((int)world_y != player_row)
+		return (offset_x);
+	if (!map_wrap_row_is_active(game, player_row))
+		return (offset_x);
+	map_w = (double)game->map.width;
+	if (offset_x > map_w / 2.0)
+		offset_x -= map_w;
+	else if (offset_x < -map_w / 2.0)
+		offset_x += map_w;
+	return (offset_x);
 }
 
 int	map_wrap_ray_x(t_game *g)
