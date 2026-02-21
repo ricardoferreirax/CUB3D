@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/01/29 22:25:26 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/02/21 23:51:28 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,31 +35,49 @@ MLX_PATH = minilibx-linux
 MLX = $(MLX_PATH)/libmlx.a
 
 SRC_FILES = main.c \
-	aux_funcs.c  \
 	ghosts.c \
-	init/init.c \
-	init/init_aux_funcs.c \
-	init/init_ghosts.c \
+	srcs/init/init.c \
+	srcs/init/init_mlx.c \
+	srcs/init/init_aux_funcs.c \
+	srcs/init/init_ghosts.c \
+	srcs/init/init_assets.c \
+	srcs/init/init_pacdots.c \
+	srcs/init/init_energizers.c \
+	srcs/init/init_gates.c \
 	time.c \
-	init/init_defaults.c \
-	execution/start_execution.c \
-	execution/player_collision.c \
-	execution/player_rotation.c \
-	execution/player_movement.c \
-	execution/wrap_port.c \
-	execution/minimap.c \
-	execution/put_pixel.c  \
-	execution/render_frame.c \
-	parsing/map_dimensions.c \
-	parsing/map_read.c \
-	parsing/map_validate_closed.c \
-	parsing/map_player.c \
-	parsing/map_validate_chars.c \
-	init/init_mlx.c execution/raycasting.c \
-	execution/raycasting_utils.c \
-	math/math.c \
-	hooks/handle_close.c \
-	hooks/handle_keys.c \
+	srcs/map/map_load.c \
+	srcs/map/map_dimensions.c \
+	srcs/map/map_player_spawn.c \
+	srcs/map/map_read.c \
+	srcs/map/map_validate_grid.c \
+	srcs/map/map_parse_lines.c \
+	srcs/map/map_gate_iteraction.c \
+	srcs/map/map_wrap.c \
+	srcs/map/minimap_test.c \
+	srcs/map/map_utils.c \
+	srcs/text/texture_parse_path.c \
+	srcs/text/texture_parse_color.c \
+	srcs/text/texture_load.c \
+	srcs/text/texture_pick_wall.c \
+	srcs/text/texture_utils.c \
+	srcs/render/render_frame.c \
+	srcs/render/render_wall_texture.c \
+	srcs/render/sprite_draw.c \
+	srcs/render/render_sprites.c \
+	srcs/render/render_floor_texture.c \
+	srcs/render/render_ceiling_texture.c \
+	srcs/render/render_utils.c \
+	srcs/render/process_raycasting.c \
+	srcs/render/render_center_hit.c \
+	srcs/render/sprite_draw_col.c \
+	srcs/render/perform_dda.c \
+	srcs/render/render_fill_color.c \
+	srcs/player/player_collision.c \
+	srcs/player/player_rotation.c \
+	srcs/player/player_movement.c \
+	srcs/player/player_eat_pacdots.c \
+	srcs/hooks/handle_close.c \
+	srcs/hooks/handle_keys.c \
 	utils/free.c  \
 
 OBJ_DIR   = objs

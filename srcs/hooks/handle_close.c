@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   handle_close.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/16 14:37:42 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/21 23:48:11 by rmedeiro         ###   ########.fr       */
+/*   Created: 2026/01/17 20:39:32 by rmedeiro          #+#    #+#             */
+/*   Updated: 2026/02/21 23:45:33 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Pac_Struct.h"
+#include "../Pac_Struct.h"
 
-long get_time_us(void)
+int	handle_close(t_game *g)
 {
-	struct timeval tv;
-	gettimeofday(&tv, NULL);
-	return(tv.tv_sec * 1000000L + tv.tv_usec);
+	exit_game(EXIT_QUIT, g);
+	return (0);
 }
-
