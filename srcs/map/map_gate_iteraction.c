@@ -1,34 +1,33 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   map_gate_iteraction.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/21 21:38:39 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/21 21:38:59 by rmedeiro         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "../Pac_Struct.h"
 
-#include "../../Pac_Struct.h"
-#include "map3D.h"
-
-static int	gate_in_front(t_game *g)
+static int	gate_front(t_game *g, int *mx, int *my)
 {
-	if (!g)
+	double	fx;
+	double	fy;
+
+	if (!g || !mx || !my)
 		return (0);
-	if (g->player.target_tile != GATE)
+	fx = g->player.pos_x + g->player.dir_x * 0.60;
+	fy = g->player.pos_y + g->player.dir_y * 0.60;
+	*mx = (int)fx;
+	*my = (int)fy;
+	if (*mx < 0 || *mx >= g->map.width)
 		return (0);
-	if (g->player.target_dist > 1.25)
+	if (*my < 0 || *my >= g->map.height)
 		return (0);
 	return (1);
 }
 
-static void	gate_toggle(t_game *g)
+static void	gate_toggle_front(t_game *g)
 {
-	if (!g)
+	int		mx;
+	int		my;
+	char	t;
+
+	if (!gate_front(g, &mx, &my))
 		return ;
-	if (!gate_in_front(g))
+	t = map_get_tile(g, my, mx);
+	if (t != GATE)
 		return ;
 	if (g->gate_passable)
 		g->gate_passable = 0;
@@ -45,5 +44,5 @@ void	handle_gate_input(t_game *g)
 	if (g->key.e_lock)
 		return ;
 	g->key.e_lock = 1;
-	gate_toggle(g);
+	gate_toggle_front(g);
 }
