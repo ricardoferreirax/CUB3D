@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/23 21:36:08 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/23 22:42:37 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,6 @@ void init_pacdots(t_game *g);
 void	init_assets(t_game *g);
 void	init_energizers(t_game *g);
 void	init_ghosts(t_game *g);
-void	init_gates(t_game *g);
 
 // =========================
 // MLX / Window
