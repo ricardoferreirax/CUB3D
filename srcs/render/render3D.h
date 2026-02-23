@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/20 23:03:49 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/23 18:18:02 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ typedef struct s_ghost	t_ghost;
 #define SPR_PACDOT     1
 #define SPR_ENERGIZER  2
 #define SPR_GHOST      3
+
+#define CEILING_DIST 2.8  // CEILING_DIST > 1.0 O ceiling parece que fica mais longe (menos zoom na textura)
+#define CEILING_HORIZON 40.0 // ajusta a posição do horizonte. Valores positivos desce e negativos sobe
+#define CEILING_P_MIN 6.0
 
 typedef struct s_fc
 {
