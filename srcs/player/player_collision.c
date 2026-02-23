@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 22:42:10 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/18 21:43:19 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/23 21:27:59 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,19 @@ int	is_wall_player(t_game *g, int y, int x)
 	t = map_get_tile(g, y, x);
 	if (t == WALL || t == VOID)
 		return (1);
-	if (t == GATE && !g->gate_passable)
+	if (t == GATE && g->gate_passable == 0)
 		return (1);
 	return (0);
 }
-
 
 int	is_wall_ghost(t_game *g, int y, int x)
 {
 	char	t;
 
 	t = map_get_tile(g, y, x);
-	return (t == WALL || t == VOID);
+	if (t == WALL || t == VOID)
+		return (1);
+	return (0);
 }
 
 

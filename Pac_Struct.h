@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/21 21:55:50 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/23 21:36:08 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,6 @@ typedef struct s_game
 	t_textures tex;
 	t_pacdot *pacdots;
 	t_pacdot	*energizers;
-	t_pacdot	*gates;
 	t_image		energizer_img;
 	t_ghost		ghosts[4]; 
 	t_image	render;
@@ -242,7 +241,6 @@ typedef struct s_game
 	int pacdot_count;
 	int	energizer_count;
 	int gate_passable;
-	int	gate_count;
 	
 	bool debug_mode;
 	double timeout;

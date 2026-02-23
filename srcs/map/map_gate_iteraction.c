@@ -29,10 +29,7 @@ static void	gate_toggle_front(t_game *g)
 	t = map_get_tile(g, my, mx);
 	if (t != GATE)
 		return ;
-	if (g->gate_passable)
-		g->gate_passable = 0;
-	else
-		g->gate_passable = 1;
+	g->gate_passable = !g->gate_passable;
 }
 
 void	handle_gate_input(t_game *g)

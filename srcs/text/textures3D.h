@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:20:35 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/21 22:03:14 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/23 21:36:30 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct s_textures
 	char	*inky;
 	char	*clyde;
 	char 	*gate_close;
-	char	*gate_open;
 
 	t_image	no_img;
 	t_image	so_img;
@@ -45,7 +44,6 @@ typedef struct s_textures
 	t_image	inky_img;
 	t_image	clyde_img;
 	t_image gate_close_img;
-	t_image	gate_open_img;
 
 }	t_textures;
 
