@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 22:38:39 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/18 21:15:21 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/23 23:02:09 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@ static int	map_is_cub_prefix(char *p)
 
 static int	map_is_valid_char_in_line(char c)
 {
-	return (c == '\n' || c == ' ' || c == '\t' || c == WALL || c == OPEN_SPACE
-		|| c == PACDOT || c == WRAP_PORTS || c == BLINKY_T || c == PINKY_T 
-		|| c == INKY_T || c == CLYDE_T || c == ENERGIZER
-		|| c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == GATE);
+	return (c == '\n' || c == ' ' || c == '\t'
+		|| c == WALL || c == OPEN_SPACE
+		|| c == PACDOT || c == WRAP_PORTS || c == ENERGIZER
+		|| c == BLINKY_T || c == PINKY_T || c == INKY_T || c == CLYDE_T
+		|| c == 'N' || c == 'S' || c == 'E' || c == 'W'
+		|| c == GATE);
 }
-
 
 int	map_is_map_line(char *line)
 {

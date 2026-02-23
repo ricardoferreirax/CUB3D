@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:41:18 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/18 21:15:46 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/23 23:02:34 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	map_tile_type(char t, int tile_type)
 	}
 	return (0);
 }
-
 
 char	map_get_tile(t_game *g, int y, int x)
 {

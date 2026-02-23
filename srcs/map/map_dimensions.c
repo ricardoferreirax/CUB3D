@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:35:44 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/14 22:04:36 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/23 23:01:13 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,20 @@ void	map_setup_size(t_game *g)
 	g->map.width = max_w;
 }
 
+static char	map_norm_char(char c)
+{
+	if (c == '\t')
+		return (VOID);
+	return (c);
+}
+
 static int	map_fill_row(t_game *g, char **rect, int y)
 {
 	int		x;
 	int		len;
 	char	c;
 
-	rect[y] = ft_calloc(g->map.width + 1, sizeof(char));
+	rect[y] = ft_calloc((size_t)g->map.width + 1, sizeof(char));
 	if (!rect[y])
 		return (0);
 	len = map_line_len(g->map.grid[y]);
@@ -59,14 +66,14 @@ static int	map_fill_row(t_game *g, char **rect, int y)
 	{
 		if (x < len)
 		{
-			c = g->map.grid[y][x];
-			if (c == '\n' || c == VOID)
-				rect[y][x] = WALL;
+			c = map_norm_char(g->map.grid[y][x]);
+			if (c == '\n' || c == '\0')
+				rect[y][x] = VOID;
 			else
 				rect[y][x] = c;
 		}
 		else
-			rect[y][x] = WALL;
+			rect[y][x] = VOID;
 		x++;
 	}
 	rect[y][g->map.width] = '\0';
@@ -78,7 +85,9 @@ char	**map_rectangular(t_game *g)
 	char	**rect;
 	int		y;
 
-	rect = ft_calloc(g->map.height + 1, sizeof(char *));
+	if (!g || !g->map.grid || g->map.width <= 0 || g->map.height <= 0)
+		return (NULL);
+	rect = ft_calloc((size_t)g->map.height + 1, sizeof(char *));
 	if (!rect)
 		return (NULL);
 	y = 0;
