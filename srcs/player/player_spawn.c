@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_player_spawn.c                                 :+:      :+:    :+:   */
+/*   player_spawn.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 21:11:27 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/14 22:04:51 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/23 22:40:38 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
-#include "map3D.h"
+#include "player3D.h"
 
 static void	set_dir_plane_from_char(t_game *g, char c)
 {
