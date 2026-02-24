@@ -6,11 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:28:58 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/21 21:49:20 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/24 17:55:29 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
+#include "initializer.h"
 
 static void	ghost_set(t_game *g, e_ghost who, int x, int y)
 {
@@ -21,37 +22,40 @@ static void	ghost_set(t_game *g, e_ghost who, int x, int y)
 	g->ghosts[who].pos.tile_pos.y = y;
 }
 
-void	init_ghosts(t_game *g)
+static void	ghost_fill_from_map(t_game *g)
 {
 	int		x;
 	int		y;
 	char	t;
 
-	if (!g || !g->map.grid)
-		return ;
-	y = 0;
-	while (y < g->map.height)
+	y = -1;
+	while (++y < g->map.height)
 	{
-		x = 0;
-		while (x < g->map.width)
+		x = -1;
+		while (++x < g->map.width)
 		{
 			t = map_get_tile(g, y, x);
-			if (t == BLINKY_T) 
+			if (t == BLINKY_T)
 				ghost_set(g, BLINKY, x, y);
-			else if (t == PINKY_T) 
+			else if (t == PINKY_T)
 				ghost_set(g, PINKY, x, y);
-			else if (t == INKY_T) 
+			else if (t == INKY_T)
 				ghost_set(g, INKY, x, y);
-			else if (t == CLYDE_T) 
+			else if (t == CLYDE_T)
 				ghost_set(g, CLYDE, x, y);
-			if (t == BLINKY_T || t == PINKY_T || t == INKY_T || t == CLYDE_T)
+			if (t == BLINKY_T || t == PINKY_T
+				|| t == INKY_T || t == CLYDE_T)
 				g->map.grid[y][x] = OPEN_SPACE;
-			x++;
 		}
-		y++;
 	}
 }
 
+void	init_ghosts(t_game *g)
+{
+	if (!g || !g->map.grid)
+		return ;
+	ghost_fill_from_map(g);
+}
 
 
 /* void init_blinky(t_game *game, t_ghost *blinky)

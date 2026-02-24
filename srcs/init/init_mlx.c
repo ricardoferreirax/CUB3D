@@ -6,11 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 15:53:44 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/21 21:49:36 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/24 17:54:14 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
+#include "initializer.h"
 
 void	init_framebuffer(t_game *g)
 {

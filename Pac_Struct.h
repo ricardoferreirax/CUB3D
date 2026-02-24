@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/23 22:42:37 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/24 17:57:33 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,18 +256,6 @@ void	start_execution(t_game *game);
 void	init_defaults(t_game *g);
 int		gameloop(t_game *game);
 long	get_time_us(void);
-
-
-void init_pacdots(t_game *g);
-void	init_assets(t_game *g);
-void	init_energizers(t_game *g);
-void	init_ghosts(t_game *g);
-
-// =========================
-// MLX / Window
-// =========================
-void	init_mlx(t_game *game);
-void	init_window(t_game *s);
 
 // =========================
 // Free & Exit

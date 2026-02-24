@@ -6,11 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/23 23:30:59 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/24 17:54:46 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Pac_Struct.h"
+#include "srcs/init/initializer.h"
 #include "srcs/text/textures3D.h"
 #include "srcs/render/render3D.h"
 #include "srcs/map/map3D.h"

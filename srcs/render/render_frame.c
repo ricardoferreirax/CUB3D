@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 19:44:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/21 21:39:47 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/24 14:13:06 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	apply_input(t_game *g)
 	if (!g)
 		return ;
 	player_rotation_controller(g);
-	movement_controller(g);
+	player_movement_controller(g);
 }
 
 void	render_frame(t_game *game)

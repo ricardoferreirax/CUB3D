@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:25:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/21 21:49:50 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/24 17:53:19 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 #define INITIALIZER_H
 #include "../../Pac_Struct.h"
 
-char **copy_map(char **map);
-t_point find_c(char **map,  char c);
-void init_clyde(t_game *game, t_ghost *clyde);
-void init_inky(t_game *game, t_ghost *inky);
-void init_pinky(t_game *game, t_ghost *pinky);
-void init_blinky(t_game *game, t_ghost *blinky);
+void	init_mlx(t_game *game);
+void	init_window(t_game *s);
+void	init_assets(t_game *g);
+void	init_ghosts(t_game *g);
+void	init_sprites(t_game *g);
+
 #endif

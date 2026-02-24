@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/02/23 22:39:27 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/02/24 17:53:58 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,7 @@ SRC_FILES = main.c \
 	srcs/init/init_aux_funcs.c \
 	srcs/init/init_ghosts.c \
 	srcs/init/init_assets.c \
-	srcs/init/init_pacdots.c \
-	srcs/init/init_energizers.c \
+	srcs/init/init_sprites.c \
 	time.c \
 	srcs/map/map_load.c \
 	srcs/map/map_dimensions.c \
