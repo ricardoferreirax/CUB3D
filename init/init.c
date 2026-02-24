@@ -242,6 +242,7 @@ void	fill_tile(t_game *g, t_image *tile, unsigned int color, t_point point)
 int	find_sprite(unsigned int mask)
 {
 	static const uint16_t bitmask_to_tile[256] = {
+		[0xFF] = 170, // Blank Tile
 		[0x31] = 16, // 0011 0001 Top Left
 		[0x62] = 18, // 0110 0010 Top Right
 		[0x98] = 60, // 1001 1000 Bottom Left
@@ -255,16 +256,16 @@ int	find_sprite(unsigned int mask)
 		[0x73] = 17, // Horizontal Top
 		[0xDC] = 61, // Horizontal Bottom
 		// Borders
-		[0xB1] = 104,
-		[0xB8] = 126,
-		[0xE4] = 129,
-		[0xE2] = 107,
-		[0x90] = 148,
-		[0x30] = 82,
-		[0x60] = 85,
-		[0xC0] = 149,
-		[0x10] = 103,
-		[0x40] = 101,
+		[0xB1] = 104, // Bottom Left, Double Wall
+		[0xB8] = 126, // Top Left, Double Wall
+		[0xE4] = 129, // Top Roght, Double Wall
+		[0xE2] = 107, // Bottom Right, Double Wall
+		[0x90] = 148, // Bottom Left Curve
+		[0x30] = 82, // Bottom Right Curve
+		[0x60] = 85, // Top Right Curve
+		[0xC0] = 149, // Bottom Right Curve
+		[0x10] = 103, // Right Doorframe
+		[0x40] = 101, // Left Doorframe
 	};
 	uint16_t tile = bitmask_to_tile[mask];
 	if(tile == 0)
@@ -356,7 +357,7 @@ int	which_tile(t_game *game, t_point coord)
 	if (game->map.grid[coord.y][coord.x] == '1')
 		return (which_wall(game->map, &coord));
 	else
-		return (39);
+		return (170);
 }
 
 void	put_tile_inbase(t_game *g, int tile_code, unsigned int color,
