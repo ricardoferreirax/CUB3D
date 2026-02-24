@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/02/24 17:53:58 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/02/24 21:26:29 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ SRC_FILES = main.c \
 	srcs/map/minimap_test.c \
 	srcs/map/map_utils.c \
 	srcs/text/texture_parse_path.c \
-	srcs/text/texture_parse_color.c \
+	srcs/text/texture_parse_floor_ceiling.c \
 	srcs/text/texture_load.c \
 	srcs/text/texture_pick_wall.c \
 	srcs/text/texture_utils.c \

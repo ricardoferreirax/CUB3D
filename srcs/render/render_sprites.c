@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 22:09:52 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/23 21:26:12 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/24 21:45:04 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	draw_pacdots(t_game *g)
 	t_sprite	box;
 	int			i;
 
-	if (!g || !g->pacdots || !g->pacdot_img.img_addr)
+	if (!g || !g->pacdots || !g->tex.pacdot_img.img_addr)
 		return ;
 	i = 0;
 	while (i < g->pacdot_count)
@@ -28,7 +28,7 @@ static void	draw_pacdots(t_game *g)
 			if (sprite_project(g, g->pacdots[i].x, g->pacdots[i].y, &box))
 			{
 				if (sprite_build(g, &box, 6))
-					sprite_draw(g, &box, &g->pacdot_img);
+					sprite_draw(g, &box, &g->tex.pacdot_img);
 			}
 		}
 		i++;
@@ -40,7 +40,7 @@ static void	draw_energizers(t_game *g)
 	t_sprite	box;
 	int			i;
 
-	if (!g || !g->energizers || !g->energizer_img.img_addr)
+	if (!g || !g->energizers || !g->tex.energizer_img.img_addr)
 		return ;
 	i = 0;
 	while (i < g->energizer_count)
@@ -50,7 +50,7 @@ static void	draw_energizers(t_game *g)
 			if (sprite_project(g, g->energizers[i].x, g->energizers[i].y, &box))
 			{
 				if (sprite_build(g, &box, 3))
-					sprite_draw(g, &box, &g->energizer_img);
+					sprite_draw(g, &box, &g->tex.energizer_img);
 			}
 		}
 		i++;

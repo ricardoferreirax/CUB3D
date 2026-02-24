@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/24 18:09:32 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/24 21:43:43 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,10 +239,8 @@ typedef struct s_game
 	t_textures tex;
 	t_pacdot *pacdots;
 	t_pacdot	*energizers;
-	t_image		energizer_img;
 	t_ghost		ghosts[4]; 
 	t_image	render;
-	t_image pacdot_img;
 	t_mode mode;
 
 	int pacdot_count;

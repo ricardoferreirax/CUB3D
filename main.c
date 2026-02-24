@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/24 18:41:57 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/24 21:35:48 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int main(int ac, char **av)
 	if (!game)
 		exit_game(EXIT_MALLOC, NULL);
 	init_defaults(game);
-	parse_texture(game, av[1]);
+	parse_texture_path(game, av[1]);
 	parse_map(game, av[1]);    
 	init_mlx(game);
 	init_assets(game);
