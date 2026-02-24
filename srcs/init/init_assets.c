@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 22:18:40 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/24 17:52:34 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/24 18:13:41 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ void	init_assets(t_game *game)
 	texture_load_walls(game);
 	texture_load_floor_ceiling(game);
 	texture_load_sprites(game);
-	init_sprites(game);
-	init_ghosts(game);
+	if (game->mode == MODE_PACMAN)
+	{
+		init_sprites(game);
+		init_ghosts(game);
+	}
 }

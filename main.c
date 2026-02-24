@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/24 17:54:46 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/24 18:41:57 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,32 @@ int	gameloop(t_game *game)
 	render_frame(game);
 	return (0);
 }
+
+/* void	switch_to_pacman_mode(t_game *g, const char *path)
+{
+	char	**rect;
+
+	if (!g)
+		return ;
+	g->mode = MODE_PACMAN;
+	parse_texture(g, path);
+	if (g->map.grid)
+		free_tab_tab(g->map.grid);
+	g->map.grid = load_map_from_cub(g, path);
+	if (!g->map.grid)
+		exit_game(EXIT_MAP, g);
+	map_setup_size(g);
+	rect = map_rectangular(g);
+	if (!rect)
+		exit_game(EXIT_MALLOC, g);
+	free_tab_tab(g->map.grid);
+	g->map.grid = rect;
+	map_validate_chars(g);
+	init_player_from_map(g);
+	map_validate_closed(g);
+	init_sprites(g);
+	init_ghosts(g);
+} */
 
 void	parse_map(t_game *g, const char *path)
 {
@@ -66,6 +92,7 @@ void	init_defaults(t_game *g)
 	if (!g)
 		return ;
 	ft_bzero(g, sizeof(t_game));
+	g->mode = MODE_PACMAN;
 	g->ray.hit_side = -1;
 	g->player.target_map_x = -1;
 	g->player.target_map_y = -1;
@@ -84,7 +111,7 @@ int main(int ac, char **av)
 		exit_game(EXIT_MALLOC, NULL);
 	init_defaults(game);
 	parse_texture(game, av[1]);
-	parse_map(game, av[1]);
+	parse_map(game, av[1]);    
 	init_mlx(game);
 	init_assets(game);
 

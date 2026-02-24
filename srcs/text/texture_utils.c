@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:17:53 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/14 23:25:52 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/24 18:33:39 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ char	*skip_whitespace(char *s)
 	return (s);
 }
 
-int	is_map_start_line(char *line)
+int	is_map_start_line(t_game *g, char *line)
 {
-	return (map_is_map_line(line));
+	return (map_is_map_line(g, line));
 }
 
 int	is_xpm_path(const char *s)

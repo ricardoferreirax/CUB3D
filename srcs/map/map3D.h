@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:48:48 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/23 23:13:01 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/24 18:21:46 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	**load_map_from_cub(t_game *g, const char *path);
 void	map_validate_chars(t_game *g);
 void	map_validate_closed(t_game *g);
 
-int	map_is_map_line(char *line);
+int	map_is_map_line(t_game *g, char *line);
 int	map_is_empty_line(char *s);
 
 char	map_get_tile(t_game *g, int y, int x);

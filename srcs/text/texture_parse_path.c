@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:19:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/23 21:36:56 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/24 18:32:15 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ static void	parse_texture_line(t_game *g, char *line)
     	set_texture_path(&g->tex.gate_close, p + 2, g);
 }
 
-void	parse_texture(t_game *g, char *path)
+void	parse_texture(t_game *g, const char *path)
 {
 	int		fd;
 	char	*line;
@@ -121,7 +121,7 @@ void	parse_texture(t_game *g, char *path)
 		exit_game(EXIT_MAP, g);
 	while ((line = get_next_line(fd)))
 	{
-		if (map_is_map_line(line))
+		if (map_is_map_line(g, line))
 		{
 			free(line);
 			break ;
@@ -130,7 +130,12 @@ void	parse_texture(t_game *g, char *path)
 		free(line);
 	}
 	close(fd);
-	if (!g->tex.no || !g->tex.so || !g->tex.we || !g->tex.ea || !g->tex.pacdot || !g->tex.energizer 
-		|| !g->tex.blinky || !g->tex.pinky || !g->tex.inky || !g->tex.clyde || !g->tex.gate_close)
+	if (!g->tex.no || !g->tex.so || !g->tex.we || !g->tex.ea)
 		exit_game(EXIT_MAP, g);
+	if (g->mode == MODE_PACMAN)
+	{
+		if (!g->tex.pacdot || !g->tex.energizer || !g->tex.blinky || !g->tex.pinky
+			|| !g->tex.inky || !g->tex.clyde || !g->tex.gate_close)
+			exit_game(EXIT_MAP, g);
+	}
 }

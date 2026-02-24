@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:20:35 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/23 21:36:30 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/24 18:33:59 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,14 @@ typedef struct s_textures
 
 }	t_textures;
 
-void			parse_texture(t_game *g, char *path);
+void	parse_texture(t_game *g, const char *path);
 void			texture_load_xpm(t_game *g, t_image *img, const char *path);
 void			texture_load_walls(t_game *g);
 void			texture_load_floor_ceiling(t_game *g);
 void	texture_load_sprites(t_game *g);
 unsigned int	tex_pixel(t_image *tex, int x, int y);
 t_image			*texture_pick_wall(t_game *g);
+int	is_map_start_line(t_game *g, char *line);
 
 int	read_rgb(const char *s, int *i, t_game *g);
 int rgb_to_int(int r, int g, int b);

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/24 17:57:33 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/24 18:09:32 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,12 @@ typedef struct s_player
 	int speed_multiplier;
 }	t_player;
 
+typedef enum e_mode
+{
+	MODE_CUBE = 0,
+	MODE_PACMAN = 1
+}	t_mode;
+
 typedef struct s_game
 {
 	void *mlx_ptr;
@@ -237,6 +243,7 @@ typedef struct s_game
 	t_ghost		ghosts[4]; 
 	t_image	render;
 	t_image pacdot_img;
+	t_mode mode;
 
 	int pacdot_count;
 	int	energizer_count;
