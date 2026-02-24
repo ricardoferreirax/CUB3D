@@ -33,12 +33,16 @@ Middle of the Maze
 Borders
 	Walls
 	1010 0000 = (41 or 43) Ambigous Vertical Wall
-	0101 0000 = (20 or 54) Ambigous Horizontal Wall
+	0101 0000 = (20 or 64) Ambigous Horizontal Wall
 	T Intersection
-	1011 0001 = 104 Bottom Left, Double Wall
-	1011 1000 = 126 Top Left, Double Wall
-	1110 0100 = 129 Top Right, Double Wall
-	1110 0010 = 107 Bottom Right, Double Wall
+	1011 0001 = 104 Bottom Vertical Left, Double Wall
+	1011 1000 = 126 Top Vertical Left, Double Wall
+	1110 0100 = 129 Top Vertical Right, Double Wall
+	1110 0010 = 107 Bottom Vertical Right, Double Wall
+	0111 0001 = 83 Top Horizontal Right, Double Wall
+	0111 0010 = 84 Top Horizontal Left, Double Wall
+	1101 1000 = 150 Bottom Horizontal Right, Double Wall
+	1101 0100 = 151 Bottom Horizontal Left, Double Wall
 
 	Corners
 	1001 0000 = 148 Bottom Left Curve
@@ -46,7 +50,7 @@ Borders
 	0110 0000 = 85 Top Right Curve
 	1100 0000 = 149 Bottom Right Curve
 
-Monster Peeen
+Monster Peen
 	0001 0000 = 103 Right Doorframe
 	0100 0000 = 101 Left Doorframe
 	102 Door

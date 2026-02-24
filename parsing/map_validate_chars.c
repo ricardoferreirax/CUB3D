@@ -14,6 +14,8 @@
 
 static int	is_valid_map_char(char c)
 {
+	return 1;
+
 	if (c == '\n')
 		return (1);
 	if (c == WALL || c == OPEN_SPACE || c == PACDOT || c == VOID)

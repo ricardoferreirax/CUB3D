@@ -242,7 +242,7 @@ void	fill_tile(t_game *g, t_image *tile, unsigned int color, t_point point)
 int	find_sprite(unsigned int mask)
 {
 	static const uint16_t bitmask_to_tile[256] = {
-		[0xFF] = 170, // Blank Tile
+		[0xFF] = 39, // Filled Tile
 		[0x31] = 16, // 0011 0001 Top Left
 		[0x62] = 18, // 0110 0010 Top Right
 		[0x98] = 60, // 1001 1000 Bottom Left
@@ -264,10 +264,14 @@ int	find_sprite(unsigned int mask)
 		[0xDE] = 61,
 		[0xDD] = 61,
 		// Borders
-		[0xB1] = 104, // Bottom Left, Double Wall
-		[0xB8] = 126, // Top Left, Double Wall
-		[0xE4] = 129, // Top Roght, Double Wall
-		[0xE2] = 107, // Bottom Right, Double Wall
+		[0xB1] = 104, // Bottom Vertical Left, Double Wall
+		[0xB8] = 126, // Top Vertical Left, Double Wall
+		[0xE4] = 129, // Top Vertical Roght, Double Wall
+		[0xE2] = 107, // Bottom Vertical Right, Double Wall
+		[0x71] = 83, //Top Horizontal Right, Double Wall
+		[0x72] = 84, //Top Horizontal Left, Double Wall
+		[0xD8] = 150, //Bottom Horizontal Right, Double Wall
+		[0xD4] = 151, //Bottom Horizontal Left, Doublw Wall
 		[0x90] = 148, // Bottom Left Curve
 		[0x30] = 82, // Bottom Right Curve
 		[0x60] = 85, // Top Right Curve
@@ -297,14 +301,15 @@ void	flood_fill(char **map, int x, int y)
 int disambiguation(char **map, t_point coord)
 {
 	flood_fill(map, 24, 14);
-	if(coord.x > 0 && map[coord.y][coord.x - 1] == 'F')
-		return(41);
-	if(coord.x < xtile(map) - 1 && map[coord.y][coord.x + 1] == 'F')
-		return (43);
+		
 	if(coord.y > 0 && map[coord.y - 1][coord.x] == 'F')
 		return(20);
+	if(coord.x < xtile(map) - 1 && map[coord.y][coord.x + 1] == 'F')
+		return(43);
 	if(coord.y < ytile(map) - 1 && map[coord.y + 1][coord.x] == 'F')
-		return (64);
+		return(64);
+	if(coord.x > 0 && map[coord.y][coord.x - 1] == 'F')
+		return (41);
 	return 0;
 }
 
@@ -321,6 +326,19 @@ int disambiguation(char **map, t_point coord)
 // 	dup[i] = NULL;
 // 	return dup;
 // }
+
+int squared_corners(int final)
+{
+	if(final == 148)
+		return(63);
+	if(final == 82)
+		return(19);
+	if(final == 85)
+		return(21);
+	if(final == 149)
+		return(65);
+	return(final);
+}
 
 int	which_wall(t_map map, t_point *coord)
 {
@@ -356,6 +374,8 @@ int	which_wall(t_map map, t_point *coord)
 	temp = copy_map(map.grid);
 	if(final == 0)
 		final = disambiguation(temp, *coord);
+	if(map.grid[coord->y][coord->x] == 'M')
+		final = squared_corners(final);
 	free_2d((void **)temp);
 	return final;
 }
