@@ -16,10 +16,19 @@ Middle of the Maze
 
 	Walls
 	1011 1001 = 38 Vertical Left
+	1011 1011 = 38 Vertical Left
+	1011 1101 = 38 Vertical Left
 	1110 0110 = 40 Vertical Right
+	1110 1110 = 40 Vertical Right
+	1110 0111 = 40 Vertical Right
 	0111 0011 = 17 Horizontal Top
+	0111 0111 = 17 Horizontal Top
+	0111 1011 = 17 Hozizontal Top
 	1101 1100 = 61 Horizontal Bottom
-	0111 1011 = 17 Horizontal Top
+	1101 1110 = 61 Horizontal Bottom
+	1101 1101 = 61 Horizontal Bottom
+
+
 
 Borders
 	Walls

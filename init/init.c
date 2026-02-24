@@ -252,9 +252,17 @@ int	find_sprite(unsigned int mask)
 		[0xF7] = 106, // T Top Right
 		[0xFB] = 105, // T Top Left
 		[0xB9] = 38, // Vertical Left
+		[0xBB] = 38,
+		[0xBD] = 38,
 		[0xE6] = 40, // Vertical Right
+		[0xEE] = 40,
+		[0xE7] = 40,
 		[0x73] = 17, // Horizontal Top
+		[0x77] = 17,
+		[0x7B] = 17,
 		[0xDC] = 61, // Horizontal Bottom
+		[0xDE] = 61,
+		[0xDD] = 61,
 		// Borders
 		[0xB1] = 104, // Bottom Left, Double Wall
 		[0xB8] = 126, // Top Left, Double Wall
@@ -277,7 +285,7 @@ void	flood_fill(char **map, int x, int y)
 {
 	if (x < 0 || x >= xtile(map) || y < 0
 		|| y >= ytile(map) || map[y][x] == 'F'
-		|| map[y][x] == '1')
+		|| map[y][x] == '1' || map[y][x] == 'G' || map[x][y] == 'D')
 		return ;
     map[y][x] = 'F';
 	flood_fill(map, x + 1, y);
@@ -288,7 +296,7 @@ void	flood_fill(char **map, int x, int y)
 
 int disambiguation(char **map, t_point coord)
 {
-	flood_fill(map, 0, 0);
+	flood_fill(map, 24, 14);
 	if(coord.x > 0 && map[coord.y][coord.x - 1] == 'F')
 		return(41);
 	if(coord.x < xtile(map) - 1 && map[coord.y][coord.x + 1] == 'F')
@@ -296,7 +304,7 @@ int disambiguation(char **map, t_point coord)
 	if(coord.y > 0 && map[coord.y - 1][coord.x] == 'F')
 		return(20);
 	if(coord.y < ytile(map) - 1 && map[coord.y + 1][coord.x] == 'F')
-		return (54);
+		return (64);
 	return 0;
 }
 
