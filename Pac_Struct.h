@@ -24,7 +24,7 @@
 #include <math.h>
 #include <sys/time.h>
 
-#define SPRITE_SHEET "./sprites/SpriteSheet.xpm"
+#define SPRITE_SHEET "./sprites/Spriteheet.xpm"
 
 #define UPDATE_F 16666
 #define MAX_UPDATES 5
