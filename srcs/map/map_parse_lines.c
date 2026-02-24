@@ -6,19 +6,14 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 22:38:39 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/24 18:45:24 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/24 18:52:32 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "map3D.h"
 
-static int	is_whitespace(char c)
-{
-	return (c == ' ' || c == '\t');
-}
-
-static int	map_is_cub_prefix(char *p)
+static int	map_cube_mode_prefix(char *p)
 {
 	if (!p)
 		return (0);
@@ -34,6 +29,13 @@ static int	map_is_cub_prefix(char *p)
 		return (1);
 	if (*p == 'C' && is_whitespace(p[1]))
 		return (1);
+	return (0);
+}
+
+static int	map_pacman_mode_prefix(char *p)
+{
+	if (!p)
+		return (0);
 	if (!ft_strncmp(p, "PD", 2) && is_whitespace(p[2]))
 		return (1);
 	if (!ft_strncmp(p, "EN", 2) && is_whitespace(p[2]))
@@ -47,6 +49,15 @@ static int	map_is_cub_prefix(char *p)
 	if (!ft_strncmp(p, "CL", 2) && is_whitespace(p[2]))
 		return (1);
 	if (!ft_strncmp(p, "GC", 2) && is_whitespace(p[2]))
+		return (1);
+	return (0);
+}
+
+static int	map_is_cub_prefix(char *p)
+{
+	if (map_cube_mode_prefix(p))
+		return (1);
+	if (map_pacman_mode_prefix(p))
 		return (1);
 	return (0);
 }
@@ -89,20 +100,4 @@ int	map_is_map_line(t_game *g, char *line)
 		p++;
 	}
 	return (has_tile);
-}
-
-int	map_is_empty_line(char *s)
-{
-	int	i;
-
-	if (!s)
-		return (1);
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] != '\n' && s[i] != ' ' && s[i] != '\t')
-			return (0);
-		i++;
-	}
-	return (1);
 }
