@@ -37,6 +37,27 @@ static void	apply_input(t_game *g)
 	movement_controller(g);
 }
 
+void	render_base_into_buffer(t_game *s)
+{
+	int				x;
+	int				y;
+	unsigned int	color;
+
+	y = 0;
+	while (y < s->base.height)
+	{
+		x = 0;
+		while (x < s->base.width)
+		{
+			color = pixel_get(&s->base, x, y);
+			if ((color >> 24) != 0xFF)
+				ft_pixel_put(&s->win.frame_buffer, x + s->win.width / 2, y + s->win.height / 2, color);
+			x++;
+		}
+		y++;
+	}
+}
+
 void	render_frame(t_game *game)
 {
 	if (!game)
@@ -51,5 +72,6 @@ void	render_frame(t_game *game)
 	clear_sprite_z(game);
 	render_all_sprites(game);
 	render_minimap_test(game);
+	render_base_into_buffer(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr, game->win.frame_buffer.img_ptr, 0, 0);
 }

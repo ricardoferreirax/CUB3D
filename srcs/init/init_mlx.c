@@ -27,8 +27,8 @@ void	init_framebuffer(t_game *g)
 
 void	init_window(t_game *g)
 {
-	g->win.ntilesx = 28;
-	g->win.ntilesy = 25;
+	g->win.ntilesx = xtile(g->map.grid);
+	g->win.ntilesy = ytile(g->map.grid);
 	g->win.width = 1600;
 	g->win.height = 900;
 	g->win.win_ptr = mlx_new_window(g->mlx_ptr, g->win.width, g->win.height, "Pac-Man");

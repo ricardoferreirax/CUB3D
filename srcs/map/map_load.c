@@ -101,5 +101,6 @@ char	**load_map_from_cub(t_game *g, const char *path)
 	free_tab_tab(file);
 	if (!map)
 		exit_game(EXIT_MAP, g);
+	print_2d(map);
 	return (map);
 }

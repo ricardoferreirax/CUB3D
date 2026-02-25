@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:21:39 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/21 23:48:33 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/25 16:09:55 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 // 	}
 // }
 
-/* char **copy_map(char **map)
+char **copy_map(char **map)
 {
 	char **copy;
 	copy = ft_calloc(sizeof(char *), ytile(map) + 1);
@@ -59,7 +59,7 @@
 	// ft_printf("--------___--");
 	return copy;
 }
-
+/*
 t_point find_c(char **map,  char c)
 {
 	t_point cord;

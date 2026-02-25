@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:25:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/21 21:49:50 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/25 16:11:27 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,7 @@ void init_inky(t_game *game, t_ghost *inky);
 void init_pinky(t_game *game, t_ghost *pinky);
 void init_blinky(t_game *game, t_ghost *blinky);
 
+
+int	init_spritesheet(t_game *game);
+void	init_base(t_game *s);
 #endif

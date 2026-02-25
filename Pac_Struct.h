@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/21 23:43:10 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/25 16:09:55 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 #include "srcs/map/map3D.h"
 #include "srcs/player/player3D.h"
 #include "srcs/hooks/hooks.h"
+#define TILE_SIZE 8
 
 #define UPDATE_F 16666
 #define MAX_UPDATES 5
@@ -266,6 +267,7 @@ typedef struct s_game
 	t_ghost		ghosts[4]; 
 	t_image	render;
 	t_image pacdot_img;
+	t_image base;
 
 	int pacdot_count;
 	int	energizer_count;
@@ -325,3 +327,4 @@ int	pixel_get(t_image *data, int x, int y);
 int	pixeL_get_coord(t_sprite_sheet *sheet, int i, int x, int y);
 void	ft_pixel_put(t_image *s, int x, int y, unsigned int color);
 
+void print_2d(char **arr);

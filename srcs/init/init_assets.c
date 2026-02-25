@@ -6,11 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/13 22:18:40 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/21 23:41:53 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/25 16:11:27 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
+#include "initializer.h"
 
 void	init_assets(t_game *game)
 {
@@ -23,4 +24,6 @@ void	init_assets(t_game *game)
 	init_pacdots(game);
 	init_energizers(game);
 	init_ghosts(game);
+	init_spritesheet(game);
+	init_base(game);
 }

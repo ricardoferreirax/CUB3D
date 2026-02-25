@@ -35,6 +35,7 @@ MLX_PATH = minilibx-linux
 MLX = $(MLX_PATH)/libmlx.a
 
 SRC_FILES = main.c \
+	aux_funcs.c \
 	ghosts.c \
 	srcs/init/init.c \
 	srcs/init/init_mlx.c \
@@ -44,6 +45,8 @@ SRC_FILES = main.c \
 	srcs/init/init_pacdots.c \
 	srcs/init/init_energizers.c \
 	srcs/init/init_gates.c \
+	srcs/init/init_spritesheet.c \
+	srcs/init/init_base.c \
 	time.c \
 	srcs/map/map_load.c \
 	srcs/map/map_dimensions.c \

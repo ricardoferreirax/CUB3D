@@ -61,7 +61,7 @@ static int	map_fill_row(t_game *g, char **rect, int y)
 		{
 			c = g->map.grid[y][x];
 			if (c == '\n' || c == VOID)
-				rect[y][x] = WALL;
+				rect[y][x] = VOID;
 			else
 				rect[y][x] = c;
 		}
