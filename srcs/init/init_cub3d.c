@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 11:27:11 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/25 17:31:43 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/25 21:33:33 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ static void	init_defaults(t_game *g)
 	g->map.floor_color = -1;
 	g->map.ceiling_color = -1;
 	g->gate_passable = 0;
-	g->last_ghost_move_us = 0;
 }
 
 void	start_execution(t_game *g)

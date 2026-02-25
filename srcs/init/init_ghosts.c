@@ -6,123 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:28:58 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/25 17:35:52 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/25 21:30:22 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "initializer.h"
-
-int	ft_abs(int n)
-{
-	if (n < 0)
-		return (-n);
-	return (n);
-}
-
-static int	sq(int a) 
-{ 
-	return (a * a); 
-}
-
-int	distance_to_target(t_ghost *ghost, int dy, int dx)
-{
-	int nx;
-	int ny;
-	int tx;
-	int ty;
-
-	nx = ghost->pos.tile_pos.x + dx;
-	ny = ghost->pos.tile_pos.y + dy;
-	tx = ghost->target_tile.x;
-	ty = ghost->target_tile.y;
-	return (sq(nx - tx) + sq(ny - ty));
-}
-
-static int	ghost_can_step(t_game *g, int y, int x)
-{
-	char t;
-
-	t = map_get_tile(g, y, x);
-	if (t == WALL)
-		return (0);
-	if (t == GATE && !g->gate_passable)
-		return (0);
-	return (1);
-}
-
-t_point	chose_next_move(t_game *g, t_ghost *ghost)
-{
-	int		i;
-	int		best;
-	int		best_dir;
-	int		dist;
-	t_point	dir;
-	int		dirs[4][2] = {
-		{-1, 0}, {0, -1}, {1, 0}, {0, 1}
-	};
-
-	i = 0;
-	best = -1;
-	best_dir = -1;
-	while (i < 4)
-	{
-		int ny = ghost->pos.tile_pos.y + dirs[i][0];
-		int nx = ghost->pos.tile_pos.x + dirs[i][1];
-
-		if (i != ghost->invalid_dir && ghost_can_step(g, ny, nx))
-		{
-			dist = distance_to_target(ghost, dirs[i][0], dirs[i][1]);
-			if (best == -1 || dist < best)
-			{
-				best = dist;
-				best_dir = i;
-			}
-		}
-		i++;
-	}
-	if (best_dir == -1)
-		best_dir = (ghost->invalid_dir + 2) % 4;
-	ghost->invalid_dir = (best_dir + 2) % 4;
-
-	dir.y = dirs[best_dir][0];
-	dir.x = dirs[best_dir][1];
-	return (dir);
-}
-
-static void	ghost_step_tile(t_game *g, t_ghost *ghost)
-{
-	t_point mv;
-
-	mv = chose_next_move(g, ghost);
-	ghost->pos.tile_pos.x += mv.x;
-	ghost->pos.tile_pos.y += mv.y;
-	ghost->sprite_x = (double)ghost->pos.tile_pos.x + 0.5;
-	ghost->sprite_y = (double)ghost->pos.tile_pos.y + 0.5;
-}
-
-void	update_ghosts(t_game *g)
-{
-	int i;
-
-	i = 0;
-	while (i < 4)
-	{
-		g->ghosts[i].target_tile.x = g->player.pos.tile_pos.x;
-		g->ghosts[i].target_tile.y = g->player.pos.tile_pos.y;
-		ghost_step_tile(g, &g->ghosts[i]);
-		i++;
-	}
-}
-
-
-
-
-
-
-
-
-
 
 static void	ghost_set(t_game *g, e_ghost who, int x, int y)
 {

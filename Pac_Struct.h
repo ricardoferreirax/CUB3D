@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/25 17:31:25 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/25 21:32:20 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,7 +253,6 @@ typedef struct s_game
 	t_mode mode;
 	t_gstate state;
 	t_image menu_img;
-	long	last_ghost_move_us;
 
 	int pacdot_count;
 	int	energizer_count;
