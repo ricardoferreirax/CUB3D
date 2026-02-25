@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/10 10:58:56 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/02/21 23:43:10 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 #include <sys/time.h>
 
 #define SPRITE_SHEET "./sprites/Spriteheet.xpm"
+#include "srcs/map/map3D.h"
+#include "srcs/player/player3D.h"
+#include "srcs/hooks/hooks.h"
 
 #define UPDATE_F 16666
 #define MAX_UPDATES 5
@@ -40,33 +43,12 @@
 #define PINKY_T 'P'
 #define INKY_T 'I'
 #define CLYDE_T 'C'
-#define TILE_SIZE 8
-#define GHOST_SPAWN 'G'
+#define GATE 'G'
 #define PLAYER 'J'
 #define WALL '1'
 #define OPEN_SPACE '0'
 #define PACDOT '.'
 #define VOID ' '
-
-#define PLAYER_SPEED    0.06
-#define ROT_SPEED    0.05
-#define PLAYER_RADIUS   0.15
-
-//////// MINIMAP TEST ////////
-
-#define MINI_TILE    8     // tamanho de cada tile em pixels
-#define MINI_MARGIN  12    // margem do canto
-
-#define C_BG         0x00000000
-#define C_WALL       0x00000088
-#define C_WALL_SHADE 0x00000055
-#define C_DOT        0x00FFFFCC
-#define C_ENERGIZER  0x00FFFFFF
-#define C_PLAYER     0x00FFFF00
-#define C_PORT       0x0000CCFF
-
-////////////////////////////////
-
 
 // exit codes
 # define EXIT_OK        0
@@ -75,21 +57,6 @@
 # define EXIT_MLX       3
 # define EXIT_MAP       4
 # define EXIT_INPUT     5
-
-// keycodes
-# define KEY_ESC   65307
-# define KEY_W     119
-# define KEY_A     97
-# define KEY_S     115
-# define KEY_D     100
-# define KEY_LEFT  65361
-# define KEY_RIGHT 65363
-# define KEY_H     104
-//Cardinal Directions
-#define DIR_UP 0;
-#define DIR_LEFT 1;
-#define DIR_DOWN 2;
-#define DIR_RIGHT 3;
 
 typedef struct s_point
 {
@@ -113,6 +80,9 @@ typedef struct s_image
 	int				endian;
 	void			*img_ptr;
 }					t_image;
+
+# include "srcs/text/textures3D.h"
+# include "srcs/render/render3D.h"
 
 typedef struct s_window
 {
@@ -171,14 +141,6 @@ typedef struct s_player
 }	t_player;
 
 
-typedef struct s_pacdot
-{
-	t_pos pos;
-	bool eaten;
-	t_point sprite_cord;
-	bool is_energizer;
-}	t_pacdot;
-
 typedef enum e_ghost
 {
 	BLINKY,
@@ -213,7 +175,7 @@ typedef struct s_elroy
 	t_elroy_level two;
 }	t_elroy;
 
-typedef struct s_ghost
+/* typedef struct s_ghost
 {
 	//Self Explaining, it is the ghost's name
 	e_ghost name;
@@ -234,19 +196,30 @@ typedef struct s_ghost
 	char **mental_map;
 	t_elroy cruiser;
 	e_state state;
-} t_ghost;
+} t_ghost; */
 //At game start one of the penhouse ghost will activate it's counter, it will count up each dot pacman eats
 //if pacman eats all the dots it gets out, but if the ghost is forced out by timeout its dot counter is not reset and the next ghost dot counter starts counting.
 
-// execution - map
-typedef struct s_map
+typedef struct s_ghost
 {
-	char	**grid;
-	int		width;
-	int		height;
-	int ceiling_color;
-	int floor_color;
-}	t_map;
+	e_ghost	name;
+
+	t_pos	pos;
+	double	sprite_x;
+	double	sprite_y;
+
+	int		dot_counter;
+	t_point	target_tile;
+	int		global_dot_counter_call;
+	int		speed_multiplier;
+	int		is_steping_on_pacdot;
+	t_anim	anim;
+	int		invalid_dir;
+	char	**mental_map;
+	t_elroy	cruiser;
+	e_state	state;
+
+}	t_ghost;
 
 typedef struct s_time
 {
@@ -261,58 +234,15 @@ typedef struct s_time
 	long accumulator;
 }	t_timer;
 
-typedef struct s_key
+typedef struct s_pacdot
 {
-	int	w;
-	int	a;
-	int	s;
-	int	d;
-	int	left;
-	int	right;
-	int	esc;
-}	t_key;
-
-typedef struct s_raycasting
-{
-	double	*z_buffer; // array para armazenar a distância da parede
-	double	camera_x; // posição no ecra (-1 a 1) 
-	double	ray_dir_x; 
-	double	ray_dir_y;
-	int		map_x;
-	int		map_y;
-	int		step_x;  // +1 ou -1 para indicar a direção no eixo x
-	int		step_y; // +1 ou -1 para indicar a direção no eixo y
-	double	side_dist_x; // distancia do ray atual até a proxima linha vertical (até a proxima parede no eixo x)
-	double	side_dist_y; // distancia do ray atual até a proxima linha horizontal (até a proxima parede no eixo y)
-	double	delta_dist_x; // distancia que o ray tem que percorrer para ir de uma linha vertical para a proxima (no eixo x) - distancia entre linhas verticais
-	double	delta_dist_y; // distancia que o ray tem que percorrer para ir de uma linha horizontal para a proxima (no eixo y) - distancia entre linhas horizontais
-	int		hit_side; // 0 = parede vertical, 1 = parede horizontal
-	double	perp_wall_dist; // distancia perpendicular a parede
-
-	// drawing limits
-	int		draw_start;
-	int		draw_end;
-}	t_raycasting;
-
-typedef struct s_backcast
-{
-	int		is_floor;
-
-	double	ray0_x;
-	double	ray0_y;
-	double	ray1_x;
-	double	ray1_y;
-
-	double	cam_z;
-	double	p;
-	double	row_dist;
-
-	double	step_x;
-	double	step_y;
-
-	double	world_x;
-	double	world_y;
-}	t_backcast;
+	double x;
+	double y;
+	int active;
+	
+	t_pos pos;
+	bool eaten;
+}	t_pacdot;
 
 typedef struct s_sheet
 {
@@ -322,19 +252,27 @@ typedef struct s_sheet
 
 typedef struct s_game
 {
-	// o que eu preciso para a execução
 	void *mlx_ptr;
 	t_window win;
 	t_map   map;
-	t_image	render;
 	t_raycasting ray;
 	t_player player;
 	t_key	key;
+	t_textures tex;
+	t_pacdot *pacdots;
+	t_pacdot	*energizers;
+	t_pacdot	*gates;
+	t_image		energizer_img;
+	t_ghost		ghosts[4]; 
+	t_image	render;
+	t_image pacdot_img;
+
+	int pacdot_count;
+	int	energizer_count;
+	int gate_passable;
+	int	gate_count;
 	
 	bool debug_mode;
-	t_image base; //save static sprite, no need to recalculate what does not change
-	t_ghost *ghost;
-	t_pacdot *dot;
 	double timeout;
 	t_timer timer;
 	int global_dot_counter;
@@ -346,61 +284,23 @@ typedef struct s_game
 
 #endif // !DEBUG
 
-// =========================
-// Execution / Game loop
-// =========================
 void	start_execution(t_game *game);
 void	init_defaults(t_game *g);
 int		gameloop(t_game *game);
 long	get_time_us(void);
 
-// =========================
-// Map & Player init
-// =========================
-void	setup_map_grid(t_game *g);
-char	**map_rectangular(t_game *g);
-char	**map_read_file(const char *path);
-void	wrap_port(t_game *g);
-void	validate_map_chars(t_game *g);
-void	validate_map_closed(t_game *g);
-char	map_tile(t_game *g, int y, int x);
-void	init_player_from_map(t_game *g);
-int	is_wall_tile(char t);
-int	is_void_tile(char t);
-int	is_solid_tile(char t);
-int	is_walkable_tile(char t);
-int	is_valid_wrap_port(t_game *g, int y, int x);
-void	render_minimap_test(t_game *g);
 
-// =========================
-// Input & Movement
-// =========================
-void	init_keys(t_game *g);
-
-void	move_radius_check(t_game *g, double x_delta, double y_delta);
-void	player_rotation_controller(t_game *g);
-void	movement_controller(t_game *g);
-
-// =========================
-// Rendering
-// =========================
-void	render_frame(t_game *game);
-void	process_raycasting(t_game *g);
-int		register_center_hit(t_game *g, int screen_x, int hit_found);
-void	put_pixel_fast(t_image *img, int x, int y, int color);
+void init_pacdots(t_game *g);
+void	init_assets(t_game *g);
+void	init_energizers(t_game *g);
+void	init_ghosts(t_game *g);
+void	init_gates(t_game *g);
 
 // =========================
 // MLX / Window
 // =========================
 void	init_mlx(t_game *game);
 void	init_window(t_game *s);
-
-// =========================
-// Hooks
-// =========================
-int		handle_close(t_game *g);
-int		handle_key_press(int keycode, t_game *g);
-int		handle_key_release(int keycode, t_game *g);
 
 // =========================
 // Free & Exit

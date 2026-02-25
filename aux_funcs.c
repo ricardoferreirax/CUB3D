@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   aux_funcs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 13:42:39 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/12 13:53:02 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/02/21 23:47:20 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Pac_Struct.h"
 
-int xtile(char **map)
+/* int xtile(char **map)
 {
 	int i = 0;
 	int total = 0;
@@ -70,3 +70,4 @@ void move(char** map, t_ghost *ghost, int dx, int dy)
 	}
 	map[new_posy][new_posx] = ghost_to_move;
 }
+ */

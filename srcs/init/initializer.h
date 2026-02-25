@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   initializer.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/16 14:37:42 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/21 23:48:11 by rmedeiro         ###   ########.fr       */
+/*   Created: 2026/01/14 15:25:02 by pfreire-          #+#    #+#             */
+/*   Updated: 2026/02/21 21:49:50 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Pac_Struct.h"
+#ifndef INITIALIZER_H
+#define INITIALIZER_H
+#include "../../Pac_Struct.h"
 
-long get_time_us(void)
-{
-	struct timeval tv;
-	gettimeofday(&tv, NULL);
-	return(tv.tv_sec * 1000000L + tv.tv_usec);
-}
+char **copy_map(char **map);
+t_point find_c(char **map,  char c);
+void init_clyde(t_game *game, t_ghost *clyde);
+void init_inky(t_game *game, t_ghost *inky);
+void init_pinky(t_game *game, t_ghost *pinky);
+void init_blinky(t_game *game, t_ghost *blinky);
 
+#endif

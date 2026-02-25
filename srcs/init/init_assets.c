@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   init_assets.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/16 14:37:42 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/21 23:48:11 by rmedeiro         ###   ########.fr       */
+/*   Created: 2026/02/13 22:18:40 by rmedeiro          #+#    #+#             */
+/*   Updated: 2026/02/21 23:41:53 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Pac_Struct.h"
+#include "../../Pac_Struct.h"
 
-long get_time_us(void)
+void	init_assets(t_game *game)
 {
-	struct timeval tv;
-	gettimeofday(&tv, NULL);
-	return(tv.tv_sec * 1000000L + tv.tv_usec);
+	if (!game || !game->mlx_ptr)
+		exit_game(EXIT_MLX, game);
+	texture_load_walls(game);
+	texture_load_floor_ceiling(game);
+	texture_load_sprites(game);
+	init_gates(game);
+	init_pacdots(game);
+	init_energizers(game);
+	init_ghosts(game);
 }
-

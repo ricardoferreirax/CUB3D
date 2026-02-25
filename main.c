@@ -6,12 +6,130 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/10 14:00:15 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/02/21 23:49:19 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Pac_Struct.h"
+#include "srcs/text/textures3D.h"
+#include "srcs/render/render3D.h"
+#include "srcs/map/map3D.h"
 
+int	gameloop(t_game *game)
+{
+	long	now;
+
+	now = get_time_us();
+	if (game->timer.last_time_up == 0)
+	{
+		game->timer.last_time_up = now;
+		return (0);
+	}
+	game->timer.last_time_up = now;
+	render_frame(game);
+	return (0);
+}
+
+void	parse_map(t_game *g, const char *path)
+{
+
+	char	**rect;
+
+	g->map.grid = load_map_from_cub(g, path);
+	if (!g->map.grid)
+		exit_game(EXIT_MAP, g);
+	map_setup_size(g);
+	rect = map_rectangular(g);
+	if (!rect)
+		exit_game(EXIT_MALLOC, g);
+	free_tab_tab(g->map.grid);
+	g->map.grid = rect;
+	map_validate_chars(g);
+	init_player_from_map(g);
+	map_validate_closed(g);
+}
+
+void	start_execution(t_game *g)
+{
+	if (!g || !g->mlx_ptr || !g->win.win_ptr || !g->win.frame_buffer.img_ptr)
+		exit_game(EXIT_MLX, g);
+	g->ray.z_buffer = malloc(sizeof(double) * g->win.width);
+	if (!g->ray.z_buffer)
+		exit_game(EXIT_MALLOC, g);
+	g->ray.sprite_z = malloc(sizeof(double) * g->win.width * g->win.height);
+	if (!g->ray.sprite_z)
+		exit_game(EXIT_MALLOC, g);
+}
+
+void	init_defaults(t_game *g)
+{
+	if (!g)
+		return ;
+	ft_bzero(g, sizeof(t_game));
+	g->ray.hit_side = -1;
+	g->player.target_map_x = -1;
+	g->player.target_map_y = -1;
+	g->map.floor_color = -1;
+	g->map.ceiling_color = -1;
+	g->gate_passable = 0;
+}
+
+int main(int ac, char **av)
+{
+	t_game *game;
+	if((ac > 3 || ac == 1) || (ac == 3 && (ft_strcmp(av[2], "debug_mode=y") != 0)))
+		return(ft_printf("Wrong args\n"), -1);
+	game = malloc(sizeof(t_game));
+	if (!game)
+		exit_game(EXIT_MALLOC, NULL);
+	init_defaults(game);
+	parse_texture(game, av[1]);
+	parse_map(game, av[1]);
+	init_mlx(game);
+	init_assets(game);
+
+	start_execution(game);
+	
+	mlx_hook(game->win.win_ptr, 2, 1L << 0, handle_key_press, game);
+	mlx_hook(game->win.win_ptr, 3, 1L << 1, handle_key_release, game);
+	mlx_hook(game->win.win_ptr, 17, 0, handle_close, game);
+	mlx_loop_hook(game->mlx_ptr, gameloop, game);
+	mlx_loop(game->mlx_ptr);
+	return (0);
+}
+
+
+/* void	clear_terminal(void)
+{
+	write(1, "\033[H", 3);
+}
+
+void	ft_pixel_put(t_image *s, int x, int y, unsigned int color)
+{
+	char	*dest;
+
+	dest = s->img_addr + (y * s->l_len + x * (s->bpp / 8));
+	*(unsigned int *)dest = color;
+}
+
+int	pixeL_get_coord(t_sprite_sheet *sheet, int i, int x, int y)
+{
+	char	*dest;
+
+	dest = sheet->sprite_img.img_addr + ((sheet->sprites[i].coord.y + y)
+			* sheet->sprite_img.l_len + (sheet->sprites[i].coord.x + x)
+			* (sheet->sprite_img.bpp / 8));
+	return (*(unsigned int *)dest);
+}
+
+int	pixel_get(t_image *data, int x, int y)
+{
+	char	*dest;
+
+	dest = data->img_addr + (y * data->l_len + x * (data->bpp / 8));
+	return (*(unsigned int *)dest);
+}
+>>>>>>> main
 
 void	new_target(t_game *game, t_ghost *ghost, e_state state)
 {
@@ -138,6 +256,7 @@ int	close_game(void *game)
 {
 	(void)game;
 	exit(1);
+<<<<<<< HEAD
 }
 
 int	gameloop(t_game *game)
@@ -222,3 +341,5 @@ int	main(int argc, char **argv)
 }
 
 
+=======
+} */
