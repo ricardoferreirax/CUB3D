@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/25 15:42:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/25 17:31:25 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,6 +253,7 @@ typedef struct s_game
 	t_mode mode;
 	t_gstate state;
 	t_image menu_img;
+	long	last_ghost_move_us;
 
 	int pacdot_count;
 	int	energizer_count;
@@ -283,7 +284,6 @@ void	free_tab_tab(char **tab);
 // =========================
 // Ghost / AI / Utils
 // =========================
-t_point	chose_next_move(t_ghost *ghost, char **map);
 t_point	find_c(char **map, char c);
 
 int		xtile(char **map);

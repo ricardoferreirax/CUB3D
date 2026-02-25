@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/25 15:39:43 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/25 17:34:02 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,16 @@ int	gameloop(t_game *game)
 	game->timer.last_time_up = now;
 	if (game->state == MENU)
 		return (render_menu(game), 0);
+	if (game->state == PLAY && game->mode == MODE_PACMAN)
+	{
+		if (game->last_ghost_move_us == 0)
+			game->last_ghost_move_us = now;
+		if (now - game->last_ghost_move_us >= 120000)
+		{
+			update_ghosts(game);
+			game->last_ghost_move_us = now;
+		}
+	}
 	return (render_frame(game), 0);
 }
 

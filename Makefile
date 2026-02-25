@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/02/25 15:36:29 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/02/25 17:26:03 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,6 @@ MLX = $(MLX_PATH)/libmlx.a
 
 SRC_FILES = main.c \
 	aux_funcs.c  \
-	ghosts.c \
 	srcs/init/init.c \
 	srcs/init/init_cub3d.c \
 	srcs/init/init_mlx.c \
