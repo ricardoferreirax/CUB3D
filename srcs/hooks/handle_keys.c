@@ -6,14 +6,30 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 14:59:32 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/21 21:37:57 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/25 15:38:53 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Pac_Struct.h"
+#include "../../Pac_Struct.h"
+#include "hooks.h"
+
+static int	handle_menu_key(int keycode, t_game *g)
+{
+	if (keycode == KEY_ESC)
+		handle_close(g);
+	else if (keycode == KEY_1)
+		start_game_mode(g, MODE_PACMAN);
+	else if (keycode == KEY_2)
+		start_game_mode(g, MODE_CUBE);
+	return (0);
+}
 
 int	handle_key_press(int keycode, t_game *g)
 {
+	if (!g)
+		return (0);
+	if (g->state == MENU)
+		return (handle_menu_key(keycode, g));
 	if (keycode == KEY_ESC)
 		g->key.esc = 1;
 	else if (keycode == KEY_W)

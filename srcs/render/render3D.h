@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/23 18:18:02 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/25 11:05:24 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	put_pixel_fast(t_image *img, int x, int y, int color);
 void	render_wall_col(t_game *g, int screen_x);
 void	render_floor_texture(t_game *g);
 void	render_ceiling_texture(t_game *g);
+void	render_menu(t_game *g);
 double	fract_pos(double x);
 
 unsigned int	tex_pixel(t_image *tex, int x, int y);

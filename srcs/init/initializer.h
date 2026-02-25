@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:25:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/24 17:53:19 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/25 15:33:58 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 #include "../../Pac_Struct.h"
 
 void	init_mlx(t_game *game);
+void	init_cub3d(t_game *g);
 void	init_window(t_game *s);
 void	init_assets(t_game *g);
 void	init_ghosts(t_game *g);
 void	init_sprites(t_game *g);
+void	start_execution(t_game *g);
 
 #endif

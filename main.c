@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/24 21:35:48 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/25 15:39:43 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,19 @@ int	gameloop(t_game *game)
 		return (0);
 	}
 	game->timer.last_time_up = now;
-	render_frame(game);
-	return (0);
+	if (game->state == MENU)
+		return (render_menu(game), 0);
+	return (render_frame(game), 0);
 }
 
-/* void	switch_to_pacman_mode(t_game *g, const char *path)
+void	switch_mode_and_parse(t_game *g, t_mode mode, const char *path)
 {
 	char	**rect;
 
-	if (!g)
-		return ;
-	g->mode = MODE_PACMAN;
-	parse_texture(g, path);
+	if (!g || !path)
+		exit_game(EXIT_MAP, g);
+	g->mode = mode;
+	parse_texture_path(g, path);
 	if (g->map.grid)
 		free_tab_tab(g->map.grid);
 	g->map.grid = load_map_from_cub(g, path);
@@ -53,70 +54,19 @@ int	gameloop(t_game *game)
 	map_validate_chars(g);
 	init_player_from_map(g);
 	map_validate_closed(g);
-	init_sprites(g);
-	init_ghosts(g);
-} */
-
-void	parse_map(t_game *g, const char *path)
-{
-	char	**rect;
-
-	g->map.grid = load_map_from_cub(g, path);
-	if (!g->map.grid)
-		exit_game(EXIT_MAP, g);
-	map_setup_size(g);
-	rect = map_rectangular(g);
-	if (!rect)
-		exit_game(EXIT_MALLOC, g);
-	free_tab_tab(g->map.grid);
-	g->map.grid = rect;
-	map_validate_chars(g);
-	init_player_from_map(g);
-	map_validate_closed(g);
 }
 
-void	start_execution(t_game *g)
+int	main(int ac, char **av)
 {
-	if (!g || !g->mlx_ptr || !g->win.win_ptr || !g->win.frame_buffer.img_ptr)
-		exit_game(EXIT_MLX, g);
-	g->ray.z_buffer = malloc(sizeof(double) * g->win.width);
-	if (!g->ray.z_buffer)
-		exit_game(EXIT_MALLOC, g);
-	g->ray.sprite_z = malloc(sizeof(double) * g->win.width * g->win.height);
-	if (!g->ray.sprite_z)
-		exit_game(EXIT_MALLOC, g);
-}
+	t_game	*game;
 
-void	init_defaults(t_game *g)
-{
-	if (!g)
-		return ;
-	ft_bzero(g, sizeof(t_game));
-	g->mode = MODE_PACMAN;
-	g->ray.hit_side = -1;
-	g->player.target_map_x = -1;
-	g->player.target_map_y = -1;
-	g->map.floor_color = -1;
-	g->map.ceiling_color = -1;
-	g->gate_passable = 0;
-}
-
-int main(int ac, char **av)
-{
-	t_game *game;
-	if((ac > 3 || ac == 1) || (ac == 3 && (ft_strcmp(av[2], "debug_mode=y") != 0)))
-		return(ft_printf("Wrong args\n"), -1);
+	(void)av;
+	if ((ac > 3 || ac == 1) || (ac == 3 && (ft_strcmp(av[2], "debug_mode=y") != 0)))
+		return (ft_printf("Wrong args\n"), -1);
 	game = malloc(sizeof(t_game));
 	if (!game)
 		exit_game(EXIT_MALLOC, NULL);
-	init_defaults(game);
-	parse_texture_path(game, av[1]);
-	parse_map(game, av[1]);    
-	init_mlx(game);
-	init_assets(game);
-
-	start_execution(game);
-	
+	init_cub3d(game);
 	mlx_hook(game->win.win_ptr, 2, 1L << 0, handle_key_press, game);
 	mlx_hook(game->win.win_ptr, 3, 1L << 1, handle_key_release, game);
 	mlx_hook(game->win.win_ptr, 17, 0, handle_close, game);

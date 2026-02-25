@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/02/24 21:26:29 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/02/25 15:36:29 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,10 +37,10 @@ SRC_FILES = main.c \
 	aux_funcs.c  \
 	ghosts.c \
 	srcs/init/init.c \
+	srcs/init/init_cub3d.c \
 	srcs/init/init_mlx.c \
 	srcs/init/init_aux_funcs.c \
 	srcs/init/init_ghosts.c \
-	srcs/init/init_assets.c \
 	srcs/init/init_sprites.c \
 	time.c \
 	srcs/map/map_load.c \
@@ -63,6 +63,7 @@ SRC_FILES = main.c \
 	srcs/render/render_floor_texture.c \
 	srcs/render/render_ceiling_texture.c \
 	srcs/render/render_utils.c \
+	srcs/render/render_menu.c \
 	srcs/render/process_raycasting.c \
 	srcs/render/render_center_hit.c \
 	srcs/render/sprite_draw_col.c \

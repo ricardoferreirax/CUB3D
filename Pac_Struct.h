@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/24 21:43:43 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/25 15:42:40 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@
 # define EXIT_MLX       3
 # define EXIT_MAP       4
 # define EXIT_INPUT     5
+
+#define MAP_PACMAN "./maps/Pacman.cub"
+#define MAP_CUBE   "./maps/cube.cub"
 
 typedef struct s_point
 {
@@ -222,6 +225,12 @@ typedef struct s_player
 	int speed_multiplier;
 }	t_player;
 
+typedef enum e_gstate
+{
+	MENU,
+	PLAY
+}	t_gstate;
+
 typedef enum e_mode
 {
 	MODE_CUBE = 0,
@@ -242,6 +251,8 @@ typedef struct s_game
 	t_ghost		ghosts[4]; 
 	t_image	render;
 	t_mode mode;
+	t_gstate state;
+	t_image menu_img;
 
 	int pacdot_count;
 	int	energizer_count;
@@ -257,10 +268,10 @@ typedef struct s_game
 
 #endif // !DEBUG
 
-void	start_execution(t_game *game);
-void	init_defaults(t_game *g);
 int		gameloop(t_game *game);
 long	get_time_us(void);
+void	switch_mode_and_parse(t_game *g, t_mode mode, const char *path);
+void	start_game_mode(t_game *g, t_mode mode);
 
 // =========================
 // Free & Exit

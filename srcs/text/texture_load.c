@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 17:59:33 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/24 21:46:15 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/25 11:01:05 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,9 @@ void	texture_load_sprites(t_game *g)
 	texture_load_xpm(g, &g->tex.pinky_img, g->tex.pinky);
 	texture_load_xpm(g, &g->tex.inky_img, g->tex.inky);
 	texture_load_xpm(g, &g->tex.clyde_img, g->tex.clyde);
+}
+
+void	load_menu_assets(t_game *g)
+{
+	texture_load_xpm(g, &g->menu_img, "./textures/menu.xpm");
 }
