@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "Pac_Struct.h"
-#include "srcs/text/textures3D.h"
-#include "srcs/render/render3D.h"
 #include "srcs/map/map3D.h"
 
 

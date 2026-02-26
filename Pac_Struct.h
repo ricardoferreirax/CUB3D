@@ -24,7 +24,7 @@
 #include <math.h>
 #include <sys/time.h>
 
-#define SPRITE_SHEET "./sprites/Spriteheet.xpm"
+#define SPRITE_SHEET "./assets/sprites/Spriteheet.xpm"
 #include "srcs/map/map3D.h"
 #include "srcs/player/player3D.h"
 #include "srcs/hooks/hooks.h"
@@ -82,7 +82,7 @@ typedef struct s_image
 	void			*img_ptr;
 }					t_image;
 
-# include "srcs/text/textures3D.h"
+# include "srcs/textures/textures3D.h"
 # include "srcs/render/render3D.h"
 
 typedef struct s_window
@@ -201,6 +201,7 @@ typedef struct s_elroy
 //At game start one of the penhouse ghost will activate it's counter, it will count up each dot pacman eats
 //if pacman eats all the dots it gets out, but if the ghost is forced out by timeout its dot counter is not reset and the next ghost dot counter starts counting.
 
+
 typedef struct s_ghost
 {
 	e_ghost	name;
@@ -217,8 +218,10 @@ typedef struct s_ghost
 	t_anim	anim;
 	int		invalid_dir;
 	char	**mental_map;
+	t_sprite_ref sprite;
 	t_elroy	cruiser;
 	e_state	state;
+	t_anim frames;
 
 }	t_ghost;
 

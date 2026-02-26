@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
-
+#include "../render/render3D.h"
 static void	draw_rect(t_image *img, int x0, int y0, int w, int h, int color)
 {
 	int	x;
