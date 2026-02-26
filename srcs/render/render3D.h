@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/25 11:05:24 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/26 23:10:57 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ typedef struct s_game	t_game;
 typedef struct s_image	t_image;
 typedef struct s_ghost	t_ghost;
 
+#define TILE_SIZE 1
 #define SPR_PACDOT     1
 #define SPR_ENERGIZER  2
 #define SPR_GHOST      3

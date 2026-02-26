@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 21:39:40 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/23 21:43:29 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/26 23:10:29 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	calculate_dda_step(t_game *g)
 	else
 	{
 		g->ray.step_x = 1;
-		g->ray.side_dist_x = (g->ray.map_x + 1.0 - g->player.pos_x)
+		g->ray.side_dist_x = (g->ray.map_x + TILE_SIZE - g->player.pos_x)
 			* g->ray.delta_dist_x;
 	}
 	if (g->ray.ray_dir_y < 0)
@@ -36,7 +36,7 @@ void	calculate_dda_step(t_game *g)
 	else
 	{
 		g->ray.step_y = 1;
-		g->ray.side_dist_y = (g->ray.map_y + 1.0 - g->player.pos_y)
+		g->ray.side_dist_y = (g->ray.map_y + TILE_SIZE - g->player.pos_y)
 			* g->ray.delta_dist_y;
 	}
 }
