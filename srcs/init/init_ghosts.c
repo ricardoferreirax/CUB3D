@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:28:58 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/25 21:30:22 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/26 22:59:41 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@
 static void	ghost_set(t_game *g, e_ghost who, int x, int y)
 {
 	g->ghosts[who].name = who;
-	g->ghosts[who].sprite_x = (double)x + 0.5;
-	g->ghosts[who].sprite_y = (double)y + 0.5;
-	g->ghosts[who].pos.tile_pos.x = x;
-	g->ghosts[who].pos.tile_pos.y = y;
+	g->ghosts[who].pos.tile_pos.x = (double)x + 0.5;
+	g->ghosts[who].pos.tile_pos.y = (double)y + 0.5;
 }
 
 static void	ghost_fill_from_map(t_game *g)
@@ -57,31 +55,12 @@ void	init_ghosts(t_game *g)
 	ghost_fill_from_map(g);
 }
 
+// static int ghost_tile_x(t_ghost *gh)
+// {
+//     return ((int)gh->pos.tile_pos.x);
+// }
 
-/* void init_blinky(t_game *game, t_ghost *blinky)
-{
-	blinky->target_tile = find_c(game->map.grid, 'B');
-	blinky->pos.tile_pos = find_c(blinky->mental_map, 'S');
-	blinky->invalid_dir = 3;
-}
-
-void init_pinky(t_game *game, t_ghost *pinky)
-{
-	pinky->target_tile = find_c(game->map.grid, 'P');
-	pinky->pos.tile_pos = find_c(pinky->mental_map, 'S');
-	pinky->invalid_dir = 3;
-}
-
-void init_inky(t_game *game, t_ghost *inky)
-{
-	inky->target_tile = find_c(game->map.grid, 'I');
-	inky->pos.tile_pos = find_c(inky->mental_map, 'S');
-	inky->invalid_dir = 3;
-}
-
-void init_clyde(t_game *game, t_ghost *clyde)
-{
-	clyde->target_tile = find_c(game->map.grid, 'C');
-	clyde->pos.tile_pos = find_c(clyde->mental_map, 'S');
-	clyde->invalid_dir = 3;
-} */
+// static int ghost_tile_y(t_ghost *gh)
+// {
+//     return ((int)gh->pos.tile_pos.y);
+// }

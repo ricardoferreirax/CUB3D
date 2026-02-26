@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/25 21:32:20 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/26 14:06:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,16 @@ typedef struct s_point
 	int y;
 }	t_point;
 
+typedef struct s_double_point
+{
+	double x;
+	double y;
+}	t_double_point;
+
 typedef struct s_position
 {
 	t_point pixel_pos;
-	t_point tile_pos;
+	t_double_point tile_pos;
 }	t_pos;
 	
 typedef struct s_image
@@ -165,8 +171,6 @@ typedef struct s_ghost
 	e_ghost	name;
 
 	t_pos	pos;
-	double	sprite_x;
-	double	sprite_y;
 
 	int		dot_counter;
 	t_point	target_tile;

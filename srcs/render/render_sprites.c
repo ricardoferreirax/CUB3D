@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 22:09:52 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/24 21:45:04 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/26 22:54:16 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	draw_ghosts(t_game *g)
 		tex = ghost_tex(g, &g->ghosts[i]);
 		if (tex && tex->img_addr)
 		{
-			if (sprite_project(g, g->ghosts[i].sprite_x, g->ghosts[i].sprite_y, &box))
+			if (sprite_project(g, g->ghosts[i].pos.tile_pos.x, g->ghosts[i].pos.tile_pos.y, &box))
 			{
 				if (sprite_build(g, &box, 2))
 					sprite_draw(g, &box, tex);
