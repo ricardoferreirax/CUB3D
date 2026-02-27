@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/27 00:17:51 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/27 22:40:49 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,7 +276,8 @@ int		gameloop(t_game *game);
 long	get_time_us(void);
 void	switch_mode_and_parse(t_game *g, t_mode mode, const char *path);
 void	start_game_mode(t_game *g, t_mode mode);
-void	ghosts_update_all(t_game *g);
+char	**copy_map(char **map);
+t_point	find_c(char **map, char c);
 
 // =========================
 // Free & Exit
