@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 11:27:11 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/25 21:33:33 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/27 00:22:50 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	init_defaults(t_game *g)
 	g->player.target_map_y = -1;
 	g->map.floor_color = -1;
 	g->map.ceiling_color = -1;
-	g->gate_passable = 0;
+	g->gate_passable = 1;
 }
 
 void	start_execution(t_game *g)
@@ -76,4 +76,5 @@ void	init_cub3d(t_game *g)
 	init_mlx(g);
 	start_execution(g);
 	load_menu_assets(g);
+	start_game_mode(g, MODE_PACMAN);
 }

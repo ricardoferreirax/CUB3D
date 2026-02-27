@@ -6,30 +6,33 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 22:13:51 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/21 21:23:25 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/27 21:45:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "render3D.h"
 
-int	sprite_project(t_game *g, double x, double y, t_sprite *b)
+int	sprite_project(t_game *g, double world_x, double world_y, t_sprite *sp)
 {
-	double	inv;
 	double	dx;
 	double	dy;
+	double	inv_det;
+	double	tx;
+	double	ty;
 
-	dx = sprite_wrap_offset_x(g, x, y);
-	dy = y - g->player.pos_y;
-	inv = (g->player.plane_x * g->player.dir_y) - (g->player.dir_x * g->player.plane_y);
-	if (inv == 0.0)
+	if (!g || !sp)
 		return (0);
-	inv = 1.0 / inv;
-	b->depth = inv * (-g->player.plane_y * dx + g->player.plane_x * dy);
-	if (b->depth <= 0.001)
+	dx = sprite_wrap_offset_x(g, world_x, world_y);
+	dy = world_y - g->player.pos_y;
+	inv_det = 1.0 / (g->player.plane_x * g->player.dir_y
+			- g->player.dir_x * g->player.plane_y);
+	tx = inv_det * (g->player.dir_y * dx - g->player.dir_x * dy);
+	ty = inv_det * (-g->player.plane_y * dx + g->player.plane_x * dy);
+	if (ty <= 0.01)
 		return (0);
-	b->screen_x = (int)((g->win.width / 2.0) 
-		* (1.0 + (inv * (g->player.dir_y * dx - g->player.dir_x * dy)) / b->depth));
+	sp->depth = ty;
+	sp->screen_x = (int)((g->win.width / 2.0) * (1.0 + tx / ty));
 	return (1);
 }
 

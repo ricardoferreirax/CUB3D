@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 14:15:20 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/24 17:57:59 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/26 23:58:47 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,4 @@ void	init_sprites(t_game *g)
 {
 	init_sprite(g, PACDOT, &g->pacdots, &g->pacdot_count);
 	init_sprite(g, ENERGIZER, &g->energizers, &g->energizer_count);
-	init_ghosts(g);
 }

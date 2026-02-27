@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:25:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/25 17:22:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/26 23:34:26 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,5 @@ void	init_assets(t_game *g);
 void	init_ghosts(t_game *g);
 void	init_sprites(t_game *g);
 void	start_execution(t_game *g);
-void	update_ghosts(t_game *g);
 
 #endif

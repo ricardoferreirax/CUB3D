@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/26 14:06:28 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/27 00:17:51 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,9 +169,9 @@ typedef struct s_elroy
 typedef struct s_ghost
 {
 	e_ghost	name;
-
+	int	at_center;
 	t_pos	pos;
-
+	int		cur_dir;
 	int		dot_counter;
 	t_point	target_tile;
 	int		global_dot_counter_call;
@@ -276,6 +276,7 @@ int		gameloop(t_game *game);
 long	get_time_us(void);
 void	switch_mode_and_parse(t_game *g, t_mode mode, const char *path);
 void	start_game_mode(t_game *g, t_mode mode);
+void	ghosts_update_all(t_game *g);
 
 // =========================
 // Free & Exit
