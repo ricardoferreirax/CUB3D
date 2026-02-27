@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:28:58 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/27 22:40:00 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/27 23:42:09 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,15 @@ static void	init_one_ghost(t_game *g, t_ghost *gh, char spawn_char)
 	gh->mental_map = copy_map(g->map.grid);
 	if (!gh->mental_map)
 		exit_game(EXIT_MALLOC, g);
-
 	p = find_c(g->map.grid, spawn_char);
 	if (p.x < 0 || p.y < 0)
 		exit_game(EXIT_MAP, g);
-
 	gh->pos.tile_pos.x = (double)p.x;
 	gh->pos.tile_pos.y = (double)p.y;
 	ghost_update_pixel_pos(gh);
-
-	gh->invalid_dir = 3;
+	gh->cur_dir = 1;
+	gh->invalid_dir = ghost_opposite_dir(gh->cur_dir);
+	gh->speed = 3.0;
 	gh->target_tile = p;
 }
 

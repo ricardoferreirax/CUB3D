@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/27 22:40:49 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/27 23:45:52 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ typedef struct s_ghost
 	int	at_center;
 	t_pos	pos;
 	int		cur_dir;
+	double speed;
 	int		dot_counter;
 	t_point	target_tile;
 	int		global_dot_counter_call;
@@ -189,6 +190,8 @@ typedef struct s_time
 {
 	double level_time;
 	double mode_timer;
+	long	last_ghost_us;
+	long ghost_step_us;
 	//starts when ghosts are in the pen and pac-man refuses to eat dots
 	double timeout_timer;
 	int energizer;
@@ -278,6 +281,10 @@ void	switch_mode_and_parse(t_game *g, t_mode mode, const char *path);
 void	start_game_mode(t_game *g, t_mode mode);
 char	**copy_map(char **map);
 t_point	find_c(char **map, char c);
+void	update_ghost(t_game *g, t_ghost *gh, double dt);
+int	ghost_tick_ready(t_game *g, long now);
+void	update_ghosts(t_game *g, double dt);
+int	ghost_opposite_dir(int dir);
 
 // =========================
 // Free & Exit
