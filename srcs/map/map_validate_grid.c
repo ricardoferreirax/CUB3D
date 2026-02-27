@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:53:00 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/25 17:06:23 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/27 22:18:02 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	map_is_valid_tile(t_game *g, char c)
 	{
 		if (c == PACDOT || c == ENERGIZER || c == WRAP_PORTS
 			|| c == BLINKY_T || c == PINKY_T || c == INKY_T || c == CLYDE_T
-			|| c == GATE)
+			|| c == GATE || c == PLAYER)
 			return (1);
 	}
 	return (0);

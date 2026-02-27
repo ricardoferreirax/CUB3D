@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:28:58 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/27 22:02:12 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/27 22:24:21 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,20 @@ char	**copy_map(char **map)
 	int		h;
 
 	h = ytile(map);
-	copy = ft_calloc(sizeof(char *), h + 1);
+	copy = ft_calloc((size_t)h + 1, sizeof(char *));
 	if (!copy)
 		return (NULL);
 	i = 0;
 	while (map && map[i])
 	{
-		copy[i] = ft_calloc(sizeof(char), ft_strlen(map[i]) + 1);
+		copy[i] = ft_calloc(ft_strlen(map[i]) + 1, sizeof(char));
 		if (!copy[i])
 			return (free_copy_partial(copy, i), NULL);
 		j = 0;
 		while (map[i][j] != '\0')
 		{
 			if (map[i][j] == 'M')
-				copy[i][j] = '1';
+				copy[i][j] = WALL;
 			else
 				copy[i][j] = map[i][j];
 			j++;
@@ -59,31 +59,6 @@ char	**copy_map(char **map)
 	}
 	copy[i] = NULL;
 	return (copy);
-}
-
-static void	set_ghost_name(t_ghost *gh, int i)
-{
-	if (i == 0)
-		gh->name = BLINKY;
-	else if (i == 1)
-		gh->name = PINKY;
-	else if (i == 2)
-		gh->name = INKY;
-	else
-		gh->name = CLYDE;
-}
-
-static char	ghost_spawn_char(t_ghost *gh)
-{
-	if (gh->name == BLINKY)
-		return ('B');
-	if (gh->name == PINKY)
-		return ('P');
-	if (gh->name == INKY)
-		return ('I');
-	if (gh->name == CLYDE)
-		return ('C');
-	return ('S');
 }
 
 t_point	find_c(char **map, char c)
@@ -107,46 +82,43 @@ t_point	find_c(char **map, char c)
 	return (cord);
 }
 
-static void	init_one_ghost(t_game *g, t_ghost *gh)
+static void	ghost_update_pixel_pos(t_ghost *gh)
+{
+	gh->pos.pixel_pos.x = (gh->pos.tile_pos.x + 0.5) * (double)TILE_SIZE;
+	gh->pos.pixel_pos.y = (gh->pos.tile_pos.y + 0.5) * (double)TILE_SIZE;
+}
+
+static void	init_one_ghost_simple(t_game *g, t_ghost *gh, char spawn_char)
 {
 	t_point	p;
 
 	gh->mental_map = copy_map(g->map.grid);
 	if (!gh->mental_map)
 		exit_game(EXIT_MALLOC, g);
-	p = find_c(g->map.grid, ghost_spawn_char(gh));
-	if (p.x < 0 || p.y < 0)
-		p = find_c(g->map.grid, 'S');
+	p = find_c(g->map.grid, spawn_char);
 	if (p.x < 0 || p.y < 0)
 		exit_game(EXIT_MAP, g);
 	gh->pos.tile_pos.x = (double)p.x;
 	gh->pos.tile_pos.y = (double)p.y;
-	gh->target_tile = p;
+	ghost_update_pixel_pos(gh);
 	gh->invalid_dir = 3;
+	gh->target_tile = p;
 }
 
 void	init_ghosts(t_game *g)
 {
-	int	i;
-
 	if (!g || !g->map.grid)
 		exit_game(EXIT_MAP, g);
-	i = 0;
-	while (i < 4)
-	{
-		ft_bzero(&g->ghosts[i], sizeof(t_ghost));
-		set_ghost_name(&g->ghosts[i], i);
-		init_one_ghost(g, &g->ghosts[i]);
-		i++;
-	}
+	ft_bzero(&g->ghosts[0], sizeof(t_ghost));
+	g->ghosts[0].name = BLINKY;
+	init_one_ghost_simple(g, &g->ghosts[0], BLINKY_T);
+	ft_bzero(&g->ghosts[1], sizeof(t_ghost));
+	g->ghosts[1].name = PINKY;
+	init_one_ghost_simple(g, &g->ghosts[1], PINKY_T);
+	ft_bzero(&g->ghosts[2], sizeof(t_ghost));
+	g->ghosts[2].name = INKY;
+	init_one_ghost_simple(g, &g->ghosts[2], INKY_T);
+	ft_bzero(&g->ghosts[3], sizeof(t_ghost));
+	g->ghosts[3].name = CLYDE;
+	init_one_ghost_simple(g, &g->ghosts[3], CLYDE_T);
 }
-
-// static int ghost_tile_x(t_ghost *gh)
-// {
-//     return ((int)gh->pos.tile_pos.x);
-// }
-
-// static int ghost_tile_y(t_ghost *gh)
-// {
-//     return ((int)gh->pos.tile_pos.y);
-// }

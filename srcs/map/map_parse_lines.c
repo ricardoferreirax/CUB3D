@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 22:38:39 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/24 20:54:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/27 22:17:37 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	map_is_valid_char_in_line(char c, t_mode mode)
 	{
 		if (c == PACDOT || c == WRAP_PORTS || c == ENERGIZER
 			|| c == BLINKY_T || c == PINKY_T || c == INKY_T || c == CLYDE_T
-			|| c == GATE)
+			|| c == GATE || c == PLAYER)
 			return (1);
 	}
 	return (0);
