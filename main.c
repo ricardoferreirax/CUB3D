@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/01 21:13:13 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/01 21:43:59 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	switch_mode_and_parse(t_game *g, t_mode mode, const char *path)
 	g->map.grid = load_map_from_cub(g, path);
 	if (!g->map.grid)
 		exit_game(EXIT_MAP, g);
-	map_setup_size(g);
+	map_dimensions(g);
 	rect = map_rectangular(g);
 	if (!rect)
 		exit_game(EXIT_MALLOC, g);

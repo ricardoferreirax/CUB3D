@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:48:48 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/27 22:40:37 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/01 21:39:38 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_map
 
 #endif
 
-void	map_setup_size(t_game *g);
+void	map_dimensions(t_game *g);
 char	**map_rectangular(t_game *g);
 char	**load_map_from_cub(t_game *g, const char *path);
 void	map_validate_chars(t_game *g);
