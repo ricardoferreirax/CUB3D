@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 13:42:39 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/26 23:00:26 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/01 21:19:46 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,6 @@ int ytile(char **map)
 // 	if(ghost->name == CLYDE)
 // 		return 'Y';
 // 	return '?';
-// }
-
-// void move(char** map, t_ghost *ghost, int dx, int dy)
-// {
-// 	char ghost_to_move = which_ghost(ghost);
-
-// 	int new_posx = ghost->pos.tile_pos.x + dx;
-// 	int new_posy = ghost->pos.tile_pos.y + dy;
-// 	map[ghost->pos.tile_pos.y][ghost->pos.tile_pos.x] = '0';
-// 	if(ghost->is_steping_on_pacdot)
-// 	{ 
-// 		if(ghost->is_steping_on_pacdot > 0)
-// 			map[ghost->pos.tile_pos.y][ghost->pos.tile_pos.x] = 'D';
-// 		if (ghost->is_steping_on_pacdot > 1)
-// 			map[ghost->pos.tile_pos.y][ghost->pos.tile_pos.x] = 'E';
-// 		ghost->is_steping_on_pacdot = 0;
-// 	}
-// 	if(map[new_posy][new_posx] != '0')
-// 	{
-// 		if(map[new_posy][new_posx] == 'D')
-// 			ghost->is_steping_on_pacdot = 1;
-// 		else if(map[new_posy][new_posx] == 'E')
-// 			ghost->is_steping_on_pacdot = 2;
-// 	}
-// 	map[new_posy][new_posx] = ghost_to_move;
 // }
 
 // void init_blinky(t_game *game, t_ghost *blinky)

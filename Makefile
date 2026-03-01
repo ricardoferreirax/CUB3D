@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/02/27 22:54:13 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/03/01 21:18:34 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,6 @@ SRC_FILES = main.c \
 	srcs/init/init_mlx.c \
 	srcs/init/init_ghosts.c \
 	srcs/init/init_sprites.c \
-	ghost.c \
 	time.c \
 	srcs/map/map_load.c \
 	srcs/map/map_dimensions.c \

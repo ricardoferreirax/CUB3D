@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/27 23:45:52 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/01 21:17:27 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,9 +169,7 @@ typedef struct s_elroy
 typedef struct s_ghost
 {
 	e_ghost	name;
-	int	at_center;
 	t_pos	pos;
-	int		cur_dir;
 	double speed;
 	int		dot_counter;
 	t_point	target_tile;
@@ -190,8 +188,6 @@ typedef struct s_time
 {
 	double level_time;
 	double mode_timer;
-	long	last_ghost_us;
-	long ghost_step_us;
 	//starts when ghosts are in the pen and pac-man refuses to eat dots
 	double timeout_timer;
 	int energizer;

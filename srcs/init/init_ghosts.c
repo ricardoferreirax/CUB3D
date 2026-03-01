@@ -6,18 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:28:58 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/27 23:42:09 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/01 21:19:07 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "initializer.h"
-
-static void	ghost_update_pixel_pos(t_ghost *gh) // guardar pixel_pos para o minimapa 
-{
-	gh->pos.pixel_pos.x = (gh->pos.tile_pos.x + 0.5) * (double)TILE_SIZE;
-	gh->pos.pixel_pos.y = (gh->pos.tile_pos.y + 0.5) * (double)TILE_SIZE;
-}
 
 static void	ghost_info(int i, int *name, char *spawn)
 {
@@ -43,6 +37,12 @@ static void	ghost_info(int i, int *name, char *spawn)
 	}
 }
 
+static void	ghost_update_pixel_pos(t_ghost *gh) // guardar pixel_pos para o minimapa 
+{
+	gh->pos.pixel_pos.x = (gh->pos.tile_pos.x + 0.5) * (double)TILE_SIZE;
+	gh->pos.pixel_pos.y = (gh->pos.tile_pos.y + 0.5) * (double)TILE_SIZE;
+}
+
 static void	init_one_ghost(t_game *g, t_ghost *gh, char spawn_char)
 {
 	t_point	p;
@@ -56,9 +56,7 @@ static void	init_one_ghost(t_game *g, t_ghost *gh, char spawn_char)
 	gh->pos.tile_pos.x = (double)p.x;
 	gh->pos.tile_pos.y = (double)p.y;
 	ghost_update_pixel_pos(gh);
-	gh->cur_dir = 1;
-	gh->invalid_dir = ghost_opposite_dir(gh->cur_dir);
-	gh->speed = 3.0;
+	gh->invalid_dir = -1;
 	gh->target_tile = p;
 }
 

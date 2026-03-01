@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/27 23:36:32 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/01 21:13:13 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 int	gameloop(t_game *game)
 {
 	long	now;
-	long	delta;
-	double	dt;
 
 	now = get_time_us();
 	if (game->timer.last_time_up == 0)
@@ -28,14 +26,9 @@ int	gameloop(t_game *game)
 		game->timer.last_time_up = now;
 		return (0);
 	}
-	delta = now - game->timer.last_time_up;
 	game->timer.last_time_up = now;
-	dt = (double)delta / 1000000.0;
-	if (dt > 0.05)
-		dt = 0.05;
 	if (game->state == MENU)
 		return (render_menu(game), 0);
-	update_ghosts(game, dt);
 	return (render_frame(game), 0);
 }
 
