@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 17:59:33 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/25 11:01:05 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/01 22:53:05 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,14 @@ void	texture_load_xpm(t_game *g, t_image *img, const char *path)
 	img->img_ptr = mlx_xpm_file_to_image(g->mlx_ptr, (char *)path, &w, &h);
 	if (!img->img_ptr)
 		exit_game(EXIT_MLX, g);
-	img->img_addr = mlx_get_data_addr(img->img_ptr, &img->bpp, &img->l_len, &img->endian);
+	img->img_addr = mlx_get_data_addr(img->img_ptr, &img->bpp,
+			&img->l_len, &img->endian);
 	if (!img->img_addr)
+	{
+		mlx_destroy_image(g->mlx_ptr, img->img_ptr);
+		img->img_ptr = NULL;
 		exit_game(EXIT_MLX, g);
+	}
 	img->width = w;
 	img->height = h;
 }
