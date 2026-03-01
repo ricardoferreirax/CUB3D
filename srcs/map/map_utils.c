@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:41:18 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/24 18:51:54 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/01 23:25:14 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	map_get_tile(t_game *g, int y, int x)
 		return (VOID);
 	if (y < 0 || y >= g->map.height)
 		return (VOID);
-	if (map_wrap_row_is_active(g, y))
+	if (map_wrap_has_wrap(g, y))
 	{
 		if (x < 0)
 			x = g->map.width - 1;

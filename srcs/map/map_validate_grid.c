@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:53:00 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/27 22:18:02 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/01 23:24:43 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	map_validate_closed(t_game *g)
 		{
 			t = map_get_tile(g, y, x);
 			check = map_tile_type(t, TILE_WALKABLE)
-				&& !(t == WRAP_PORTS && map_is_wrap_port(g, y, x));
+				&& !(t == WRAP_PORTS && map_is_wrap_tile(g, y, x));
 			if (check && (map_tile_type(map_get_tile(g, y, x + 1), TILE_VOID)
 					|| map_tile_type(map_get_tile(g, y, x - 1), TILE_VOID)
 					|| map_tile_type(map_get_tile(g, y + 1, x), TILE_VOID)

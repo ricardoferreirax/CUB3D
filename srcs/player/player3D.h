@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 23:09:31 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/24 14:11:57 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/01 23:37:49 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ typedef struct s_game	t_game;
 
 void	player_movement_controller(t_game *g);
 void	player_rotation_controller(t_game *g);
-void	move_radius_check(t_game *g, double x_delta, double y_delta);
+void	update_player_movement(t_game *g, double dx, double dy);
 void		player_eat_pacdots(t_game *g);
-int	is_wall_ghost(t_game *g, int y, int x);
-int	is_wall_player(t_game *g, int y, int x);
+int	player_hits_wall(t_game *g, int row, int col);
+int	ghost_hits_wall(t_game *g, int row, int col);
 void	init_player_from_map(t_game *g);
 void	handle_gate_input(t_game *g);
 

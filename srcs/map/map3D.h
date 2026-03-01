@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:48:48 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/01 23:06:09 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/01 23:23:53 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ char	map_get_tile(t_game *g, int y, int x);
 int	map_tile_type(char t, int tile_type);
 char	**map_read_file(const char *path);
 
-int	map_is_wrap_port(t_game *g, int y, int x);
-int	map_wrap_row_is_active(t_game *g, int y);
-int	map_wrap_ray_x(t_game *g);
-void	map_wrap_port(t_game *g);
-double	sprite_wrap_offset_x(t_game *game, double world_x, double world_y);
+int	map_is_wrap_tile(t_game *g, int row, int col);
+int	map_wrap_has_wrap(t_game *g, int row);
+int	ray_apply_wrap_x(t_game *g);
+void	player_wrap_position(t_game *g);
+double	get_sprite_wrap_offset_x(t_game *g, double sprite_x, double sprite_y);
 void	render_minimap_test(t_game *g);
 int	is_whitespace(char c);
 char	**copy_map(char **map_grid);

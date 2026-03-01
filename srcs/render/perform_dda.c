@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 21:39:40 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/26 23:10:29 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/01 23:26:35 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	validate_or_wrap_ray(t_game *g)
 	if (g->ray.map_y < 0 || g->ray.map_y >= g->map.height)
 		return (0);
 	if (g->ray.map_x < 0 || g->ray.map_x >= g->map.width)
-		return (map_wrap_ray_x(g));
+		return (ray_apply_wrap_x(g));
 	return (1);
 }
 

@@ -6,82 +6,82 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 21:54:56 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/27 23:22:51 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/01 23:22:58 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 
-int	map_is_wrap_port(t_game *g, int y, int x)
+int	map_is_wrap_tile(t_game *g, int row, int col)
 {
-	if (map_get_tile(g, y, 0) != WRAP_PORTS)
+	if (map_get_tile(g, row, 0) != WRAP_PORTS)
 		return (0);
-	if (map_get_tile(g, y, g->map.width - 1) != WRAP_PORTS)
+	if (map_get_tile(g, row, g->map.width - 1) != WRAP_PORTS)
 		return (0);
-	if (x != 0 && x != g->map.width - 1)
+	if (col != 0 && col != g->map.width - 1)
 		return (0);
-	if (map_tile_type(map_get_tile(g, y - 1, x), TILE_VOID)
-		|| map_tile_type(map_get_tile(g, y + 1, x), TILE_VOID))
+	if (map_tile_type(map_get_tile(g, row - 1, col), TILE_VOID)
+		|| map_tile_type(map_get_tile(g, row + 1, col), TILE_VOID))
 		return (0);
-	if (x == 0 && !map_tile_type(map_get_tile(g, y, 1), TILE_WALKABLE))
+	if (col == 0 && !map_tile_type(map_get_tile(g, row, 1), TILE_WALKABLE))
 		return (0);
-	if (x == g->map.width - 1
-		&& !map_tile_type(map_get_tile(g, y, g->map.width - 2), TILE_WALKABLE))
+	if (col == g->map.width - 1
+		&& !map_tile_type(map_get_tile(g, row, g->map.width - 2), TILE_WALKABLE))
 		return (0);
 	return (1);
 }
 
-int	map_wrap_row_is_active(t_game *g, int y)
+int	map_wrap_has_wrap(t_game *g, int row)
 {
 	if (!g || !g->map.grid)
 		return (0);
-	if (y < 0 || y >= g->map.height)
+	if (row < 0 || row >= g->map.height)
 		return (0);
 	if (g->map.width <= 1)
 		return (0);
-	return (g->map.grid[y][0] == WRAP_PORTS
-		&& g->map.grid[y][g->map.width - 1] == WRAP_PORTS);
+	return (g->map.grid[row][0] == WRAP_PORTS
+		&& g->map.grid[row][g->map.width - 1] == WRAP_PORTS);
 }
 
-double	sprite_wrap_offset_x(t_game *g, double world_x, double world_y)
+double	get_sprite_wrap_offset_x(t_game *g, double sprite_x, double sprite_y)
 {
 	double	offset_x;
-	double	map_w;
+	double	map_width;
 	int		player_row;
 	int		sprite_row;
-
+	
 	if (!g)
 		return (0.0);
-	offset_x = world_x - g->player.pos_x;
+	offset_x = sprite_x - g->player.pos_x;
 	player_row = (int)g->player.pos_y;
-	sprite_row = (int)world_y;
+	sprite_row = (int)sprite_y;
 	if (sprite_row != player_row)
 		return (offset_x);
-	if (!map_wrap_row_is_active(g, player_row))
+	if (!map_wrap_has_wrap(g, player_row))
 		return (offset_x);
-	map_w = (double)g->map.width;
-	if (offset_x > map_w / 2.0)
-		offset_x -= map_w;
-	else if (offset_x < -map_w / 2.0)
-		offset_x += map_w;
+	map_width = (double)g->map.width;
+	if (offset_x > map_width / 2.0)
+		offset_x -= map_width;
+	else if (offset_x < -map_width / 2.0)
+		offset_x += map_width;
 	return (offset_x);
 }
 
-int	map_wrap_ray_x(t_game *g)
+int	ray_apply_wrap_x(t_game *g)
 {
-	int	w;
+	int	map_width;
 
 	if (!g)
 		return (0);
-	if (!map_wrap_row_is_active(g, g->ray.map_y))
+	if (!map_wrap_has_wrap(g, g->ray.map_y))
 		return (0);
-	w = g->map.width;
+	map_width = g->map.width;
 	if (g->ray.map_x < 0)
 	{
-		g->ray.map_x = w - 1;
+		g->ray.map_x = map_width - 1;
 		return (1);
 	}
-	if (g->ray.map_x >= w)
+	if (g->ray.map_x >= map_width)
 	{
 		g->ray.map_x = 0;
 		return (1);
@@ -89,19 +89,19 @@ int	map_wrap_ray_x(t_game *g)
 	return (1);
 }
 
-void	map_wrap_port(t_game *g)
+void	player_wrap_position(t_game *g)
 {
-	int	y;
-	int	w;
+	int	player_row;
+	int	map_width;
 
 	if (!g)
 		return ;
-	y = (int)g->player.pos_y;
-	if (!map_wrap_row_is_active(g, y))
+	player_row = (int)g->player.pos_y;
+	map_width = g->map.width;
+	if (!map_wrap_has_wrap(g, player_row))
 		return ;
-	w = g->map.width;
 	if (g->player.pos_x < 0.0)
-		g->player.pos_x += (double)w;
-	else if (g->player.pos_x >= (double)w)
-		g->player.pos_x -= (double)w;
+		g->player.pos_x += (double)map_width;
+	else if (g->player.pos_x >= (double)map_width)
+		g->player.pos_x -= (double)map_width;
 }
