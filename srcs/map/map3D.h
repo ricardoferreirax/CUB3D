@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:48:48 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/01 21:39:38 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/01 23:06:09 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,3 +66,4 @@ void	map_wrap_port(t_game *g);
 double	sprite_wrap_offset_x(t_game *game, double world_x, double world_y);
 void	render_minimap_test(t_game *g);
 int	is_whitespace(char c);
+char	**copy_map(char **map_grid);

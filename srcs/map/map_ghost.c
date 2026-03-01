@@ -6,80 +6,81 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 22:37:05 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/27 22:37:55 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/01 23:05:42 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "map3D.h"
 
-static void	free_copy_partial(char **copy, int rows_done)
+static void	free_copy_partial(char **map_copy, int rows_done)
 {
-	int	i;
+	int	row;
 
-	if (!copy)
+	if (!map_copy)
 		return ;
-	i = 0;
-	while (i < rows_done)
+	row = 0;
+	while (row < rows_done)
 	{
-		free(copy[i]);
-		i++;
+		free(map_copy[row]);
+		row++;
 	}
-	free(copy);
+	free(map_copy);
 }
 
-static void	copy_map_row(char *dst, const char *src)
+static void	copy_map_row(char *row_dst, const char *row_src)
 {
-	int	j;
+	int	col;
 
-	j = 0;
-	while (src && src[j] != '\0')
+	col = 0;
+	while (row_src && row_src[col] != '\0')
 	{
-		if (src[j] == 'M')
-			dst[j] = WALL;
+		if (row_src[col] == 'M')
+			row_dst[col] = WALL;
 		else
-			dst[j] = src[j];
-		j++;
+			row_dst[col] = row_src[col];
+		col++;
 	}
-	dst[j] = '\0';
+	row_dst[col] = '\0';
 }
 
-char	**copy_map(char **map)
+char	**copy_map(char **map_grid)
 {
-	char	**copy;
-	int		i;
-	int		h;
+	char	**map_copy;
+	int		row;
+	int		height;
 
-	if (!map)
+	if (!map_grid)
 		return (NULL);
-	h = ytile(map);
-	copy = ft_calloc((size_t)h + 1, sizeof(char *));
-	if (!copy)
+	height = ytile(map_grid);
+	map_copy = ft_calloc((size_t)height + 1, sizeof(char *));
+	if (!map_copy)
 		return (NULL);
-	i = 0;
-	while (i < h)
+	row = 0;
+	while (row < height)
 	{
-		copy[i] = ft_calloc(ft_strlen(map[i]) + 1, sizeof(char));
-		if (!copy[i])
-			return (free_copy_partial(copy, i), NULL);
-		copy_map_row(copy[i], map[i]);
-		i++;
+		map_copy[row] = ft_calloc(ft_strlen(map_grid[row]) + 1,
+			sizeof(char));
+		if (!map_copy[row])
+			return (free_copy_partial(map_copy, row), NULL);
+		copy_map_row(map_copy[row], map_grid[row]);
+		row++;
 	}
-	copy[i] = NULL;
-	return (copy);
+	map_copy[row] = NULL;
+	return (map_copy);
 }
 
-t_point	find_c(char **map, char c)
+t_point	find_c(char **map_grid, char target)
 {
 	t_point	cord;
 
 	cord.y = 0;
-	while (map && map[cord.y])
+	while (map_grid && map_grid[cord.y])
 	{
 		cord.x = 0;
-		while (map[cord.y][cord.x])
+		while (map_grid[cord.y][cord.x])
 		{
-			if (map[cord.y][cord.x] == c)
+			if (map_grid[cord.y][cord.x] == target)
 				return (cord);
 			cord.x++;
 		}

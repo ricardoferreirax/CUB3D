@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 14:15:20 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/26 23:58:47 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/01 23:00:56 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,70 +15,70 @@
 
 static int	count_in_map(t_game *g, char target)
 {
-	int	y;
-	int	x;
-	int	n;
+	int	row;
+	int	col;
+	int	total;
 
 	if (!g || !g->map.grid)
 		return (0);
-	y = 0;
-	n = 0;
-	while (g->map.grid[y])
+	row = 0;
+	total = 0;
+	while (g->map.grid[row])
 	{
-		x = 0;
-		while (g->map.grid[y][x])
+		col = 0;
+		while (g->map.grid[row][col])
 		{
-			if (g->map.grid[y][x] == target)
-				n++;
-			x++;
+			if (g->map.grid[row][col] == target)
+				total++;
+			col++;
 		}
-		y++;
+		row++;
 	}
-	return (n);
+	return (total);
 }
 
-static void	fill_from_map(t_game *g, t_pacdot *arr, char target)
+static void	fill_from_map(t_game *g, t_pacdot *sprites, char target)
 {
-	int	y;
-	int	x;
+	int	row;
+	int	col;
 	int	i;
 
-	y = 0;
+	row = 0;
 	i = 0;
-	while (g->map.grid[y])
+	while (g->map.grid[row])
 	{
-		x = 0;
-		while (g->map.grid[y][x])
+		col = 0;
+		while (g->map.grid[row][col])
 		{
-			if (g->map.grid[y][x] == target)
+			if (g->map.grid[row][col] == target)
 			{
-				arr[i].x = (double)x + 0.5;
-				arr[i].y = (double)y + 0.5;
-				arr[i].active = 1;
-				arr[i].eaten = false;
+				sprites[i].x = (double)col + 0.5;
+				sprites[i].y = (double)row + 0.5;
+				sprites[i].active = 1;
+				sprites[i].eaten = false;
 				i++;
 			}
-			x++;
+			col++;
 		}
-		y++;
+		row++;
 	}
 }
 
-static void	init_sprite(t_game *g, char target, t_pacdot **arr, int *count)
+static void	init_sprite(t_game *g, char target, t_pacdot **s_arr, int *s_count)
 {
-	int	n;
+	int	total;
 
-	if (!g || !arr || !count)
+	if (!g || !s_arr || !s_count)
 		return ;
-	*arr = NULL;
-	*count = count_in_map(g, target);
-	n = *count;
-	if (n <= 0)
+	*s_arr = NULL;
+	*s_count = count_in_map(g, target);
+	total = *s_count;
+	if (total <= 0)
 		return ;
-	*arr = malloc(sizeof(t_pacdot) * n);
-	if (!*arr)
+	*s_arr = malloc(sizeof(t_pacdot) * total);
+	if (!*s_arr)
 		exit_game(EXIT_MALLOC, g);
-	fill_from_map(g, *arr, target);
+	fill_from_map(g, *s_arr, target);
 }
 
 void	init_sprites(t_game *g)
