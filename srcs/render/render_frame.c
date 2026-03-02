@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 19:44:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/27 23:15:06 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/02 09:32:55 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	render_frame(t_game *game)
 	render_ceiling_texture(game);
 	render_floor_texture(game);
 	process_raycasting(game);
-	handle_gate_input(game);
+	handle_gate_toggle(game);
 	clear_sprite_z(game);
 	render_all_sprites(game);
 	render_minimap_test(game);

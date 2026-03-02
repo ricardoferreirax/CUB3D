@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 22:42:10 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/01 23:37:13 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/02 09:26:09 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,5 @@ void	update_player_movement(t_game *g, double dx, double dy)
 	g->player.pos_y += dy;
 	player_wrap_position(g);
 	player_collision(g);
-	player_eat_pacdots(g);
+	player_collect_pacdots(g);
 }
