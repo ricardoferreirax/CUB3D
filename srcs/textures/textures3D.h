@@ -15,37 +15,7 @@
 
 typedef struct s_ghost	t_ghost;
 
-typedef struct s_textures
-{
-	char	*no;
-	char	*so;
-	char	*we;
-	char	*ea;
-	char	*floor;
-	char	*ceiling;
-	char	*pacdot;
-	char	*energizer;
-	char	*blinky;
-	char	*pinky;
-	char	*inky;
-	char	*clyde;
-	char 	*gate_close;
-
-	t_image	no_img;
-	t_image	so_img;
-	t_image	we_img;
-	t_image	ea_img;
-	t_image	floor_img;
-	t_image	ceiling_img;
-	t_image	pacdot_img;
-	t_image	energizer_img;
-	t_image	blinky_img;
-	t_image	pinky_img;
-	t_image	inky_img;
-	t_image	clyde_img;
-	t_image gate_close_img;
-
-}	t_textures;
+#include "../../Pac_Struct.h"
 
 void	parse_texture_path(t_game *g, const char *path);
 void			texture_load_xpm(t_game *g, t_image *img, const char *path);
@@ -55,7 +25,6 @@ void	set_texture_path(char **dst, char *value, t_game *g);
 unsigned int	tex_pixel(t_image *tex, int x, int y);
 t_image			*texture_pick_wall(t_game *g);
 int	is_map_start_line(t_game *g, char *line);
-void	load_menu_assets(t_game *g);
 
 int	read_rgb(const char *s, int *i, t_game *g);
 int rgb_to_int(int r, int g, int b);

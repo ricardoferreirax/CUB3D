@@ -26,53 +26,9 @@ typedef struct s_ghost	t_ghost;
 #define CEILING_HORIZON 40.0 // ajusta a posição do horizonte. Valores positivos desce e negativos sobe
 #define CEILING_P_MIN 6.0
 
-typedef struct s_fc
-{
-	double	fx;
-	double	fy;
-	double	stepx;
-	double	stepy;
-	double	rowdist;
-}	t_fc;
-
-typedef struct s_sprite
-{
-	double	depth;
-	int		screen_x;
-	int		size;
-	int		x0;
-	int		x1;
-	int		y0;
-	int		y1;
-	int raw_x0;
-	int raw_y0;
-}	t_sprite;
-
-typedef struct s_raycasting
-{
-	double	*z_buffer;
-	double *sprite_z;
-	double	camera_x;
-	double	ray_dir_x;
-	double	ray_dir_y;
-	double	side_dist_x;
-	double	side_dist_y;
-	double	delta_dist_x;
-	double	delta_dist_y;
-	double	perp_wall_dist;
-	int		hit_side;
-	char hit_tile;
-	int		map_x;
-	int		map_y;
-	int		step_x;
-	int		step_y;
-	int		draw_start;
-	int		draw_end;
-	int		hit;
-	int		line_h;
-}	t_raycasting;
-
 #endif
+
+#include "../../Pac_Struct.h"
 
 void	render_frame(t_game *game);
 void	process_raycasting(t_game *g);

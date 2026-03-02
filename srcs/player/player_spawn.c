@@ -92,7 +92,7 @@ static int	find_player_spawn_in_map(t_game *g)
 	return (count);
 }
 
-void	init_player_from_map(t_game *g)
+void	init_player(t_game *g)
 {
 	int	count;
 

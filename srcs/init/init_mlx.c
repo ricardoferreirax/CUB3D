@@ -30,8 +30,8 @@ void	init_window(t_game *g)
 {
 	g->win.ntilesx = xtile(g->map.grid);
 	g->win.ntilesy = ytile(g->map.grid);
-	g->win.width = 1600;
-	g->win.height = 900;
+	g->win.width = 1920;
+	g->win.height = 1080;
 	g->win.win_ptr = mlx_new_window(g->mlx_ptr, g->win.width, g->win.height, "Pac-Man");
 	if (!g->win.win_ptr)
 		exit_game(EXIT_MLX, g);

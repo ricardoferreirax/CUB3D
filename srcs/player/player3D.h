@@ -25,7 +25,7 @@ void	update_player_movement(t_game *g, double dx, double dy);
 void		player_collect_pacdots(t_game *g);
 int	player_hits_wall(t_game *g, int row, int col);
 int	ghost_hits_wall(t_game *g, int row, int col);
-void	init_player_from_map(t_game *g);
+void	init_player(t_game *g);
 void	handle_gate_toggle(t_game *g);
 
 #endif

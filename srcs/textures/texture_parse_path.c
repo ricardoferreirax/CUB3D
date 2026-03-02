@@ -12,6 +12,8 @@
 
 #include "../Pac_Struct.h"
 #include "textures3D.h"
+#include "../render/render3D.h"
+
 
 static int	parse_cube_texture_line(t_game *g, char *p)
 {
@@ -86,10 +88,10 @@ void	parse_texture_path(t_game *g, const char *path)
 	close(fd);
 	if (!g->tex.no || !g->tex.so || !g->tex.we || !g->tex.ea)
 		exit_game(EXIT_MAP, g);
-	if (g->mode == MODE_PACMAN)
-	{
-		if (!g->tex.pacdot || !g->tex.energizer || !g->tex.blinky || !g->tex.pinky
-			|| !g->tex.inky || !g->tex.clyde || !g->tex.gate_close)
-			exit_game(EXIT_MAP, g);
-	}
+	// if (g->mode == MODE_PACMAN)
+	// {
+	if (!g->tex.pacdot || !g->tex.energizer || !g->tex.blinky || !g->tex.pinky
+		|| !g->tex.inky || !g->tex.clyde || !g->tex.gate_close)
+		exit_game(EXIT_MAP, g);
+	// }
 }

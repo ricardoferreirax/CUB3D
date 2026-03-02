@@ -28,7 +28,9 @@
 #include "srcs/map/map3D.h"
 #include "srcs/player/player3D.h"
 #include "srcs/hooks/hooks.h"
-#define TILE_SIZE 1
+#define TILE_SIZE 8
+
+#define TEXTURES "./assets/textures/"
 
 #define UPDATE_F 16666
 #define MAX_UPDATES 5
@@ -91,8 +93,54 @@ typedef struct s_image
 	void			*img_ptr;
 }					t_image;
 
-# include "srcs/textures/textures3D.h"
-# include "srcs/render/render3D.h"
+typedef struct s_fc
+{
+	double	fx;
+	double	fy;
+	double	stepx;
+	double	stepy;
+	double	rowdist;
+}	t_fc;
+
+typedef struct s_sprite
+{
+	double	depth;
+	int		screen_x;
+	int		size;
+	int		x0;
+	int		x1;
+	int		y0;
+	int		y1;
+	int raw_x0;
+	int raw_y0;
+}	t_sprite;
+
+typedef struct s_raycasting
+{
+	double	*z_buffer;
+	double *sprite_z;
+	double	camera_x;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	perp_wall_dist;
+	int		hit_side;
+	char hit_tile;
+	int		map_x;
+	int		map_y;
+	int		step_x;
+	int		step_y;
+	int		draw_start;
+	int		draw_end;
+	int		hit;
+	int		line_h;
+}	t_raycasting;
+
+
+
 
 typedef struct s_window
 {
@@ -271,6 +319,39 @@ typedef enum e_mode
 	MODE_CUBE = 0,
 	MODE_PACMAN = 1
 }	t_mode;
+
+
+typedef struct s_textures
+{
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+	char	*floor;
+	char	*ceiling;
+	char	*pacdot;
+	char	*energizer;
+	char	*blinky;
+	char	*pinky;
+	char	*inky;
+	char	*clyde;
+	char 	*gate_close;
+
+	t_image	no_img;
+	t_image	so_img;
+	t_image	we_img;
+	t_image	ea_img;
+	t_image	floor_img;
+	t_image	ceiling_img;
+	t_image	pacdot_img;
+	t_image	energizer_img;
+	t_image	blinky_img;
+	t_image	pinky_img;
+	t_image	inky_img;
+	t_image	clyde_img;
+	t_image gate_close_img;
+
+}	t_textures;
 
 typedef struct s_game
 {

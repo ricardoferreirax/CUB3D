@@ -13,36 +13,6 @@
 #include "../../Pac_Struct.h"
 #include "map3D.h"
 
-static int	map_row_len(const char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str && str[i] && str[i] != '\n')
-		i++;
-	return (i);
-}
-
-void	map_dimensions(t_game *g)
-{
-	int	row;
-	int	row_len;
-	int	max_row_len;
-
-	if (!g || !g->map.grid)
-		return ;
-	row = 0;
-	max_row_len = 0;
-	while (g->map.grid[row])
-	{
-		row_len = map_row_len(g->map.grid[row]);
-		if (row_len > max_row_len)
-			max_row_len = row_len;
-		row++;
-	}
-	g->map.height = row;
-	g->map.width = max_row_len;
-}
 
 static int	map_fill_row(t_game *g, char **rect, int row)
 {
@@ -86,7 +56,7 @@ char	**map_rectangular(t_game *g)
 	while (row < g->map.height)
 	{
 		if (!map_fill_row(g, rect, row))
-			return (free_tab_tab(rect), NULL);
+			return (free_2d((void *)rect), NULL);
 		row++;
 	}
 	rect[row] = NULL;

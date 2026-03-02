@@ -73,7 +73,3 @@ void	texture_load_sprites(t_game *g)
 	texture_load_xpm(g, &g->tex.clyde_img, g->tex.clyde);
 }
 
-void	load_menu_assets(t_game *g)
-{
-	texture_load_xpm(g, &g->menu_img, "./assets/textures/menu.xpm");
-}

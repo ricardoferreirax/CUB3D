@@ -12,6 +12,7 @@
 
 #include "../../Pac_Struct.h"
 #include "map3D.h"
+#include "../textures/textures3D.h"
 
 static int	map_cube_mode_prefix(char *p)
 {

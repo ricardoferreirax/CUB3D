@@ -52,6 +52,7 @@ char	**load_map_from_cub(t_game *g, const char *path);
 void	map_validate_chars(t_game *g);
 void	map_validate_closed(t_game *g);
 
+void parse(t_game *g, const char *path);
 int	map_is_map_line(t_game *g, char *line);
 int	map_is_empty_line(char *s);
 

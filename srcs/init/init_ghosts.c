@@ -12,6 +12,7 @@
 
 #include "../../Pac_Struct.h"
 #include "initializer.h"
+#include "../render/render3D.h"
 
 static void	ghost_info(int i, int *name, char *spawn)
 {
@@ -39,8 +40,8 @@ static void	ghost_info(int i, int *name, char *spawn)
 
 static void	ghost_update_pixel_pos(t_ghost *gh) // guardar pixel_pos para o minimapa 
 {
-	gh->pos.pixel_pos.x = (gh->pos.tile_pos.x + 0.5) * (double)TILE_SIZE;
-	gh->pos.pixel_pos.y = (gh->pos.tile_pos.y + 0.5) * (double)TILE_SIZE;
+	gh->pos.pixel_pos.x = (gh->pos.tile_pos.x + 0.5) * (double)TILE_SIZE_3D;
+	gh->pos.pixel_pos.y = (gh->pos.tile_pos.y + 0.5) * (double)TILE_SIZE_3D;
 }
 
 static void	init_one_ghost(t_game *g, t_ghost *gh, char spawn_char)

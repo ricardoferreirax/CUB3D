@@ -37,7 +37,8 @@ MLX = $(MLX_PATH)/libmlx.a
 SRC_FILES = main.c \
 	aux_funcs.c  \
 	srcs/init/init.c \
-	srcs/init/init_cub3d.c \
+	srcs/init/init_base.c \
+	srcs/init/init_spritesheet.c \
 	srcs/init/init_mlx.c \
 	srcs/init/init_ghosts.c \
 	srcs/init/init_sprites.c \

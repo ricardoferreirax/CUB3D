@@ -66,7 +66,7 @@ static char	**extract_map(char **file_lines, int start, int end, t_game *g)
 		if (!map[j])
 		{
 			map[j] = NULL;
-			free_tab_tab(map);
+			free_2d((void *)map);
 			exit_game(EXIT_MALLOC, g);
 		}
 	}
@@ -87,17 +87,17 @@ char	**load_map_from_cub(t_game *g, const char *path)
 	start = find_map_start(g, file_lines);
 	if (start < 0)
 	{
-		free_tab_tab(file_lines);
+		free_2d((void *)file_lines);
 		exit_game(EXIT_MAP, g);
 	}
 	end = find_map_end(g, file_lines, start);
 	if (end < 0)
 	{
-		free_tab_tab(file_lines);
+		free_2d((void *)file_lines);
 		exit_game(EXIT_MAP, g);
 	}
 	map = extract_map(file_lines, start, end, g);
-	free_tab_tab(file_lines);
+	free_2d((void *)file_lines);
 	if (!map)
 		exit_game(EXIT_MAP, g);
 	return (map);

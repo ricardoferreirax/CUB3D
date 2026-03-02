@@ -109,7 +109,7 @@ static void	free_pacman_arrays(t_game *g)
 	{
 		if (g->ghosts[i].mental_map)
 		{
-			free_tab_tab(g->ghosts[i].mental_map);
+			free_2d((void *)g->ghosts[i].mental_map);
 			g->ghosts[i].mental_map = NULL;
 		}
 		i++;
@@ -128,7 +128,7 @@ void	free_game(t_game *g)
 	g->ray.sprite_z = NULL;
 	free_pacman_arrays(g);
 	if (g->map.grid)
-		free_tab_tab(g->map.grid);
+		free_2d((void *)g->map.grid);
 	g->map.grid = NULL;
 	destroy_all_images(g);
 	if (g->mlx_ptr && g->win.win_ptr)
@@ -144,17 +144,3 @@ void	free_game(t_game *g)
 	free(g);
 }
 
-void	free_tab_tab(char **tab)
-{
-	int	i;
-
-	if (!tab)
-		return ;
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}

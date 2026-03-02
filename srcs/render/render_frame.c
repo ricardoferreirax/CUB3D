@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Pac_Struct.h"
+#include "../../Pac_Struct.h"
+
 #include "render3D.h"
 
 void	clear_sprite_z(t_game *g)
@@ -87,7 +88,7 @@ void render_ghosts_into_framebuffer(t_game *game)
 void render_into_framebuffer(t_game *game)
 {
 	render_base_into_buffer(game);
-	render_ghosts_into_framebuffer(game);
+	// render_ghosts_into_framebuffer(game);
 }
 
 void	render_frame(t_game *game)
@@ -103,7 +104,7 @@ void	render_frame(t_game *game)
 	handle_gate_toggle(game);
 	clear_sprite_z(game);
 	render_all_sprites(game);
-	render_minimap_test(game);
+	// render_minimap_test(game);
 	render_into_framebuffer(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr, game->win.frame_buffer.img_ptr, 0, 0);
 }

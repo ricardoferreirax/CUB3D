@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Pac_Struct.h"
 #include "srcs/init/initializer.h"
 #include "srcs/textures/textures3D.h"
 #include "srcs/render/render3D.h"
@@ -45,27 +44,33 @@ int	gameloop(t_game *game)
 
 void	switch_mode_and_parse(t_game *g, t_mode mode, const char *path)
 {
-
-	char	**rect;
-
 	if (!g || !path)
 		exit_game(EXIT_MAP, g);
 	g->mode = mode;
+
+}
+
+void parse(t_game *g, const char *path)
+{
+	// char **rect;
+
 	parse_texture_path(g, path);
 	if (g->map.grid)
-		free_tab_tab(g->map.grid);
+		free_2d((void *)g->map.grid);
 	g->map.grid = load_map_from_cub(g, path);
 	if (!g->map.grid)
 		exit_game(EXIT_MAP, g);
-	map_dimensions(g);
-	rect = map_rectangular(g);
-	if (!rect)
-		exit_game(EXIT_MALLOC, g);
-	free_tab_tab(g->map.grid);
-	g->map.grid = rect;
+	g->map.height = ytile(g->map.grid);
+	g->map.width = xtile(g->map.grid);
+	// rect = map_rectangular(g);
+	// if (!rect)
+	// 	exit_game(EXIT_MALLOC, g);
+	// free_tab_tab(g->map.grid);
+	// g->map.grid = rect;
 	map_validate_chars(g);
-	init_player_from_map(g);
-	map_validate_closed(g);
+	// map_validate_closed(g);
+	//^ needs to be checked
+	
 }
 
 int	main(int ac, char **av)
@@ -78,7 +83,7 @@ int	main(int ac, char **av)
 	game = malloc(sizeof(t_game));
 	if (!game)
 		exit_game(EXIT_MALLOC, NULL);
-	init_cub3d(game);
+	init(game);
 	mlx_hook(game->win.win_ptr, 2, 1L << 0, handle_key_press, game);
 	mlx_hook(game->win.win_ptr, 3, 1L << 1, handle_key_release, game);
 	mlx_hook(game->win.win_ptr, 17, 0, handle_close, game);

@@ -247,16 +247,20 @@ void	init_base(t_game *s)
 	color = 0;
 	point.x = 0;
 	point.y = 0;
+	ft_printf("HEKKI");
 	s->base.img_ptr = mlx_new_image(s->mlx_ptr, s->win.width, s->win.height);
 	s->base.img_addr = mlx_get_data_addr(s->base.img_ptr, &s->base.bpp,
 			&s->base.l_len, &s->base.endian);
 	s->base.width = s->map.width * TILE_SIZE;
 	s->base.height = s->map.height * TILE_SIZE;
+	ft_printf("HEKKI");
 	while (s->map.grid[point.y])
 	{
+		ft_printf("Hekki");
 		point.x = 0;
 		while (s->map.grid[point.y][point.x])
 		{
+			printf("ITERATION NUMBER: %d", point.x);
 			tile = which_tile(s, point);
 			put_tile_inbase(s, tile, color, point);
 			point.x++;

@@ -10,29 +10,75 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../textures/textures3D.h"
 #include "initializer.h"
+#include "../player/player3D.h"
+#include "../map/map3D.h"
 
-/* void init_ghost(t_game *game, t_ghost *ghost)
+void	init_assets(t_game *g)
 {
-	ghost->is_steping_on_pacdot = 0;
-	ghost->mental_map = copy_map(game->map.grid);
-	ghost->state = SCATTER;
-	if (ghost->name == BLINKY)
-		init_blinky(game, ghost);
-	if (ghost->name == PINKY)
-		init_pinky(game, ghost);
-	if (ghost->name == INKY)
-		init_inky(game, ghost);
-	if (ghost->name == CLYDE)
-		init_clyde(game, ghost);
+	if (!g || !g->mlx_ptr)
+		exit_game(EXIT_MLX, g);
+	texture_load_cube(g);
+	texture_load_sprites(g);
+	if (g->mode == MODE_PACMAN)
+	{
+		init_sprites(g);
+		init_ghosts(g);
+	}
 }
 
-void	init_ghosts(t_game *game)
+void	start_game_mode(t_game *g, t_mode mode)
 {
-	int	i;
 
-	game->ghost = malloc(sizeof(t_ghost) * 4);
-	i = -1;
-	while (++i < 4)
-		init_ghost(game, &game->ghost[i]);
-} */
+	if (!g)
+		return ;
+
+	//TODO: Parse this shit correctly
+	parse(g, "../../maps/Pacman.cub");
+	g->mode = mode;
+	init_assets(g);
+	g->state = PLAY;
+}
+
+static void	init_defaults(t_game *g)
+{
+	if (!g)
+		return ;
+	ft_bzero(g, sizeof(t_game));
+	g->state = MENU;
+	g->mode = MODE_PACMAN;
+	g->ray.hit_side = -1;
+	g->player.target_map_x = -1;
+	g->player.target_map_y = -1;
+	g->map.floor_color = -1;
+	g->map.ceiling_color = -1;
+	g->gate_passable = 0;
+}
+
+void	init_execution(t_game *g)
+{
+	if (!g || !g->mlx_ptr || !g->win.win_ptr || !g->win.frame_buffer.img_ptr)
+		exit_game(EXIT_MLX, g);
+	g->ray.z_buffer = malloc(sizeof(double) * g->win.width);
+	if (!g->ray.z_buffer)
+		exit_game(EXIT_MALLOC, g);
+	g->ray.sprite_z = malloc(sizeof(double) * g->win.width * g->win.height);
+	if (!g->ray.sprite_z)
+		exit_game(EXIT_MALLOC, g);
+}
+
+void	init(t_game *g)
+{
+	if (!g)
+		return ;
+	init_defaults(g);
+	init_mlx(g);
+	// init_map(g);
+	init_player(g);
+	init_execution(g);
+	init_menu(g);
+	init_spritesheet(g);
+	init_base(g);
+
+}
