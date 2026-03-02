@@ -28,7 +28,7 @@
 #include "srcs/map/map3D.h"
 #include "srcs/player/player3D.h"
 #include "srcs/hooks/hooks.h"
-#define TILE_SIZE 8
+#define TILE_SIZE 1
 
 #define UPDATE_F 16666
 #define MAX_UPDATES 5
@@ -285,6 +285,7 @@ typedef struct s_game
 	t_mode mode;
 	t_gstate state;
 	t_image menu_img;
+	t_image base;
 
 	int pacdot_count;
 	int	energizer_count;

@@ -6,17 +6,13 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-<<<<<<< HEAD
 #    Updated: 2026/02/21 23:51:28 by rmedeiro         ###   ########.fr        #
-=======
-#    Updated: 2026/03/02 09:33:24 by rmedeiro         ###   ########.fr        #
->>>>>>> ricardo
 #                                                                              #
 # **************************************************************************** #
 
 NAME    = cub3d
 
-CC      = clang-12
+CC      = clang-12 -O3
 CFLAGS  = -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion -Wformat=2 -Wstrict-aliasing=2 \
 		-fno-omit-frame-pointer \
 		-g 
@@ -28,7 +24,7 @@ MLX_CFLAGS = -Wall -Wextra -Werror \
 	-Wno-return-type \
 	-Wno-sign-compare \
 	-Wno-unused-parameter \
-	-Wno-parentheses \
+	-Wno-parentheses\
 	-Wno-unused-variable \
 	-Wno-unused-but-set-variable
 

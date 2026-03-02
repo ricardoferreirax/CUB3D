@@ -2,6 +2,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -26,6 +27,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -50,30 +52,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Wpedantic",
-      "-Wshadow",
-      "-Wdouble-promotion",
-      "-Wformat=2",
-      "-Wstrict-aliasing=2",
-      "-fno-omit-frame-pointer",
-      "-g",
-      "-Iinclude",
-      "-Ilibft",
-      "-c",
-      "-o",
-      "objs/ghosts.o",
-      "ghosts.c"
-    ],
-    "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/ghosts.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/ghosts.o"
-  },
-  {
-    "arguments": [
-      "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -98,6 +77,32 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/srcs/init/init_cub3d.o",
+      "srcs/init/init_cub3d.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/init/init_cub3d.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/init/init_cub3d.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -122,30 +127,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Wpedantic",
-      "-Wshadow",
-      "-Wdouble-promotion",
-      "-Wformat=2",
-      "-Wstrict-aliasing=2",
-      "-fno-omit-frame-pointer",
-      "-g",
-      "-Iinclude",
-      "-Ilibft",
-      "-c",
-      "-o",
-      "objs/srcs/init/init_aux_funcs.o",
-      "srcs/init/init_aux_funcs.c"
-    ],
-    "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/init/init_aux_funcs.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/init/init_aux_funcs.o"
-  },
-  {
-    "arguments": [
-      "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -170,6 +152,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -184,136 +167,17 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/init/init_assets.o",
-      "srcs/init/init_assets.c"
+      "objs/srcs/init/init_sprites.o",
+      "srcs/init/init_sprites.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/init/init_assets.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/init/init_assets.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/init/init_sprites.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/init/init_sprites.o"
   },
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Wpedantic",
-      "-Wshadow",
-      "-Wdouble-promotion",
-      "-Wformat=2",
-      "-Wstrict-aliasing=2",
-      "-fno-omit-frame-pointer",
-      "-g",
-      "-Iinclude",
-      "-Ilibft",
-      "-c",
-      "-o",
-      "objs/srcs/init/init_pacdots.o",
-      "srcs/init/init_pacdots.c"
-    ],
-    "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/init/init_pacdots.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/init/init_pacdots.o"
-  },
-  {
-    "arguments": [
-      "/home/pedro/.local/bin/clang-12",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Wpedantic",
-      "-Wshadow",
-      "-Wdouble-promotion",
-      "-Wformat=2",
-      "-Wstrict-aliasing=2",
-      "-fno-omit-frame-pointer",
-      "-g",
-      "-Iinclude",
-      "-Ilibft",
-      "-c",
-      "-o",
-      "objs/srcs/init/init_energizers.o",
-      "srcs/init/init_energizers.c"
-    ],
-    "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/init/init_energizers.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/init/init_energizers.o"
-  },
-  {
-    "arguments": [
-      "/home/pedro/.local/bin/clang-12",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Wpedantic",
-      "-Wshadow",
-      "-Wdouble-promotion",
-      "-Wformat=2",
-      "-Wstrict-aliasing=2",
-      "-fno-omit-frame-pointer",
-      "-g",
-      "-Iinclude",
-      "-Ilibft",
-      "-c",
-      "-o",
-      "objs/srcs/init/init_gates.o",
-      "srcs/init/init_gates.c"
-    ],
-    "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/init/init_gates.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/init/init_gates.o"
-  },
-  {
-    "arguments": [
-      "/home/pedro/.local/bin/clang-12",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Wpedantic",
-      "-Wshadow",
-      "-Wdouble-promotion",
-      "-Wformat=2",
-      "-Wstrict-aliasing=2",
-      "-fno-omit-frame-pointer",
-      "-g",
-      "-Iinclude",
-      "-Ilibft",
-      "-c",
-      "-o",
-      "objs/srcs/init/init_spritesheet.o",
-      "srcs/init/init_spritesheet.c"
-    ],
-    "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/init/init_spritesheet.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/init/init_spritesheet.o"
-  },
-  {
-    "arguments": [
-      "/home/pedro/.local/bin/clang-12",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Wpedantic",
-      "-Wshadow",
-      "-Wdouble-promotion",
-      "-Wformat=2",
-      "-Wstrict-aliasing=2",
-      "-fno-omit-frame-pointer",
-      "-g",
-      "-Iinclude",
-      "-Ilibft",
-      "-c",
-      "-o",
-      "objs/srcs/init/init_base.o",
-      "srcs/init/init_base.c"
-    ],
-    "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/init/init_base.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/init/init_base.o"
-  },
-  {
-    "arguments": [
-      "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -338,6 +202,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -362,6 +227,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -386,30 +252,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Wpedantic",
-      "-Wshadow",
-      "-Wdouble-promotion",
-      "-Wformat=2",
-      "-Wstrict-aliasing=2",
-      "-fno-omit-frame-pointer",
-      "-g",
-      "-Iinclude",
-      "-Ilibft",
-      "-c",
-      "-o",
-      "objs/srcs/map/map_player_spawn.o",
-      "srcs/map/map_player_spawn.c"
-    ],
-    "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/map_player_spawn.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/map_player_spawn.o"
-  },
-  {
-    "arguments": [
-      "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -434,6 +277,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -458,6 +302,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -482,6 +327,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -496,16 +342,17 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/map/map_gate_iteraction.o",
-      "srcs/map/map_gate_iteraction.c"
+      "objs/srcs/map/map_ghost.o",
+      "srcs/map/map_ghost.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/map_gate_iteraction.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/map_gate_iteraction.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/map_ghost.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/map_ghost.o"
   },
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -530,6 +377,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -554,6 +402,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -578,6 +427,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -602,6 +452,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -616,16 +467,17 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/text/texture_parse_color.o",
-      "srcs/text/texture_parse_color.c"
+      "objs/srcs/text/texture_parse_floor_ceiling.o",
+      "srcs/text/texture_parse_floor_ceiling.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/text/texture_parse_color.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/text/texture_parse_color.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/text/texture_parse_floor_ceiling.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/text/texture_parse_floor_ceiling.o"
   },
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -650,6 +502,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -674,6 +527,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -698,6 +552,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -722,6 +577,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -746,6 +602,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -770,6 +627,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -794,6 +652,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -818,6 +677,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -842,6 +702,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -866,6 +727,32 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/srcs/render/render_menu.o",
+      "srcs/render/render_menu.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/render/render_menu.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/render/render_menu.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -890,6 +777,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -914,6 +802,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -938,6 +827,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -962,6 +852,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -986,6 +877,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -1010,6 +902,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -1034,6 +927,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -1058,6 +952,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -1072,16 +967,67 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/player/player_eat_pacdots.o",
-      "srcs/player/player_eat_pacdots.c"
+      "objs/srcs/player/handle_gate_toggle.o",
+      "srcs/player/handle_gate_toggle.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/player_eat_pacdots.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/player_eat_pacdots.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/handle_gate_toggle.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/handle_gate_toggle.o"
   },
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/srcs/player/player_collect_pacdots.o",
+      "srcs/player/player_collect_pacdots.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/player_collect_pacdots.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/player_collect_pacdots.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-O5",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/srcs/player/player_spawn.o",
+      "srcs/player/player_spawn.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/player_spawn.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/player_spawn.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -1106,6 +1052,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -1130,6 +1077,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -1154,6 +1102,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
+      "-O5",
       "-Wall",
       "-Wextra",
       "-Werror",

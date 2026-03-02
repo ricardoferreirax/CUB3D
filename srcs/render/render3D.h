@@ -17,7 +17,7 @@ typedef struct s_game	t_game;
 typedef struct s_image	t_image;
 typedef struct s_ghost	t_ghost;
 
-#define TILE_SIZE 1
+#define TILE_SIZE_3D 1
 #define SPR_PACDOT     1
 #define SPR_ENERGIZER  2
 #define SPR_GHOST      3
