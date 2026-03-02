@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Pac_Struct.h"
+#include "../../Pac_Struct.h"
 #include "textures3D.h"
 
 void	texture_load_xpm(t_game *g, t_image *img, const char *path)
@@ -75,5 +75,5 @@ void	texture_load_sprites(t_game *g)
 
 void	load_menu_assets(t_game *g)
 {
-	texture_load_xpm(g, &g->menu_img, "./textures/menu.xpm");
+	texture_load_xpm(g, &g->menu_img, "./assets/textures/menu.xpm");
 }

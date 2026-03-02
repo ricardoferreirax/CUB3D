@@ -2,7 +2,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -27,7 +27,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -52,7 +52,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -77,7 +77,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -102,7 +102,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -127,7 +127,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -152,7 +152,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -177,7 +177,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -202,7 +202,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -227,7 +227,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -252,7 +252,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -277,7 +277,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -302,7 +302,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -327,7 +327,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -352,7 +352,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -377,7 +377,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -402,7 +402,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -427,7 +427,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -442,17 +442,17 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/text/texture_parse_path.o",
-      "srcs/text/texture_parse_path.c"
+      "objs/srcs/textures/texture_parse_path.o",
+      "srcs/textures/texture_parse_path.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/text/texture_parse_path.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/text/texture_parse_path.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/textures/texture_parse_path.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/textures/texture_parse_path.o"
   },
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -467,17 +467,17 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/text/texture_parse_floor_ceiling.o",
-      "srcs/text/texture_parse_floor_ceiling.c"
+      "objs/srcs/textures/texture_parse_color.o",
+      "srcs/textures/texture_parse_color.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/text/texture_parse_floor_ceiling.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/text/texture_parse_floor_ceiling.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/textures/texture_parse_color.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/textures/texture_parse_color.o"
   },
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -492,17 +492,17 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/text/texture_load.o",
-      "srcs/text/texture_load.c"
+      "objs/srcs/textures/texture_load.o",
+      "srcs/textures/texture_load.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/text/texture_load.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/text/texture_load.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/textures/texture_load.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/textures/texture_load.o"
   },
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -517,17 +517,17 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/text/texture_pick_wall.o",
-      "srcs/text/texture_pick_wall.c"
+      "objs/srcs/textures/texture_pick_wall.o",
+      "srcs/textures/texture_pick_wall.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/text/texture_pick_wall.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/text/texture_pick_wall.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/textures/texture_pick_wall.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/textures/texture_pick_wall.o"
   },
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -542,17 +542,17 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/text/texture_utils.o",
-      "srcs/text/texture_utils.c"
+      "objs/srcs/textures/texture_utils.o",
+      "srcs/textures/texture_utils.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/text/texture_utils.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/text/texture_utils.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/textures/texture_utils.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/textures/texture_utils.o"
   },
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -577,7 +577,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -602,7 +602,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -627,7 +627,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -652,7 +652,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -677,7 +677,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -702,7 +702,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -727,7 +727,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -752,7 +752,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -777,7 +777,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -802,7 +802,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -827,7 +827,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -852,7 +852,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -877,7 +877,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -902,7 +902,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -927,7 +927,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -952,7 +952,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -977,7 +977,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -1002,7 +1002,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -1027,7 +1027,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -1052,7 +1052,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -1077,7 +1077,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -1102,7 +1102,7 @@
   {
     "arguments": [
       "/home/pedro/.local/bin/clang-12",
-      "-O5",
+      "-O3",
       "-Wall",
       "-Wextra",
       "-Werror",

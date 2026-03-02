@@ -1,18 +1,19 @@
-NO ./textures/text1.xpm
-SO ./textures/text1.xpm
-WE ./textures/text1.xpm
-EA ./textures/text1.xpm
+NO ./assets/textures/text1.xpm
+SO ./assets/textures/text1.xpm
+WE ./assets/textures/text1.xpm
+EA ./assets/textures/text1.xpm
 
-F ./textures/floor5.xpm
-C ./textures/ceiling.xpm
+F ./assets/textures/floor5.xpm
+C ./assets/textures/ceiling.xpm
 
-PD ./textures/pacdot.xpm
-EN ./textures/energizer.xpm
-BL ./textures/blinky.xpm
-PI ./textures/pinky.xpm
-IN ./textures/inky.xpm
-CL ./textures/clyde.xpm
-GC ./textures/gate_closed.xpm
+PD ./assets/textures/pacdot.xpm
+EN ./assets/textures/energizer.xpm
+BL ./assets/textures/blinky.xpm
+PI ./assets/textures/pinky.xpm
+IN ./assets/textures/inky.xpm
+CL ./assets/textures/clyde.xpm
+GC ./assets/textures/gate_closed.xpm
+GO ./assets/textures/gate_open.xpm
 
 1111111111111111111111111111
 1............11............1

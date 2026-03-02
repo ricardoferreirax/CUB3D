@@ -51,11 +51,11 @@ SRC_FILES = main.c \
 	srcs/map/map_wrap.c \
 	srcs/map/minimap_test.c \
 	srcs/map/map_utils.c \
-	srcs/text/texture_parse_path.c \
-	srcs/text/texture_parse_floor_ceiling.c \
-	srcs/text/texture_load.c \
-	srcs/text/texture_pick_wall.c \
-	srcs/text/texture_utils.c \
+	srcs/textures/texture_parse_path.c \
+	srcs/textures/texture_parse_color.c \
+	srcs/textures/texture_load.c \
+	srcs/textures/texture_pick_wall.c \
+	srcs/textures/texture_utils.c \
 	srcs/render/render_frame.c \
 	srcs/render/render_wall_texture.c \
 	srcs/render/sprite_draw.c \

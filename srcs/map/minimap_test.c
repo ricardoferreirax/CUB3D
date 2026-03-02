@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Pac_Struct.h"
+#include "../../Pac_Struct.h"
+#include "../render/render3D.h"
 
 static void	mini_rect(t_image *img, int x0, int y0, int size, int color)
 {
