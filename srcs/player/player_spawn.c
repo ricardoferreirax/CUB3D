@@ -6,14 +6,14 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 21:11:27 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/23 23:41:09 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/02 09:36:23 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "player3D.h"
 
-static void	set_dir_plane_ns(t_game *g, char c)
+static void	set_player_orientation_ns(t_game *g, char c)
 {
 	if (c == 'N')
 	{
@@ -31,7 +31,7 @@ static void	set_dir_plane_ns(t_game *g, char c)
 	}
 }
 
-static void	set_dir_plane_ew(t_game *g, char c)
+static void	set_player_orientation_ew(t_game *g, char c)
 {
 	if (c == 'E')
 	{
@@ -49,7 +49,7 @@ static void	set_dir_plane_ew(t_game *g, char c)
 	}
 }
 
-static void	apply_player_spawn(t_game *g, int x, int y, char dir)
+static void	set_player_spawn_position(t_game *g, int x, int y, char dir)
 {
 	if (g->map.grid[y][x] == VOID)
 		exit_game(EXIT_MAP, g);
@@ -60,12 +60,12 @@ static void	apply_player_spawn(t_game *g, int x, int y, char dir)
 		exit_game(EXIT_MAP, g);
 	g->player.pos_x = (double)x + 0.5;
 	g->player.pos_y = (double)y + 0.5;
-	set_dir_plane_ns(g, dir);
-	set_dir_plane_ew(g, dir);
+	set_player_orientation_ns(g, dir);
+	set_player_orientation_ew(g, dir);
 	g->map.grid[y][x] = OPEN_SPACE;
 }
 
-static int	map_find_player_spawn(t_game *g)
+static int	find_player_spawn_in_map(t_game *g)
 {
 	int		y;
 	int		x;
@@ -83,7 +83,7 @@ static int	map_find_player_spawn(t_game *g)
 			if (t == 'N' || t == 'S' || t == 'E' || t == 'W')
 			{
 				count++;
-				apply_player_spawn(g, x, y, t);
+				set_player_spawn_position(g, x, y, t);
 			}
 			x++;
 		}
@@ -98,7 +98,7 @@ void	init_player_from_map(t_game *g)
 
 	if (!g || !g->map.grid)
 		exit_game(EXIT_MAP, g);
-	count = map_find_player_spawn(g);
+	count = find_player_spawn_in_map(g);
 	if (count != 1)
 		exit_game(EXIT_MAP, g);
 }
