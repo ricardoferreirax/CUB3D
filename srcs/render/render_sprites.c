@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 22:09:52 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/21 21:57:08 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/27 23:21:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	draw_pacdots(t_game *g)
 	t_sprite	box;
 	int			i;
 
-	if (!g || !g->pacdots || !g->pacdot_img.img_addr)
+	if (!g || !g->pacdots || !g->tex.pacdot_img.img_addr)
 		return ;
 	i = 0;
 	while (i < g->pacdot_count)
@@ -28,7 +28,7 @@ static void	draw_pacdots(t_game *g)
 			if (sprite_project(g, g->pacdots[i].x, g->pacdots[i].y, &box))
 			{
 				if (sprite_build(g, &box, 6))
-					sprite_draw(g, &box, &g->pacdot_img);
+					sprite_draw(g, &box, &g->tex.pacdot_img);
 			}
 		}
 		i++;
@@ -40,7 +40,7 @@ static void	draw_energizers(t_game *g)
 	t_sprite	box;
 	int			i;
 
-	if (!g || !g->energizers || !g->energizer_img.img_addr)
+	if (!g || !g->energizers || !g->tex.energizer_img.img_addr)
 		return ;
 	i = 0;
 	while (i < g->energizer_count)
@@ -50,7 +50,7 @@ static void	draw_energizers(t_game *g)
 			if (sprite_project(g, g->energizers[i].x, g->energizers[i].y, &box))
 			{
 				if (sprite_build(g, &box, 3))
-					sprite_draw(g, &box, &g->energizer_img);
+					sprite_draw(g, &box, &g->tex.energizer_img);
 			}
 		}
 		i++;
@@ -62,6 +62,8 @@ static void	draw_ghosts(t_game *g)
 	t_sprite	box;
 	t_image		*tex;
 	int			i;
+	double		wx;
+	double		wy;
 
 	if (!g)
 		return ;
@@ -71,34 +73,12 @@ static void	draw_ghosts(t_game *g)
 		tex = ghost_tex(g, &g->ghosts[i]);
 		if (tex && tex->img_addr)
 		{
-			if (sprite_project(g, g->ghosts[i].sprite_x, g->ghosts[i].sprite_y, &box))
+			wx = g->ghosts[i].pos.tile_pos.x + 0.5;
+			wy = g->ghosts[i].pos.tile_pos.y + 0.5;
+			if (sprite_project(g, wx, wy, &box))
 			{
 				if (sprite_build(g, &box, 2))
 					sprite_draw(g, &box, tex);
-			}
-		}
-		i++;
-	}
-}
-
-static void	draw_open_gates(t_game *g)
-{
-	t_sprite	box;
-	int			i;
-
-	if (!g || !g->gates || !g->tex.gate_open_img.img_addr)
-		return ;
-	if (!g->gate_passable)
-		return ;
-	i = 0;
-	while (i < g->gate_count)
-	{
-		if (g->gates[i].active)
-		{
-			if (sprite_project(g, g->gates[i].x, g->gates[i].y, &box))
-			{
-				if (sprite_build(g, &box, 1))
-					sprite_draw(g, &box, &g->tex.gate_open_img);
 			}
 		}
 		i++;
@@ -112,5 +92,4 @@ void	render_all_sprites(t_game *g)
 	draw_pacdots(g);
 	draw_energizers(g);
 	draw_ghosts(g);
-	draw_open_gates(g);
 }

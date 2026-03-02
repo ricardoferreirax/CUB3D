@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 21:39:40 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/21 22:19:09 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/01 23:26:35 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	calculate_dda_step(t_game *g)
 	else
 	{
 		g->ray.step_x = 1;
-		g->ray.side_dist_x = (g->ray.map_x + 1.0 - g->player.pos_x)
+		g->ray.side_dist_x = (g->ray.map_x + TILE_SIZE - g->player.pos_x)
 			* g->ray.delta_dist_x;
 	}
 	if (g->ray.ray_dir_y < 0)
@@ -36,7 +36,7 @@ void	calculate_dda_step(t_game *g)
 	else
 	{
 		g->ray.step_y = 1;
-		g->ray.side_dist_y = (g->ray.map_y + 1.0 - g->player.pos_y)
+		g->ray.side_dist_y = (g->ray.map_y + TILE_SIZE - g->player.pos_y)
 			* g->ray.delta_dist_y;
 	}
 }
@@ -62,14 +62,14 @@ static int	validate_or_wrap_ray(t_game *g)
 	if (g->ray.map_y < 0 || g->ray.map_y >= g->map.height)
 		return (0);
 	if (g->ray.map_x < 0 || g->ray.map_x >= g->map.width)
-		return (map_wrap_ray_x(g));
+		return (ray_apply_wrap_x(g));
 	return (1);
 }
 
 int	perform_dda(t_game *g)
 {
-	int	steps;
-	int	max_steps;
+	int		steps;
+	int		max_steps;
 	char	t;
 
 	steps = 0;
@@ -77,16 +77,18 @@ int	perform_dda(t_game *g)
 	while (steps < max_steps)
 	{
 		dda_step(g);
-		if (!validate_or_wrap_ray(g))
+		if (validate_or_wrap_ray(g) == 0)
 			return (0);
 		t = map_get_tile(g, g->ray.map_y, g->ray.map_x);
-		if (!(t == GATE && g->gate_passable))
+		if (t != GATE)
 		{
 			if (map_tile_type(t, TILE_SOLID))
-			{
-				g->ray.hit_tile = t;
-				return (1);
-			}
+				return (g->ray.hit_tile = t, 1);
+		}
+		else
+		{
+			if (g->gate_passable == 0)
+				return (g->ray.hit_tile = t, 1);
 		}
 		steps++;
 	}

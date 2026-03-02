@@ -6,12 +6,17 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:41:18 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/18 21:15:46 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/01 23:25:14 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "map3D.h"
+
+int	is_whitespace(char c)
+{
+	return (c == ' ' || c == '\t');
+}
 
 int	map_tile_type(char t, int tile_type)
 {
@@ -29,14 +34,13 @@ int	map_tile_type(char t, int tile_type)
 	return (0);
 }
 
-
 char	map_get_tile(t_game *g, int y, int x)
 {
 	if (!g || !g->map.grid)
 		return (VOID);
 	if (y < 0 || y >= g->map.height)
 		return (VOID);
-	if (map_wrap_row_is_active(g, y))
+	if (map_wrap_has_wrap(g, y))
 	{
 		if (x < 0)
 			x = g->map.width - 1;
@@ -46,4 +50,20 @@ char	map_get_tile(t_game *g, int y, int x)
 	if (x < 0 || x >= g->map.width)
 		return (VOID);
 	return (g->map.grid[y][x]);
+}
+
+int	map_is_empty_line(char *s)
+{
+	int	i;
+
+	if (!s)
+		return (1);
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] != '\n' && s[i] != ' ' && s[i] != '\t')
+			return (0);
+		i++;
+	}
+	return (1);
 }

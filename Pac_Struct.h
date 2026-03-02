@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/25 16:09:55 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/03/02 09:50:11 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,25 @@
 # define EXIT_MAP       4
 # define EXIT_INPUT     5
 
+#define MAP_PACMAN "./maps/Pacman.cub"
+#define MAP_CUBE   "./maps/cube.cub"
+
 typedef struct s_point
 {
 	int x;
 	int y;
 }	t_point;
 
+typedef struct s_double_point
+{
+	double x;
+	double y;
+}	t_double_point;
+
 typedef struct s_position
 {
 	t_point pixel_pos;
-	t_point tile_pos;
+	t_double_point tile_pos;
 }	t_pos;
 	
 typedef struct s_image
@@ -204,11 +213,8 @@ typedef struct s_elroy
 typedef struct s_ghost
 {
 	e_ghost	name;
-
 	t_pos	pos;
-	double	sprite_x;
-	double	sprite_y;
-
+	double speed;
 	int		dot_counter;
 	t_point	target_tile;
 	int		global_dot_counter_call;
@@ -251,6 +257,18 @@ typedef struct s_sheet
 	t_image sprite_img;
 }	t_sprite_sheet;
 
+typedef enum e_gstate
+{
+	MENU,
+	PLAY
+}	t_gstate;
+
+typedef enum e_mode
+{
+	MODE_CUBE = 0,
+	MODE_PACMAN = 1
+}	t_mode;
+
 typedef struct s_game
 {
 	void *mlx_ptr;
@@ -262,17 +280,15 @@ typedef struct s_game
 	t_textures tex;
 	t_pacdot *pacdots;
 	t_pacdot	*energizers;
-	t_pacdot	*gates;
-	t_image		energizer_img;
 	t_ghost		ghosts[4]; 
 	t_image	render;
-	t_image pacdot_img;
-	t_image base;
+	t_mode mode;
+	t_gstate state;
+	t_image menu_img;
 
 	int pacdot_count;
 	int	energizer_count;
 	int gate_passable;
-	int	gate_count;
 	
 	bool debug_mode;
 	double timeout;
@@ -286,23 +302,16 @@ typedef struct s_game
 
 #endif // !DEBUG
 
-void	start_execution(t_game *game);
-void	init_defaults(t_game *g);
 int		gameloop(t_game *game);
 long	get_time_us(void);
-
-
-void init_pacdots(t_game *g);
-void	init_assets(t_game *g);
-void	init_energizers(t_game *g);
-void	init_ghosts(t_game *g);
-void	init_gates(t_game *g);
-
-// =========================
-// MLX / Window
-// =========================
-void	init_mlx(t_game *game);
-void	init_window(t_game *s);
+void	switch_mode_and_parse(t_game *g, t_mode mode, const char *path);
+void	start_game_mode(t_game *g, t_mode mode);
+char	**copy_map(char **map);
+t_point	find_c(char **map, char c);
+void	update_ghost(t_game *g, t_ghost *gh, double dt);
+int	ghost_tick_ready(t_game *g, long now);
+void	update_ghosts(t_game *g, double dt);
+int	ghost_opposite_dir(int dir);
 
 // =========================
 // Free & Exit
@@ -314,7 +323,6 @@ void	free_tab_tab(char **tab);
 // =========================
 // Ghost / AI / Utils
 // =========================
-t_point	chose_next_move(t_ghost *ghost, char **map);
 t_point	find_c(char **map, char c);
 
 int		xtile(char **map);

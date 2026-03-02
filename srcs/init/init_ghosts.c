@@ -6,117 +6,75 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:28:58 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/21 23:45:00 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/02 09:52:07 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
+#include "initializer.h"
 
-// void init_sprite(t_sprite_ref *sprite, int x, int y, t_point size)
-// {
-// 	sprite->coord.x = x;
-// 	sprite->coord.y = y;
-// 	sprite->height = size.y;
-// 	sprite->width = size.x;
-// }
-//
-// void init_anim(t_ghost *blinky)
-// {
-// 	t_point size;
-// 	size.x = TILE_SIZE;
-// 	size.y = TILE_SIZE;
-// }
-static void	ghost_set(t_game *g, e_ghost who, int x, int y)
+static void	ghost_info(int i, int *name, char *spawn)
 {
-	g->ghosts[who].name = who;
-	g->ghosts[who].sprite_x = (double)x + 0.5;
-	g->ghosts[who].sprite_y = (double)y + 0.5;
-	g->ghosts[who].pos.tile_pos.x = x;
-	g->ghosts[who].pos.tile_pos.y = y;
+	if (i == 0)
+	{
+		*name = BLINKY;
+		*spawn = BLINKY_T;
+	}
+	else if (i == 1)
+	{
+		*name = PINKY;
+		*spawn = PINKY_T;
+	}
+	else if (i == 2)
+	{
+		*name = INKY;
+		*spawn = INKY_T;
+	}
+	else
+	{
+		*name = CLYDE;
+		*spawn = CLYDE_T;
+	}
+}
+
+static void	ghost_update_pixel_pos(t_ghost *gh) // guardar pixel_pos para o minimapa 
+{
+	gh->pos.pixel_pos.x = (gh->pos.tile_pos.x + 0.5) * (double)TILE_SIZE;
+	gh->pos.pixel_pos.y = (gh->pos.tile_pos.y + 0.5) * (double)TILE_SIZE;
+}
+
+static void	init_one_ghost(t_game *g, t_ghost *gh, char spawn_char)
+{
+	t_point	p;
+
+	gh->mental_map = copy_map(g->map.grid);
+	if (!gh->mental_map)
+		exit_game(EXIT_MALLOC, g);
+	p = find_c(g->map.grid, spawn_char);
+	if (p.x < 0 || p.y < 0)
+		exit_game(EXIT_MAP, g);
+	gh->pos.tile_pos.x = (double)p.x;
+	gh->pos.tile_pos.y = (double)p.y;
+	ghost_update_pixel_pos(gh);
+	gh->invalid_dir = -1;
+	gh->target_tile = p;
 }
 
 void	init_ghosts(t_game *g)
 {
-	int		x;
-	int		y;
-	char	t;
+	int		i;
+	int		name;
+	char	spawn;
 
 	if (!g || !g->map.grid)
-		return ;
-	y = 0;
-	while (y < g->map.height)
+		exit_game(EXIT_MAP, g);
+	i = 0;
+	while (i < 4)
 	{
-		x = 0;
-		while (x < g->map.width)
-		{
-			t = map_get_tile(g, y, x);
-			if (t == BLINKY_T) 
-				ghost_set(g, BLINKY, x, y);
-			else if (t == PINKY_T) 
-				ghost_set(g, PINKY, x, y);
-			else if (t == INKY_T) 
-				ghost_set(g, INKY, x, y);
-			else if (t == CLYDE_T) 
-				ghost_set(g, CLYDE, x, y);
-			if (t == BLINKY_T || t == PINKY_T || t == INKY_T || t == CLYDE_T)
-				g->map.grid[y][x] = OPEN_SPACE;
-			x++;
-		}
-		y++;
+		ghost_info(i, &name, &spawn);
+		ft_bzero(&g->ghosts[i], sizeof(t_ghost));
+		g->ghosts[i].name = name;
+		init_one_ghost(g, &g->ghosts[i], spawn);
+		i++;
 	}
 }
-
-/* void init_sprite(t_sprite_ref *sprite, int x, int y, t_point size)
-{
-	
-	sprite->coord.x = x;
-	sprite->coord.y = y;
-	sprite->height = size.y;
-	sprite->width = size.x;
-}
-
-void init_anim(t_ghost *blinky)
-{
-	t_point size;
-	size.x = TILE_SIZE;
-	size.y = TILE_SIZE;
-	init_sprite(&blinky->frames->up[0], 105, 104, size);
-} */
-
-
-/* void init_blinky(t_game *game, t_ghost *blinky)
-{
-	blinky->target_tile = find_c(game->map.grid, 'B');
-	blinky->pos.tile_pos = find_c(blinky->mental_map, 'S');
-	blinky->pos.pixel_pos.x = blinky->pos.tile_pos.x * 8;
-	blinky->pos.pixel_pos.y = blinky->pos.tile_pos.y * 8;
-	// init_anim(blinky);
-	blinky->invalid_dir = 3;
-}
-
-void init_pinky(t_game *game, t_ghost *pinky)
-{
-	pinky->target_tile = find_c(game->map.grid, 'P');
-	pinky->pos.tile_pos = find_c(pinky->mental_map, 'S');
-	pinky->pos.pixel_pos.x = pinky->pos.tile_pos.x * 8;
-	pinky->pos.pixel_pos.y = pinky->pos.tile_pos.y * 8;
-	pinky->invalid_dir = 3;
-}
-
-void init_inky(t_game *game, t_ghost *inky)
-{
-	inky->target_tile = find_c(game->map.grid, 'I');
-	inky->pos.tile_pos = find_c(inky->mental_map, 'S');
-	inky->pos.pixel_pos.x = inky->pos.tile_pos.x * 8;
-	inky->pos.pixel_pos.y = inky->pos.tile_pos.y * 8;
-	inky->invalid_dir = 3;
-}
-
-void init_clyde(t_game *game, t_ghost *clyde)
-{
-	clyde->target_tile = find_c(game->map.grid, 'C');
-	clyde->pos.tile_pos = find_c(clyde->mental_map, 'S');
-	clyde->pos.pixel_pos.x = clyde->pos.tile_pos.x * 8;
-	clyde->pos.pixel_pos.y = clyde->pos.tile_pos.y * 8;
-	clyde->invalid_dir = 3;
-} */

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/20 23:03:49 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/26 23:10:57 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,14 @@ typedef struct s_game	t_game;
 typedef struct s_image	t_image;
 typedef struct s_ghost	t_ghost;
 
+#define TILE_SIZE 1
 #define SPR_PACDOT     1
 #define SPR_ENERGIZER  2
 #define SPR_GHOST      3
+
+#define CEILING_DIST 2.8  // CEILING_DIST > 1.0 O ceiling parece que fica mais longe (menos zoom na textura)
+#define CEILING_HORIZON 40.0 // ajusta a posição do horizonte. Valores positivos desce e negativos sobe
+#define CEILING_P_MIN 6.0
 
 typedef struct s_fc
 {
@@ -78,6 +83,7 @@ void	put_pixel_fast(t_image *img, int x, int y, int color);
 void	render_wall_col(t_game *g, int screen_x);
 void	render_floor_texture(t_game *g);
 void	render_ceiling_texture(t_game *g);
+void	render_menu(t_game *g);
 double	fract_pos(double x);
 
 unsigned int	tex_pixel(t_image *tex, int x, int y);

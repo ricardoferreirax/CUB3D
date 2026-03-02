@@ -6,88 +6,89 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:35:44 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/14 22:04:36 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/02 09:52:45 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "map3D.h"
 
-static int	map_line_len(const char *s)
+static int	map_row_len(const char *str)
 {
 	int	i;
 
 	i = 0;
-	while (s && s[i] && s[i] != '\n')
+	while (str && str[i] && str[i] != '\n')
 		i++;
 	return (i);
 }
 
-void	map_setup_size(t_game *g)
+void	map_dimensions(t_game *g)
 {
-	int	y;
-	int	w;
-	int	max_w;
+	int	row;
+	int	row_len;
+	int	max_row_len;
 
 	if (!g || !g->map.grid)
 		return ;
-	y = 0;
-	max_w = 0;
-	while (g->map.grid[y])
+	row = 0;
+	max_row_len = 0;
+	while (g->map.grid[row])
 	{
-		w = map_line_len(g->map.grid[y]);
-		if (w > max_w)
-			max_w = w;
-		y++;
+		row_len = map_row_len(g->map.grid[row]);
+		if (row_len > max_row_len)
+			max_row_len = row_len;
+		row++;
 	}
-	g->map.height = y;
-	g->map.width = max_w;
+	g->map.height = row;
+	g->map.width = max_row_len;
 }
 
-static int	map_fill_row(t_game *g, char **rect, int y)
+static int	map_fill_row(t_game *g, char **rect, int row)
 {
-	int		x;
-	int		len;
+	int		col;
+	char	*map_row;
 	char	c;
 
-	rect[y] = ft_calloc(g->map.width + 1, sizeof(char));
-	if (!rect[y])
+	rect[row] = ft_calloc((size_t)g->map.width + 1, sizeof(char));
+	if (!rect[row])
 		return (0);
-	len = map_line_len(g->map.grid[y]);
-	x = 0;
-	while (x < g->map.width)
+	map_row = g->map.grid[row]; 
+	col = 0;
+	while (col < g->map.width) // enquanto houver colunas para preencher
 	{
-		if (x < len)
-		{
-			c = g->map.grid[y][x];
-			if (c == '\n' || c == VOID)
-				rect[y][x] = VOID;
-			else
-				rect[y][x] = c;
-		}
-		else
-			rect[y][x] = WALL;
-		x++;
+		c = '\0';
+		if (map_row && *map_row && *map_row != '\n') // se ainda houver caracteres na row
+			c = *map_row;
+		if (c == '\t' || c == '\0')
+			rect[row][col] = VOID;
+		else // preencher com o caractere do mapa
+			rect[row][col] = c;
+		if (map_row && *map_row && *map_row != '\n')
+			map_row++;
+		col++;
 	}
-	rect[y][g->map.width] = '\0';
+	rect[row][g->map.width] = '\0';
 	return (1);
 }
 
 char	**map_rectangular(t_game *g)
 {
 	char	**rect;
-	int		y;
+	int		row;
 
-	rect = ft_calloc(g->map.height + 1, sizeof(char *));
+	if (!g || !g->map.grid || g->map.width <= 0 || g->map.height <= 0)
+		return (NULL);
+	rect = ft_calloc((size_t)g->map.height + 1, sizeof(char *));
 	if (!rect)
 		return (NULL);
-	y = 0;
-	while (y < g->map.height)
+	row = 0;
+	while (row < g->map.height)
 	{
-		if (!map_fill_row(g, rect, y))
+		if (!map_fill_row(g, rect, row))
 			return (free_tab_tab(rect), NULL);
-		y++;
+		row++;
 	}
-	rect[y] = NULL;
+	rect[row] = NULL;
 	return (rect);
 }
