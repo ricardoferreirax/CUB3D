@@ -39,7 +39,7 @@ void	map_validate_chars(t_game *g)
 	int	x;
 
 	if (!g || !g->map.grid)
-		exit_game(EXIT_MAP, g);
+		exit_game(EXIT_MAP, g, "map_validate_chars() has not found a grid");
 	y = 0;
 	while (g->map.grid[y])
 	{
@@ -47,7 +47,7 @@ void	map_validate_chars(t_game *g)
 		while (g->map.grid[y][x])
 		{
 			if (!map_is_valid_tile(g, g->map.grid[y][x]))
-				exit_game(EXIT_MAP, g);
+				exit_game(EXIT_MAP, g, "map_validate_chars() has found an invalid char");
 			x++;
 		}
 		y++;
@@ -62,7 +62,7 @@ void	map_validate_closed(t_game *g)
 	int		check;
 
 	if (!g || !g->map.grid)
-		exit_game(EXIT_MAP, g);
+		exit_game(EXIT_MAP, g, "map_validate_closed has not found a grid");
 	y = 0;
 	while (y < g->map.height)
 	{
@@ -76,7 +76,7 @@ void	map_validate_closed(t_game *g)
 					|| map_tile_type(map_get_tile(g, y, x - 1), TILE_VOID)
 					|| map_tile_type(map_get_tile(g, y + 1, x), TILE_VOID)
 					|| map_tile_type(map_get_tile(g, y - 1, x), TILE_VOID)))
-				exit_game(EXIT_MAP, g);
+				exit_game(EXIT_MAP, g, "map_validate_closed has determined map to not be closed");
 			x++;
 		}
 		y++;

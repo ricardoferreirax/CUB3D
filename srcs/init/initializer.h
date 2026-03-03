@@ -14,7 +14,7 @@
 #define INITIALIZER_H
 #include "../../Pac_Struct.h"
 
-void	init_mlx(t_game *game);
+void	init_minilib(t_game *game);
 void	init(t_game *g);
 void	init_window(t_game *s);
 void	init_assets(t_game *g);

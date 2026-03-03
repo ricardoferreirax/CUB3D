@@ -96,7 +96,7 @@ void	render_frame(t_game *game)
 	if (!game)
 		return ;
 	if (game->key.esc)
-		exit_game(EXIT_QUIT, game);
+		exit_game(EXIT_QUIT, game, NULL);
 	apply_input(game);
 	render_ceiling_texture(game);
 	render_floor_texture(game);

@@ -14,6 +14,6 @@
 
 int	handle_close(t_game *g)
 {
-	exit_game(EXIT_QUIT, g);
+	exit_game(EXIT_QUIT, g, NULL);
 	return (0);
 }

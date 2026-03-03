@@ -18,7 +18,7 @@
 void	init_assets(t_game *g)
 {
 	if (!g || !g->mlx_ptr)
-		exit_game(EXIT_MLX, g);
+		exit_game(EXIT_MLX, g, "init_assets() has not found a game");
 	texture_load_cube(g);
 	texture_load_sprites(g);
 	if (g->mode == MODE_PACMAN)
@@ -59,13 +59,13 @@ static void	init_defaults(t_game *g)
 void	init_execution(t_game *g)
 {
 	if (!g || !g->mlx_ptr || !g->win.win_ptr || !g->win.frame_buffer.img_ptr)
-		exit_game(EXIT_MLX, g);
+		exit_game(EXIT_MLX, g, "init_execution() has not found necessary pointers");
 	g->ray.z_buffer = malloc(sizeof(double) * g->win.width);
 	if (!g->ray.z_buffer)
-		exit_game(EXIT_MALLOC, g);
+		exit_game(EXIT_MALLOC, g, "init_execution() has failed to allocate memory E1");
 	g->ray.sprite_z = malloc(sizeof(double) * g->win.width * g->win.height);
 	if (!g->ray.sprite_z)
-		exit_game(EXIT_MALLOC, g);
+		exit_game(EXIT_MALLOC, g, "init_execution() had failed to allocate memory E2");
 }
 
 void	init(t_game *g)
@@ -73,7 +73,7 @@ void	init(t_game *g)
 	if (!g)
 		return ;
 	init_defaults(g);
-	init_mlx(g);
+	init_minilib(g);
 	// init_map(g);
 	init_player(g);
 	init_execution(g);

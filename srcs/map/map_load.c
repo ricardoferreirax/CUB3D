@@ -57,7 +57,7 @@ static char	**extract_map(char **file_lines, int start, int end, t_game *g)
 	line_count = end - start + 1;
 	map = ft_calloc((size_t)line_count + 1, sizeof(char *));
 	if (!map)
-		exit_game(EXIT_MALLOC, g);
+		exit_game(EXIT_MALLOC, g, "extract_map() was unable to allocte memory E1");
 	i = start - 1;
 	j = -1;
 	while (++i <= end)
@@ -67,7 +67,7 @@ static char	**extract_map(char **file_lines, int start, int end, t_game *g)
 		{
 			map[j] = NULL;
 			free_2d((void *)map);
-			exit_game(EXIT_MALLOC, g);
+			exit_game(EXIT_MALLOC, g, "extract_map() was unable to allocte memory E2");
 		}
 	}
 	map[j + 1] = NULL;
@@ -83,22 +83,22 @@ char	**load_map_from_cub(t_game *g, const char *path)
 
 	file_lines = map_read_file(path);
 	if (!file_lines)
-		exit_game(EXIT_MAP, g);
+		exit_game(EXIT_MAP, g, "load_map_from_cub() was unable to read file_lines");
 	start = find_map_start(g, file_lines);
 	if (start < 0)
 	{
 		free_2d((void *)file_lines);
-		exit_game(EXIT_MAP, g);
+		exit_game(EXIT_MAP, g, "load_map_from_cub() has found an invalid start");
 	}
 	end = find_map_end(g, file_lines, start);
 	if (end < 0)
 	{
 		free_2d((void *)file_lines);
-		exit_game(EXIT_MAP, g);
+		exit_game(EXIT_MAP, g, "load_map_from_cub() has found an invalid end");
 	}
 	map = extract_map(file_lines, start, end, g);
 	free_2d((void *)file_lines);
 	if (!map)
-		exit_game(EXIT_MAP, g);
+		exit_game(EXIT_MAP, g, "load_map_from_cub() was unable to allocte memory");
 	return (map);
 }

@@ -12,18 +12,18 @@
 
 #include "../Pac_Struct.h"
 
-void	exit_game(int errcode, t_game *g)
+void	exit_game(int errcode, t_game *g, char *str)
 {
 	if (errcode == EXIT_QUIT)
-		ft_putstr("\nQuitting Pac-Man...\n");
+		ft_printf("\n%s\nQuitting Pac-Man...\n", str);
 	else if (errcode == EXIT_MALLOC)
-		ft_putstr("\nError: malloc failed\n");
+		ft_printf("\n%s\nError: malloc failed\n", str);
 	else if (errcode == EXIT_MLX)
-		ft_putstr("\nError: MLX failed\n");
+		ft_printf("\n%s\nError: MLX failed\n", str);
 	else if (errcode == EXIT_MAP)
-		ft_putstr("\nError: map parsing failed\n");
+		ft_printf("\n%s\nError: map parsing failed\n", str);
 	else if (errcode == EXIT_INPUT)
-		ft_putstr("\nError: invalid input\n");
+		ft_printf("\n%s\nError: invalid input\n", str);
 	free_game(g);
 	exit(errcode);
 }

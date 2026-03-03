@@ -45,7 +45,7 @@ int	gameloop(t_game *game)
 void	switch_mode_and_parse(t_game *g, t_mode mode, const char *path)
 {
 	if (!g || !path)
-		exit_game(EXIT_MAP, g);
+		exit_game(EXIT_MAP, g, "switch_mode_and_parse() has not found a path or game");
 	g->mode = mode;
 
 }
@@ -59,7 +59,7 @@ void parse(t_game *g, const char *path)
 		free_2d((void *)g->map.grid);
 	g->map.grid = load_map_from_cub(g, path);
 	if (!g->map.grid)
-		exit_game(EXIT_MAP, g);
+		exit_game(EXIT_MAP, g, "parse() has not found a grid");
 	g->map.height = ytile(g->map.grid);
 	g->map.width = xtile(g->map.grid);
 	// rect = map_rectangular(g);
@@ -82,7 +82,7 @@ int	main(int ac, char **av)
 		return (ft_printf("Wrong args\n"), -1);
 	game = malloc(sizeof(t_game));
 	if (!game)
-		exit_game(EXIT_MALLOC, NULL);
+		exit_game(EXIT_MALLOC, NULL, "main() failed to allocate game");
 	init(game);
 	mlx_hook(game->win.win_ptr, 2, 1L << 0, handle_key_press, game);
 	mlx_hook(game->win.win_ptr, 3, 1L << 1, handle_key_release, game);

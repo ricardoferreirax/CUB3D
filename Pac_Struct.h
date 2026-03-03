@@ -401,7 +401,7 @@ int	ghost_opposite_dir(int dir);
 // =========================
 // Free & Exit
 // =========================
-void	exit_game(int errcode, t_game *g);
+void	exit_game(int errcode, t_game *g, char *str);
 void	free_game(t_game *g);
 void	free_tab_tab(char **tab);
 

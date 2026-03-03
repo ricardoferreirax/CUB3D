@@ -74,7 +74,7 @@ void	parse_texture_path(t_game *g, const char *path)
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		exit_game(EXIT_MAP, g);
+		exit_game(EXIT_MAP, g, "parse_texture_path() has nto found a valid fd");
 	while ((line = get_next_line(fd)))
 	{
 		if (map_is_map_line(g, line))
@@ -87,11 +87,11 @@ void	parse_texture_path(t_game *g, const char *path)
 	}
 	close(fd);
 	if (!g->tex.no || !g->tex.so || !g->tex.we || !g->tex.ea)
-		exit_game(EXIT_MAP, g);
+		exit_game(EXIT_MAP, g, "parse_texture_path() was unable to find all textures E1");
 	// if (g->mode == MODE_PACMAN)
 	// {
 	if (!g->tex.pacdot || !g->tex.energizer || !g->tex.blinky || !g->tex.pinky
 		|| !g->tex.inky || !g->tex.clyde || !g->tex.gate_close)
-		exit_game(EXIT_MAP, g);
+		exit_game(EXIT_MAP, g, "parse_texture_path() was unable to find all textures E2");
 	// }
 }

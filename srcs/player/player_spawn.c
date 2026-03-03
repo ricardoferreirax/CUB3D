@@ -52,12 +52,12 @@ static void	set_player_orientation_ew(t_game *g, char c)
 static void	set_player_spawn_position(t_game *g, int x, int y, char dir)
 {
 	if (g->map.grid[y][x] == VOID)
-		exit_game(EXIT_MAP, g);
+		exit_game(EXIT_MAP, g, "set_player_spawn_position() found player in a VOID tile");
 	if (map_get_tile(g, y, x + 1) == VOID
 		|| map_get_tile(g, y, x - 1) == VOID
 		|| map_get_tile(g, y + 1, x) == VOID
 		|| map_get_tile(g, y - 1, x) == VOID)
-		exit_game(EXIT_MAP, g);
+		exit_game(EXIT_MAP, g, "set_player_spawn_position() found player directily near a void tile");
 	g->player.pos_x = (double)x + 0.5;
 	g->player.pos_y = (double)y + 0.5;
 	set_player_orientation_ns(g, dir);
@@ -97,8 +97,8 @@ void	init_player(t_game *g)
 	int	count;
 
 	if (!g || !g->map.grid)
-		exit_game(EXIT_MAP, g);
+		exit_game(EXIT_MAP, g, "init_player() was given invalid pointers");
 	count = find_player_spawn_in_map(g);
 	if (count != 1)
-		exit_game(EXIT_MAP, g);
+		exit_game(EXIT_MAP, g, "init_player() has found more than one player");
 }

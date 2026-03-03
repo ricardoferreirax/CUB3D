@@ -37,17 +37,17 @@ int	is_map_start_line(t_game *g, char *line)
 	return (map_is_map_line(g, line));
 }
 
-void	set_texture_path(char **dst, char *value, t_game *g)
+void	set_texture_path(char **dest, char *value, t_game *g)
 {
 	value = skip_whitespace(value);
 	strip_newline(value);
 	if (!*value)
-		exit_game(EXIT_MAP, g);
-	if (*dst)
-		exit_game(EXIT_MAP, g);
-	*dst = ft_strdup(value);
-	if (!*dst)
-		exit_game(EXIT_MALLOC, g);
+		exit_game(EXIT_MAP, g, "set_texture_path() has found an invalid value");
+	if (*dest)
+		exit_game(EXIT_MAP, g, "set_texture_path() has found an invalid dst");
+	*dest = ft_strdup(value);
+	if (!*dest)
+		exit_game(EXIT_MALLOC, g, "set_texture_path was unable to create a valid dst");
 }
 
 int	is_xpm_path(const char *s)
