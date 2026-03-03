@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:41:18 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/03 21:42:48 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/03 21:54:51 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,28 @@ int	map_tile_type(char t, int tile_type)
 
 char	map_get_tile(t_game *g, int y, int x)
 {
+	int	last;
+
 	if (!g || !g->map.grid)
 		return (VOID);
 	if (y < 0 || y >= g->map.height)
 		return (VOID);
-	if (map_wrap_has_wrap(g, y))
+	last = map_wrap_last_col(g, y);
+	if (last >= 0)
 	{
 		if (x < 0)
-			x = g->map.width - 1;
-		else if (x >= g->map.width)
+			x = last;
+		else if (x > last)
 			x = 0;
 	}
-	if (x < 0 || x >= g->map.width)
+	else
+	{
+		last = (int)ft_strlen(g->map.grid[y]) - 1;
+		while (last >= 0
+			&& (g->map.grid[y][last] == '\n' || g->map.grid[y][last] == '\r'))
+			last--;
+	}
+	if (x < 0 || x > last)
 		return (VOID);
 	return (g->map.grid[y][x]);
 }

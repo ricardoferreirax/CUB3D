@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:48:48 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/01 23:23:53 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/03 21:57:19 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	**map_rectangular(t_game *g);
 char	**load_map_from_cub(t_game *g, const char *path);
 void	map_validate_chars(t_game *g);
 void	map_validate_closed(t_game *g);
+int	map_wrap_last_col(t_game *g, int row);
 
 void parse(t_game *g, const char *path);
 int	map_is_map_line(t_game *g, char *line);
