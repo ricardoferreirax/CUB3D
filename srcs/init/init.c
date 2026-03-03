@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../map/map3D.h"
+#include "../player/player3D.h"
 #include "../textures/textures3D.h"
 #include "initializer.h"
-#include "../player/player3D.h"
-#include "../map/map3D.h"
 
 void	init_assets(t_game *g)
 {
@@ -30,12 +30,10 @@ void	init_assets(t_game *g)
 
 void	start_game_mode(t_game *g, t_mode mode)
 {
-
 	if (!g)
 		return ;
-
-	//TODO: Parse this shit correctly
-	parse(g, "../../maps/Pacman.cub");
+	// TODO: Parse this shit correctly
+	// parse(g, "../../maps/Pacman.cub");
 	g->mode = mode;
 	init_assets(g);
 	g->state = PLAY;
@@ -59,13 +57,37 @@ static void	init_defaults(t_game *g)
 void	init_execution(t_game *g)
 {
 	if (!g || !g->mlx_ptr || !g->win.win_ptr || !g->win.frame_buffer.img_ptr)
-		exit_game(EXIT_MLX, g, "init_execution() has not found necessary pointers");
+		exit_game(EXIT_MLX, g,
+			"init_execution() has not found necessary pointers");
 	g->ray.z_buffer = malloc(sizeof(double) * g->win.width);
 	if (!g->ray.z_buffer)
-		exit_game(EXIT_MALLOC, g, "init_execution() has failed to allocate memory E1");
+		exit_game(EXIT_MALLOC, g,
+			"init_execution() has failed to allocate memory E1");
 	g->ray.sprite_z = malloc(sizeof(double) * g->win.width * g->win.height);
 	if (!g->ray.sprite_z)
-		exit_game(EXIT_MALLOC, g, "init_execution() had failed to allocate memory E2");
+		exit_game(EXIT_MALLOC, g,
+			"init_execution() had failed to allocate memory E2");
+}
+
+void	init_map(t_game *g, const char *path)
+{
+	// char **rect;
+	parse_texture_path(g, path);
+	if (g->map.grid)
+		free_2d((void *)g->map.grid);
+	g->map.grid = load_map_from_cub(g, path);
+	if (!g->map.grid)
+		exit_game(EXIT_MAP, g, "parse() has not found a grid");
+	g->map.height = ytile(g->map.grid);
+	g->map.width = xtile(g->map.grid);
+	// rect = map_rectangular(g);
+	// if (!rect)
+	// 	exit_game(EXIT_MALLOC, g);
+	// free_tab_tab(g->map.grid);
+	// g->map.grid = rect;
+	map_validate_chars(g);
+	// map_validate_closed(g);
+	//^ needs to be checked
 }
 
 void	init(t_game *g)
@@ -74,11 +96,10 @@ void	init(t_game *g)
 		return ;
 	init_defaults(g);
 	init_minilib(g);
-	// init_map(g);
+	init_map(g, "./maps/Pacman.cub");
 	init_player(g);
 	init_execution(g);
 	init_menu(g);
 	init_spritesheet(g);
 	init_base(g);
-
 }

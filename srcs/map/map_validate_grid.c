@@ -27,7 +27,7 @@ static int	map_is_valid_tile(t_game *g, char c)
 	{
 		if (c == PACDOT || c == ENERGIZER || c == WRAP_PORTS
 			|| c == BLINKY_T || c == PINKY_T || c == INKY_T || c == CLYDE_T
-			|| c == GATE || c == PLAYER)
+			|| c == GATE || c == PLAYER || c == 'M')
 			return (1);
 	}
 	return (0);

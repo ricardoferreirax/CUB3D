@@ -14,16 +14,18 @@
 
 void	exit_game(int errcode, t_game *g, char *str)
 {
+	if(str)
+		ft_dprintf(2, "\n%s\n", str);
 	if (errcode == EXIT_QUIT)
-		ft_printf("\n%s\nQuitting Pac-Man...\n", str);
+		ft_dprintf(2, "\nQuitting Pac-Man...\n");
 	else if (errcode == EXIT_MALLOC)
-		ft_printf("\n%s\nError: malloc failed\n", str);
+		ft_dprintf(2, "\nError: malloc failed\n");
 	else if (errcode == EXIT_MLX)
-		ft_printf("\n%s\nError: MLX failed\n", str);
+		ft_dprintf(2, "\n%s\nError: MLX failed\n");
 	else if (errcode == EXIT_MAP)
-		ft_printf("\n%s\nError: map parsing failed\n", str);
+		ft_dprintf(2, "\nError: map parsing failed\n");
 	else if (errcode == EXIT_INPUT)
-		ft_printf("\n%s\nError: invalid input\n", str);
+		ft_dprintf(2, "\nError: invalid input\n");
 	free_game(g);
 	exit(errcode);
 }

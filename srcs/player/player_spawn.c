@@ -100,5 +100,5 @@ void	init_player(t_game *g)
 		exit_game(EXIT_MAP, g, "init_player() was given invalid pointers");
 	count = find_player_spawn_in_map(g);
 	if (count != 1)
-		exit_game(EXIT_MAP, g, "init_player() has found more than one player");
+		exit_game(EXIT_MAP, g, "init_player() has found more or less than one player");
 }

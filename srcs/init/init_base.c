@@ -166,7 +166,7 @@ int squared_corners(int final)
 	return(final);
 }
 
-int	which_wall(t_map map, t_point *coord)
+int	which_wall(char **original_map, t_map map, t_point *coord)
 {
 	unsigned char	mask;
 
@@ -200,16 +200,16 @@ int	which_wall(t_map map, t_point *coord)
 	temp = copy_map(map.grid);
 	if(final == 0)
 		final = disambiguation(temp, *coord);
-	if(map.grid[coord->y][coord->x] == 'M')
+	if(original_map[coord->y][coord->x] == 'M')
 		final = squared_corners(final);
 	free_2d((void **)temp);
 	return final;
 }
 
-int	which_tile(t_game *game, t_point coord)
+int	which_tile(char **original_map, t_map *map, t_point coord)
 {
-	if (game->map.grid[coord.y][coord.x] == '1')
-		return (which_wall(game->map, &coord));
+	if (map->grid[coord.y][coord.x] == '1')
+		return (which_wall(original_map, *map, &coord));
 	else
 		return (170);
 }
@@ -238,30 +238,65 @@ void	put_tile_inbase(t_game *g, int tile_code, unsigned int color,
 	}
 }
 
+
+char *parse_chars(char *str)
+{
+	char *dup;
+	dup = ft_calloc(ft_strlen(str), sizeof(char));
+	int i = 0;
+	int j = 0;
+	while(str[i])
+	{
+		if(str[i] != '\n')
+		{
+			if(str[i] == 'M')
+				dup[j] = '1';
+			else
+				dup[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	return dup;
+}
+
+char **remove_char(char **array)
+{
+	int i = 0;
+	char **final = ft_calloc(ytile(array) + 1, sizeof(char *));
+	while(array[i] != NULL)
+	{
+		final[i] = parse_chars(array[i]);
+		i++;
+	}
+	final[i] = NULL;
+	return final;
+}
+
 void	init_base(t_game *s)
 {
 	int				tile;
 	t_point			point;
 	unsigned int	color;
 
+	t_map parsed_map;
+	parsed_map.grid = remove_char(s->map.grid);
+	parsed_map.height = s->map.height;
+	parsed_map.width = s->map.width - 1;
 	color = 0;
 	point.x = 0;
 	point.y = 0;
-	ft_printf("HEKKI");
 	s->base.img_ptr = mlx_new_image(s->mlx_ptr, s->win.width, s->win.height);
 	s->base.img_addr = mlx_get_data_addr(s->base.img_ptr, &s->base.bpp,
 			&s->base.l_len, &s->base.endian);
 	s->base.width = s->map.width * TILE_SIZE;
 	s->base.height = s->map.height * TILE_SIZE;
-	ft_printf("HEKKI");
 	while (s->map.grid[point.y])
 	{
-		ft_printf("Hekki");
 		point.x = 0;
 		while (s->map.grid[point.y][point.x])
 		{
-			printf("ITERATION NUMBER: %d", point.x);
-			tile = which_tile(s, point);
+			tile = which_tile(s->map.grid, &parsed_map, point);
 			put_tile_inbase(s, tile, color, point);
 			point.x++;
 		}

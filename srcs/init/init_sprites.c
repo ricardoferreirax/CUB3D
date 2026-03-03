@@ -91,7 +91,7 @@ void	init_sprites(t_game *g)
 void	init_menu(t_game *g)
 {
 
-	g->menu_img.img_ptr = mlx_xpm_file_to_image(g->mlx_ptr, "../../assets/textures/menu.xpm", &g->menu_img.width, &g->menu_img.height);
+	g->menu_img.img_ptr = mlx_xpm_file_to_image(g->mlx_ptr, "./assets/textures/menu.xpm", &g->menu_img.width, &g->menu_img.height);
 	if (!g->menu_img.img_ptr)
 		exit_game(EXIT_MLX, g, "init_menu() was unable to create img_ptr");
 	g->menu_img.img_addr = mlx_get_data_addr(g->menu_img.img_ptr, &g->menu_img.bpp,

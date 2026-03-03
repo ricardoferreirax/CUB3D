@@ -16,6 +16,14 @@
 #include "srcs/map/map3D.h"
 
 
+void breakpoint(void)
+{
+	int i = 0;
+	i ++;
+	(void)i;
+	//do nothing
+}
+
 void print_2d(char **arr)
 {
 	int i = 0;
@@ -50,28 +58,7 @@ void	switch_mode_and_parse(t_game *g, t_mode mode, const char *path)
 
 }
 
-void parse(t_game *g, const char *path)
-{
-	// char **rect;
 
-	parse_texture_path(g, path);
-	if (g->map.grid)
-		free_2d((void *)g->map.grid);
-	g->map.grid = load_map_from_cub(g, path);
-	if (!g->map.grid)
-		exit_game(EXIT_MAP, g, "parse() has not found a grid");
-	g->map.height = ytile(g->map.grid);
-	g->map.width = xtile(g->map.grid);
-	// rect = map_rectangular(g);
-	// if (!rect)
-	// 	exit_game(EXIT_MALLOC, g);
-	// free_tab_tab(g->map.grid);
-	// g->map.grid = rect;
-	map_validate_chars(g);
-	// map_validate_closed(g);
-	//^ needs to be checked
-	
-}
 
 int	main(int ac, char **av)
 {
