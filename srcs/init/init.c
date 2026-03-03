@@ -6,37 +6,100 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/16 17:26:03 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/02/21 23:44:13 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../map/map3D.h"
+#include "../player/player3D.h"
+#include "../textures/textures3D.h"
 #include "initializer.h"
 
-/* void init_ghost(t_game *game, t_ghost *ghost)
+void	init_assets(t_game *g)
 {
-	ghost->is_steping_on_pacdot = 0;
-	ghost->mental_map = copy_map(game->map.grid);
-	ghost->state = SCATTER;
-	if(ghost->name == BLINKY)
-		init_blinky(game, ghost);
-	if(ghost->name == PINKY)
-		init_pinky(game, ghost);
-	if(ghost->name == INKY)
-		init_inky(game, ghost);
-	if(ghost->name == CLYDE)
-		init_clyde(game, ghost);
+	if (!g || !g->mlx_ptr)
+		exit_game(EXIT_MLX, g, "init_assets() has not found a game");
+	texture_load_cube(g);
+	texture_load_sprites(g);
+	if (g->mode == MODE_PACMAN)
+	{
+		init_sprites(g);
+		init_ghosts(g);
+	}
 }
 
-void init_game(t_game *game)
+void	start_game_mode(t_game *g, t_mode mode)
 {
-	// init_null(game);
-	//init_window(game);
-	game->ghost = malloc(sizeof(t_ghost) * 4);
-	game->ghost[0].name = BLINKY;
-	game->ghost[1].name = PINKY;
-	game->ghost[2].name = INKY;
-	game->ghost[3].name = CLYDE;
-	int i = -1;
-	while (++i < 4)
-		init_ghost(game, &game->ghost[i]);
-} */
+	if (!g)
+		return ;
+	// TODO: Parse this shit correctly
+	// parse(g, "../../maps/Pacman.cub");
+	g->mode = mode;
+	init_assets(g);
+	g->state = PLAY;
+}
+
+static void	init_defaults(t_game *g)
+{
+	if (!g)
+		return ;
+	ft_bzero(g, sizeof(t_game));
+	g->state = MENU;
+	g->mode = MODE_PACMAN;
+	g->ray.hit_side = -1;
+	g->player.target_map_x = -1;
+	g->player.target_map_y = -1;
+	g->map.floor_color = -1;
+	g->map.ceiling_color = -1;
+	g->gate_passable = 0;
+}
+
+void	init_execution(t_game *g)
+{
+	if (!g || !g->mlx_ptr || !g->win.win_ptr || !g->win.frame_buffer.img_ptr)
+		exit_game(EXIT_MLX, g,
+			"init_execution() has not found necessary pointers");
+	g->ray.z_buffer = malloc(sizeof(double) * g->win.width);
+	if (!g->ray.z_buffer)
+		exit_game(EXIT_MALLOC, g,
+			"init_execution() has failed to allocate memory E1");
+	g->ray.sprite_z = malloc(sizeof(double) * g->win.width * g->win.height);
+	if (!g->ray.sprite_z)
+		exit_game(EXIT_MALLOC, g,
+			"init_execution() had failed to allocate memory E2");
+}
+
+void	init_map(t_game *g, const char *path)
+{
+	// char **rect;
+	parse_texture_path(g, path);
+	if (g->map.grid)
+		free_2d((void *)g->map.grid);
+	g->map.grid = load_map_from_cub(g, path);
+	if (!g->map.grid)
+		exit_game(EXIT_MAP, g, "parse() has not found a grid");
+	g->map.height = ytile(g->map.grid);
+	g->map.width = xtile(g->map.grid);
+	// rect = map_rectangular(g);
+	// if (!rect)
+	// 	exit_game(EXIT_MALLOC, g);
+	// free_tab_tab(g->map.grid);
+	// g->map.grid = rect;
+	map_validate_chars(g);
+	// map_validate_closed(g);
+	//^ needs to be checked
+}
+
+void	init(t_game *g)
+{
+	if (!g)
+		return ;
+	init_defaults(g);
+	init_minilib(g);
+	init_map(g, "./maps/Pacman.cub");
+	init_player(g);
+	init_execution(g);
+	init_menu(g);
+	init_spritesheet(g);
+	init_base(g);
+}

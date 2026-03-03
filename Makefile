@@ -6,16 +6,17 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/03/02 09:33:24 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/02/21 23:51:28 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    = cub3d
 
-CC      = gcc -O3
+CC      = clang-12 -O3
 CFLAGS  = -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion -Wformat=2 -Wstrict-aliasing=2 \
 		-fno-omit-frame-pointer \
-		-g -fsanitize=undefined 
+		-g 
+#-fsanitize=undefined 
 		
 #  MLX_CFLAGS= -Wall -Wextra -Werror
 
@@ -23,7 +24,7 @@ MLX_CFLAGS = -Wall -Wextra -Werror \
 	-Wno-return-type \
 	-Wno-sign-compare \
 	-Wno-unused-parameter \
-	-Wno-parentheses \
+	-Wno-parentheses\
 	-Wno-unused-variable \
 	-Wno-unused-but-set-variable
 
@@ -36,7 +37,8 @@ MLX = $(MLX_PATH)/libmlx.a
 SRC_FILES = main.c \
 	aux_funcs.c  \
 	srcs/init/init.c \
-	srcs/init/init_cub3d.c \
+	srcs/init/init_base.c \
+	srcs/init/init_spritesheet.c \
 	srcs/init/init_mlx.c \
 	srcs/init/init_ghosts.c \
 	srcs/init/init_sprites.c \
@@ -50,11 +52,11 @@ SRC_FILES = main.c \
 	srcs/map/map_wrap.c \
 	srcs/map/minimap_test.c \
 	srcs/map/map_utils.c \
-	srcs/text/texture_parse_path.c \
-	srcs/text/texture_parse_floor_ceiling.c \
-	srcs/text/texture_load.c \
-	srcs/text/texture_pick_wall.c \
-	srcs/text/texture_utils.c \
+	srcs/textures/texture_parse_path.c \
+	srcs/textures/texture_parse_color.c \
+	srcs/textures/texture_load.c \
+	srcs/textures/texture_pick_wall.c \
+	srcs/textures/texture_utils.c \
 	srcs/render/render_frame.c \
 	srcs/render/render_wall_texture.c \
 	srcs/render/sprite_draw.c \
@@ -77,6 +79,7 @@ SRC_FILES = main.c \
 	srcs/hooks/handle_close.c \
 	srcs/hooks/handle_keys.c \
 	utils/free.c  \
+	rendering/pixels.c \
 
 OBJ_DIR   = objs
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))

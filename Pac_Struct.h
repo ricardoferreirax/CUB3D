@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/01 21:17:27 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/02 09:50:11 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,21 @@
 #include <math.h>
 #include <sys/time.h>
 
+#define SPRITE_SHEET "./assets/sprites/Spriteheet.xpm"
 #include "srcs/map/map3D.h"
 #include "srcs/player/player3D.h"
 #include "srcs/hooks/hooks.h"
+#define TILE_SIZE 8
+
+#define TEXTURES "./assets/textures/"
 
 #define UPDATE_F 16666
 #define MAX_UPDATES 5
-#define SPEED 75.75757625
+#define SPEED 75.5757625
+#define PLAYER 'J'
+#define WALL '1'
+#define OPEN_SPACE '0'
+// #define PACDOT 'D'
 
 #define ENERGIZER 'R'
 #define WRAP_PORTS 'D'
@@ -85,8 +93,54 @@ typedef struct s_image
 	void			*img_ptr;
 }					t_image;
 
-# include "srcs/text/textures3D.h"
-# include "srcs/render/render3D.h"
+typedef struct s_fc
+{
+	double	fx;
+	double	fy;
+	double	stepx;
+	double	stepy;
+	double	rowdist;
+}	t_fc;
+
+typedef struct s_sprite
+{
+	double	depth;
+	int		screen_x;
+	int		size;
+	int		x0;
+	int		x1;
+	int		y0;
+	int		y1;
+	int raw_x0;
+	int raw_y0;
+}	t_sprite;
+
+typedef struct s_raycasting
+{
+	double	*z_buffer;
+	double *sprite_z;
+	double	camera_x;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	perp_wall_dist;
+	int		hit_side;
+	char hit_tile;
+	int		map_x;
+	int		map_y;
+	int		step_x;
+	int		step_y;
+	int		draw_start;
+	int		draw_end;
+	int		hit;
+	int		line_h;
+}	t_raycasting;
+
+
+
 
 typedef struct s_window
 {
@@ -98,14 +152,52 @@ typedef struct s_window
 	t_image			frame_buffer;
 }					t_window;
 
-typedef struct s_anim
+typedef struct s_sprite_red
 {
-	//each char has only 2 animations for each cardinal direction
-	t_image *up[2];
-	t_image *down[2];
-	t_image *left[2];
-	t_image *right[2];
-}	t_anim;
+	t_point coord;
+	int width;
+	int height;
+} t_sprite_ref;
+
+typedef struct s_anim_cord
+{
+	// Coordinates to find the sprites in the sprite sheet.
+	// Each entity has 2 animations per direction, they alternate
+	t_sprite_ref up[2];
+	t_sprite_ref left[2];
+	t_sprite_ref down[2];
+	t_sprite_ref rigth[2];
+	//Death animation ofr th eplayer has 12 frames
+	t_sprite_ref death[12];
+
+} t_anim;
+
+typedef struct s_player
+{
+	// vou precisar para a execução 3D
+	double	pos_x;
+	double	pos_y;
+		// vou precisar para a execução 3D
+	double	dir_x; // direção para onde o player está a olhar (eixo X)
+	double	dir_y; // direção para onde o player está a olhar (eixo Y)
+	double	plane_x; // plano (da camera de visao - fov) perpendicular à direção do player (eixo X)
+	double	plane_y; // plano (da camera de visao - fov) perpendicular à direção do player (eixo Y)
+
+	int		target_map_x;  	// coordenadas do tile que o player está a apontar no eixo x
+	int		target_map_y;  	// coordenadas do tile que o player está a apontar no eixo y
+	char	target_tile;    // id do tile que o player está a apontar
+	char	target_wall_dir; // 'N', 'S', 'E', 'W'
+	double	target_dist;   // distância perpendicular
+	
+
+
+	t_pos pos; // para o 2d (tile/pixel)
+	int lives;
+	int speed_multiplier;
+	// 4 cardinal directions, 2 frames per animation
+	t_anim *frames;
+}	t_player;
+
 
 typedef enum e_ghost
 {
@@ -157,7 +249,7 @@ typedef struct s_elroy
 	int global_dot_counter_call;
 	int speed_multiplier;
 	int is_steping_on_pacdot;
-	t_anim anim;
+	t_anim *frames;
 	int invalid_dir;
 	char **mental_map;
 	t_elroy cruiser;
@@ -165,6 +257,7 @@ typedef struct s_elroy
 } t_ghost; */
 //At game start one of the penhouse ghost will activate it's counter, it will count up each dot pacman eats
 //if pacman eats all the dots it gets out, but if the ghost is forced out by timeout its dot counter is not reset and the next ghost dot counter starts counting.
+
 
 typedef struct s_ghost
 {
@@ -179,8 +272,10 @@ typedef struct s_ghost
 	t_anim	anim;
 	int		invalid_dir;
 	char	**mental_map;
+	t_sprite_ref sprite;
 	t_elroy	cruiser;
 	e_state	state;
+	t_anim frames;
 
 }	t_ghost;
 
@@ -207,26 +302,11 @@ typedef struct s_pacdot
 	bool eaten;
 }	t_pacdot;
 
-typedef struct s_player
+typedef struct s_sheet
 {
-	// vou precisar para a execução 3D
-	double	pos_x; // posição do player no mapa (eixo X)
-	double	pos_y; // posição do player no mapa (eixo Y)
-	double	dir_x; // direção para onde o player está a olhar (eixo X)
-	double	dir_y; // direção para onde o player está a olhar (eixo Y)
-	double	plane_x; // plano (da camera de visao - fov) perpendicular à direção do player (eixo X)
-	double	plane_y; // plano (da camera de visao - fov) perpendicular à direção do player (eixo Y)
-
-	int		target_map_x;  	// coordenadas do tile que o player está a apontar no eixo x
-	int		target_map_y;  	// coordenadas do tile que o player está a apontar no eixo y
-	char	target_tile;    // id do tile que o player está a apontar
-	char	target_wall_dir; // 'N', 'S', 'E', 'W'
-	double	target_dist;   // distância perpendicular
-	
-	t_pos pos; // para o 2d (tile/pixel)
-	int lives;
-	int speed_multiplier;
-}	t_player;
+	t_sprite_ref *sprites;
+	t_image sprite_img;
+}	t_sprite_sheet;
 
 typedef enum e_gstate
 {
@@ -239,6 +319,39 @@ typedef enum e_mode
 	MODE_CUBE = 0,
 	MODE_PACMAN = 1
 }	t_mode;
+
+
+typedef struct s_textures
+{
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+	char	*floor;
+	char	*ceiling;
+	char	*pacdot;
+	char	*energizer;
+	char	*blinky;
+	char	*pinky;
+	char	*inky;
+	char	*clyde;
+	char 	*gate_close;
+
+	t_image	no_img;
+	t_image	so_img;
+	t_image	we_img;
+	t_image	ea_img;
+	t_image	floor_img;
+	t_image	ceiling_img;
+	t_image	pacdot_img;
+	t_image	energizer_img;
+	t_image	blinky_img;
+	t_image	pinky_img;
+	t_image	inky_img;
+	t_image	clyde_img;
+	t_image gate_close_img;
+
+}	t_textures;
 
 typedef struct s_game
 {
@@ -256,6 +369,7 @@ typedef struct s_game
 	t_mode mode;
 	t_gstate state;
 	t_image menu_img;
+	t_image base;
 
 	int pacdot_count;
 	int	energizer_count;
@@ -267,6 +381,8 @@ typedef struct s_game
 	int global_dot_counter;
 	int score;
 	int level;
+	// SpriteShit is 200x186
+	t_sprite_sheet sprite_sheet;
 }	t_game;
 
 #endif // !DEBUG
@@ -285,7 +401,7 @@ int	ghost_opposite_dir(int dir);
 // =========================
 // Free & Exit
 // =========================
-void	exit_game(int errcode, t_game *g);
+void	exit_game(int errcode, t_game *g, char *str);
 void	free_game(t_game *g);
 void	free_tab_tab(char **tab);
 
@@ -296,3 +412,13 @@ t_point	find_c(char **map, char c);
 
 int		xtile(char **map);
 int		ytile(char **map);
+
+void	init_game(t_game *game);
+
+
+int	pixel_get(t_image *data, int x, int y);
+int	pixeL_get_coord(t_sprite_sheet *sheet, int i, int x, int y);
+void	ft_pixel_put(t_image *s, int x, int y, unsigned int color);
+
+void print_2d(char **arr);
+void breakpoint(void);

@@ -12,6 +12,8 @@
 
 #include "../Pac_Struct.h"
 #include "textures3D.h"
+#include "../render/render3D.h"
+
 
 static int	parse_cube_texture_line(t_game *g, char *p)
 {
@@ -70,9 +72,10 @@ void	parse_texture_path(t_game *g, const char *path)
 	int		fd;
 	char	*line;
 
+	ft_printf("Opening file: %s\n", path);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		exit_game(EXIT_MAP, g);
+		exit_game(EXIT_MAP, g, "parse_texture_path() has not found a valid fd");
 	while ((line = get_next_line(fd)))
 	{
 		if (map_is_map_line(g, line))
@@ -85,11 +88,11 @@ void	parse_texture_path(t_game *g, const char *path)
 	}
 	close(fd);
 	if (!g->tex.no || !g->tex.so || !g->tex.we || !g->tex.ea)
-		exit_game(EXIT_MAP, g);
-	if (g->mode == MODE_PACMAN)
-	{
-		if (!g->tex.pacdot || !g->tex.energizer || !g->tex.blinky || !g->tex.pinky
-			|| !g->tex.inky || !g->tex.clyde || !g->tex.gate_close)
-			exit_game(EXIT_MAP, g);
-	}
+		exit_game(EXIT_MAP, g, "parse_texture_path() was unable to find all textures E1");
+	// if (g->mode == MODE_PACMAN)
+	// {
+	if (!g->tex.pacdot || !g->tex.energizer || !g->tex.blinky || !g->tex.pinky
+		|| !g->tex.inky || !g->tex.clyde || !g->tex.gate_close)
+		exit_game(EXIT_MAP, g, "parse_texture_path() was unable to find all textures E2");
+	// }
 }

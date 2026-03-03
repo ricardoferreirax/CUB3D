@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:25:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/26 23:34:26 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/02 09:53:40 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 #define INITIALIZER_H
 #include "../../Pac_Struct.h"
 
-void	init_mlx(t_game *game);
-void	init_cub3d(t_game *g);
+void	init_minilib(t_game *game);
+void	init(t_game *g);
 void	init_window(t_game *s);
 void	init_assets(t_game *g);
 void	init_ghosts(t_game *g);
 void	init_sprites(t_game *g);
-void	start_execution(t_game *g);
+void	init_execution(t_game *g);
 
+void	init_menu(t_game *g);
+void	init_base(t_game *s);
+int	init_spritesheet(t_game *game);
 #endif

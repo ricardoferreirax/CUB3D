@@ -6,12 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:28:58 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/01 21:19:07 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/02 09:52:07 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "initializer.h"
+#include "../render/render3D.h"
 
 static void	ghost_info(int i, int *name, char *spawn)
 {
@@ -39,8 +40,8 @@ static void	ghost_info(int i, int *name, char *spawn)
 
 static void	ghost_update_pixel_pos(t_ghost *gh) // guardar pixel_pos para o minimapa 
 {
-	gh->pos.pixel_pos.x = (gh->pos.tile_pos.x + 0.5) * (double)TILE_SIZE;
-	gh->pos.pixel_pos.y = (gh->pos.tile_pos.y + 0.5) * (double)TILE_SIZE;
+	gh->pos.pixel_pos.x = (gh->pos.tile_pos.x + 0.5) * (double)TILE_SIZE_3D;
+	gh->pos.pixel_pos.y = (gh->pos.tile_pos.y + 0.5) * (double)TILE_SIZE_3D;
 }
 
 static void	init_one_ghost(t_game *g, t_ghost *gh, char spawn_char)
@@ -49,10 +50,10 @@ static void	init_one_ghost(t_game *g, t_ghost *gh, char spawn_char)
 
 	gh->mental_map = copy_map(g->map.grid);
 	if (!gh->mental_map)
-		exit_game(EXIT_MALLOC, g);
+		exit_game(EXIT_MALLOC, g, "init_one_ghost() was unable to copy map");
 	p = find_c(g->map.grid, spawn_char);
 	if (p.x < 0 || p.y < 0)
-		exit_game(EXIT_MAP, g);
+		exit_game(EXIT_MAP, g, "init_one_ghost() found an invalid target");
 	gh->pos.tile_pos.x = (double)p.x;
 	gh->pos.tile_pos.y = (double)p.y;
 	ghost_update_pixel_pos(gh);
@@ -67,7 +68,7 @@ void	init_ghosts(t_game *g)
 	char	spawn;
 
 	if (!g || !g->map.grid)
-		exit_game(EXIT_MAP, g);
+		exit_game(EXIT_MAP, g, "init_ghosts() has not found a valid pointer");
 	i = 0;
 	while (i < 4)
 	{

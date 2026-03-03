@@ -12,6 +12,7 @@
 
 #include "../Pac_Struct.h"
 #include "render3D.h"
+#include "../textures/textures3D.h"
 
 static int	wall_tex_x(t_game *g, t_image *tex)
 {

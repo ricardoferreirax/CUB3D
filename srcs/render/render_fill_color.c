@@ -59,3 +59,17 @@ void	fill_floor_color(t_image *img, int color, int horizon)
 	while (y < img->height)
 		fill_row_fast(img, y++, color);
 }
+//
+// void	render_frame(t_game *game)
+// {
+// 	if (!game)
+// 		return ;
+// 	if (game->key.esc)
+// 		exit_game(EXIT_QUIT, game);
+// 	apply_input(game);
+// 	fill_ceiling_color(&game->win.frame_buffer, game->map.ceiling_color, 0);
+// 	fill_floor_color(&game->win.frame_buffer, game->map.floor_color, 0);
+// 	process_raycasting(game);
+// 	render_minimap_test(game);
+// }
+

@@ -12,18 +12,20 @@
 
 #include "../Pac_Struct.h"
 
-void	exit_game(int errcode, t_game *g)
+void	exit_game(int errcode, t_game *g, char *str)
 {
+	if(str)
+		ft_dprintf(2, "\n%s\n", str);
 	if (errcode == EXIT_QUIT)
-		ft_putstr("\nQuitting Pac-Man...\n");
+		ft_dprintf(2, "\nQuitting Pac-Man...\n");
 	else if (errcode == EXIT_MALLOC)
-		ft_putstr("\nError: malloc failed\n");
+		ft_dprintf(2, "\nError: malloc failed\n");
 	else if (errcode == EXIT_MLX)
-		ft_putstr("\nError: MLX failed\n");
+		ft_dprintf(2, "\n%s\nError: MLX failed\n");
 	else if (errcode == EXIT_MAP)
-		ft_putstr("\nError: map parsing failed\n");
+		ft_dprintf(2, "\nError: map parsing failed\n");
 	else if (errcode == EXIT_INPUT)
-		ft_putstr("\nError: invalid input\n");
+		ft_dprintf(2, "\nError: invalid input\n");
 	free_game(g);
 	exit(errcode);
 }
@@ -109,7 +111,7 @@ static void	free_pacman_arrays(t_game *g)
 	{
 		if (g->ghosts[i].mental_map)
 		{
-			free_tab_tab(g->ghosts[i].mental_map);
+			free_2d((void *)g->ghosts[i].mental_map);
 			g->ghosts[i].mental_map = NULL;
 		}
 		i++;
@@ -128,7 +130,7 @@ void	free_game(t_game *g)
 	g->ray.sprite_z = NULL;
 	free_pacman_arrays(g);
 	if (g->map.grid)
-		free_tab_tab(g->map.grid);
+		free_2d((void *)g->map.grid);
 	g->map.grid = NULL;
 	destroy_all_images(g);
 	if (g->mlx_ptr && g->win.win_ptr)
@@ -144,17 +146,3 @@ void	free_game(t_game *g)
 	free(g);
 }
 
-void	free_tab_tab(char **tab)
-{
-	int	i;
-
-	if (!tab)
-		return ;
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}

@@ -12,6 +12,7 @@
 
 #include "../../Pac_Struct.h"
 #include "map3D.h"
+#include "../textures/textures3D.h"
 
 static int	map_cube_mode_prefix(char *p)
 {
@@ -72,7 +73,7 @@ static int	map_is_valid_char_in_line(char c, t_mode mode)
 	{
 		if (c == PACDOT || c == WRAP_PORTS || c == ENERGIZER
 			|| c == BLINKY_T || c == PINKY_T || c == INKY_T || c == CLYDE_T
-			|| c == GATE || c == PLAYER)
+			|| c == GATE || c == PLAYER || c == 'M')
 			return (1);
 	}
 	return (0);
