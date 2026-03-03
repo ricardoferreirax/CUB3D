@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:53:00 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/01 23:24:43 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/03 21:25:03 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 static int	map_is_valid_tile(t_game *g, char c)
 {
-	return 1;
 	if (c == '\0')
 		return (0);
 	if (c == '\n')
 		return (1);
-	if (c == WALL || c == OPEN_SPACE || c == VOID)
+	if (c == WALL || c == OPEN_SPACE || c == VOID || c == 'M')
 		return (1);
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 		return (1);
@@ -27,7 +26,7 @@ static int	map_is_valid_tile(t_game *g, char c)
 	{
 		if (c == PACDOT || c == ENERGIZER || c == WRAP_PORTS
 			|| c == BLINKY_T || c == PINKY_T || c == INKY_T || c == CLYDE_T
-			|| c == GATE || c == PLAYER || c == 'M')
+			|| c == GATE || c == PLAYER)
 			return (1);
 	}
 	return (0);

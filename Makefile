@@ -6,13 +6,13 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/02/21 23:51:28 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/03/03 16:49:23 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    = cub3d
 
-CC      = clang-12 -O3
+CC      = gcc -O3
 CFLAGS  = -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion -Wformat=2 -Wstrict-aliasing=2 \
 		-fno-omit-frame-pointer \
 		-g 

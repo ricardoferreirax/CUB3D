@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:41:18 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/01 23:25:14 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/03 21:42:48 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,16 @@ int	is_whitespace(char c)
 int	map_tile_type(char t, int tile_type)
 {
 	if (tile_type == TILE_WALL)
-		return (t == WALL);
+		return (t == WALL || t == 'M');
 	if (tile_type == TILE_VOID)
 		return (t == VOID);
 	if (tile_type == TILE_SOLID)
-		return (t == WALL || t == GATE);
+		return (t == WALL || t == 'M' || t == GATE);
 	if (tile_type == TILE_WALKABLE)
 	{
 		return (t == OPEN_SPACE || t == PACDOT || t == ENERGIZER
-			|| t == WRAP_PORTS || t == 'N' || t == 'S' || t == 'E' || t == 'W');
+			|| t == WRAP_PORTS
+			|| t == 'N' || t == 'S' || t == 'E' || t == 'W');
 	}
 	return (0);
 }
