@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:41:18 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/04 10:24:45 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/04 15:58:40 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	map_tile_type(char t, int tile_type)
 	return (0);
 }
 
-// retorna a ultima coluna de uma linha ou a ultima coluna wrap se existirem wrap tunnels
 int	map_row_last_col(t_game *g, int row, int want_wrap)
 {
 	int		last;
@@ -44,41 +43,35 @@ int	map_row_last_col(t_game *g, int row, int want_wrap)
 	if (!g || !g->map.grid || row < 0 || row >= g->map.height)
 		return (-1);
 	s = g->map.grid[row];
-	last = (int)ft_strlen(s) - 1;
-	while (last >= 0 && (s[last] == '\n' || s[last] == '\r'))
+	last = (int)ft_strlen(s) - 1; // começa no último índice da string (antes do '\0')
+	while (last >= 0 && (s[last] == '\n')) // ignora as '\n' no final da row
 		last--;
-	if (!want_wrap)
+	if (!want_wrap) // se não queremos uma row com wrap 
 		return (last);
-	if (last < 1)
+	if (last < 1 || s[0] != WRAP_PORTS || s[last] != WRAP_PORTS) // se as extremidades da row não forem wrap ou se a row não tiver pelo menos 2 colunas
 		return (-1);
-	if (s[0] != WRAP_PORTS || s[last] != WRAP_PORTS)
-		return (-1);
-	return (last);
+	return (last); // devolve o índice da última coluna (antes do '\n')
 }
 
-char	map_get_tile(t_game *g, int y, int x)
+char	map_get_tile(t_game *game, int row, int col)
 {
-	int		last;
-	char	tile;
+	int	last_col;
 
-	if (!g || !g->map.grid || y < 0 || y >= g->map.height)
+	if (!game || !game->map.grid || row < 0 || row >= game->map.height)
 		return (VOID);
-	last = map_row_last_col(g, y, 1);
-	if (last >= 0)
+	last_col = map_row_last_col(game, row, 1);
+	if (last_col >= 0) // se a row tem wrap ajusta a coluna para permitir o wrap
 	{
-		if (x < 0)
-			x = last;
-		else if (x > last)
-			x = 0;
+		if (col < 0)
+			col = last_col;
+		else if (col > last_col)
+			col = 0;
 	}
-	else
-		last = map_row_last_col(g, y, 0);
-	if (x < 0 || x > last)
+	else // se a row no tem wrap verifica se a coluna esta dentro dos limites e se o tile nessa posição é válido
+		last_col = map_row_last_col(game, row, 0);
+	if (col < 0 || col > last_col || game->map.grid[row][col] <= ' ') // se a coluna está fora dos limites ou se o tile é um espaço
 		return (VOID);
-	tile = g->map.grid[y][x];
-	if (tile == ' ' || tile == '\t' || tile == '\n' || tile == '\r' || tile == '\0')
-		return (VOID);
-	return (tile);
+	return (game->map.grid[row][col]); // devolve o tile na posição (row, col)
 }
 
 int	map_is_empty_line(char *s)

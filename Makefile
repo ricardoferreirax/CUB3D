@@ -6,14 +6,14 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/03/03 16:49:23 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/03/04 15:18:44 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    = cub3d
 
 CC      = gcc -O3
-CFLAGS  = -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion -Wformat=2 -Wstrict-aliasing=2 \
+CFLAGS  = -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion -ffast-math -Wformat=2 -Wstrict-aliasing=2 \
 		-fno-omit-frame-pointer \
 		-g 
 #-fsanitize=undefined 
@@ -44,13 +44,11 @@ SRC_FILES = main.c \
 	srcs/init/init_sprites.c \
 	time.c \
 	srcs/map/map_load.c \
-	srcs/map/map_dimensions.c \
 	srcs/map/map_read.c \
 	srcs/map/map_validate_grid.c \
 	srcs/map/map_parse_lines.c \
 	srcs/map/map_ghost.c \
 	srcs/map/map_wrap.c \
-	srcs/map/minimap_test.c \
 	srcs/map/map_utils.c \
 	srcs/textures/texture_parse_path.c \
 	srcs/textures/texture_parse_color.c \
