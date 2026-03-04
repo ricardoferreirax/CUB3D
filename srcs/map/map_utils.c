@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:41:18 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/04 09:50:11 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/04 10:17:04 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,34 @@ int	map_tile_type(char t, int tile_type)
 	return (0);
 }
 
+int	map_row_last_col(t_game *g, int row, int want_wrap)
+{
+	int		last;
+	char	*s;
+
+	if (!g || !g->map.grid || row < 0 || row >= g->map.height)
+		return (-1);
+	s = g->map.grid[row];
+	last = (int)ft_strlen(s) - 1;
+	while (last >= 0 && (s[last] == '\n' || s[last] == '\r'))
+		last--;
+	if (!want_wrap)
+		return (last);
+	if (last < 1)
+		return (-1);
+	if (s[0] != WRAP_PORTS || s[last] != WRAP_PORTS)
+		return (-1);
+	return (last);
+}
+
 char	map_get_tile(t_game *g, int y, int x)
 {
 	int		last;
-	char	t;
+	char	tile;
 
-	if (!g || !g->map.grid)
+	if (!g || !g->map.grid || y < 0 || y >= g->map.height)
 		return (VOID);
-	if (y < 0 || y >= g->map.height)
-		return (VOID);
-	last = map_wrap_last_col(g, y);
+	last = map_row_last_col(g, y, 1);
 	if (last >= 0)
 	{
 		if (x < 0)
@@ -53,18 +71,13 @@ char	map_get_tile(t_game *g, int y, int x)
 			x = 0;
 	}
 	else
-	{
-		last = (int)ft_strlen(g->map.grid[y]) - 1;
-		while (last >= 0
-			&& (g->map.grid[y][last] == '\n' || g->map.grid[y][last] == '\r'))
-			last--;
-	}
+		last = map_row_last_col(g, y, 0);
 	if (x < 0 || x > last)
 		return (VOID);
-	t = g->map.grid[y][x];
-	if (t == ' ' || t == '\t')
+	tile = g->map.grid[y][x];
+	if (tile == ' ' || tile == '\t' || tile == '\n' || tile == '\r' || tile == '\0')
 		return (VOID);
-	return (t);
+	return (tile);
 }
 
 int	map_is_empty_line(char *s)
