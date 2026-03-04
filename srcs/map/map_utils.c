@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:41:18 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/04 10:17:04 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/04 10:24:45 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	map_tile_type(char t, int tile_type)
 	return (0);
 }
 
+// retorna a ultima coluna de uma linha ou a ultima coluna wrap se existirem wrap tunnels
 int	map_row_last_col(t_game *g, int row, int want_wrap)
 {
 	int		last;
