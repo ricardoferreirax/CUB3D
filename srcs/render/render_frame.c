@@ -82,6 +82,78 @@ void	render_sprite_into_framebuffer(t_game *game, t_point coord,
 	}
 }
 
+t_point continue_travel(t_point *ghost_pos, int dir)
+{
+	if(dir == 0)
+		return((t_point){.x = ghost_pos->x, .y = ghost_pos->y +1});
+	if(dir == 1)
+		return((t_point){.x = ghost_pos->x + 1, .y = ghost_pos->y});
+	if(dir == 2)
+		return((t_point){.x = ghost_pos->x, .y = ghost_pos->y -1});
+	if(dir == 3)
+		return((t_point){.x = ghost_pos->x - 1, .y = ghost_pos->y});
+
+}
+
+//Only useful to compare distances as it returns the distance sqaured, for true distance it needs to be square rooted
+int	distance_to_target(t_ghost *ghost, int dy, int dx)
+{
+	int	result;
+
+	result = pow(((ghost->pos.tile_pos.x + dx) - ghost->target_tile.x), 2)
+		+ pow(((ghost->pos.tile_pos.y + dy) - ghost->target_tile.y), 2);
+	return (result);
+}
+
+
+int	chose_next_move(t_ghost *ghost, char **map)
+{
+	int		i;
+	int		best;
+	int		best_dir;
+	int		dist;
+
+	int direction[4][2] = 
+	{
+		{-1, 0}, // 0 = up
+		{0, -1}, // 1 = left
+		{1, 0},  // 2 = down
+		{0, 1}   // 3 = right
+	};
+	i = 0;
+	best = -1;
+	best_dir = -1;
+	while (i < 4)
+	{
+		if (map[(int)ghost->pos.tile_pos.y + direction[i][0]][(int)ghost->pos.tile_pos.x + direction[i][1]] != '1' && i != ghost->invalid_dir)
+		{
+			dist = distance_to_target(ghost, direction[i][0], direction[i][1]);
+			if (best == -1 || dist < best)
+			{
+				best = dist;
+				best_dir = i;
+			}
+		}
+		i++;
+	}
+	if (best_dir == -1)
+		best_dir = (ghost->invalid_dir + 2) % 4;
+	ghost->pos.pixel_pos.y += direction[best_dir][0];
+	ghost->pos.pixel_pos.x += direction[best_dir][1];
+
+	return((best_dir + 2) % 4);
+}
+
+void update_ghost(t_game *game, t_ghost *ghost)
+{
+	if(ghost->pos.pixel_pos.x % 8 != 0 && ghost->pos.pixel_pos.y % 8 != 0)
+	{
+		ghost->pos.pixel_pos = continue_travel(&ghost->pos.pixel_pos, ghost->invalid_dir);
+		return;
+	}
+	ghost->invalid_dir = chose_next_move(ghost, game->map.grid);
+}
+
 void	render_ghosts_into_framebuffer(t_game *game)
 {
 	int	i;
@@ -91,6 +163,7 @@ void	render_ghosts_into_framebuffer(t_game *game)
 
 	while (++i < 4)
 	{
+		// update_ghost(game, game->ghosts[i], double dt)
 		coord.x = (game->ghosts[i].pos.pixel_pos.x * 8 + game->win.width / 2);
 		coord.y = (game->ghosts[i].pos.pixel_pos.y * 8 + game->win.height / 2);
 		render_sprite_into_framebuffer(game, coord, &game->ghosts[i].frames.left[0]);

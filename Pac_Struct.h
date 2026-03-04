@@ -394,9 +394,7 @@ void	switch_mode_and_parse(t_game *g, t_mode mode, const char *path);
 void	start_game_mode(t_game *g, t_mode mode);
 char	**copy_map(char **map);
 t_point	find_c(char **map, char c);
-void	update_ghost(t_game *g, t_ghost *gh, double dt);
 int	ghost_tick_ready(t_game *g, long now);
-void	update_ghosts(t_game *g, double dt);
 int	ghost_opposite_dir(int dir);
 
 // =========================
