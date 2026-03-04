@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 21:39:40 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/03 21:41:22 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/04 09:54:35 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,39 @@ static void	dda_step(t_game *g)
 	}
 }
 
+static int	row_last_col_any(t_game *g, int y)
+{
+	int	last;
+
+	if (!g || !g->map.grid || y < 0 || y >= g->map.height)
+		return (-1);
+	last = (int)ft_strlen(g->map.grid[y]) - 1;
+	while (last >= 0 && (g->map.grid[y][last] == '\n' || g->map.grid[y][last] == '\r'))
+		last--;
+	return (last);
+}
+
 static int	validate_or_wrap_ray(t_game *g)
 {
+	int	last_wrap;
+	int	last_any;
+
 	if (g->ray.map_y < 0 || g->ray.map_y >= g->map.height)
 		return (0);
-	if (g->ray.map_x < 0 || g->ray.map_x >= g->map.width)
-		return (ray_apply_wrap_x(g));
+	last_wrap = map_wrap_last_col(g, g->ray.map_y); // se a linha tiver wrap, aplica com base no last da linha do wrap
+	if (last_wrap >= 0)
+	{
+		if (g->ray.map_x < 0)
+			g->ray.map_x = last_wrap;
+		else if (g->ray.map_x > last_wrap)
+			g->ray.map_x = 0;
+		return (1);
+	}
+	last_any = row_last_col_any(g, g->ray.map_y); // se a linha não tiver wrap, valida com base no last da linha
+	if (last_any < 0)
+		return (0);
+	if (g->ray.map_x < 0 || g->ray.map_x > last_any)
+		return (0);
 	return (1);
 }
 

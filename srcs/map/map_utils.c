@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:41:18 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/03 21:54:51 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/04 09:50:11 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int	map_tile_type(char t, int tile_type)
 
 char	map_get_tile(t_game *g, int y, int x)
 {
-	int	last;
+	int		last;
+	char	t;
 
 	if (!g || !g->map.grid)
 		return (VOID);
@@ -60,7 +61,10 @@ char	map_get_tile(t_game *g, int y, int x)
 	}
 	if (x < 0 || x > last)
 		return (VOID);
-	return (g->map.grid[y][x]);
+	t = g->map.grid[y][x];
+	if (t == ' ' || t == '\t')
+		return (VOID);
+	return (t);
 }
 
 int	map_is_empty_line(char *s)
