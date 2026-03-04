@@ -67,10 +67,13 @@ int	main(int ac, char **av)
 	(void)av;
 	if ((ac > 3 || ac == 1) || (ac == 3 && (ft_strcmp(av[2], "debug_mode=y") != 0)))
 		return (ft_printf("Wrong args\n"), -1);
-	game = malloc(sizeof(t_game));
+	game = ft_calloc(sizeof(t_game), 1);
 	if (!game)
 		exit_game(EXIT_MALLOC, NULL, "main() failed to allocate game");
-	init(game);
+	game->debug_mode = false;
+	if(ac == 3)
+		game->debug_mode = true;
+	init(game, av[1]);
 	mlx_hook(game->win.win_ptr, 2, 1L << 0, handle_key_press, game);
 	mlx_hook(game->win.win_ptr, 3, 1L << 1, handle_key_release, game);
 	mlx_hook(game->win.win_ptr, 17, 0, handle_close, game);

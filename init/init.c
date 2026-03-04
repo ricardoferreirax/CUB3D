@@ -335,7 +335,11 @@ int	which_tile(t_game *game, t_point coord)
 	if (game->map.grid[coord.y][coord.x] == '1')
 		return (which_wall(game->map, &coord));
 	else
+	{
+		if(game->debug_mode)
+			return 59;
 		return (170);
+	}
 }
 
 void	put_tile_inbase(t_game *g, int tile_code, unsigned int color,

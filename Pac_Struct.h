@@ -24,7 +24,8 @@
 #include <math.h>
 #include <sys/time.h>
 
-#define SPRITE_SHEET "./assets/sprites/Spriteheet.xpm"
+#define SPRITE_SHEET "./assets/sprites/SpriteSheet.xpm"
+
 #include "srcs/map/map3D.h"
 #include "srcs/player/player3D.h"
 #include "srcs/hooks/hooks.h"

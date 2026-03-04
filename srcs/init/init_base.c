@@ -103,7 +103,7 @@ void	flood_fill(char **map, int x, int y)
 {
 	if (x < 0 || x >= xtile(map) || y < 0
 		|| y >= ytile(map) || map[y][x] == 'F'
-		|| map[y][x] == '1' || map[x][y] == 'D')
+		|| map[y][x] == '1' || map[y][x] == 'D')
 		return ;
 	if(map[y][x] == 'G')
 	{
@@ -206,12 +206,16 @@ int	which_wall(char **original_map, t_map map, t_point *coord)
 	return final;
 }
 
-int	which_tile(char **original_map, t_map *map, t_point coord)
+int	which_tile(char **original_map, t_map *map, t_point coord, bool debug)
 {
 	if (map->grid[coord.y][coord.x] == '1')
 		return (which_wall(original_map, *map, &coord));
 	else
+	{
+		if(debug)
+			return(59);
 		return (170);
+	}
 }
 
 void	put_tile_inbase(t_game *g, int tile_code, unsigned int color,
@@ -296,7 +300,7 @@ void	init_base(t_game *s)
 		point.x = 0;
 		while (s->map.grid[point.y][point.x])
 		{
-			tile = which_tile(s->map.grid, &parsed_map, point);
+			tile = which_tile(s->map.grid, &parsed_map, point, s->debug_mode);
 			put_tile_inbase(s, tile, color, point);
 			point.x++;
 		}
