@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 23:18:06 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/25 15:41:11 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/05 18:01:07 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ typedef struct s_key
 int		handle_close(t_game *g);
 int		handle_key_press(int keycode, t_game *g);
 int		handle_key_release(int keycode, t_game *g);
+void	handle_gate_toggle(t_game *g);
 
 #endif

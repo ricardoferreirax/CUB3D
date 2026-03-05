@@ -18,28 +18,16 @@ static int	get_front_tile_coord(t_game *g, int *map_x, int *map_y)
 	return (1);
 }
 
-static void	handle_gate_interaction(t_game *g)
-{
-	int		map_x;
-	int		map_y;
-	char	tile;
-
-	if (!get_front_tile_coord(g, &map_x, &map_y))
-		return ;
-	tile = map_get_tile(g, map_y, map_x);
-	if (tile != GATE)
-		return ;
-	g->gate_passable = !g->gate_passable;
-}
-
 void	handle_gate_toggle(t_game *g)
 {
-	if (!g)
-		return ;
-	if (!g->key.e)
-		return ;
-	if (g->key.e_lock)
+	int	map_x;
+	int	map_y;
+
+	if (!g || !g->key.e || g->key.e_lock)
 		return ;
 	g->key.e_lock = 1;
-	handle_gate_interaction(g);
+	if (!get_front_tile_coord(g, &map_x, &map_y))
+		return ;
+	if (map_get_tile(g, map_y, map_x) == GATE)
+		g->gate_passable = !g->gate_passable;
 }

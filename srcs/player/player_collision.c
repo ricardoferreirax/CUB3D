@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 22:42:10 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/04 09:58:11 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/05 17:58:29 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,27 @@ int	ghost_hits_wall(t_game *g, int row, int col)
 static void	player_collision(t_game *g)
 {
 	t_player	*player;
-	int			tile_right;
-	int			tile_left;
-	int			tile_bottom;
-	int			tile_top;
+	int			col;
+	int			row;
 
 	player = &g->player;
-	tile_right = (int)(player->pos_x + PLAYER_RADIUS);
-	tile_left = (int)(player->pos_x - PLAYER_RADIUS);
-	tile_bottom = (int)(player->pos_y + PLAYER_RADIUS);
-	tile_top = (int)(player->pos_y - PLAYER_RADIUS);
-	if (player_hits_wall(g, (int)player->pos_y, tile_left))
-		player->pos_x = (tile_left + 1) + PLAYER_RADIUS;
-	if (player_hits_wall(g, (int)player->pos_y, tile_right))
-		player->pos_x = tile_right - PLAYER_RADIUS;
-	if (player_hits_wall(g, tile_top, (int)player->pos_x))
-		player->pos_y = (tile_top + 1) + PLAYER_RADIUS;
-	if (player_hits_wall(g, tile_bottom, (int)player->pos_x))
-		player->pos_y = tile_bottom - PLAYER_RADIUS;
+	row = (int)player->pos_y; // converte a posiçao do player para as coordenadas do tile
+	col = (int)(player->pos_x - PLAYER_RADIUS); // converte a posiçao do player para as coordenadas do tile considerando o raio do player para detectar colisões com as paredes
+	if (player_hits_wall(g, row, col)) // se o player colidir com uma parede
+		player->pos_x = col + 1 + PLAYER_RADIUS; // ajusta a posição do player para ficar encostado a parede considerando o raio do player
+	col = (int)(player->pos_x + PLAYER_RADIUS);
+	if (player_hits_wall(g, row, col))
+		player->pos_x = col - PLAYER_RADIUS;
+	col = (int)player->pos_x;
+	row = (int)(player->pos_y - PLAYER_RADIUS);
+	if (player_hits_wall(g, row, col))
+		player->pos_y = row + 1 + PLAYER_RADIUS;
+	row = (int)(player->pos_y + PLAYER_RADIUS);
+	if (player_hits_wall(g, row, col))
+		player->pos_y = row - PLAYER_RADIUS;
 }
 
-void	update_player_movement(t_game *g, double dx, double dy)
+void	apply_player_movement(t_game *g, double dx, double dy)
 {
 	g->player.pos_x += dx;
 	g->player.pos_y += dy;

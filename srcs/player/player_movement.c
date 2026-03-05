@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 22:56:32 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/01 23:38:25 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/05 17:36:48 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	player_move_left(t_game *g)
 
 	dx =  g->player.dir_y * PLAYER_SPEED;
 	dy = -g->player.dir_x * PLAYER_SPEED;
-	update_player_movement(g, dx, dy);
+	apply_player_movement(g, dx, dy);
 }
 
 static void	player_move_right(t_game *g)
@@ -30,7 +30,7 @@ static void	player_move_right(t_game *g)
 
 	dx = -g->player.dir_y * PLAYER_SPEED;
 	dy =  g->player.dir_x * PLAYER_SPEED;
-	update_player_movement(g, dx, dy);
+	apply_player_movement(g, dx, dy);
 }
 
 static void	player_move_forward(t_game *g)
@@ -40,7 +40,7 @@ static void	player_move_forward(t_game *g)
 
 	dx = g->player.dir_x * PLAYER_SPEED;
 	dy = g->player.dir_y * PLAYER_SPEED;
-	update_player_movement(g, dx, dy);
+	apply_player_movement(g, dx, dy);
 }
 
 static void	player_move_backward(t_game *g)
@@ -50,7 +50,7 @@ static void	player_move_backward(t_game *g)
 
 	dx = -g->player.dir_x * PLAYER_SPEED;
 	dy = -g->player.dir_y * PLAYER_SPEED;
-	update_player_movement(g, dx, dy);
+	apply_player_movement(g, dx, dy);
 }
 
 void	player_movement_controller(t_game *g)
