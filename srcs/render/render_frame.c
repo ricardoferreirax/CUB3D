@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 19:44:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/04 11:06:44 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/05 21:38:36 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,6 @@ void	clear_sprite_z(t_game *g)
 		g->ray.sprite_z[i] = 1e30;
 		i++;
 	}
-}
-
-static void	apply_input(t_game *g)
-{
-	if (!g)
-		return ;
-	player_rotation_controller(g);
-	player_movement_controller(g);
 }
 
 void	render_base_into_buffer(t_game *s)
@@ -98,14 +90,13 @@ void	render_frame(t_game *game)
 		return ;
 	if (game->key.esc)
 		exit_game(EXIT_QUIT, game, NULL);
-	apply_input(game);
+	player_controller(game);
 	render_ceiling_texture(game);
 	render_floor_texture(game);
 	process_raycasting(game);
 	handle_gate_toggle(game);
 	clear_sprite_z(game);
 	render_all_sprites(game);
-	// render_minimap_test(game);
 	render_into_framebuffer(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr, game->win.frame_buffer.img_ptr, 0, 0);
 }

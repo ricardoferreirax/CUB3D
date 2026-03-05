@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 22:42:10 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/05 17:58:29 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/05 18:14:47 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ghost_hits_wall(t_game *g, int row, int col)
 	return (0);
 }
 
-static void	player_collision(t_game *g)
+void	player_collision(t_game *g)
 {
 	t_player	*player;
 	int			col;
@@ -58,13 +58,4 @@ static void	player_collision(t_game *g)
 	row = (int)(player->pos_y + PLAYER_RADIUS);
 	if (player_hits_wall(g, row, col))
 		player->pos_y = row - PLAYER_RADIUS;
-}
-
-void	apply_player_movement(t_game *g, double dx, double dy)
-{
-	g->player.pos_x += dx;
-	g->player.pos_y += dy;
-	player_wrap_position(g);
-	player_collision(g);
-	player_collect_pacdots(g);
 }

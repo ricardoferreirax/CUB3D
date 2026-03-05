@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/03/05 18:03:38 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/03/05 21:38:17 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,8 +69,7 @@ SRC_FILES = main.c \
 	srcs/render/perform_dda.c \
 	srcs/render/render_fill_color.c \
 	srcs/player/player_collision.c \
-	srcs/player/player_rotation.c \
-	srcs/player/player_movement.c \
+	srcs/player/player_controller.c \
 	srcs/player/player_collect_pacdots.c \
 	srcs/player/player_spawn.c \
 	srcs/hooks/handle_close.c \
