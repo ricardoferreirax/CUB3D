@@ -6,30 +6,30 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/20 21:40:11 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/05 22:43:00 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 #include "render3D.h"
 
-static void	calc_draw_limits(t_game *g)
+static void	cal_draw_range(t_game *g)
 {
-	int	line_h;
+	int	col_height;
 
-	line_h = (int)((double)g->win.height / g->ray.perp_wall_dist);
-	if (line_h < 1)
-		line_h = 1;
-	g->ray.line_h = line_h;
-	g->ray.draw_start = -line_h / 2 + g->win.height / 2;
-	g->ray.draw_end = line_h / 2 + g->win.height / 2;
+	col_height = (int)((double)g->win.height / g->ray.perp_wall_dist);
+	if (col_height < 1)
+		col_height = 1;
+	g->ray.line_h = col_height;
+	g->ray.draw_start = g->win.height / 2 - col_height / 2;
+	g->ray.draw_end = g->win.height / 2 + col_height / 2;
 	if (g->ray.draw_start < 0)
 		g->ray.draw_start = 0;
 	if (g->ray.draw_end >= g->win.height)
 		g->ray.draw_end = g->win.height - 1;
 }
 
-static void calc_wall_distance(t_game *g) 
+static void calc_perp_wall_distance(t_game *g) 
 { 
 	if (g->ray.hit_side == 0) 
 		g->ray.perp_wall_dist = g->ray.side_dist_x - g->ray.delta_dist_x; 
@@ -39,11 +39,42 @@ static void calc_wall_distance(t_game *g)
  		g->ray.perp_wall_dist = 1e-6; 
 }
 
-static void	init_ray(t_game *g, int x)
+void	dda_init_steps(t_game *g)
 {
-	g->ray.camera_x = 2.0 * x / (double)g->win.width - 1.0;
-	g->ray.ray_dir_x = g->player.dir_x + g->player.plane_x * g->ray.camera_x;
-	g->ray.ray_dir_y = g->player.dir_y + g->player.plane_y * g->ray.camera_x;
+	if (g->ray.ray_dir_x < 0)
+	{
+		g->ray.step_x = -1;
+		g->ray.side_dist_x = (g->player.pos_x - g->ray.map_x)
+			* g->ray.delta_dist_x;
+	}
+	else
+	{
+		g->ray.step_x = 1;
+		g->ray.side_dist_x = (g->ray.map_x + TILE_SIZE_3D - g->player.pos_x)
+			* g->ray.delta_dist_x;
+	}
+	if (g->ray.ray_dir_y < 0)
+	{
+		g->ray.step_y = -1;
+		g->ray.side_dist_y = (g->player.pos_y - g->ray.map_y)
+			* g->ray.delta_dist_y;
+	}
+	else
+	{
+		g->ray.step_y = 1;
+		g->ray.side_dist_y = (g->ray.map_y + TILE_SIZE_3D - g->player.pos_y)
+			* g->ray.delta_dist_y;
+	}
+}
+
+static void	init_ray_column(t_game *g, int col)
+{
+	double	cam_x;
+
+	cam_x = 2.0 * col / (double)g->win.width - 1.0;
+	g->ray.camera_x = cam_x;
+	g->ray.ray_dir_x = g->player.dir_x + g->player.plane_x * cam_x;
+	g->ray.ray_dir_y = g->player.dir_y + g->player.plane_y * cam_x;
 	g->ray.map_x = (int)g->player.pos_x;
 	g->ray.map_y = (int)g->player.pos_y;
 	g->ray.hit = 0;
@@ -53,7 +84,6 @@ static void	init_ray(t_game *g, int x)
 		g->ray.delta_dist_x = 1e30;
 	else
 		g->ray.delta_dist_x = fabs(1.0 / g->ray.ray_dir_x);
-
 	if (g->ray.ray_dir_y == 0.0)
 		g->ray.delta_dist_y = 1e30;
 	else
@@ -62,27 +92,24 @@ static void	init_ray(t_game *g, int x)
 
 void	process_raycasting(t_game *g)
 {
-	int	screen_x;
-	int	hit_found;
-	int	hit;
+	int	col;
+	int	center_hit;
 
 	if (!g)
 		return ;
-	screen_x = 0;
-	hit_found = 0;
-	while (screen_x < g->win.width)
+	col = -1;
+	center_hit = 0;
+	while (++col < g->win.width)
 	{
-		init_ray(g, screen_x);
-		calculate_dda_step(g);
-		hit = perform_dda(g);
-		if (hit)
+		init_ray_column(g, col);
+		dda_init_steps(g);
+		if (perform_dda(g)) // se bateu numa parede renderiza a coluna caso contrario passa para a próxima
 		{
-			calc_wall_distance(g);
-			calc_draw_limits(g);
-			render_wall_col(g, screen_x);
-			g->ray.z_buffer[screen_x] = g->ray.perp_wall_dist;
-			hit_found = register_center_hit(g, screen_x, hit_found);
+			calc_perp_wall_distance(g);
+			cal_draw_range(g);
+			render_wall_col(g, col);
+			g->ray.z_buffer[col] = g->ray.perp_wall_dist;
+			center_hit = register_center_hit(g, col, center_hit);
 		}
-		screen_x++;
 	}
 }

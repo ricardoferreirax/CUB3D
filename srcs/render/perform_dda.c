@@ -6,40 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 21:39:40 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/04 15:14:57 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/05 22:22:53 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 #include "render3D.h"
-
-void	calculate_dda_step(t_game *g)
-{
-	if (g->ray.ray_dir_x < 0)
-	{
-		g->ray.step_x = -1;
-		g->ray.side_dist_x = (g->player.pos_x - g->ray.map_x)
-			* g->ray.delta_dist_x;
-	}
-	else
-	{
-		g->ray.step_x = 1;
-		g->ray.side_dist_x = (g->ray.map_x + TILE_SIZE_3D - g->player.pos_x)
-			* g->ray.delta_dist_x;
-	}
-	if (g->ray.ray_dir_y < 0)
-	{
-		g->ray.step_y = -1;
-		g->ray.side_dist_y = (g->player.pos_y - g->ray.map_y)
-			* g->ray.delta_dist_y;
-	}
-	else
-	{
-		g->ray.step_y = 1;
-		g->ray.side_dist_y = (g->ray.map_y + TILE_SIZE_3D - g->player.pos_y)
-			* g->ray.delta_dist_y;
-	}
-}
 
 static void	dda_step(t_game *g)
 {
@@ -57,7 +29,7 @@ static void	dda_step(t_game *g)
 	}
 }
 
-static int	validate_or_wrap_ray(t_game *g)
+static int	ray_validate_wrap_x(t_game *g)
 {
 	int	last;
 
@@ -73,34 +45,34 @@ static int	validate_or_wrap_ray(t_game *g)
 		return (1);
 	}
 	last = map_row_last_col(g, g->ray.map_y, 0);
-	return (last >= 0 && g->ray.map_x >= 0 && g->ray.map_x <= last);
+	if (last < 0 || g->ray.map_x < 0 || g->ray.map_x > last)
+		return (0);
+	return (1);
 }
 
 int	perform_dda(t_game *g)
 {
-	int		steps;
-	int		max_steps;
-	char	t;
+	int		i;
+	int		limit;
+	int		hit;
+	char	tile;
 
-	steps = 0;
-	max_steps = g->map.width * g->map.height + 50;
-	while (steps < max_steps)
+	i = -1;
+	limit = g->map.width * g->map.height + 50;
+	hit = 0;
+	while (++i < limit)
 	{
 		dda_step(g);
-		if (validate_or_wrap_ray(g) == 0)
-			return (0);
-		t = map_get_tile(g, g->ray.map_y, g->ray.map_x);
-		if (t != GATE)
+		if (!ray_validate_wrap_x(g))
+			break ;
+		tile = map_get_tile(g, g->ray.map_y, g->ray.map_x);
+		if ((tile == GATE && g->gate_passable == 0) 
+			|| (tile != GATE && map_tile_type(tile, TILE_SOLID)))
 		{
-			if (map_tile_type(t, TILE_SOLID))
-				return (g->ray.hit_tile = t, 1);
+			g->ray.hit_tile = tile;
+			hit = 1;
+			break ;
 		}
-		else
-		{
-			if (g->gate_passable == 0)
-				return (g->ray.hit_tile = t, 1);
-		}
-		steps++;
 	}
-	return (0);
+	return (hit);
 }
