@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/21 23:44:13 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/05 21:59:09 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ void	init_execution(t_game *g)
 
 void	init_map(t_game *g, const char *path)
 {
-	// char **rect;
 	parse_texture_path(g, path);
 	if (g->map.grid)
 		free_2d((void *)g->map.grid);
@@ -80,11 +79,6 @@ void	init_map(t_game *g, const char *path)
 		exit_game(EXIT_MAP, g, "parse() has not found a grid");
 	g->map.height = ytile(g->map.grid);
 	g->map.width = xtile(g->map.grid);
-	// rect = map_rectangular(g);
-	// if (!rect)
-	// 	exit_game(EXIT_MALLOC, g);
-	// free_tab_tab(g->map.grid);
-	// g->map.grid = rect;
 	map_validate_chars(g);
 	// map_validate_closed(g);
 	//^ needs to be checked

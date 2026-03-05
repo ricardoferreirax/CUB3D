@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 21:11:27 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/02 09:36:23 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/05 22:03:03 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,56 +49,59 @@ static void	set_player_orientation_ew(t_game *g, char c)
 	}
 }
 
-static void	set_player_spawn_position(t_game *g, int x, int y, char dir)
+static void	set_player_spawn(t_game *game, int col, int row, char dir)
 {
-	if (g->map.grid[y][x] == VOID)
-		exit_game(EXIT_MAP, g, "set_player_spawn_position() found player in a VOID tile");
-	if (map_get_tile(g, y, x + 1) == VOID
-		|| map_get_tile(g, y, x - 1) == VOID
-		|| map_get_tile(g, y + 1, x) == VOID
-		|| map_get_tile(g, y - 1, x) == VOID)
-		exit_game(EXIT_MAP, g, "set_player_spawn_position() found player directily near a void tile");
-	g->player.pos_x = (double)x + 0.5;
-	g->player.pos_y = (double)y + 0.5;
-	set_player_orientation_ns(g, dir);
-	set_player_orientation_ew(g, dir);
-	g->map.grid[y][x] = OPEN_SPACE;
+	if (game->map.grid[row][col] == VOID)
+		exit_game(EXIT_MAP, game,
+			"set_player_spawn() found player in VOID tile");
+	if (map_get_tile(game, row, col + 1) == VOID
+		|| map_get_tile(game, row, col - 1) == VOID
+		|| map_get_tile(game, row + 1, col) == VOID
+		|| map_get_tile(game, row - 1, col) == VOID)
+		exit_game(EXIT_MAP, game,
+			"set_player_spawn() player next to VOID tile");
+	game->player.pos_x = (double)col + 0.5;
+	game->player.pos_y = (double)row + 0.5;
+	set_player_orientation_ns(game, dir);
+	set_player_orientation_ew(game, dir);
+	game->map.grid[row][col] = OPEN_SPACE;
 }
 
-static int	find_player_spawn_in_map(t_game *g)
+static int	find_player_spawn(t_game *game)
 {
-	int		y;
-	int		x;
-	int		count;
-	char	t;
+	int		row;
+	int		col;
+	int		spawn_count;
+	char	tile;
 
-	count = 0;
-	y = 0;
-	while (y < g->map.height)
+	spawn_count = 0;
+	row = -1;
+	while (++row < game->map.height)
 	{
-		x = 0;
-		while (x < g->map.width)
+		col = -1;
+		while (++col < game->map.width)
 		{
-			t = g->map.grid[y][x];
-			if (t == 'N' || t == 'S' || t == 'E' || t == 'W')
+			tile = game->map.grid[row][col];
+			if (tile == 'N' || tile == 'S'
+				|| tile == 'E' || tile == 'W')
 			{
-				count++;
-				set_player_spawn_position(g, x, y, t);
+				spawn_count++;
+				set_player_spawn(game, col, row, tile);
 			}
-			x++;
 		}
-		y++;
 	}
-	return (count);
+	return (spawn_count);
 }
 
-void	init_player(t_game *g)
+void	init_player(t_game *game)
 {
-	int	count;
+	int	spawn_count;
 
-	if (!g || !g->map.grid)
-		exit_game(EXIT_MAP, g, "init_player() was given invalid pointers");
-	count = find_player_spawn_in_map(g);
-	if (count != 1)
-		exit_game(EXIT_MAP, g, "init_player() has found more or less than one player");
+	if (!game || !game->map.grid)
+		exit_game(EXIT_MAP, game,
+			"init_player() invalid map pointers");
+	spawn_count = find_player_spawn(game);
+	if (spawn_count != 1)
+		exit_game(EXIT_MAP, game,
+			"init_player() must find exactly one player");
 }

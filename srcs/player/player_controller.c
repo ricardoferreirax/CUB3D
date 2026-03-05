@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player_action.c                                    :+:      :+:    :+:   */
+/*   player_controller.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 22:56:32 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/05 21:34:17 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/05 21:55:58 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,29 +41,22 @@ static void	player_rotate(t_game *g, double angle)
 
 static void	player_apply_action(t_game *g, t_player_action act)
 {
-	double	dx;
-	double	dy;
-
-	dx = 0.0;
-	dy = 0.0;
-	if (act == ROTATE_RIGHT)
+	if (act == MOVE_FORWARD)
+		apply_player_movement(g, g->player.dir_x * PLAYER_SPEED,
+			g->player.dir_y * PLAYER_SPEED);
+	else if (act == MOVE_BACKWARD)
+		apply_player_movement(g, -g->player.dir_x * PLAYER_SPEED,
+			-g->player.dir_y * PLAYER_SPEED);
+	else if (act == MOVE_RIGHT)
+		apply_player_movement(g, -g->player.dir_y * PLAYER_SPEED,
+			 g->player.dir_x * PLAYER_SPEED);
+	else if (act == MOVE_LEFT)
+		apply_player_movement(g, g->player.dir_y * PLAYER_SPEED,
+			-g->player.dir_x * PLAYER_SPEED);
+	else if (act == ROTATE_RIGHT)
 		player_rotate(g, ROT_SPEED);
 	else if (act == ROTATE_LEFT)
 		player_rotate(g, -ROT_SPEED);
-	else
-	{
-		if (act == MOVE_FORWARD)
-			(dx = g->player.dir_x * PLAYER_SPEED, dy = g->player.dir_y * PLAYER_SPEED);
-		else if (act == MOVE_BACKWARD)
-			(dx = -g->player.dir_x * PLAYER_SPEED, dy = -g->player.dir_y * PLAYER_SPEED);
-		else if (act == MOVE_RIGHT)
-			(dx = -g->player.dir_y * PLAYER_SPEED, dy = g->player.dir_x * PLAYER_SPEED);
-		else if (act == MOVE_LEFT)
-			(dx = g->player.dir_y * PLAYER_SPEED, dy = -g->player.dir_x * PLAYER_SPEED);
-
-		if (dx != 0.0 || dy != 0.0)
-			apply_player_movement(g, dx, dy);
-	}
 }
 
 void	player_controller(t_game *g)
