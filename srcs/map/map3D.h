@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:48:48 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/04 10:17:32 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/05 17:25:39 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,9 @@ typedef struct s_map
 
 #endif
 
-char	**map_rectangular(t_game *g);
 char	**load_map_from_cub(t_game *g, const char *path);
 void	map_validate_chars(t_game *g);
 void	map_validate_closed(t_game *g);
-int	map_wrap_last_col(t_game *g, int row);
 
 int	map_is_map_line(t_game *g, char *line);
 int	map_is_empty_line(char *s);
@@ -61,9 +59,8 @@ int	map_tile_type(char t, int tile_type);
 char	**map_read_file(const char *path);
 
 int	map_is_wrap_tile(t_game *g, int row, int col);
-int	ray_apply_wrap_x(t_game *g);
+int	ray_wrap_x(t_game *g);
 void	player_wrap_position(t_game *g);
 double	get_sprite_wrap_offset_x(t_game *g, double sprite_x, double sprite_y);
-void	render_minimap_test(t_game *g);
 int	is_whitespace(char c);
 char	**copy_map(char **map_grid);

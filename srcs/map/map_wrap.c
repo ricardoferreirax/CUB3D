@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 21:54:56 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/04 16:14:30 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/05 17:25:10 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,29 @@ double	get_sprite_wrap_offset_x(t_game *g, double sprite_x, double sprite_y)
 
 	if (!g)
 		return (0.0);
-	offset_x = sprite_x - g->player.pos_x; // calcula o offset horizontal do sprite em relação ao player
-	player_row = (int)g->player.pos_y; // determina a row do mapa onde o player está
-	if ((int)sprite_y != player_row) // se o sprite não estiver na mesma row do player, não faz wrap e devolvo offset normal
+	offset_x = sprite_x - g->player.pos_x; // calcula o offset horizontal do sprite em relaçao ao player
+	player_row = (int)g->player.pos_y; // determina a row do mapa onde o player esta
+	if ((int)sprite_y != player_row) // se o sprite não estiver na mesma row do player, não faz wrap e devolve o offset normal
 		return (offset_x);
-	last = map_row_last_col(g, player_row, 1);
-	if (last < 0)
+	last = map_row_last_col(g, player_row, 1); // obtém o índice da última coluna da row do player
+	if (last < 0) // se a row do player não tiver wrap devolve o offset normal
 		return (offset_x);
-	map_width = last + 1;
-	if (offset_x > map_width / 2.0)
-		offset_x -= map_width;
+	map_width = last + 1; // calcula a largura do mapa (nr de colunas) na row do player. +1 pois começa no 0
+	if (offset_x > map_width / 2.0) // se o offset horizontal do sprite for maior que metade da largura do mapa, significa que o sprite está mais próximo do player
+		offset_x -= map_width; // ajusta o offset para considerar o wrap
 	else if (offset_x < -map_width / 2.0)
 		offset_x += map_width;
 	return (offset_x);
 }
 
-int	ray_apply_wrap_x(t_game *g)
+int	ray_wrap_x(t_game *g)
 {
 	int	last;
 
 	if (!g)
 		return (0);
-	last = map_row_last_col(g, g->ray.map_y, 1);
-	if (last < 0)
+	last = map_row_last_col(g, g->ray.map_y, 1); // obtém o índice da última coluna da row onde o ray está a apontar
+	if (last < 0) 
 		return (0);
 	if (g->ray.map_x < 0)
 		g->ray.map_x = last;
@@ -83,13 +83,13 @@ void	player_wrap_position(t_game *g)
 
 	if (!g)
 		return ;
-	row = (int)g->player.pos_y;
-	last = map_row_last_col(g, row, 1);
-	if (last < 0)
+	row = (int)g->player.pos_y; // determina a row do mapa onde o player esta
+	last = map_row_last_col(g, row, 1); // obtém o índice da última coluna da row do player
+	if (last < 0) // se a row do player não tiver wrap
 		return ;
-	width = (double)(last + 1);
-	while (g->player.pos_x < 0.0)
-		g->player.pos_x += width;
-	while (g->player.pos_x >= width)
-		g->player.pos_x -= width;
+	width = (double)(last + 1); // calcula a largura do mapa (nr de colunas) na row do player. +1 pois começa no 0
+	while (g->player.pos_x < 0.0) // se a posição x do player for menor que 0 significa que ele ultrapassou o limite esquerdo do mapa
+		g->player.pos_x += width; // ajusta a posiçao do player para o lado direito do mapa considerando que ha wrap
+	while (g->player.pos_x >= width) // se a posição x do player for maior ou igual a largura do mapa, significa que ele ultrapassou o limite direito do mapa
+		g->player.pos_x -= width; // ajusta a posiçao do player para o lado esquerdo do mapa considerando que ha wrap
 }

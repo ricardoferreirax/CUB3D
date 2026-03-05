@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:41:18 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/04 15:58:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/05 10:30:02 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ char	map_get_tile(t_game *game, int row, int col)
 		else if (col > last_col)
 			col = 0;
 	}
-	else // se a row no tem wrap verifica se a coluna esta dentro dos limites e se o tile nessa posição é válido
+	else // se a row no tem wrap verifica se a coluna esta dentro dos limites e se o tile nessa posição e válido
 		last_col = map_row_last_col(game, row, 0);
-	if (col < 0 || col > last_col || game->map.grid[row][col] <= ' ') // se a coluna está fora dos limites ou se o tile é um espaço
+	if (col < 0 || col > last_col || game->map.grid[row][col] <= ' ') // se a coluna esta fora dos limites ou se o tile é um espaço
 		return (VOID);
 	return (game->map.grid[row][col]); // devolve o tile na posição (row, col)
 }
