@@ -115,6 +115,8 @@ int	chose_next_move(t_ghost *ghost, char **map)
 	i = 0;
 	best = -1;
 	best_dir = -1;
+	if(!map)
+		return -1;
 	while (i < 4)
 	{
 		if ((map[ghost->pos.pixel_pos.y / 8 + direction[i][0]][ghost->pos.pixel_pos.x / 8 + direction[i][1]] != '1' ) && i != ghost->invalid_dir)
@@ -135,15 +137,18 @@ int	chose_next_move(t_ghost *ghost, char **map)
 	return ((best_dir + 2) % 4);
 }
 
-void	update_ghost(t_ghost *ghost)
+int	update_ghost(t_ghost *ghost)
 {
 	if (ghost->pos.pixel_pos.x % 8 != 0 && ghost->pos.pixel_pos.y % 8 != 0)
 	{
 		ghost->pos.pixel_pos = continue_travel(&ghost->pos.pixel_pos,
 				ghost->invalid_dir);
-		return ;
+		return 0;
 	}
 	ghost->invalid_dir = chose_next_move(ghost, ghost->mental_map);
+	if(ghost->invalid_dir == -1)
+		return -1;
+	return 0;
 }
 
 void	render_ghosts_into_framebuffer(t_game *game)
