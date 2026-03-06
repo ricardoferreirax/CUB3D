@@ -43,7 +43,6 @@ static void	init_defaults(t_game *g)
 {
 	if (!g)
 		return ;
-	ft_bzero(g, sizeof(t_game));
 	g->state = MENU;
 	g->mode = MODE_PACMAN;
 	g->ray.hit_side = -1;
@@ -84,13 +83,14 @@ void	init_map(t_game *g, const char *path)
 	//^ needs to be checked
 }
 
-void	init(t_game *g)
+void	init(t_game *g, char *path)
 {
 	if (!g)
 		return ;
 	init_defaults(g);
 	init_minilib(g);
-	init_map(g, "./maps/Pacman.cub");
+	init_map(g, path);
+	print_2d(g->map.grid);
 	init_player(g);
 	init_execution(g);
 	init_menu(g);

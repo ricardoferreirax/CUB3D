@@ -24,7 +24,8 @@
 #include <math.h>
 #include <sys/time.h>
 
-#define SPRITE_SHEET "./assets/sprites/Spriteheet.xpm"
+#define SPRITE_SHEET "./assets/sprites/SpriteSheet.xpm"
+
 #include "srcs/map/map3D.h"
 #include "srcs/player/player3D.h"
 #include "srcs/hooks/hooks.h"
@@ -200,7 +201,8 @@ typedef enum e_ghost
 	BLINKY,
 	PINKY,
 	INKY,
-	CLYDE
+	CLYDE,
+	DISABLED
 } e_ghost;
 
 typedef enum e_state
@@ -397,6 +399,8 @@ void	switch_mode_and_parse(t_game *g, t_mode mode, const char *path);
 void	start_game_mode(t_game *g, t_mode mode);
 char	**copy_map(char **map);
 t_point	find_c(char **map, char c);
+int	ghost_tick_ready(t_game *g, long now);
+int	ghost_opposite_dir(int dir);
 
 // =========================
 // Free & Exit

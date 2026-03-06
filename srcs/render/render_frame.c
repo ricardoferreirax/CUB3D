@@ -11,13 +11,12 @@
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
-
 #include "render3D.h"
 
 void	clear_sprite_z(t_game *g)
 {
-	int		i;
-	int		n;
+	int	i;
+	int	n;
 
 	if (!g || !g->ray.sprite_z)
 		return ;
@@ -44,44 +43,130 @@ void	render_base_into_buffer(t_game *s)
 		{
 			color = pixel_get(&s->base, x, y);
 			if ((color >> 24) != 0xFF)
-				ft_pixel_put(&s->win.frame_buffer, x + 50,
-					y + s->win.height - s->base.height - 100, color);
-			x++;
+				ft_pixel_put(&s->win.frame_buffer, x + (s->win.width / 2),
+					y + s->win.height - s->base.height  / 2, color);
 		}
 		y++;
 	}
 }
 
-void render_sprite_into_framebuffer(t_game *game, t_point coord, t_sprite_ref *sprite)
+void	render_sprite_into_framebuffer(t_game *game, t_point coord,
+		t_sprite_ref *sprite)
 {
-	t_point point;
-	unsigned int color;
+	t_point			point;
+	unsigned int	color;
+
 	point.y = 0;
-	while(point.y < sprite->height)
+	while (point.y < sprite->height)
 	{
 		point.x = 0;
-		while(point.x < sprite->width)
+		while (point.x < sprite->width)
 		{
-			color = pixel_get(&game->sprite_sheet.sprite_img, point.x + sprite->coord.x, point.y + sprite->coord.y);
-			if((color >> 24) != 0xFF)
-				ft_pixel_put(&game->win.frame_buffer, point.x + coord.x, point.y, color);
+			color = pixel_get(&game->sprite_sheet.sprite_img, point.x
+					+ sprite->coord.x, point.y + sprite->coord.y);
+			if ((color >> 24) != 0xFF)
+				ft_pixel_put(&game->win.frame_buffer, point.x + coord.x, point.y
+					+ coord.y, color);
 			point.x++;
 		}
 		point.y++;
 	}
 }
 
-void render_ghosts_into_framebuffer(t_game *game)
+t_point	continue_travel(t_point *ghost_pos, int invalid_dir)
 {
-	int i = -1;
-	while(++i < 4)
-		render_sprite_into_framebuffer(game, game->ghosts[i].pos.pixel_pos, game->ghosts[i].frames.left);
+	int	dir;
+
+	dir = (invalid_dir + 2) % 4;
+	int direction[4][2] = {
+		{0, -1}, // up
+		{-1, 0}, // left
+		{0, 1},  // down
+		{1, 0}   // right
+	};
+	return ((t_point){.x = ghost_pos->x + direction[dir][0], .y = ghost_pos->y
+		+ direction[dir][1]});
 }
 
-void render_into_framebuffer(t_game *game)
+int	distance_to_target(t_ghost *ghost, int dy, int dx)
+{
+	int	result;
+
+	result = pow((((ghost->pos.pixel_pos.x / 8) + dx) - ghost->target_tile.x),
+			2) + pow((((ghost->pos.pixel_pos.y / 8) + dy)
+				- ghost->target_tile.y), 2);
+	return (result);
+}
+
+int	chose_next_move(t_ghost *ghost, char **map)
+{
+	int	i;
+	int	best;
+	int	best_dir;
+	int	dist;
+
+	int direction[4][2] = {
+		{-1, 0}, // 0 = up
+		{0, -1}, // 1 = left
+		{1, 0},  // 2 = down
+		{0, 1}   // 3 = right
+	};
+	i = 0;
+	best = -1;
+	best_dir = -1;
+	while (i < 4)
+	{
+		if ((map[ghost->pos.pixel_pos.y / 8 + direction[i][0]][ghost->pos.pixel_pos.x / 8 + direction[i][1]] != '1' ) && i != ghost->invalid_dir)
+		{
+			dist = distance_to_target(ghost, direction[i][0], direction[i][1]);
+			if (best == -1 || dist < best)
+			{
+				best = dist;
+				best_dir = i;
+			}
+		}
+		i++;
+	}
+	if (best_dir == -1)
+		best_dir = (ghost->invalid_dir + 2) % 4;
+	ghost->pos.pixel_pos.y += direction[best_dir][0];
+	ghost->pos.pixel_pos.x += direction[best_dir][1];
+	return ((best_dir + 2) % 4);
+}
+
+void	update_ghost(t_ghost *ghost)
+{
+	if (ghost->pos.pixel_pos.x % 8 != 0 && ghost->pos.pixel_pos.y % 8 != 0)
+	{
+		ghost->pos.pixel_pos = continue_travel(&ghost->pos.pixel_pos,
+				ghost->invalid_dir);
+		return ;
+	}
+	ghost->invalid_dir = chose_next_move(ghost, ghost->mental_map);
+}
+
+void	render_ghosts_into_framebuffer(t_game *game)
+{
+	int		i;
+	t_point	coord;
+
+	i = -1;
+	while (++i < 4)
+	{
+		if(game->ghosts[i].name == DISABLED)
+			continue;
+		update_ghost(&game->ghosts[i]);
+		coord.x = (game->ghosts[i].pos.pixel_pos.x * 8 + game->win.width / 2);
+		coord.y = (game->ghosts[i].pos.pixel_pos.y * 8 + game->win.height / 2);
+		render_sprite_into_framebuffer(game, coord,
+			&game->ghosts[i].frames.left[0]);
+	}
+}
+
+void	render_into_framebuffer(t_game *game)
 {
 	render_base_into_buffer(game);
-	// render_ghosts_into_framebuffer(game);
+	render_ghosts_into_framebuffer(game);
 }
 
 void	render_frame(t_game *game)
@@ -98,5 +183,6 @@ void	render_frame(t_game *game)
 	clear_sprite_z(game);
 	render_all_sprites(game);
 	render_into_framebuffer(game);
-	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr, game->win.frame_buffer.img_ptr, 0, 0);
+	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr,
+		game->win.frame_buffer.img_ptr, 0, 0);
 }

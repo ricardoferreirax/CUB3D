@@ -15,7 +15,7 @@
 #include "../../Pac_Struct.h"
 
 void	init_minilib(t_game *game);
-void	init(t_game *g);
+void	init(t_game *g, char *path);
 void	init_window(t_game *s);
 void	init_assets(t_game *g);
 void	init_ghosts(t_game *g);

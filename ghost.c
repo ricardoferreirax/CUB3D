@@ -11,30 +11,30 @@
 /* ************************************************************************** */
 
 #include "Pac_Struct.h"
-
+//
 // int	ft_abs(int n)
 // {
 // 	if (n < 0)
 // 		return (-n);
 // 	return (n);
 // }
-
+//
 // // direction vectors
 // // left 01,00
 // // right -01,00
 // // down 00,01
 // // up 00,-01
-
+//
 // // this only is useful to compare distance is it doesn't sqrt(9 the result)
 // int	distance_to_target(t_ghost *ghost, int dy, int dx)
 // {
 // 	int	result;
-
+//
 // 	result = pow(((ghost->pos.tile_pos.x + dx) - ghost->target_tile.x), 2)
 // 		+ pow(((ghost->pos.tile_pos.y + dy) - ghost->target_tile.y), 2);
 // 	return (result);
 // }
-
+//
 // t_point	chose_next_move(t_ghost *ghost, char **map)
 // {
 // 	int		i;
@@ -42,7 +42,7 @@
 // 	int		best_dir;
 // 	int		dist;
 // 	t_point	dir;
-
+//
 // 	int direction[4][2] = 
 // 	{
 // 		{-1, 0}, // 0 = up
@@ -56,8 +56,7 @@
 // 	// print_2d(map);
 // 	while (i < 4)
 // 	{
-// 		if (map[ghost->pos.tile_pos.y + direction[i][0]][ghost->pos.tile_pos.x
-// 			+ direction[i][1]] != '1' && i != ghost->invalid_dir)
+// 		if (map[(int)ghost->pos.tile_pos.y + direction[i][0]][(int)ghost->pos.tile_pos.x + direction[i][1]] != '1' && i != ghost->invalid_dir)
 // 		{
 // 			dist = distance_to_target(ghost, direction[i][0], direction[i][1]);
 // 			if (best == -1 || dist < best)
@@ -75,11 +74,11 @@
 // 	dir.x = direction[best_dir][1];
 // 	return (dir);
 // }
-
+//
 // void move(char** map, t_ghost *ghost, int dx, int dy)
 // {
 // 	char ghost_to_move = which_ghost(ghost);
-
+//
 // 	int new_posx = ghost->pos.tile_pos.x + dx;
 // 	int new_posy = ghost->pos.tile_pos.y + dy;
 // 	map[ghost->pos.tile_pos.y][ghost->pos.tile_pos.x] = '0';
@@ -100,12 +99,12 @@
 // 	}
 // 	map[new_posy][new_posx] = ghost_to_move;
 // }
- 
-
+//
+//
 // void	update_ghosts(t_game *g, double dt)
 // {
 // 	int	i;
-
+//
 // 	if (!g)
 // 		return ;
 // 	i = 0;

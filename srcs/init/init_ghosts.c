@@ -44,21 +44,77 @@ static void	ghost_update_pixel_pos(t_ghost *gh) // guardar pixel_pos para o mini
 	gh->pos.pixel_pos.y = (gh->pos.tile_pos.y + 0.5) * (double)TILE_SIZE_3D;
 }
 
-static void	init_one_ghost(t_game *g, t_ghost *gh, char spawn_char)
+void ghost_sprites(t_game *game, e_ghost ghost)
+{
+	game->ghosts[ghost].frames.up[0] = game->sprite_sheet.sprites[202];
+	game->ghosts[ghost].frames.up[1] = game->sprite_sheet.sprites[203];
+	game->ghosts[ghost].frames.left[0] = game->sprite_sheet.sprites[200];
+	game->ghosts[ghost].frames.left[1] = game->sprite_sheet.sprites[201];
+	game->ghosts[ghost].frames.down[0] = game->sprite_sheet.sprites[198];
+	game->ghosts[ghost].frames.down[1] = game->sprite_sheet.sprites[199];
+	game->ghosts[ghost].frames.rigth[0] = game->sprite_sheet.sprites[196];
+	game->ghosts[ghost].frames.rigth[1] = game->sprite_sheet.sprites[197];
+}
+
+void apply_new_pallete(t_point pallet_coord, t_sprite_ref *sprite)
+{
+	if(!sprite)
+		return;
+	sprite->coord.x += pallet_coord.x * 200;
+	sprite->coord.y += pallet_coord.y * 186;
+}
+
+void change_pallete(t_point pallet_coord, t_anim *frames)
+{
+	apply_new_pallete(pallet_coord, &frames->left[0]);
+	apply_new_pallete(pallet_coord, &frames->left[1]);
+	apply_new_pallete(pallet_coord, &frames->rigth[0]);
+	apply_new_pallete(pallet_coord, &frames->rigth[1]);
+	apply_new_pallete(pallet_coord, &frames->up[0]);
+	apply_new_pallete(pallet_coord, &frames->up[1]);
+	apply_new_pallete(pallet_coord, &frames->down[0]);
+	apply_new_pallete(pallet_coord, &frames->down[1]);
+	int i = 0;
+	while(i < 12)
+	{
+		apply_new_pallete(pallet_coord, &frames->death[i]);
+		i++;
+	}
+}
+
+void ghost_color(t_ghost *ghost)
+{
+	if (ghost->name == BLINKY)
+		return;
+	else if(ghost->name == PINKY)
+			change_pallete((t_point){.x = 1, .y= 0}, &ghost->frames);
+	else if(ghost->name == INKY)
+			change_pallete((t_point){.x = 2, .y= 0}, &ghost->frames);
+	else if(ghost->name == CLYDE)
+			change_pallete((t_point){.x = 3, .y= 0}, &ghost->frames);
+}
+
+static int	init_one_ghost(t_game *g, t_ghost *gh, char spawn_char)
 {
 	t_point	p;
 
 	gh->mental_map = copy_map(g->map.grid);
+	// print_2d(gh->mental_map);
 	if (!gh->mental_map)
 		exit_game(EXIT_MALLOC, g, "init_one_ghost() was unable to copy map");
 	p = find_c(g->map.grid, spawn_char);
 	if (p.x < 0 || p.y < 0)
-		exit_game(EXIT_MAP, g, "init_one_ghost() found an invalid target");
+		return -1;
 	gh->pos.tile_pos.x = (double)p.x;
 	gh->pos.tile_pos.y = (double)p.y;
+	gh->pos.pixel_pos.x = gh->pos.tile_pos.x * 8;
+	gh->pos.pixel_pos.y = gh->pos.tile_pos.y * 8;
 	ghost_update_pixel_pos(gh);
 	gh->invalid_dir = -1;
 	gh->target_tile = p;
+	ghost_sprites(g, gh->name);
+	ghost_color(gh);
+	return 0;
 }
 
 void	init_ghosts(t_game *g)
@@ -75,7 +131,8 @@ void	init_ghosts(t_game *g)
 		ghost_info(i, &name, &spawn);
 		ft_bzero(&g->ghosts[i], sizeof(t_ghost));
 		g->ghosts[i].name = name;
-		init_one_ghost(g, &g->ghosts[i], spawn);
+		if(init_one_ghost(g, &g->ghosts[i], spawn))
+			g->ghosts[i].name = DISABLED;
 		i++;
 	}
 }
