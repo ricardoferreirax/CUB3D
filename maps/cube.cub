@@ -1,10 +1,21 @@
-NO ./textures/text1.xpm
-SO ./textures/text1.xpm
-WE ./textures/text1.xpm
-EA ./textures/text1.xpm
+NO ./assets/textures/text1.xpm
+SO ./assets/textures/text1.xpm
+WE ./assets/textures/text1.xpm
+EA ./assets/textures/text1.xpm
 
-F ./textures/floor5.xpm
-C ./textures/ceiling.xpm
+F ./assets/textures/floor5.xpm
+C ./assets/textures/ceiling.xpm
+
+PD ./assets/textures/pacdot.xpm
+EN ./assets/textures/energizer.xpm
+BL ./assets/textures/blinky.xpm
+PI ./assets/textures/pinky.xpm
+IN ./assets/textures/inky.xpm
+CL ./assets/textures/clyde.xpm
+GC ./assets/textures/gate_closed.xpm
+
+GO ./assets/textures/gate_open.xpm
+
 
                             111111111111111
      111111                 110000001000011
@@ -24,7 +35,7 @@ C ./textures/ceiling.xpm
 10001   10001               110000010001
 11011   10101               100111000111
 1000111110001               1001 10001
-1010100010001               1001 10e01
+1010100010001               1001 10001
 1000001010101               1111 10101
 1000100010001                    10001
 1000111111011111                 11011                1111111111
@@ -43,7 +54,7 @@ C ./textures/ceiling.xpm
 1000110110001                    10001         1101 111111111
 1000001010101                    10001         110110000000001
 1000100010001                    10001         110111111111111
-1010111110001                    10101         11000000E000001
+1010111110001                    10101         110000000000001
 1000111110001111111111111        10001         111111111111111
 100000000000000001000000111      10001         111110000000101
 100000100000001001000000101      10001              111111111
@@ -54,7 +65,7 @@ C ./textures/ceiling.xpm
          11100000111        100001010101001
            1101111          100000000000001
             1001            100000000000001
-            1001            100000000000001
+            1001            1000E0000000001
             1111            100000000000001
                             100001010100001
                             100000000000001
@@ -63,3 +74,4 @@ C ./textures/ceiling.xpm
                             100100010001001
                             100000000000001
                             111111111111111
+

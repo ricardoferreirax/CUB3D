@@ -205,7 +205,8 @@ typedef enum e_ghost
 	BLINKY,
 	PINKY,
 	INKY,
-	CLYDE
+	CLYDE,
+	DISABLED
 } e_ghost;
 
 typedef enum e_state

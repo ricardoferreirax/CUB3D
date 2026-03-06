@@ -94,16 +94,17 @@ void ghost_color(t_ghost *ghost)
 			change_pallete((t_point){.x = 3, .y= 0}, &ghost->frames);
 }
 
-static void	init_one_ghost(t_game *g, t_ghost *gh, char spawn_char)
+static int	init_one_ghost(t_game *g, t_ghost *gh, char spawn_char)
 {
 	t_point	p;
 
 	gh->mental_map = copy_map(g->map.grid);
+	print_2d(gh->mental_map);
 	if (!gh->mental_map)
 		exit_game(EXIT_MALLOC, g, "init_one_ghost() was unable to copy map");
 	p = find_c(g->map.grid, spawn_char);
 	if (p.x < 0 || p.y < 0)
-		exit_game(EXIT_MAP, g, "init_one_ghost() found an invalid target");
+		return -1;
 	gh->pos.tile_pos.x = (double)p.x;
 	gh->pos.tile_pos.y = (double)p.y;
 	gh->pos.pixel_pos.x = gh->pos.tile_pos.x * 8;
@@ -113,27 +114,8 @@ static void	init_one_ghost(t_game *g, t_ghost *gh, char spawn_char)
 	gh->target_tile = p;
 	ghost_sprites(g, gh->name);
 	ghost_color(gh);
+	return 0;
 }
-
-// void	init_ghosts(t_game *g)
-// {
-// 	int		i;
-// 	int		name;
-// 	char	spawn;
-//
-// 	if (!g || !g->map.grid)
-// 		exit_game(EXIT_MAP, g, "init_ghosts() has not found a valid pointer");
-// 	i = 0;
-// 	while (i < 4)
-// 	{
-// 		ghost_info(i, &name, &spawn);
-// 		ft_bzero(&g->ghosts[i], sizeof(t_ghost));
-// 		g->ghosts[i].name = name;
-// 		init_one_ghost(g, &g->ghosts[i], spawn);
-// 		i++;
-// 	}
-// }
-
 
 void	init_ghosts(t_game *g)
 {
@@ -149,7 +131,8 @@ void	init_ghosts(t_game *g)
 		ghost_info(i, &name, &spawn);
 		ft_bzero(&g->ghosts[i], sizeof(t_ghost));
 		g->ghosts[i].name = name;
-		init_one_ghost(g, &g->ghosts[i], spawn);
+		if(init_one_ghost(g, &g->ghosts[i], spawn))
+			g->ghosts[i].name = DISABLED;
 		i++;
 	}
 }

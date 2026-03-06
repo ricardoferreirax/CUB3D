@@ -89,6 +89,7 @@ static int	find_player_spawn_in_map(t_game *g)
 		}
 		y++;
 	}
+	printf("Count: %d\n", count);
 	return (count);
 }
 

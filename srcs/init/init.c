@@ -96,6 +96,7 @@ void	init(t_game *g, char *path)
 	init_defaults(g);
 	init_minilib(g);
 	init_map(g, path);
+	print_2d(g->map.grid);
 	init_player(g);
 	init_execution(g);
 	init_menu(g);

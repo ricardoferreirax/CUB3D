@@ -74,47 +74,47 @@ void	render_sprite_into_framebuffer(t_game *game, t_point coord,
 			color = pixel_get(&game->sprite_sheet.sprite_img, point.x
 					+ sprite->coord.x, point.y + sprite->coord.y);
 			if ((color >> 24) != 0xFF)
-				ft_pixel_put(&game->win.frame_buffer, point.x + coord.x,
-					point.y + coord.y, color);
+				ft_pixel_put(&game->win.frame_buffer, point.x + coord.x, point.y
+					+ coord.y, color);
 			point.x++;
 		}
 		point.y++;
 	}
 }
 
-t_point continue_travel(t_point *ghost_pos, int dir)
+t_point	continue_travel(t_point *ghost_pos, int invalid_dir)
 {
-	if(dir == 0)
-		return((t_point){.x = ghost_pos->x, .y = ghost_pos->y +1});
-	if(dir == 1)
-		return((t_point){.x = ghost_pos->x + 1, .y = ghost_pos->y});
-	if(dir == 2)
-		return((t_point){.x = ghost_pos->x, .y = ghost_pos->y -1});
-	if(dir == 3)
-		return((t_point){.x = ghost_pos->x - 1, .y = ghost_pos->y});
+	int	dir;
 
+	dir = (invalid_dir + 2) % 4;
+	int direction[4][2] = {
+		{0, -1}, // up
+		{-1, 0}, // left
+		{0, 1},  // down
+		{1, 0}   // right
+	};
+	return ((t_point){.x = ghost_pos->x + direction[dir][0], .y = ghost_pos->y
+		+ direction[dir][1]});
 }
 
-//Only useful to compare distances as it returns the distance sqaured, for true distance it needs to be square rooted
 int	distance_to_target(t_ghost *ghost, int dy, int dx)
 {
 	int	result;
 
-	result = pow(((ghost->pos.tile_pos.x + dx) - ghost->target_tile.x), 2)
-		+ pow(((ghost->pos.tile_pos.y + dy) - ghost->target_tile.y), 2);
+	result = pow((((ghost->pos.pixel_pos.x / 8) + dx) - ghost->target_tile.x),
+			2) + pow((((ghost->pos.pixel_pos.y / 8) + dy)
+				- ghost->target_tile.y), 2);
 	return (result);
 }
 
-
 int	chose_next_move(t_ghost *ghost, char **map)
 {
-	int		i;
-	int		best;
-	int		best_dir;
-	int		dist;
+	int	i;
+	int	best;
+	int	best_dir;
+	int	dist;
 
-	int direction[4][2] = 
-	{
+	int direction[4][2] = {
 		{-1, 0}, // 0 = up
 		{0, -1}, // 1 = left
 		{1, 0},  // 2 = down
@@ -125,7 +125,7 @@ int	chose_next_move(t_ghost *ghost, char **map)
 	best_dir = -1;
 	while (i < 4)
 	{
-		if (map[(int)ghost->pos.tile_pos.y + direction[i][0]][(int)ghost->pos.tile_pos.x + direction[i][1]] != '1' && i != ghost->invalid_dir)
+		if ((map[ghost->pos.pixel_pos.y / 8 + direction[i][0]][ghost->pos.pixel_pos.x / 8 + direction[i][1]] != '1' ) && i != ghost->invalid_dir)
 		{
 			dist = distance_to_target(ghost, direction[i][0], direction[i][1]);
 			if (best == -1 || dist < best)
@@ -140,33 +140,35 @@ int	chose_next_move(t_ghost *ghost, char **map)
 		best_dir = (ghost->invalid_dir + 2) % 4;
 	ghost->pos.pixel_pos.y += direction[best_dir][0];
 	ghost->pos.pixel_pos.x += direction[best_dir][1];
-
-	return((best_dir + 2) % 4);
+	return ((best_dir + 2) % 4);
 }
 
-void update_ghost(t_game *game, t_ghost *ghost)
+void	update_ghost(t_ghost *ghost)
 {
-	if(ghost->pos.pixel_pos.x % 8 != 0 && ghost->pos.pixel_pos.y % 8 != 0)
+	if (ghost->pos.pixel_pos.x % 8 != 0 && ghost->pos.pixel_pos.y % 8 != 0)
 	{
-		ghost->pos.pixel_pos = continue_travel(&ghost->pos.pixel_pos, ghost->invalid_dir);
-		return;
+		ghost->pos.pixel_pos = continue_travel(&ghost->pos.pixel_pos,
+				ghost->invalid_dir);
+		return ;
 	}
-	ghost->invalid_dir = chose_next_move(ghost, game->map.grid);
+	ghost->invalid_dir = chose_next_move(ghost, ghost->mental_map);
 }
 
 void	render_ghosts_into_framebuffer(t_game *game)
 {
-	int	i;
+	int		i;
+	t_point	coord;
 
 	i = -1;
-	t_point coord;
-
 	while (++i < 4)
 	{
-		// update_ghost(game, game->ghosts[i], double dt)
+		if(game->ghosts[i].name == DISABLED)
+			continue;
+		update_ghost(&game->ghosts[i]);
 		coord.x = (game->ghosts[i].pos.pixel_pos.x * 8 + game->win.width / 2);
 		coord.y = (game->ghosts[i].pos.pixel_pos.y * 8 + game->win.height / 2);
-		render_sprite_into_framebuffer(game, coord, &game->ghosts[i].frames.left[0]);
+		render_sprite_into_framebuffer(game, coord,
+			&game->ghosts[i].frames.left[0]);
 	}
 }
 
