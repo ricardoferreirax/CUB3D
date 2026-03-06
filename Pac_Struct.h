@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/02 09:50:11 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/05 18:29:33 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,9 +140,6 @@ typedef struct s_raycasting
 	int		line_h;
 }	t_raycasting;
 
-
-
-
 typedef struct s_window
 {
 	void			*win_ptr;
@@ -198,7 +195,6 @@ typedef struct s_player
 	// 4 cardinal directions, 2 frames per animation
 	t_anim *frames;
 }	t_player;
-
 
 typedef enum e_ghost
 {
@@ -259,7 +255,6 @@ typedef struct s_elroy
 } t_ghost; */
 //At game start one of the penhouse ghost will activate it's counter, it will count up each dot pacman eats
 //if pacman eats all the dots it gets out, but if the ghost is forced out by timeout its dot counter is not reset and the next ghost dot counter starts counting.
-
 
 typedef struct s_ghost
 {
@@ -322,6 +317,15 @@ typedef enum e_mode
 	MODE_PACMAN = 1
 }	t_mode;
 
+typedef enum e_player_action
+{
+	MOVE_FORWARD,
+	MOVE_BACKWARD,
+	MOVE_LEFT,
+	MOVE_RIGHT,
+	ROTATE_LEFT,
+	ROTATE_RIGHT
+}	t_player_action;
 
 typedef struct s_textures
 {
@@ -403,7 +407,6 @@ int	ghost_opposite_dir(int dir);
 // =========================
 void	exit_game(int errcode, t_game *g, char *str);
 void	free_game(t_game *g);
-void	free_tab_tab(char **tab);
 
 // =========================
 // Ghost / AI / Utils
@@ -414,7 +417,6 @@ int		xtile(char **map);
 int		ytile(char **map);
 
 void	init_game(t_game *game);
-
 
 int	pixel_get(t_image *data, int x, int y);
 int	pixeL_get_coord(t_sprite_sheet *sheet, int i, int x, int y);

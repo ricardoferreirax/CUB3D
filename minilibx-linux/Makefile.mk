@@ -14,7 +14,7 @@
 INC	=%%%%
 
 UNAME = $(shell uname)
-CC	= clang-12
+CC	= clang
 ifeq ($(UNAME),FreeBSD)
 	CC = clang
 endif

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 21:54:56 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/01 23:22:58 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/05 18:14:51 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,25 @@
 
 int	map_is_wrap_tile(t_game *g, int row, int col)
 {
+	int	last;
+
+	last = map_row_last_col(g, row, 1);
+	if (last < 1)
+		return (0);
 	if (map_get_tile(g, row, 0) != WRAP_PORTS)
 		return (0);
-	if (map_get_tile(g, row, g->map.width - 1) != WRAP_PORTS)
+	if (map_get_tile(g, row, last) != WRAP_PORTS)
 		return (0);
-	if (col != 0 && col != g->map.width - 1)
+	if (col != 0 && col != last)
 		return (0);
 	if (map_tile_type(map_get_tile(g, row - 1, col), TILE_VOID)
 		|| map_tile_type(map_get_tile(g, row + 1, col), TILE_VOID))
 		return (0);
 	if (col == 0 && !map_tile_type(map_get_tile(g, row, 1), TILE_WALKABLE))
 		return (0);
-	if (col == g->map.width - 1
-		&& !map_tile_type(map_get_tile(g, row, g->map.width - 2), TILE_WALKABLE))
+	if (col == last && !map_tile_type(map_get_tile(g, row, last - 1), TILE_WALKABLE))
 		return (0);
 	return (1);
-}
-
-int	map_wrap_has_wrap(t_game *g, int row)
-{
-	if (!g || !g->map.grid)
-		return (0);
-	if (row < 0 || row >= g->map.height)
-		return (0);
-	if (g->map.width <= 1)
-		return (0);
-	return (g->map.grid[row][0] == WRAP_PORTS
-		&& g->map.grid[row][g->map.width - 1] == WRAP_PORTS);
 }
 
 double	get_sprite_wrap_offset_x(t_game *g, double sprite_x, double sprite_y)
@@ -48,60 +40,56 @@ double	get_sprite_wrap_offset_x(t_game *g, double sprite_x, double sprite_y)
 	double	offset_x;
 	double	map_width;
 	int		player_row;
-	int		sprite_row;
-	
+	int		last;
+
 	if (!g)
 		return (0.0);
-	offset_x = sprite_x - g->player.pos_x;
-	player_row = (int)g->player.pos_y;
-	sprite_row = (int)sprite_y;
-	if (sprite_row != player_row)
+	offset_x = sprite_x - g->player.pos_x; // calcula o offset horizontal do sprite em relaçao ao player
+	player_row = (int)g->player.pos_y; // determina a row do mapa onde o player esta
+	if ((int)sprite_y != player_row) // se o sprite não estiver na mesma row do player, não faz wrap e devolve o offset normal
 		return (offset_x);
-	if (!map_wrap_has_wrap(g, player_row))
+	last = map_row_last_col(g, player_row, 1); // obtém o índice da última coluna da row do player
+	if (last < 0) // se a row do player não tiver wrap devolve o offset normal
 		return (offset_x);
-	map_width = (double)g->map.width;
-	if (offset_x > map_width / 2.0)
-		offset_x -= map_width;
+	map_width = last + 1; // calcula a largura do mapa (nr de colunas) na row do player. +1 pois começa no 0
+	if (offset_x > map_width / 2.0) // se o offset horizontal do sprite for maior que metade da largura do mapa, significa que o sprite está mais próximo do player
+		offset_x -= map_width; // ajusta o offset para considerar o wrap
 	else if (offset_x < -map_width / 2.0)
 		offset_x += map_width;
 	return (offset_x);
 }
 
-int	ray_apply_wrap_x(t_game *g)
+int	ray_wrap_x(t_game *g)
 {
-	int	map_width;
+	int	last;
 
 	if (!g)
 		return (0);
-	if (!map_wrap_has_wrap(g, g->ray.map_y))
+	last = map_row_last_col(g, g->ray.map_y, 1); // obtém o índice da última coluna da row onde o ray está a apontar
+	if (last < 0) 
 		return (0);
-	map_width = g->map.width;
 	if (g->ray.map_x < 0)
-	{
-		g->ray.map_x = map_width - 1;
-		return (1);
-	}
-	if (g->ray.map_x >= map_width)
-	{
+		g->ray.map_x = last;
+	else if (g->ray.map_x > last)
 		g->ray.map_x = 0;
-		return (1);
-	}
 	return (1);
 }
 
 void	player_wrap_position(t_game *g)
 {
-	int	player_row;
-	int	map_width;
+	int		row;
+	int		last;
+	double	width;
 
 	if (!g)
 		return ;
-	player_row = (int)g->player.pos_y;
-	map_width = g->map.width;
-	if (!map_wrap_has_wrap(g, player_row))
+	row = (int)g->player.pos_y; // determina a row do mapa onde o player esta
+	last = map_row_last_col(g, row, 1); // obtém o índice da última coluna da row do player
+	if (last < 0) // se a row do player não tiver wrap
 		return ;
-	if (g->player.pos_x < 0.0)
-		g->player.pos_x += (double)map_width;
-	else if (g->player.pos_x >= (double)map_width)
-		g->player.pos_x -= (double)map_width;
+	width = (double)(last + 1); // calcula a largura do mapa (nr de colunas) na row do player. +1 pois começa no 0
+	while (g->player.pos_x < 0.0) // se a posição x do player for menor que 0 significa que ele ultrapassou o limite esquerdo do mapa
+		g->player.pos_x += width; // ajusta a posiçao do player para o lado direito do mapa considerando que ha wrap
+	while (g->player.pos_x >= width) // se a posição x do player for maior ou igual a largura do mapa, significa que ele ultrapassou o limite direito do mapa
+		g->player.pos_x -= width; // ajusta a posiçao do player para o lado esquerdo do mapa considerando que ha wrap
 }

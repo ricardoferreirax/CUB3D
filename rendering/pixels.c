@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   pixels.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 10:57:26 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/10 10:58:56 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/03/03 16:47:49 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
 
-void	clear_terminal(void)
+/* void	clear_terminal(void)
 {
 	write(1, "\033[H", 3);
-}
+} */
 
 void	ft_pixel_put(t_image *s, int x, int y, unsigned int color)
 {

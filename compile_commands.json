@@ -267,31 +267,6 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/map/map_dimensions.o",
-      "srcs/map/map_dimensions.c"
-    ],
-    "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/map_dimensions.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/map_dimensions.o"
-  },
-  {
-    "arguments": [
-      "/home/pedro/.local/bin/clang-12",
-      "-O3",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Wpedantic",
-      "-Wshadow",
-      "-Wdouble-promotion",
-      "-Wformat=2",
-      "-Wstrict-aliasing=2",
-      "-fno-omit-frame-pointer",
-      "-g",
-      "-Iinclude",
-      "-Ilibft",
-      "-c",
-      "-o",
       "objs/srcs/map/map_read.o",
       "srcs/map/map_read.c"
     ],
@@ -398,31 +373,6 @@
     "directory": "/var/home/pedro/Code/42/CUB3D",
     "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/map_wrap.c",
     "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/map_wrap.o"
-  },
-  {
-    "arguments": [
-      "/home/pedro/.local/bin/clang-12",
-      "-O3",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Wpedantic",
-      "-Wshadow",
-      "-Wdouble-promotion",
-      "-Wformat=2",
-      "-Wstrict-aliasing=2",
-      "-fno-omit-frame-pointer",
-      "-g",
-      "-Iinclude",
-      "-Ilibft",
-      "-c",
-      "-o",
-      "objs/srcs/map/minimap_test.o",
-      "srcs/map/minimap_test.c"
-    ],
-    "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/minimap_test.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/minimap_test.o"
   },
   {
     "arguments": [
@@ -942,62 +892,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/player/player_rotation.o",
-      "srcs/player/player_rotation.c"
+      "objs/srcs/player/player_controller.o",
+      "srcs/player/player_controller.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/player_rotation.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/player_rotation.o"
-  },
-  {
-    "arguments": [
-      "/home/pedro/.local/bin/clang-12",
-      "-O3",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Wpedantic",
-      "-Wshadow",
-      "-Wdouble-promotion",
-      "-Wformat=2",
-      "-Wstrict-aliasing=2",
-      "-fno-omit-frame-pointer",
-      "-g",
-      "-Iinclude",
-      "-Ilibft",
-      "-c",
-      "-o",
-      "objs/srcs/player/player_movement.o",
-      "srcs/player/player_movement.c"
-    ],
-    "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/player_movement.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/player_movement.o"
-  },
-  {
-    "arguments": [
-      "/home/pedro/.local/bin/clang-12",
-      "-O3",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Wpedantic",
-      "-Wshadow",
-      "-Wdouble-promotion",
-      "-Wformat=2",
-      "-Wstrict-aliasing=2",
-      "-fno-omit-frame-pointer",
-      "-g",
-      "-Iinclude",
-      "-Ilibft",
-      "-c",
-      "-o",
-      "objs/srcs/player/handle_gate_toggle.o",
-      "srcs/player/handle_gate_toggle.c"
-    ],
-    "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/handle_gate_toggle.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/handle_gate_toggle.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/player_controller.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/player_controller.o"
   },
   {
     "arguments": [
@@ -1098,6 +998,31 @@
     "directory": "/var/home/pedro/Code/42/CUB3D",
     "file": "/var/home/pedro/Code/42/CUB3D/srcs/hooks/handle_keys.c",
     "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/hooks/handle_keys.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/srcs/hooks/handle_gate_toggle.o",
+      "srcs/hooks/handle_gate_toggle.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/hooks/handle_gate_toggle.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/hooks/handle_gate_toggle.o"
   },
   {
     "arguments": [

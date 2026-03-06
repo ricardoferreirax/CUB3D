@@ -4,7 +4,7 @@ WE ./assets/textures/text1.xpm
 EA ./assets/textures/text1.xpm
 
 F ./assets/textures/floor5.xpm
-C ./assets/textures/ceiling.xpm
+C ./assets/textures/Starry_Sky.xpm
 
 PD ./assets/textures/pacdot.xpm
 EN ./assets/textures/energizer.xpm

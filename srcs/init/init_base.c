@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_base.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 16:04:01 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/25 16:08:01 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/03/04 14:59:38 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,6 @@ void	flood_fill(char **map, int x, int y)
 	flood_fill(map, x, y + 1);
 	flood_fill(map, x, y - 1);
 }
-
-
 
 int disambiguation(char **map, t_point coord)
 {

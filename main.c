@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/02 09:51:30 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/03 21:21:40 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ void	switch_mode_and_parse(t_game *g, t_mode mode, const char *path)
 	if (!g || !path)
 		exit_game(EXIT_MAP, g, "switch_mode_and_parse() has not found a path or game");
 	g->mode = mode;
-
 }
-
-
 
 int	main(int ac, char **av)
 {
