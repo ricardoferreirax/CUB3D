@@ -74,7 +74,7 @@ void	render_sprite_into_framebuffer(t_game *game, t_point coord,
 	}
 }
 
-t_point	continue_travel(t_point *ghost_pos, int invalid_dir)
+t_point	continue_travel(t_ghost ghost, int invalid_dir)
 {
 	int	dir;
 
@@ -85,7 +85,7 @@ t_point	continue_travel(t_point *ghost_pos, int invalid_dir)
 		{0, 1},  // down
 		{1, 0}   // right
 	};
-	return ((t_point){.x = ghost_pos->x + direction[dir][0], .y = ghost_pos->y
+	return ((t_point){.x = ghost.pos.pixel_pos.x + direction[dir][0], .y = ghost.pos.pixel_pos.y
 		+ direction[dir][1]});
 }
 
@@ -139,10 +139,9 @@ int	chose_next_move(t_ghost *ghost, char **map)
 
 int	update_ghost(t_ghost *ghost)
 {
-	if (ghost->pos.pixel_pos.x % 8 != 0 && ghost->pos.pixel_pos.y % 8 != 0)
+	if (ghost->pos.pixel_pos.x % 8 != 0 || ghost->pos.pixel_pos.y % 8 != 0)
 	{
-		ghost->pos.pixel_pos = continue_travel(&ghost->pos.pixel_pos,
-				ghost->invalid_dir);
+		ghost->pos.pixel_pos = continue_travel(*ghost, ghost->invalid_dir);
 		return 0;
 	}
 	ghost->invalid_dir = chose_next_move(ghost, ghost->mental_map);

@@ -107,8 +107,8 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char spawn_char)
 		return -1;
 	gh->pos.tile_pos.x = (double)p.x;
 	gh->pos.tile_pos.y = (double)p.y;
-	gh->pos.pixel_pos.x = gh->pos.tile_pos.x * 8;
-	gh->pos.pixel_pos.y = gh->pos.tile_pos.y * 8;
+	gh->pos.pixel_pos.x = p.x * 8;
+	gh->pos.pixel_pos.y = p.y  * 8;
 	ghost_update_pixel_pos(gh);
 	gh->invalid_dir = -1;
 	gh->target_tile = p;
