@@ -43,8 +43,9 @@ void	render_base_into_buffer(t_game *s)
 		{
 			color = pixel_get(&s->base, x, y);
 			if ((color >> 24) != 0xFF)
-				ft_pixel_put(&s->win.frame_buffer, x + (s->win.width / 2),
-					y + s->win.height - s->base.height  / 2, color);
+				ft_pixel_put(&s->win.frame_buffer, x + s->win.width / 2, y
+					+ s->win.height / 2, color);
+			x++;
 		}
 		y++;
 	}

@@ -103,7 +103,7 @@ void	flood_fill(char **map, int x, int y)
 {
 	if (x < 0 || x >= xtile(map) || y < 0
 		|| y >= ytile(map) || map[y][x] == 'F'
-		|| map[y][x] == '1' || map[y][x] == 'D' || map[y][x] == 'M')
+		|| map[y][x] == '1' || map[y][x] == 'D')
 		return ;
 	if(map[y][x] == 'G')
 	{

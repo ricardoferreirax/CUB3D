@@ -13,7 +13,7 @@
 NAME    = cub3d
 
 CC      = clang-12 -O3
-CFLAGS  = -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion -ffast-math -Wformat=2 -Wstrict-aliasing=2 \
+CFLAGS  = -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion  -Wformat=2 -Wstrict-aliasing=2 \
 		-fno-omit-frame-pointer \
 		-g 
 #-fsanitize=undefined 
