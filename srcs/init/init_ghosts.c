@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:28:58 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/02 09:52:07 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/07 11:33:24 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char spawn_char)
 	gh->target_tile = p;
 	ghost_sprites(g, gh->name);
 	ghost_color(gh);
-	return 0;
+	return 1;
 }
 
 void	init_ghosts(t_game *g)

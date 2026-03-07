@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 19:44:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/05 21:38:36 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/07 11:35:12 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	render_base_into_buffer(t_game *s)
 		{
 			color = pixel_get(&s->base, x, y);
 			if ((color >> 24) != 0xFF)
-				ft_pixel_put(&s->win.frame_buffer, x + s->win.width / 2, y
-					+ s->win.height / 2, color);
+				ft_pixel_put(&s->win.frame_buffer, x + 50,
+					y + s->win.height - s->base.height - 100, color);
 			x++;
 		}
 		y++;
