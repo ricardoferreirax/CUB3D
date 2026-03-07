@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:18:28 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/20 22:10:49 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/07 22:18:19 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,25 +48,6 @@ t_image	*ghost_tex(t_game *g, t_ghost *gh)
 	if (gh->name == INKY)
 		return (&g->tex.inky_img);
 	return (&g->tex.clyde_img);
-}
-
-void	convert_texture_coords(t_fc *fc, t_image *tex, int *tx, int *ty)
-{
-	double	u;
-	double	v;
-
-	u = fract_pos(fc->fx);
-	v = fract_pos(fc->fy);
-	*tx = (int)(u * (double)tex->width);
-	*ty = (int)(v * (double)tex->height);
-	if (*tx < 0)
-		*tx = 0;
-	if (*ty < 0)
-		*ty = 0;
-	if (*tx >= tex->width)
-		*tx = tex->width - 1;
-	if (*ty >= tex->height)
-		*ty = tex->height - 1;
 }
 
 int	clampi(int v, int lo, int hi)

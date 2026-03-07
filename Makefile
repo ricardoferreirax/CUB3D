@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/03/07 21:47:21 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/03/07 22:07:39 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,8 +59,7 @@ SRC_FILES = main.c \
 	srcs/render/render_wall_texture.c \
 	srcs/render/sprite_draw.c \
 	srcs/render/render_sprites.c \
-	srcs/render/render_floor_texture.c \
-	srcs/render/render_ceiling_texture.c \
+	srcs/render/render_floor_ceiling.c \
 	srcs/render/render_utils.c \
 	srcs/render/render_menu.c \
 	srcs/render/raycast_frame.c \

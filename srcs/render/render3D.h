@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/07 21:48:55 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/07 22:20:08 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,13 @@ typedef struct s_ghost	t_ghost;
 #define SPR_ENERGIZER  2
 #define SPR_GHOST      3
 
-#define CEILING_DIST 2.8  // CEILING_DIST > 1.0 O ceiling parece que fica mais longe (menos zoom na textura)
-#define CEILING_HORIZON 40.0 // ajusta a posição do horizonte. Valores positivos desce e negativos sobe
-#define CEILING_P_MIN 6.0
+#define CEILING_DIST 2.8
+#define CEILING_HORIZON 40.0
+#define CEILING_MIN_SCREEN_DIST 6.0
+#define CEILING_CENTER_MARGIN 2
+
+#define FLOOR_START_OFFSET 2
+#define FLOOR_MIN_DIST 4.0
 
 #endif
 
@@ -46,7 +50,6 @@ void	parse_floor_ceiling_color(t_game *g, const char *s, int *dst);
 void	parse_floor_ceiling_line(t_game *g, char id, char *value);
 void	fill_floor_color(t_image *img, int color, int horizon);
 void	fill_ceiling_color(t_image *img, int color, int horizon);
-void	convert_texture_coords(t_fc *fc, t_image *tex, int *tx, int *ty);
 void	sprite_draw(t_game *g, t_sprite *b, t_image *tex);
 int	sprite_project(t_game *g, double x, double y, t_sprite *b);
 int	sprite_build(t_game *g, t_sprite *b, int size_div);

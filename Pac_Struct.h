@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/05 18:29:33 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/07 22:09:53 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,11 @@ typedef struct s_image
 
 typedef struct s_fc
 {
-	double	fx;
-	double	fy;
-	double	stepx;
-	double	stepy;
-	double	rowdist;
+	double	pos_x;
+	double	pos_y;
+	double	step_x;
+	double	step_y;
+	double	dist;
 }	t_fc;
 
 typedef struct s_sprite
