@@ -6,14 +6,14 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 21:39:40 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/05 22:22:53 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/07 21:45:17 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 #include "render3D.h"
 
-static void	dda_step(t_game *g)
+static void	ray_step(t_game *g)
 {
 	if (g->ray.side_dist_x < g->ray.side_dist_y)
 	{
@@ -50,7 +50,7 @@ static int	ray_validate_wrap_x(t_game *g)
 	return (1);
 }
 
-int	perform_dda(t_game *g)
+int	raycast_dda(t_game *g)
 {
 	int		i;
 	int		limit;
@@ -62,7 +62,7 @@ int	perform_dda(t_game *g)
 	hit = 0;
 	while (++i < limit)
 	{
-		dda_step(g);
+		ray_step(g);
 		if (!ray_validate_wrap_x(g))
 			break ;
 		tile = map_get_tile(g, g->ray.map_y, g->ray.map_x);

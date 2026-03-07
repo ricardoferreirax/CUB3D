@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/03/07 11:31:09 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/03/07 21:47:21 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,10 +63,10 @@ SRC_FILES = main.c \
 	srcs/render/render_ceiling_texture.c \
 	srcs/render/render_utils.c \
 	srcs/render/render_menu.c \
-	srcs/render/process_raycasting.c \
+	srcs/render/raycast_frame.c \
 	srcs/render/render_center_hit.c \
 	srcs/render/sprite_draw_col.c \
-	srcs/render/perform_dda.c \
+	srcs/render/raycast_dda.c \
 	srcs/render/render_fill_color.c \
 	srcs/player/player_collision.c \
 	srcs/player/player_controller.c \

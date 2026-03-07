@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/26 23:10:57 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/07 21:48:55 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@ typedef struct s_ghost	t_ghost;
 #include "../../Pac_Struct.h"
 
 void	render_frame(t_game *game);
-void	process_raycasting(t_game *g);
-int	perform_dda(t_game *g);
-void	calculate_dda_step(t_game *g);
+void	raycast_frame(t_game *g);
+int	raycast_dda(t_game *g);
 int		register_center_hit(t_game *g, int screen_x, int hit_found);
 void	put_pixel_fast(t_image *img, int x, int y, int color);
 void	render_wall_col(t_game *g, int screen_x);
