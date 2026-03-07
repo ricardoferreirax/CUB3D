@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_raycasting.c                               :+:      :+:    :+:   */
+/*   raycast_frame.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/07 21:45:56 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/07 23:06:35 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	raycast_frame(t_game *g)
 		{
 			ray_perp_wall_distance(g); // calcula a distância perpendicular da parede
 			ray_draw_range(g); // calcula o range de pixels a desenhar para a parede
-			render_wall_col(g, col); // renderiza a coluna da parede
+			render_wall_column(g, col); // renderiza a coluna da parede
 			g->ray.z_buffer[col] = g->ray.perp_wall_dist;
 			center_hit = register_center_hit(g, col, center_hit);
 		}
