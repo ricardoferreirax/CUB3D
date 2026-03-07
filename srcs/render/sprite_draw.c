@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 22:13:51 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/01 23:25:49 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/07 22:35:48 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ int	sprite_build(t_game *g, t_sprite *b, int size_div)
 	vmove = (int)(0.10 * (double)g->win.height / b->depth);
 	b->raw_x0 = b->screen_x - b->size / 2;
 	b->raw_y0 = h - b->size / 2 + vmove;
-	b->x0 = clampi(b->raw_x0, 0, g->win.width - 1);
-	b->x1 = clampi(b->raw_x0 + b->size, 0, g->win.width - 1);
-	b->y0 = clampi(b->raw_y0, 0, g->win.height - 1);
-	b->y1 = clampi(b->raw_y0 + b->size, 0, g->win.height - 1);
+	b->x0 = clamp_int(b->raw_x0, 0, g->win.width - 1);
+	b->x1 = clamp_int(b->raw_x0 + b->size, 0, g->win.width - 1);
+	b->y0 = clamp_int(b->raw_y0, 0, g->win.height - 1);
+	b->y1 = clamp_int(b->raw_y0 + b->size, 0, g->win.height - 1);
 	return (b->x0 < b->x1 && b->y0 < b->y1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:18:28 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/07 22:18:19 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/07 22:34:09 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ t_image	*ghost_tex(t_game *g, t_ghost *gh)
 	return (&g->tex.clyde_img);
 }
 
-int	clampi(int v, int lo, int hi)
+int	clamp_int(int value, int min, int max)
 {
-	if (v < lo)
-		return (lo);
-	if (v > hi)
-		return (hi);
-	return (v);
+	if (value < min)
+		return (min);
+	if (value > max)
+		return (max);
+	return (value);
 }

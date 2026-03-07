@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 22:11:20 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/20 23:09:01 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/07 22:36:02 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	sprite_tx(t_sprite *b, t_image *tex, int x)
 	int	tx;
 
 	tx = (x - b->raw_x0) * tex->width / b->size;
-	return (clampi(tx, 0, tex->width - 1));
+	return (clamp_int(tx, 0, tex->width - 1));
 }
 
 static int	sprite_ty(t_sprite *b, t_image *tex, int y)
@@ -36,7 +36,7 @@ static int	sprite_ty(t_sprite *b, t_image *tex, int y)
 	int	ty;
 
 	ty = (y - b->raw_y0) * tex->height / b->size;
-	return (clampi(ty, 0, tex->height - 1));
+	return (clamp_int(ty, 0, tex->height - 1));
 }
 
 int	sprite_draw_col(t_game *g, t_sprite *b, int x, t_image *tex)
