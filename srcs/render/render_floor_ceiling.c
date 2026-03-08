@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:15:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/08 22:21:43 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/08 23:15:53 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@ static void	convert_texture_coords(t_fc *fc, t_image *tex, int *tex_x, int *tex_
 
 	u = fractional_positive_part(fc->pos_x);
 	v = fractional_positive_part(fc->pos_y);
-	*tex_x = (int)(u * (double)tex->width);
-	*tex_y = (int)(v * (double)tex->height);
-	if (*tex_x < 0)
+	*tex_x = (int)(u * (double)tex->width); // converte u para coordenada da textura ao multiplicar pela largura da textura
+	*tex_y = (int)(v * (double)tex->height); // converte v para coordenada da textura ao multiplicar pela altura da textura
+	if (*tex_x < 0) // se a coordenada da textura for negativa, ajusta para 0
 		*tex_x = 0;
 	if (*tex_y < 0)
 		*tex_y = 0;
-	if (*tex_x >= tex->width)
-		*tex_x = tex->width - 1;
-	if (*tex_y >= tex->height)
-		*tex_y = tex->height - 1;
+	if (*tex_x >= tex->width) // se a coordenada da textura for maior ou igual à largura da textura
+		*tex_x = tex->width - 1; // ajusta para a última coluna da textura
+	if (*tex_y >= tex->height) // se a coordenada da textura for maior ou igual à altura da textura
+		*tex_y = tex->height - 1; // ajusta para a última linha da textura
 }
 
 static void	draw_plane_row(t_game *g, t_fc *plane, t_image *tex, int row)

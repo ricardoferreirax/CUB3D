@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 18:15:08 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/08 22:28:49 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/08 23:13:31 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,18 @@ double	fractional_positive_part(double x)
 {
 	int	i; // guarda a parte inteira de x
 
-	i = (int)x;                         // converte x para inteiro ao truncar a parte decimal
-	if (x < 0.0 && (double)i != x)      // se x for negativo e tiver parte decimal
-		i -= 1;                         // ajusta a parte inteira para o próximo número inteiro menor
-	return (x - (double)i);             // devolve so a parte fracionaria positiva
+	i = (int)x;         // converte x para inteiro ao truncar a parte decimal
+	if (x < 0.0 && (double)i != x) // se x for negativo e tiver parte decimal
+		i -= 1;       // ajusta a parte inteira para o próximo número inteiro menor
+	return (x - (double)i);  // devolve so a parte fracionaria positiva
 }
 
 static int	get_wall_tex_x(t_game *g, t_image *tex)
 {
-	double	wall_offset;                // posição fracionária do hit na parede
-	int		tex_x;                      // coluna da textura que vai ser utilizada
+	double	wall_offset;  // posição fracionária do hit na parede
+	int		tex_x;  // coluna da textura que vai ser utilizada
 
-	if (g->ray.hit_side == 0)           // se a parede atingida for vertical (lado X)
+	if (g->ray.hit_side == 0)  // se a parede atingida for vertical (lado X)
 		wall_offset = g->player.pos_y + g->ray.perp_wall_dist * g->ray.ray_dir_y;
 	else                                // se a parede atingida for horizontal (lado Y)
 		wall_offset = g->player.pos_x + g->ray.perp_wall_dist * g->ray.ray_dir_x;
@@ -44,12 +44,12 @@ static int	get_wall_tex_x(t_game *g, t_image *tex)
 
 void	render_wall_column(t_game *g, int screen_x)
 {
-	t_image	*wall_tex;                  // textura da parede do lado atingido
-	int		screen_y;                   // linha atual do ecrã onde vai ser desenhado o pixel
-	int		tex_x;                      // coluna da textura da parede atingida
-	double	tex_y_pos;                  // posição vertical atual dentro da textura
+	t_image	*wall_tex;     // textura da parede do lado atingido
+	int		screen_y;      // linha atual do ecrã onde vai ser desenhado o pixel
+	int		tex_x;         // coluna da textura da parede atingida
+	double	tex_y_pos;     // posição vertical atual dentro da textura
 
-	if (g->ray.line_h <= 0)            // se a altura da parede for inválida, não desenha nada
+	if (g->ray.line_h <= 0)    // se a altura da parede for inválida, não desenha nada
 		return ;
 	wall_tex = texture_pick_wall(g);   // escolhe a textura correta conforme o lado/tile atingido
 	tex_x = get_wall_tex_x(g, wall_tex); // calcula a coluna horizontal da textura para esta parede
