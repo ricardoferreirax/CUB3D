@@ -6,12 +6,9 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:15:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/08 23:15:53 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/08 23:16:31 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../../Pac_Struct.h"
-#include "render3D.h"
 
 #include "../../Pac_Struct.h"
 #include "render3D.h"
