@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:18:28 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/07 22:34:09 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/08 22:14:39 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,6 @@ void	put_pixel_fast(t_image *img, int x, int y, int color)
 	stride = img->l_len / 4;
 	buf = (unsigned int *)img->img_addr;
 	buf[y * stride + x] = (unsigned int)color;
-}
-
-double	fract_pos(double x)
-{
-	int	i;
-
-	i = (int)x;
-	if (x < 0.0 && (double)i != x)
-		i -= 1;
-	return (x - (double)i);
 }
 
 t_image	*ghost_tex(t_game *g, t_ghost *gh)

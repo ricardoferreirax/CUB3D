@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:15:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/07 22:19:58 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/08 22:21:43 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ static void	convert_texture_coords(t_fc *fc, t_image *tex, int *tex_x, int *tex_
 	double	u;
 	double	v;
 
-	u = fract_pos(fc->pos_x);
-	v = fract_pos(fc->pos_y);
+	u = fractional_positive_part(fc->pos_x);
+	v = fractional_positive_part(fc->pos_y);
 	*tex_x = (int)(u * (double)tex->width);
 	*tex_y = (int)(v * (double)tex->height);
 	if (*tex_x < 0)
