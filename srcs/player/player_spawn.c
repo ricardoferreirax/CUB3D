@@ -64,7 +64,7 @@ static void	set_player_spawn(t_game *game, int col, int row, char dir)
 	game->player.pos_y = (double)row + 0.5;
 	set_player_orientation_ns(game, dir);
 	set_player_orientation_ew(game, dir);
-	game->map.grid[row][col] = OPEN_SPACE;
+	// game->map.grid[row][col] = OPEN_SPACE;
 }
 
 static int	find_player_spawn(t_game *game)

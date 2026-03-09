@@ -98,22 +98,18 @@ t_point find_spawn(char **map, char ghost)
 {
 	t_point gate_pos;
 	gate_pos = find_c(map, GATE);
-	if(ghost == 'B')
+	if(ghost == BLINKY_T)
 	{
 		gate_pos.y -= 1;
 		return gate_pos;
 	}
 	gate_pos.y += 1;
-	if(ghost == 'P')
+	if(ghost == PINKY_T)
 		return gate_pos;
-	if(ghost == 'I')
-	{
+	if(ghost == INKY_T)
 		gate_pos.x += 1;
-	}
-	if(ghost == 'C')
-	{
+	if(ghost == CLYDE_T) 
 		gate_pos.x -= 1;
-	}
 	return gate_pos;
 }
 
@@ -122,23 +118,23 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char)
 	t_point	target_point;
 	t_point spawn_point;
 
-	spawn_point.x = 0;
-	spawn_point.y = 0;
+	// spawn_point.x = 0;
+	// spawn_point.y = 0;
 	gh->mental_map = copy_map(g->map.grid);
 	if (!gh->mental_map)
 		exit_game(EXIT_MALLOC, g, "init_one_ghost() was unable to copy map");
 	target_point = find_c(g->map.grid, target_char);
-	// spawn_point = find_spawn(g->map.grid, target_char);
+	spawn_point = find_spawn(g->map.grid, target_char);
 	if (target_point.x < 0 || target_point.y < 0 || spawn_point.x < 0 || spawn_point.y < 0)
 		return -1;
-	// gh->pos.tile_pos.x = (double)spawn_point.x;
-	// gh->pos.tile_pos.y = (double)spawn_point.y;
-	// gh->pos.pixel_pos.x = spawn_point.x * 8;
-	// gh->pos.pixel_pos.y = spawn_point.y  * 8;
-	gh->pos.tile_pos.x = (double)target_point.x;
-	gh->pos.tile_pos.y = (double)target_point.y;
-	gh->pos.pixel_pos.x = target_point.x * 8;
-	gh->pos.pixel_pos.y = target_point.y * 8;
+	gh->pos.tile_pos.x = (double)spawn_point.x;
+	gh->pos.tile_pos.y = (double)spawn_point.y;
+	gh->pos.pixel_pos.x = spawn_point.x * 8;
+	gh->pos.pixel_pos.y = spawn_point.y  * 8;
+	// gh->pos.tile_pos.x = (double)target_point.x;
+	// gh->pos.tile_pos.y = (double)target_point.y;
+	// gh->pos.pixel_pos.x = target_point.x * 8;
+	// gh->pos.pixel_pos.y = target_point.y * 8;
 	// ghost_update_pixel_pos(gh);
 	gh->invalid_dir = -1;
 	gh->target_tile = target_point;

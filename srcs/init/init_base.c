@@ -117,9 +117,10 @@ void	flood_fill(char **map, int x, int y)
 	flood_fill(map, x, y - 1);
 }
 
-int disambiguation(char **map, t_point coord)
+int disambiguation(t_point player_spawn, char **map, t_point coord)
 {
-	flood_fill(map, 24, 14);
+	ft_printf("Player in x possition: %d and y possition: %d\n", player_spawn.x, player_spawn.y);
+	flood_fill(map, player_spawn.x, player_spawn.y);
 	unsigned char	mask;
 
 	mask = 0;
@@ -164,6 +165,21 @@ int squared_corners(int final)
 	return(final);
 }
 
+t_point player_spawn(char **map)
+{
+	t_point pos;
+	char *str = "NEWS";
+	int i = 0;
+	while(str[i])
+	{
+		pos = find_c(map, str[i]);
+		if(pos.x >= 0 && pos.y >= 0)
+			break;
+		i++;
+	}
+	return pos;
+}
+
 int	which_wall(char **original_map, t_map map, t_point *coord)
 {
 	unsigned char	mask;
@@ -197,7 +213,7 @@ int	which_wall(char **original_map, t_map map, t_point *coord)
 	char **temp;
 	temp = copy_map(map.grid);
 	if(final == 0)
-		final = disambiguation(temp, *coord);
+		final = disambiguation(player_spawn(original_map), temp, *coord);
 	if(original_map[coord->y][coord->x] == 'M')
 		final = squared_corners(final);
 	free_2d((void **)temp);
