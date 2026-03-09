@@ -6,23 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 18:15:08 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/08 23:13:31 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/09 13:27:27 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 #include "render3D.h"    
 #include "../textures/textures3D.h"
-
-double	fractional_positive_part(double x)
-{
-	int	i; // guarda a parte inteira de x
-
-	i = (int)x;         // converte x para inteiro ao truncar a parte decimal
-	if (x < 0.0 && (double)i != x) // se x for negativo e tiver parte decimal
-		i -= 1;       // ajusta a parte inteira para o próximo número inteiro menor
-	return (x - (double)i);  // devolve so a parte fracionaria positiva
-}
 
 static int	get_wall_tex_x(t_game *g, t_image *tex)
 {
@@ -33,7 +23,7 @@ static int	get_wall_tex_x(t_game *g, t_image *tex)
 		wall_offset = g->player.pos_y + g->ray.perp_wall_dist * g->ray.ray_dir_y;
 	else                                // se a parede atingida for horizontal (lado Y)
 		wall_offset = g->player.pos_x + g->ray.perp_wall_dist * g->ray.ray_dir_x;
-	wall_offset = fractional_positive_part(wall_offset); // fica só com a parte decimal entre 0 e 1
+	wall_offset = fract_pos(wall_offset); // fica só com a parte decimal entre 0 e 1
 	tex_x = (int)(wall_offset * (double)tex->width);    // converte esse offset para a coluna correspondente da textura
 	tex_x = clamp_int(tex_x, 0, tex->width - 1);         // garante que tex_x fica dentro dos limites da textura
 	if ((g->ray.hit_side == 0 && g->ray.ray_dir_x < 0)   // se bateu no lado oeste

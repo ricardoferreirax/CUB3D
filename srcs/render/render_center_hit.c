@@ -6,17 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 13:48:50 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/07 22:24:30 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/09 13:20:33 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 #include "render3D.h"
-
-static int	is_screen_center(t_game *g, int col)
-{
-	return (col == (g->win.width - 1) / 2 || col == g->win.width / 2);
-}
 
 static char	get_hit_wall_dir(t_game *g)
 {
@@ -29,6 +24,11 @@ static char	get_hit_wall_dir(t_game *g)
 	if (g->ray.ray_dir_y < 0)
 		return ('N');
 	return ('S');
+}
+
+static int	is_screen_center(t_game *g, int col)
+{
+	return (col == (g->win.width - 1) / 2 || col == g->win.width / 2);
 }
 
 int	register_center_hit(t_game *g, int col, int found)

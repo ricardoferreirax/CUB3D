@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:18:28 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/08 22:14:39 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/09 14:25:24 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,14 @@ int	clamp_int(int value, int min, int max)
 	if (value > max)
 		return (max);
 	return (value);
+}
+
+double	fract_pos(double x)
+{
+	int	i; // guarda a parte inteira de x
+
+	i = (int)x;         // converte x para inteiro ao truncar a parte decimal
+	if (x < 0.0 && (double)i != x) // se x for negativo e tiver parte decimal
+		i -= 1;       // ajusta a parte inteira para o próximo número inteiro menor
+	return (x - (double)i);  // devolve so a parte fracionaria positiva
 }
