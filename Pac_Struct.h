@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/07 22:09:53 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/09 16:45:02 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,15 +105,15 @@ typedef struct s_fc
 
 typedef struct s_sprite
 {
-	double	depth;
-	int		screen_x;
-	int		size;
-	int		x0;
-	int		x1;
-	int		y0;
-	int		y1;
-	int raw_x0;
-	int raw_y0;
+	double	dist; // distancia do sprite ao player
+	int		screen_x; // posição horizontal do sprite na tela (coluna onde o centro do sprite deve ser desenhado)
+	int		size; // tamanho do sprite projetado na tela 
+	int		draw_start_x; // coluna inicial onde o sprite começa a desenhar
+	int		draw_end_x; // coluna final onde o sprite termina de desenhar
+	int		draw_start_y; // linha inicial onde o sprite começa a desenhar
+	int		draw_end_y; // linha final onde o sprite termina de desenhar
+	int 	tex_start_x; // coordenada x da textura correspondente à coluna draw_start_x do sprite
+	int 	tex_start_y; // coordenada y da textura correspondente à linha draw_start_y do
 }	t_sprite;
 
 typedef struct s_raycasting

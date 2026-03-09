@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:15:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/09 15:48:05 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/09 16:13:01 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,41 +15,44 @@
 
 static void	set_plane(t_game *g, t_fc *plane, double dist)
 {
-	plane->step_x = dist * (2.0 * g->player.plane_x) / g->win.width;
-	plane->step_y = dist * (2.0 * g->player.plane_y) / g->win.width;
-	plane->pos_x = g->player.pos_x + dist 
-		* (g->player.dir_x - g->player.plane_x);
-	plane->pos_y = g->player.pos_y + dist 
-		* (g->player.dir_y - g->player.plane_y);
+	double	left_x; // componente x do vetor direção do raio que passa pelo canto esquerdo da tela
+	double	left_y; // componente y do vetor direção do raio que passa pelo canto esquerdo da tela
+
+	left_x = g->player.dir_x - g->player.plane_x; // direção do raio para o canto esquerdo da tela no eixo x
+	left_y = g->player.dir_y - g->player.plane_y; // direção do raio para o canto esquerdo da tela no eixo y
+	plane->step_x = dist * (2.0 * g->player.plane_x) / g->win.width; // avanço no eixo x no mundo para cada pixel da linha
+	plane->step_y = dist * (2.0 * g->player.plane_y) / g->win.width;  // avanço no eixo y no mundopara cada pixel da linha
+	plane->pos_x = g->player.pos_x + dist * left_x; // posição inicial x no mundo para a linha atual - o primeiro pixel da linha
+	plane->pos_y = g->player.pos_y + dist * left_y; // posição inicial y no mundo para a linha atual - o primeiro pixel da linha 
 }
 
 static void	draw_plane_row(t_game *g, t_fc *plane, t_image *tex, int row)
 {
-	unsigned int	*pixels;
-	int				col;
-	int				tex_x;
-	int				tex_y;
+	unsigned int	*pixels; // linha atual do frame buffer onde os pixels vão ser escritos
+	int				col; // coluna atual do frame buffer no ecrã onde o pixel vai ser desenhado
+	int				tex_x; // coordenada x da textura correspondente ao pixel atual da linha a ser desenhada
+	int				tex_y; // coordenada y da textura correspondente ao pixel atual da linha a ser desenhada
 
 	pixels = (unsigned int *)(g->win.frame_buffer.img_addr + row 
-		* g->win.frame_buffer.l_len);
-	col = 0;
-	while (col < g->win.width)
+		* g->win.frame_buffer.l_len); // calcula o endereço do início da linha row atual no frame buffer para a escrita dos pixels
+	col = 0; // começa a desenhar na primeira coluna da linha
+	while (col < g->win.width) // percorre todas as colunas da linha atual
 	{
-		tex_x = (int)(fract_pos(plane->pos_x) * tex->width);
+		tex_x = (int)(fract_pos(plane->pos_x) * tex->width); // calcula a coordenada x da textura correspondente à posição atual no mundo do plano para esta coluna
 		tex_y = (int)(fract_pos(plane->pos_y) * tex->height);
-		pixels[col] = tex_pixel(tex, tex_x, tex_y);
-		plane->pos_x += plane->step_x;
-		plane->pos_y += plane->step_y;
-		col++;
+		pixels[col] = tex_pixel(tex, tex_x, tex_y); // copia o pixel da textura para o frame buffer na posição correspondente à coluna atual da linha
+		plane->pos_x += plane->step_x; // avança a posição x no mundo do plano para o próximo pixel da linha
+		plane->pos_y += plane->step_y; // avança a posição y no mundo do plano para o próximo pixel da linha
+		col++; // passa para a próxima coluna da linha
 	}
 }
 
 void	render_floor_texture(t_game *g)
 {
-	t_fc	plane;
-	int		row;
-	double	dist;
-	double	screen_dist;
+	t_fc	plane; // guarda os dados da linha atual do floor
+	int		row; // linha atual do frame buffer no ecrã onde os pixels do chão vão ser desenhados
+	double	dist; // distância perpendicular do player ao plano do chão para a linha atual do chão a ser desenhada
+	double	screen_dist; // distância vertical da linha atual do chão ao centro da tela
 
 	if (!g || !g->win.frame_buffer.img_addr)
 		return ;
@@ -58,16 +61,16 @@ void	render_floor_texture(t_game *g)
 		fill_floor_color(&g->win.frame_buffer, g->map.floor_color, 0);
 		return ;
 	}
-	row = g->win.height / 2 + FLOOR_START_OFFSET;
-	while (row < g->win.height)
+	row = g->win.height / 2 + FLOOR_START_OFFSET; // começa a desenhar o floor a partir do centro da tela
+	while (row < g->win.height) // percorre todas as linhas do floor até ao final/fundo da tela
 	{
-		screen_dist = row - g->win.height * 0.5;
-		if (screen_dist < FLOOR_MIN_DIST)
+		screen_dist = row - g->win.height * 0.5; // calcula a distância vertical da linha atual do chão ao centro da tela
+		if (screen_dist < FLOOR_MIN_DIST) // evita valores demasiado pequenos
 			screen_dist = FLOOR_MIN_DIST;
-		dist = (g->win.height * 0.5) / screen_dist;
-		set_plane(g, &plane, dist);
-		draw_plane_row(g, &plane, &g->tex.floor_img, row);
-		row++;
+		dist = (g->win.height * 0.5) / screen_dist; // converte a distância na tela para a distancia perpendicular no mundo 
+		set_plane(g, &plane, dist); // prepara a posição inicial e os steps da linha atual do chão a ser desenhada
+		draw_plane_row(g, &plane, &g->tex.floor_img, row); // desenha a linha atual do chão com a textura do chão
+		row++; // passa para a próxima linha do chão a ser desenhada
 	}
 }
 
