@@ -139,7 +139,7 @@ int	chose_next_move(t_ghost *ghost, char **map)
 
 int	update_ghost(t_ghost *ghost)
 {
-	if (ghost->pos.pixel_pos.x % 8 != 0 || ghost->pos.pixel_pos.y % 8 != 0)
+	if (ghost->pos.pixel_pos.x % 8 != 0 && ghost->pos.pixel_pos.y % 8 != 0)
 	{
 		ghost->pos.pixel_pos = continue_travel(*ghost, ghost->invalid_dir);
 		return 0;
@@ -161,8 +161,8 @@ void	render_ghosts_into_framebuffer(t_game *game)
 		if(game->ghosts[i].name == DISABLED)
 			continue;
 		update_ghost(&game->ghosts[i]);
-		coord.x = (game->ghosts[i].pos.pixel_pos.x * 8 + game->win.width / 2);
-		coord.y = (game->ghosts[i].pos.pixel_pos.y * 8 + game->win.height / 2);
+		coord.x = (game->ghosts[i].pos.pixel_pos.x + game->win.width / 2);
+		coord.y = (game->ghosts[i].pos.pixel_pos.y + game->win.height / 2);
 		render_sprite_into_framebuffer(game, coord,
 			&game->ghosts[i].frames.left[0]);
 	}
@@ -191,3 +191,4 @@ void	render_frame(t_game *game)
 	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr,
 		game->win.frame_buffer.img_ptr, 0, 0);
 }
+

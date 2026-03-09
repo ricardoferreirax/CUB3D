@@ -38,11 +38,11 @@ static void	ghost_info(int i, int *name, char *spawn)
 	}
 }
 
-static void	ghost_update_pixel_pos(t_ghost *gh) // guardar pixel_pos para o minimapa 
-{
-	gh->pos.pixel_pos.x = (gh->pos.tile_pos.x + 0.5) * (double)TILE_SIZE_3D;
-	gh->pos.pixel_pos.y = (gh->pos.tile_pos.y + 0.5) * (double)TILE_SIZE_3D;
-}
+// static void	ghost_update_pixel_pos(t_ghost *gh) // guardar pixel_pos para o minimapa 
+// {
+// 	gh->pos.pixel_pos.x = (gh->pos.tile_pos.x + 0.5) * (double)TILE_SIZE_3D;
+// 	gh->pos.pixel_pos.y = (gh->pos.tile_pos.y + 0.5) * (double)TILE_SIZE_3D;
+// }
 
 void ghost_sprites(t_game *game, e_ghost ghost)
 {
@@ -94,24 +94,54 @@ void ghost_color(t_ghost *ghost)
 			change_pallete((t_point){.x = 3, .y= 0}, &ghost->frames);
 }
 
-static int	init_one_ghost(t_game *g, t_ghost *gh, char spawn_char)
+t_point find_spawn(char **map, char ghost)
 {
-	t_point	p;
+	t_point gate_pos;
+	gate_pos = find_c(map, GATE);
+	if(ghost == 'B')
+	{
+		gate_pos.y -= 1;
+		return gate_pos;
+	}
+	gate_pos.y += 1;
+	if(ghost == 'P')
+		return gate_pos;
+	if(ghost == 'I')
+	{
+		gate_pos.x += 1;
+	}
+	if(ghost == 'C')
+	{
+		gate_pos.x -= 1;
+	}
+	return gate_pos;
+}
 
+static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char)
+{
+	t_point	target_point;
+	t_point spawn_point;
+
+	spawn_point.x = 0;
+	spawn_point.y = 0;
 	gh->mental_map = copy_map(g->map.grid);
-	print_2d(gh->mental_map);
 	if (!gh->mental_map)
 		exit_game(EXIT_MALLOC, g, "init_one_ghost() was unable to copy map");
-	p = find_c(g->map.grid, spawn_char);
-	if (p.x < 0 || p.y < 0)
+	target_point = find_c(g->map.grid, target_char);
+	// spawn_point = find_spawn(g->map.grid, target_char);
+	if (target_point.x < 0 || target_point.y < 0 || spawn_point.x < 0 || spawn_point.y < 0)
 		return -1;
-	gh->pos.tile_pos.x = (double)p.x;
-	gh->pos.tile_pos.y = (double)p.y;
-	gh->pos.pixel_pos.x = p.x * 8;
-	gh->pos.pixel_pos.y = p.y  * 8;
-	ghost_update_pixel_pos(gh);
+	// gh->pos.tile_pos.x = (double)spawn_point.x;
+	// gh->pos.tile_pos.y = (double)spawn_point.y;
+	// gh->pos.pixel_pos.x = spawn_point.x * 8;
+	// gh->pos.pixel_pos.y = spawn_point.y  * 8;
+	gh->pos.tile_pos.x = (double)target_point.x;
+	gh->pos.tile_pos.y = (double)target_point.y;
+	gh->pos.pixel_pos.x = target_point.x * 8;
+	gh->pos.pixel_pos.y = target_point.y * 8;
+	// ghost_update_pixel_pos(gh);
 	gh->invalid_dir = -1;
-	gh->target_tile = p;
+	gh->target_tile = target_point;
 	ghost_sprites(g, gh->name);
 	ghost_color(gh);
 	return 0;
@@ -131,7 +161,7 @@ void	init_ghosts(t_game *g)
 		ghost_info(i, &name, &spawn);
 		ft_bzero(&g->ghosts[i], sizeof(t_ghost));
 		g->ghosts[i].name = name;
-		if(init_one_ghost(g, &g->ghosts[i], spawn))
+		if(init_one_ghost(g, &g->ghosts[i], spawn) || g->mode == MODE_CUBE)
 			g->ghosts[i].name = DISABLED;
 		i++;
 	}

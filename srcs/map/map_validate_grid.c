@@ -14,6 +14,7 @@
 
 static int	map_is_valid_tile(t_game *g, char c)
 {
+	return 1;
 	if (c == '\0')
 		return (0);
 	if (c == '\n')

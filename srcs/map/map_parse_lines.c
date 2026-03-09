@@ -63,6 +63,14 @@ static int	map_is_cub_prefix(char *p)
 	return (0);
 }
 
+bool target_tile(char c)
+{
+	if(c == 'L' || c == 'V' || c == 'K' || c == 'Y')
+		return true;
+	return false;
+}
+
+
 static int	map_is_valid_char_in_line(char c, t_mode mode)
 {
 	if (c == '\n' || c == ' ' || c == '\t'
