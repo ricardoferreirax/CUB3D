@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 22:38:39 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/27 22:17:37 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/10 21:05:33 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,14 @@ static int	map_is_cub_prefix(char *p)
 	return (0);
 }
 
+bool target_tile(char c)
+{
+	if(c == 'L' || c == 'V' || c == 'K' || c == 'Y')
+		return true;
+	return false;
+}
+
+
 static int	map_is_valid_char_in_line(char c, t_mode mode)
 {
 	if (c == '\n' || c == ' ' || c == '\t'
@@ -88,7 +96,11 @@ int	map_is_map_line(t_game *g, char *line)
 		return (0);
 	p = skip_whitespace(line);
 	if (!*p || *p == '\n' || map_is_cub_prefix(p))
+	{
+		ft_printf("TEST: ");
+		ft_printf("%s", line);
 		return (0);
+	}
 	has_tile = 0;
 	while (*p && *p != '\n')
 	{

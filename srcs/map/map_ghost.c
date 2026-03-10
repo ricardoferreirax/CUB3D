@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 22:37:05 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/01 23:05:42 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/10 21:05:11 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,10 @@ static void	copy_map_row(char *row_dst, const char *row_src)
 	{
 		if (row_src[col] == 'M')
 			row_dst[col] = WALL;
-		else if(row_src[col] == 'D')
-				row_dst[col] = '0';
-		else if(row_src[col] == '\n')
-
-				row_dst[col] = '\0';
+		else if (row_src[col] == 'D')
+			row_dst[col] = '0';
+		else if (row_src[col] == '\n')
+			row_dst[col] = '\0';
 		else
 			row_dst[col] = row_src[col];
 		col++;
@@ -64,8 +63,7 @@ char	**copy_map(char **map_grid)
 	row = 0;
 	while (row < height)
 	{
-		map_copy[row] = ft_calloc(ft_strlen(map_grid[row]) + 1,
-			sizeof(char));
+		map_copy[row] = ft_calloc(ft_strlen(map_grid[row]) + 1, sizeof(char));
 		if (!map_copy[row])
 			return (free_copy_partial(map_copy, row), NULL);
 		copy_map_row(map_copy[row], map_grid[row]);
@@ -86,7 +84,11 @@ t_point	find_c(char **map_grid, char target)
 		while (map_grid[cord.y][cord.x])
 		{
 			if (map_grid[cord.y][cord.x] == target)
+			{
+				// cord.x *= 2;
+				// cord.y *= 2;
 				return (cord);
+			}
 			cord.x++;
 		}
 		cord.y++;
