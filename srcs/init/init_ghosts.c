@@ -129,8 +129,8 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char)
 		return -1;
 	gh->pos.tile_pos.x = (double)spawn_point.x;
 	gh->pos.tile_pos.y = (double)spawn_point.y;
-	gh->pos.pixel_pos.x = spawn_point.x * 8;
-	gh->pos.pixel_pos.y = spawn_point.y  * 8;
+	gh->pos.pixel_pos.x = (spawn_point.x + TILE_SIZE / 2) * TILE_SIZE;
+	gh->pos.pixel_pos.y = (spawn_point.y + TILE_SIZE / 2) * TILE_SIZE;
 	// gh->pos.tile_pos.x = (double)target_point.x;
 	// gh->pos.tile_pos.y = (double)target_point.y;
 	// gh->pos.pixel_pos.x = target_point.x * 8;
