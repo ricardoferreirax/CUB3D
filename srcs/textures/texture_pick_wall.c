@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 18:13:52 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/08 23:08:26 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/10 21:12:50 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ unsigned int	tex_pixel(t_image *tex, int x, int y)
 	int				stride;
 
 	stride = tex->l_len / 4; // o nr de pixels por linha (l_len é o nr de bytes por linha, dividindo por 4 obtemos o número de pixels)
+
+	if(!tex->img_addr)
+		return 128;
 	data = (unsigned int *)tex->img_addr; // converte o img_addr para um unsigned int, onde cada int representa a cor de um pixel
 	return (data[y * stride + x]); // devolve a cor do pixel na posição (x, y) da textura calculando o índice como y * stride + x
 }
