@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/09 16:45:02 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/10 21:28:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@
 
 #define ENERGIZER 'R'
 #define WRAP_PORTS 'D'
-#define BLINKY_T 'B'
-#define PINKY_T 'P'
-#define INKY_T 'I'
-#define CLYDE_T 'C'
+#define BLINKY_T 'b'
+#define PINKY_T 'p'
+#define INKY_T 'i'
+#define CLYDE_T 'c'
 #define GATE 'G'
 #define PLAYER 'J'
 #define WALL '1'
@@ -102,6 +102,7 @@ typedef struct s_fc
 	double	step_y;
 	double	dist;
 }	t_fc;
+
 
 typedef struct s_sprite
 {
@@ -415,8 +416,6 @@ t_point	find_c(char **map, char c);
 
 int		xtile(char **map);
 int		ytile(char **map);
-
-void	init_game(t_game *game);
 
 int	pixel_get(t_image *data, int x, int y);
 int	pixeL_get_coord(t_sprite_sheet *sheet, int i, int x, int y);
