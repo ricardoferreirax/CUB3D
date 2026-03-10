@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 19:44:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/07 22:07:08 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/10 20:59:49 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	render_base_into_buffer(t_game *s)
 		{
 			color = pixel_get(&s->base, x, y);
 			if ((color >> 24) != 0xFF)
-				ft_pixel_put(&s->win.frame_buffer, x + 50,
-					y + s->win.height - s->base.height - 100, color);
+				ft_pixel_put(&s->win.frame_buffer, x + s->win.width / 2, y
+					+ s->win.height / 2, color);
 			x++;
 		}
 		y++;
@@ -74,7 +74,7 @@ void	render_sprite_into_framebuffer(t_game *game, t_point coord,
 	}
 }
 
-t_point	continue_travel(t_point *ghost_pos, int invalid_dir)
+t_point	continue_travel(t_ghost ghost, int invalid_dir)
 {
 	int	dir;
 
@@ -85,7 +85,7 @@ t_point	continue_travel(t_point *ghost_pos, int invalid_dir)
 		{0, 1},  // down
 		{1, 0}   // right
 	};
-	return ((t_point){.x = ghost_pos->x + direction[dir][0], .y = ghost_pos->y
+	return ((t_point){.x = ghost.pos.pixel_pos.x + direction[dir][0], .y = ghost.pos.pixel_pos.y
 		+ direction[dir][1]});
 }
 
@@ -139,10 +139,9 @@ int	chose_next_move(t_ghost *ghost, char **map)
 
 int	update_ghost(t_ghost *ghost)
 {
-	if (ghost->pos.pixel_pos.x % 8 != 0 && ghost->pos.pixel_pos.y % 8 != 0)
+	if (ghost->pos.pixel_pos.x % 8 != 4 && ghost->pos.pixel_pos.y % 8 != 4)
 	{
-		ghost->pos.pixel_pos = continue_travel(&ghost->pos.pixel_pos,
-				ghost->invalid_dir);
+		ghost->pos.pixel_pos = continue_travel(*ghost, ghost->invalid_dir);
 		return 0;
 	}
 	ghost->invalid_dir = chose_next_move(ghost, ghost->mental_map);
@@ -162,8 +161,8 @@ void	render_ghosts_into_framebuffer(t_game *game)
 		if(game->ghosts[i].name == DISABLED)
 			continue;
 		update_ghost(&game->ghosts[i]);
-		coord.x = (game->ghosts[i].pos.pixel_pos.x * 8 + game->win.width / 2);
-		coord.y = (game->ghosts[i].pos.pixel_pos.y * 8 + game->win.height / 2);
+		coord.x = (game->ghosts[i].pos.pixel_pos.x - 8 + game->win.width / 2);
+		coord.y = (game->ghosts[i].pos.pixel_pos.y - 8 + game->win.height / 2);
 		render_sprite_into_framebuffer(game, coord,
 			&game->ghosts[i].frames.left[0]);
 	}
