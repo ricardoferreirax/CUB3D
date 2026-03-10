@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/08 23:07:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/10 21:17:36 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,11 @@ void	init_map(t_game *g, const char *path)
 	//^ needs to be checked
 }
 
+// void init_player(t_game *game)
+// {
+// 	game->player.pos.pixel_pos = find_c(game->map.grid, 'E');
+// }
+
 void	init(t_game *g, char *path)
 {
 	if (!g)
@@ -90,10 +95,10 @@ void	init(t_game *g, char *path)
 	init_defaults(g);
 	init_minilib(g);
 	init_map(g, path);
-	print_2d(g->map.grid);
 	init_player(g);
 	init_execution(g);
 	init_menu(g);
 	init_spritesheet(g);
+	// init_player(g);
 	init_base(g);
 }
