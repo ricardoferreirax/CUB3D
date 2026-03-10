@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 19:44:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/10 20:59:49 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/10 23:34:08 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,29 +99,84 @@ int	distance_to_target(t_ghost *ghost, int dy, int dx)
 	return (result);
 }
 
+void	ghost_move_pixel(t_ghost *gh, int dx, int dy)
+{
+	if (!gh)
+		return ;
+	gh->pos.pixel_pos.x += dx; // adiciona o deslocamento x (pixels) à posição atual do ghost
+	gh->pos.pixel_pos.y += dy; // adiciona o deslocamento y (pixels) à posição atual do ghost
+	gh->pos.tile_pos.x = (double)gh->pos.pixel_pos.x / (double)TILE_SIZE; // converte a posição x do ghost de pixels para tiles
+	gh->pos.tile_pos.y = (double)gh->pos.pixel_pos.y / (double)TILE_SIZE; // converte a posição y do ghost de pixels para tiles
+}
+
+int	ghost_in_penhouse(t_ghost *ghost, char **map)
+{
+	t_point	gate;
+	int		x;
+	int		y;
+
+	if (!ghost || !map)
+		return (0);
+	gate = find_c(map, GATE); // procura a posição do gate no mapa
+	if (gate.x < 0 || gate.y < 0) // verifica se o gate foi encontrado
+		return (0);
+	x = ghost->pos.pixel_pos.x / TILE_SIZE; // converte a posição x do ghost de pixeis para de tiles
+	y = ghost->pos.pixel_pos.y / TILE_SIZE; // converte a posição y do ghost de pixeis para de tiles
+	if (x < gate.x - 2 || x > gate.x + 3) // verifica se o ghost está fora da largura da penhouse 
+		return (0);
+	if (y < gate.y) // verifica se o ghost já passou em cima do gate
+		return (0); // se passou, então saiu da penhouse
+	return (1); // está dentro da penhouse
+}
+
+static t_point	find_gate_exit(char **map)
+{
+	t_point	gate; // guarda aposição do gate no mapa
+
+	gate = find_c(map, GATE); // procura a posição do gate no mapa
+	if (gate.x >= 0 && gate.y >= 0) // verifica se o gate foi encontrado
+	{
+		gate.x += 1; // move um tile para a direita do gate para encontrar o centro da porta
+		gate.y -= 1; // move um tile para cima do gate para encontrar a posição de saída da penhouse
+	}
+	return (gate); // devolve o tile da saída da penhouse
+}
+
 int	chose_next_move(t_ghost *ghost, char **map)
 {
-	int	i;
-	int	best;
-	int	best_dir;
-	int	dist;
-
-	int direction[4][2] = {
-		{-1, 0}, // 0 = up
-		{0, -1}, // 1 = left
-		{1, 0},  // 2 = down
-		{0, 1}   // 3 = right
+	int		i;
+	int		best;
+	int		best_dir;
+	int		dist;
+	t_point	target;
+	int		direction[4][2] = {
+		{-1, 0}, // para cima
+		{0, -1}, // para a esquerda
+		{1, 0}, // para baixo
+		{0, 1} // para a direita
 	};
+
 	i = 0;
 	best = -1;
 	best_dir = -1;
-	if(!map)
-		return -1;
+	if (!ghost || !map)
+		return (-1);
+	if (ghost_in_penhouse(ghost, map)) // se o ghost estiver na penhouse 
+		target = find_gate_exit(map); // o target passa a ser a saída da penhouse
+	else
+		target = ghost->target_tile; // caso contrário, o target é o tile 'b', 'p', 'i' ou 'c'
 	while (i < 4)
 	{
-		if ((map[ghost->pos.pixel_pos.y / 8 + direction[i][0]][ghost->pos.pixel_pos.x / 8 + direction[i][1]] != '1' ) && i != ghost->invalid_dir)
+		if (map[ghost->pos.pixel_pos.y / TILE_SIZE + direction[i][0]]
+			[ghost->pos.pixel_pos.x / TILE_SIZE + direction[i][1]] != WALL
+			&& i != ghost->invalid_dir)
 		{
-			dist = distance_to_target(ghost, direction[i][0], direction[i][1]);
+			dist = (((ghost->pos.pixel_pos.x / TILE_SIZE) + direction[i][1])
+					- target.x) * ((((ghost->pos.pixel_pos.x / TILE_SIZE)
+							+ direction[i][1]) - target.x))
+				+ ((((ghost->pos.pixel_pos.y / TILE_SIZE) + direction[i][0])
+						- target.y) * ((((ghost->pos.pixel_pos.y / TILE_SIZE)
+								+ direction[i][0]) - target.y)));
 			if (best == -1 || dist < best)
 			{
 				best = dist;
@@ -132,22 +187,42 @@ int	chose_next_move(t_ghost *ghost, char **map)
 	}
 	if (best_dir == -1)
 		best_dir = (ghost->invalid_dir + 2) % 4;
-	ghost->pos.pixel_pos.y += direction[best_dir][0];
-	ghost->pos.pixel_pos.x += direction[best_dir][1];
+	ghost_move_pixel(ghost, direction[best_dir][1], direction[best_dir][0]); // move o ghost um pixel na direção escolhida
 	return ((best_dir + 2) % 4);
+}
+
+void	ghost_set_pixel_pos(t_ghost *gh, int px, int py)
+{
+	if (!gh)
+		return ;
+	gh->pos.pixel_pos.x = px; // define a posição x do ghost em pixels
+	gh->pos.pixel_pos.y = py; // define a posição y do ghost em pixels
+	gh->pos.tile_pos.x = (double)gh->pos.pixel_pos.x / (double)TILE_SIZE; // converte a posição x do ghost de pixels para tiles
+	gh->pos.tile_pos.y = (double)gh->pos.pixel_pos.y / (double)TILE_SIZE; // converte a posição y do ghost de pixels para tiles
 }
 
 int	update_ghost(t_ghost *ghost)
 {
-	if (ghost->pos.pixel_pos.x % 8 != 4 && ghost->pos.pixel_pos.y % 8 != 4)
+	t_point	next;
+
+	if (!ghost)
+		return (-1);
+	// if (ghost->pos.pixel_pos.x % 8 != 4 && ghost->pos.pixel_pos.y % 8 != 4)
+	// {
+	// 	ghost->pos.pixel_pos = continue_travel(*ghost, ghost->invalid_dir);
+	// 	return 0;
+	// }
+	if (ghost->pos.pixel_pos.x % TILE_SIZE != TILE_SIZE / 2
+		|| ghost->pos.pixel_pos.y % TILE_SIZE != TILE_SIZE / 2) // verifica se o ghost ainda não chegou ao centro do tile atual
 	{
-		ghost->pos.pixel_pos = continue_travel(*ghost, ghost->invalid_dir);
-		return 0;
+		next = continue_travel(*ghost, ghost->invalid_dir); // calcula a próxima posição do ghost ao continuar na direção atual
+		ghost_set_pixel_pos(ghost, next.x, next.y); // aplica a nova posição ao ghost e sincroniza a posição em pixels com a posição em tiles
+		return (0); // continua o movimento atual do ghost
 	}
 	ghost->invalid_dir = chose_next_move(ghost, ghost->mental_map);
-	if(ghost->invalid_dir == -1)
-		return -1;
-	return 0;
+	if (ghost->invalid_dir == -1)
+		return (-1);
+	return (0);
 }
 
 void	render_ghosts_into_framebuffer(t_game *game)

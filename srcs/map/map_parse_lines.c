@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 22:38:39 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/10 21:05:33 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/10 22:42:05 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ bool target_tile(char c)
 		return true;
 	return false;
 }
-
 
 static int	map_is_valid_char_in_line(char c, t_mode mode)
 {
