@@ -73,6 +73,8 @@ static void	draw_ghosts(t_game *g)
 		tex = ghost_tex(g, &g->ghosts[i]);
 		if (tex && tex->img_addr)
 		{
+			g->ghosts[i].pos.tile_pos.x = (double)g->ghosts[i].pos.pixel_pos.x / (double)TILE_SIZE; // converte a posição x do ghost de pixels para tiles
+			g->ghosts[i].pos.tile_pos.y = (double)g->ghosts[i].pos.pixel_pos.y / (double)TILE_SIZE; // converte a posição y do ghost de pixels para tiles
 			wx = g->ghosts[i].pos.tile_pos.x + 0.5;
 			wy = g->ghosts[i].pos.tile_pos.y + 0.5;
 			if (sprite_project(g, wx, wy, &box))
