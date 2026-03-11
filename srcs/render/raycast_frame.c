@@ -6,14 +6,14 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/07 23:06:35 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/11 21:31:29 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 #include "render3D.h"
 
-static void	ray_draw_range(t_game *g)
+void	ray_draw_range(t_game *g)
 {
 	int	col_height;
 
@@ -29,7 +29,7 @@ static void	ray_draw_range(t_game *g)
 		g->ray.draw_end = g->win.height - 1;
 }
 
-static void ray_perp_wall_distance(t_game *g) 
+void ray_perp_wall_distance(t_game *g) 
 { 
 	if (g->ray.hit_side == 0) 
 		g->ray.perp_wall_dist = g->ray.side_dist_x - g->ray.delta_dist_x; 
@@ -67,7 +67,7 @@ void	ray_init_steps(t_game *g)
 	}
 }
 
-static void	ray_init(t_game *g, int col)
+void	ray_init(t_game *g, int col)
 {
 	double	cam_x;
 

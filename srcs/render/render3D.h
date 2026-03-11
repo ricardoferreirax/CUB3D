@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/09 15:36:22 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/11 21:31:59 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ void	render_floor_texture(t_game *g);
 void	render_ceiling_texture(t_game *g);
 void	render_menu(t_game *g);
 double	fract_pos(double x);
+void	ray_init_steps(t_game *g);
+void	ray_init(t_game *g, int col);
+void ray_perp_wall_distance(t_game *g);
+void	ray_draw_range(t_game *g);
 
 unsigned int	tex_pixel(t_image *tex, int x, int y);
 void	parse_floor_ceiling_color(t_game *g, const char *s, int *dst);
@@ -58,3 +62,4 @@ void	render_all_sprites(t_game *g);
 int	sprite_draw_col(t_game *g, t_sprite *b, int x, t_image *tex);
 int	clamp_int(int value, int min, int max);
 int	clamp_tex_coord(int value, int max);
+void	render_raycast_debug(t_game *g);
