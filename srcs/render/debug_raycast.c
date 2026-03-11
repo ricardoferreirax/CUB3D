@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 21:17:49 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/11 21:32:52 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/11 22:08:34 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,30 @@ static void	debug_pixel_put(t_game *g, int x, int y, int color)
 {
 	if (!g)
 		return ;
-	if (x < 0 || x >= g->win.width || y < 0 || y >= g->win.height)
+	if (x < 0 || y < 0 || x >= g->win.width || y >= g->win.height)
 		return ;
 	ft_pixel_put(&g->win.frame_buffer, x, y, color);
 }
 
-static void	draw_debug_dot(t_game *g, t_point p, int radius, int color)
+static void	draw_fill(t_game *g, int x, int y, int size, int color)
 {
 	int	i;
 	int	j;
 
-	i = -radius;
-	while (i <= radius)
+	i = 0;
+	while (i < size)
 	{
-		j = -radius;
-		while (j <= radius)
+		j = 0;
+		while (j < size)
 		{
-			debug_pixel_put(g, p.x + j, p.y + i, color);
+			debug_pixel_put(g, x + j, y + i, color);
 			j++;
 		}
 		i++;
 	}
 }
 
-static void	draw_debug_line(t_game *g, t_point a, t_point b, int color)
+static void	draw_line(t_game *g, t_point a, t_point b, int color)
 {
 	int	dx;
 	int	dy;
@@ -68,11 +68,11 @@ static void	draw_debug_line(t_game *g, t_point a, t_point b, int color)
 	int	e2;
 
 	dx = abs_i(b.x - a.x);
-	dy = abs_i(a.y - b.y);
+	dy = abs_i(b.y - a.y);
 	sx = -1;
+	sy = -1;
 	if (a.x < b.x)
 		sx = 1;
-	sy = -1;
 	if (a.y < b.y)
 		sy = 1;
 	err = dx - dy;
@@ -81,7 +81,7 @@ static void	draw_debug_line(t_game *g, t_point a, t_point b, int color)
 		debug_pixel_put(g, a.x, a.y, color);
 		if (a.x == b.x && a.y == b.y)
 			break ;
-		e2 = 2 * err;
+		e2 = err * 2;
 		if (e2 > -dy)
 		{
 			err -= dy;
@@ -95,65 +95,14 @@ static void	draw_debug_line(t_game *g, t_point a, t_point b, int color)
 	}
 }
 
-static void	draw_debug_rect(t_game *g, int x, int y, int color)
-{
-	int	sx;
-	int	sy;
-	int	start_x;
-	int	start_y;
-
-	start_x = DEBUG_OFF_X + x * DEBUG_CELL;
-	start_y = DEBUG_OFF_Y + y * DEBUG_CELL;
-	sy = 0;
-	while (sy < DEBUG_CELL)
-	{
-		sx = 0;
-		while (sx < DEBUG_CELL)
-		{
-			debug_pixel_put(g, start_x + sx, start_y + sy, color);
-			sx++;
-		}
-		sy++;
-	}
-}
-
-static void	draw_debug_grid(t_game *g)
-{
-	int	x;
-	int	y;
-	int	max_x;
-	int	max_y;
-
-	max_x = DEBUG_OFF_X + g->map.width * DEBUG_CELL;
-	max_y = DEBUG_OFF_Y + g->map.height * DEBUG_CELL;
-	x = DEBUG_OFF_X;
-	while (x <= max_x)
-	{
-		y = DEBUG_OFF_Y;
-		while (y <= max_y)
-		{
-			debug_pixel_put(g, x, y, DEBUG_COLOR_GRID);
-			y++;
-		}
-		x += DEBUG_CELL;
-	}
-	y = DEBUG_OFF_Y;
-	while (y <= max_y)
-	{
-		x = DEBUG_OFF_X;
-		while (x <= max_x)
-		{
-			debug_pixel_put(g, x, y, DEBUG_COLOR_GRID);
-			x++;
-		}
-		y += DEBUG_CELL;
-	}
-}
-
 static void	draw_debug_map(t_game *g)
 {
 	int		x;
 	int		y;
+	int		px;
+	int		py;
+	int		max_x;
+	int		max_y;
 	char	tile;
 
 	y = 0;
@@ -163,39 +112,55 @@ static void	draw_debug_map(t_game *g)
 		while (x < g->map.width)
 		{
 			tile = map_get_tile(g, y, x);
+			px = DEBUG_OFF_X + x * DEBUG_CELL;
+			py = DEBUG_OFF_Y + y * DEBUG_CELL;
 			if (map_tile_type(tile, TILE_SOLID) || tile == GATE)
-				draw_debug_rect(g, x, y, DEBUG_COLOR_WALL);
+				draw_fill(g, px, py, DEBUG_CELL, DEBUG_COLOR_WALL);
 			else
-				draw_debug_rect(g, x, y, DEBUG_COLOR_BG);
+				draw_fill(g, px, py, DEBUG_CELL, DEBUG_COLOR_BG);
 			x++;
 		}
 		y++;
 	}
-	draw_debug_grid(g);
+	max_x = DEBUG_OFF_X + g->map.width * DEBUG_CELL;
+	max_y = DEBUG_OFF_Y + g->map.height * DEBUG_CELL;
+	x = DEBUG_OFF_X;
+	while (x <= max_x)
+	{
+		y = DEBUG_OFF_Y;
+		while (y <= max_y)
+			debug_pixel_put(g, x, y++, DEBUG_COLOR_GRID);
+		x += DEBUG_CELL;
+	}
+	y = DEBUG_OFF_Y;
+	while (y <= max_y)
+	{
+		x = DEBUG_OFF_X;
+		while (x <= max_x)
+			debug_pixel_put(g, x++, y, DEBUG_COLOR_GRID);
+		y += DEBUG_CELL;
+	}
 }
 
-static int	cast_debug_ray(t_game *g, int col, t_raycasting *out)
+static int	cast_debug_ray(t_game *g, int col, t_raycasting *ray)
 {
 	t_raycasting	saved;
 
-	if (!g || !out)
+	if (!g || !ray)
 		return (0);
 	saved = g->ray;
 	ray_init(g, col);
 	ray_init_steps(g);
-	if (raycast_dda(g))
-	{
-		ray_perp_wall_distance(g);
-		ray_draw_range(g);
-		*out = g->ray;
-		g->ray = saved;
-		return (1);
-	}
+	if (!raycast_dda(g))
+		return (g->ray = saved, 0);
+	ray_perp_wall_distance(g);
+	ray_draw_range(g);
+	*ray = g->ray;
 	g->ray = saved;
-	return (0);
+	return (1);
 }
 
-static void	draw_debug_rays(t_game *g)
+void	render_raycast_debug(t_game *g)
 {
 	t_raycasting	ray;
 	t_point			start;
@@ -204,6 +169,9 @@ static void	draw_debug_rays(t_game *g)
 	double			hit_y;
 	int				col;
 
+	if (!g)
+		return ;
+	draw_debug_map(g);
 	start.x = DEBUG_OFF_X + (int)(g->player.pos_x * DEBUG_CELL);
 	start.y = DEBUG_OFF_Y + (int)(g->player.pos_y * DEBUG_CELL);
 	col = 0;
@@ -215,18 +183,10 @@ static void	draw_debug_rays(t_game *g)
 			hit_y = g->player.pos_y + ray.perp_wall_dist * ray.ray_dir_y;
 			end.x = DEBUG_OFF_X + (int)(hit_x * DEBUG_CELL);
 			end.y = DEBUG_OFF_Y + (int)(hit_y * DEBUG_CELL);
-			draw_debug_line(g, start, end, DEBUG_COLOR_RAY);
-			draw_debug_dot(g, end, 1, DEBUG_COLOR_HIT);
+			draw_line(g, start, end, DEBUG_COLOR_RAY);
+			draw_fill(g, end.x - 1, end.y - 1, 3, DEBUG_COLOR_HIT);
 		}
 		col += DEBUG_RAY_STEP;
 	}
-	draw_debug_dot(g, start, 2, DEBUG_COLOR_PLAYER);
-}
-
-void	render_raycast_debug(t_game *g)
-{
-	if (!g)
-		return ;
-	draw_debug_map(g);
-	draw_debug_rays(g);
+	draw_fill(g, start.x - 2, start.y - 2, 5, DEBUG_COLOR_PLAYER);
 }

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/10 21:28:28 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/11 21:53:45 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,10 @@ typedef struct s_raycasting
 	int		draw_end;
 	int		hit;
 	int		line_h;
+	
+	int		count;
+	double	*hit_x;
+	double	*hit_y;
 }	t_raycasting;
 
 typedef struct s_window
