@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 22:56:32 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/05 21:55:58 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/11 17:20:54 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
 	player_collect_pacdots(g);
 }
 
-static void	player_rotate(t_game *g, double angle)
+void	player_rotate(t_game *g, double angle)
 {
 	double	prev_dir_x;
 	double	prev_plane_x;
