@@ -42,14 +42,14 @@ static void	player_rotate(t_game *g, double angle)
 static void	player_apply_action(t_game *g, t_player_action act)
 {
 	if (act == MOVE_FORWARD)
-		apply_player_movement(g, g->player.dir_x * PLAYER_SPEED,
-			g->player.dir_y * PLAYER_SPEED);
+		apply_player_movement(g, g->player.dir_x * PLAYER_SPEED, g->player.dir_y
+			* PLAYER_SPEED);
 	else if (act == MOVE_BACKWARD)
 		apply_player_movement(g, -g->player.dir_x * PLAYER_SPEED,
 			-g->player.dir_y * PLAYER_SPEED);
 	else if (act == MOVE_RIGHT)
 		apply_player_movement(g, -g->player.dir_y * PLAYER_SPEED,
-			 g->player.dir_x * PLAYER_SPEED);
+			g->player.dir_x * PLAYER_SPEED);
 	else if (act == MOVE_LEFT)
 		apply_player_movement(g, g->player.dir_y * PLAYER_SPEED,
 			-g->player.dir_x * PLAYER_SPEED);
@@ -63,17 +63,34 @@ void	player_controller(t_game *g)
 {
 	if (!g)
 		return ;
-
-	if (g->key.w)
-		player_apply_action(g, MOVE_FORWARD);
-	if (g->key.s)
-		player_apply_action(g, MOVE_BACKWARD);
-	if (g->key.d)
-		player_apply_action(g, MOVE_RIGHT);
-	if (g->key.a)
-		player_apply_action(g, MOVE_LEFT);
-	if (g->key.right)
-		player_apply_action(g, ROTATE_RIGHT);
-	if (g->key.left)
-		player_apply_action(g, ROTATE_LEFT);
+	if (g->mode == MODE_CUBE)
+	{
+		if (g->key.w)
+			player_apply_action(g, MOVE_FORWARD);
+		if (g->key.s)
+			player_apply_action(g, MOVE_BACKWARD);
+		if (g->key.d)
+			player_apply_action(g, MOVE_RIGHT);
+		if (g->key.a)
+			player_apply_action(g, MOVE_LEFT);
+		if (g->key.right)
+			player_apply_action(g, ROTATE_RIGHT);
+		if (g->key.left)
+			player_apply_action(g, ROTATE_LEFT);
+	}
+	else if(g->mode == MODE_PACMAN)
+	{
+		if (g->key.w)
+			player_apply_action(g, MOVE_FORWARD);
+		if (g->key.s)
+			player_apply_action(g, MOVE_BACKWARD);
+		if (g->key.d)
+			player_apply_action(g, MOVE_RIGHT);
+		if (g->key.a)
+			player_apply_action(g, MOVE_LEFT);
+		if (g->key.right)
+			player_apply_action(g, ROTATE_RIGHT);
+		if (g->key.left)
+			player_apply_action(g, ROTATE_LEFT);
+	}
 }

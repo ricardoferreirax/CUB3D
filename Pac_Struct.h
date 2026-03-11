@@ -423,3 +423,4 @@ void	ft_pixel_put(t_image *s, int x, int y, unsigned int color);
 
 void print_2d(char **arr);
 void breakpoint(void);
+

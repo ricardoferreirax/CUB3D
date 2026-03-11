@@ -191,3 +191,4 @@ void	render_frame(t_game *game)
 	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr,
 		game->win.frame_buffer.img_ptr, 0, 0);
 }
+
