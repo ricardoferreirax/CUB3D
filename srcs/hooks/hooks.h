@@ -26,7 +26,7 @@
 # define KEY_1 49
 # define KEY_2 50
 
-#define MOUSE_SENS 0.00001
+#define MOUSE_SENS 0.00035
 
 typedef struct s_game	t_game;
 
