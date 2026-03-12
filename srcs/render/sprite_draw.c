@@ -33,8 +33,7 @@ int	sprite_project(t_game *g, double world_x, double world_y, t_sprite *sp)
 		return (0);
 	sp->depth = ty;
 	sp->screen_x = (int)((g->win.width / 2.0) * (1.0 + tx / ty));
-	return (1);
-}
+	return (1); }
 
 int	sprite_build(t_game *g, t_sprite *b, int size_div)
 {

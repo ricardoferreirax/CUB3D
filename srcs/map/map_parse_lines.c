@@ -96,11 +96,7 @@ int	map_is_map_line(t_game *g, char *line)
 		return (0);
 	p = skip_whitespace(line);
 	if (!*p || *p == '\n' || map_is_cub_prefix(p))
-	{
-		ft_printf("TEST: ");
-		ft_printf("%s", line);
 		return (0);
-	}
 	has_tile = 0;
 	while (*p && *p != '\n')
 	{

@@ -127,10 +127,14 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char)
 	spawn_point = find_spawn(g->map.grid, target_char);
 	if (target_point.x < 0 || target_point.y < 0 || spawn_point.x < 0 || spawn_point.y < 0)
 		return -1;
-	gh->pos.tile_pos.x = (double)spawn_point.x;
-	gh->pos.tile_pos.y = (double)spawn_point.y;
-	gh->pos.pixel_pos.x = (spawn_point.x + TILE_SIZE / 2) * TILE_SIZE;
-	gh->pos.pixel_pos.y = (spawn_point.y + TILE_SIZE / 2) * TILE_SIZE;
+	gh->pos.tile_pos.x = (double)spawn_point.x+ 0.5; // posiciona o ghost no centro do spawn tile no eixo x
+	gh->pos.tile_pos.y = (double)spawn_point.y + 0.5; // posiciona o ghost no centro do spawn tile no eixo y
+	gh->pos.pixel_pos.x = spawn_point.x * TILE_SIZE + TILE_SIZE / 2; // converte o spawn tile para pixels e centra o fanstasma no tile no eixo x
+	gh->pos.pixel_pos.y = spawn_point.y * TILE_SIZE + TILE_SIZE / 2; // converte o spawn tile para pixels e centra o fanstasma no tile no eixo y
+	// gh->pos.tile_pos.x = (double)spawn_point.x;
+	// gh->pos.tile_pos.y = (double)spawn_point.y;
+	// gh->pos.pixel_pos.x = (spawn_point.x + TILE_SIZE / 2 + TILE_SIZE / 4) * TILE_SIZE;
+	// gh->pos.pixel_pos.y = (spawn_point.y + TILE_SIZE / 2 + TILE_SIZE / 4) * TILE_SIZE;
 	// gh->pos.tile_pos.x = (double)target_point.x;
 	// gh->pos.tile_pos.y = (double)target_point.y;
 	// gh->pos.pixel_pos.x = target_point.x * 8;

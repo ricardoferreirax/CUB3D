@@ -99,6 +99,17 @@ int	distance_to_target(t_ghost *ghost, int dy, int dx)
 	return (result);
 }
 
+
+void	ghost_move_pixel(t_ghost *gh, int dx, int dy)
+{
+	if (!gh)
+		return ;
+	gh->pos.pixel_pos.x += dx; // adiciona o deslocamento x (pixels) à posição atual do ghost
+	gh->pos.pixel_pos.y += dy; // adiciona o deslocamento y (pixels) à posição atual do ghost
+	gh->pos.tile_pos.x = (double)gh->pos.pixel_pos.x / (double)TILE_SIZE; // converte a posição x do ghost de pixels para tiles
+	gh->pos.tile_pos.y = (double)gh->pos.pixel_pos.y / (double)TILE_SIZE; // converte a posição y do ghost de pixels para tiles
+}
+
 int	chose_next_move(t_ghost *ghost, char **map)
 {
 	int	i;
@@ -132,22 +143,56 @@ int	chose_next_move(t_ghost *ghost, char **map)
 	}
 	if (best_dir == -1)
 		best_dir = (ghost->invalid_dir + 2) % 4;
-	ghost->pos.pixel_pos.y += direction[best_dir][0];
-	ghost->pos.pixel_pos.x += direction[best_dir][1];
+	ghost_move_pixel(ghost, direction[best_dir][1], direction [best_dir][0]);
 	return ((best_dir + 2) % 4);
+}
+
+// int	update_ghost(t_ghost *ghost)
+// {
+// 	if (ghost->pos.pixel_pos.x % 8 != 4 && ghost->pos.pixel_pos.y % 8 != 4)
+// 	{
+// 		ghost->pos.pixel_pos = continue_travel(*ghost, ghost->invalid_dir);
+// 		return 0;
+// 	}
+// 	ghost->invalid_dir = chose_next_move(ghost, ghost->mental_map);
+// 	if(ghost->invalid_dir == -1)
+// 		return -1;
+// 	return 0;
+// }
+
+
+void	ghost_set_pixel_pos(t_ghost *gh, int px, int py)
+{
+	if (!gh)
+		return ;
+	gh->pos.pixel_pos.x = px; // define a posição x do ghost em pixels
+	gh->pos.pixel_pos.y = py; // define a posição y do ghost em pixels
+	gh->pos.tile_pos.x = (double)gh->pos.pixel_pos.x / (double)TILE_SIZE; // converte a posição x do ghost de pixels para tiles
+	gh->pos.tile_pos.y = (double)gh->pos.pixel_pos.y / (double)TILE_SIZE; // converte a posição y do ghost de pixels para tiles
 }
 
 int	update_ghost(t_ghost *ghost)
 {
-	if (ghost->pos.pixel_pos.x % 8 != 4 && ghost->pos.pixel_pos.y % 8 != 4)
+	t_point	next;
+
+	if (!ghost)
+		return (-1);
+	// if (ghost->pos.pixel_pos.x % 8 != 4 && ghost->pos.pixel_pos.y % 8 != 4)
+	// {
+	// 	ghost->pos.pixel_pos = continue_travel(*ghost, ghost->invalid_dir);
+	// 	return 0;
+	// }
+	if (ghost->pos.pixel_pos.x % TILE_SIZE != TILE_SIZE / 2
+		&& ghost->pos.pixel_pos.y % TILE_SIZE != TILE_SIZE / 2) // verifica se o ghost ainda não chegou ao centro do tile atual
 	{
-		ghost->pos.pixel_pos = continue_travel(*ghost, ghost->invalid_dir);
-		return 0;
+		next = continue_travel(*ghost, ghost->invalid_dir); // calcula a próxima posição do ghost ao continuar na direção atual
+		ghost_set_pixel_pos(ghost, next.x, next.y); // aplica a nova posição ao ghost e sincroniza a posição em pixels com a posição em tiles
+		return (0); // continua o movimento atual do ghost
 	}
 	ghost->invalid_dir = chose_next_move(ghost, ghost->mental_map);
-	if(ghost->invalid_dir == -1)
-		return -1;
-	return 0;
+	if (ghost->invalid_dir == -1)
+		return (-1);
+	return (0);
 }
 
 void	render_ghosts_into_framebuffer(t_game *game)
