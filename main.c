@@ -44,6 +44,8 @@ int	gameloop(t_game *game)
 		game->timer.last_time_up = now;
 		return (0);
 	}
+	if (now - game->timer.last_time_up < UPDATE_F )
+		return (0);
 	game->timer.last_time_up = now;
 	if (game->state == MENU)
 		return (render_menu(game), 0);
