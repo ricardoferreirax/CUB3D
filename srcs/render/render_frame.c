@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 19:44:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/10 20:59:49 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/11 22:34:35 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ int	distance_to_target(t_ghost *ghost, int dy, int dx)
 	return (result);
 }
 
-
 void	ghost_move_pixel(t_ghost *gh, int dx, int dy)
 {
 	if (!gh)
@@ -112,27 +111,35 @@ void	ghost_move_pixel(t_ghost *gh, int dx, int dy)
 
 int	chose_next_move(t_ghost *ghost, char **map)
 {
-	int	i;
-	int	best;
-	int	best_dir;
-	int	dist;
-
-	int direction[4][2] = {
-		{-1, 0}, // 0 = up
-		{0, -1}, // 1 = left
-		{1, 0},  // 2 = down
-		{0, 1}   // 3 = right
+	int		i;
+	int		best;
+	int		best_dir;
+	int		dist;
+	t_point	target;
+	int		direction[4][2] = {
+		{-1, 0}, // para cima
+		{0, -1}, // para a esquerda
+		{1, 0}, // para baixo
+		{0, 1} // para a direita
 	};
+
 	i = 0;
 	best = -1;
 	best_dir = -1;
-	if(!map)
-		return -1;
+	if (!ghost || !map)
+		return (-1);
 	while (i < 4)
 	{
-		if ((map[ghost->pos.pixel_pos.y / 8 + direction[i][0]][ghost->pos.pixel_pos.x / 8 + direction[i][1]] != '1' ) && i != ghost->invalid_dir)
+		if (map[ghost->pos.pixel_pos.y / TILE_SIZE + direction[i][0]]
+			[ghost->pos.pixel_pos.x / TILE_SIZE + direction[i][1]] != WALL
+			&& i != ghost->invalid_dir)
 		{
-			dist = distance_to_target(ghost, direction[i][0], direction[i][1]);
+			dist = (((ghost->pos.pixel_pos.x / TILE_SIZE) + direction[i][1])
+					- target.x) * ((((ghost->pos.pixel_pos.x / TILE_SIZE)
+							+ direction[i][1]) - target.x))
+				+ ((((ghost->pos.pixel_pos.y / TILE_SIZE) + direction[i][0])
+						- target.y) * ((((ghost->pos.pixel_pos.y / TILE_SIZE)
+								+ direction[i][0]) - target.y)));
 			if (best == -1 || dist < best)
 			{
 				best = dist;
@@ -233,6 +240,7 @@ void	render_frame(t_game *game)
 	clear_sprite_z(game);
 	render_all_sprites(game);
 	render_into_framebuffer(game);
+	render_raycast_debug(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr,
 		game->win.frame_buffer.img_ptr, 0, 0);
 }

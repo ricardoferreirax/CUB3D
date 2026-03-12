@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 14:59:32 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/25 15:38:53 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/11 19:44:56 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,21 @@ int	handle_key_press(int keycode, t_game *g)
 		g->key.left = 1;
 	else if (keycode == KEY_RIGHT)
 		g->key.right = 1;
+	else if (keycode == KEY_M)
+	{
+		if (g->key.mouse_hidden)
+		{
+			mlx_mouse_show(g->mlx_ptr, g->win.win_ptr);
+			g->key.mouse_hidden = 0;
+		}
+		else
+		{
+			mlx_mouse_hide(g->mlx_ptr, g->win.win_ptr);
+			g->key.mouse_hidden = 1;
+			g->key.mouse_lock = 1;
+			center_mouse(g);
+		}
+	}
 	else if (keycode == KEY_E)
 		g->key.e = 1;
 	return (0);

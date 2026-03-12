@@ -29,9 +29,12 @@ int	sprite_project(t_game *g, double wx, double wy, t_sprite *sp)
 	depth = cam_inv_det * (-g->player.plane_y * dx + g->player.plane_x * dy); // calcula a distancia perpendicular do sprite à camera do player 
 	if (depth <= 0.01) // se o sprite estiver muito perto ou atrás do player, não projeta
 		return (0);
-	sp->depth = ty;
-	sp->screen_x = (int)((g->win.width / 2.0) * (1.0 + tx / ty));
-	return (1); }
+	sp->dist = depth; // guarda a distancia do sprite 
+	sp->screen_x = (int)(g->win.width * 0.5
+			* (1.0 + (cam_inv_det * (g->player.dir_y * dx
+						- g->player.dir_x * dy)) / depth)); // calcula a posição horizontal do sprite na tela (coluna onde o centro do sprite deve ser desenhado)
+	return (1); // projeção bem sucedida
+}
 
 int	sprite_build(t_game *g, t_sprite *sp, int scale_div)
 {

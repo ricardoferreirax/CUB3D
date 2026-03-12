@@ -6,10 +6,9 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:28:58 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/10 20:57:09 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/10 23:30:42 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../Pac_Struct.h"
 #include "initializer.h"
@@ -124,8 +123,8 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char)
 	gh->mental_map = copy_map(g->map.grid);
 	if (!gh->mental_map)
 		exit_game(EXIT_MALLOC, g, "init_one_ghost() was unable to copy map");
-	target_point = find_c(g->map.grid, target_char);
-	spawn_point = find_spawn(g->map.grid, target_char);
+	target_point = find_c(g->map.grid, target_char); // procura no mapa o tile 'b', 'p', 'i' ou 'c'
+	spawn_point = find_spawn(g->map.grid, target_char); // determina o tile onde o ghost deve spawnar relativamente ao gate
 	if (target_point.x < 0 || target_point.y < 0 || spawn_point.x < 0 || spawn_point.y < 0)
 		return -1;
 	gh->pos.tile_pos.x = (double)spawn_point.x+ 0.5; // posiciona o ghost no centro do spawn tile no eixo x
@@ -141,6 +140,7 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char)
 	// gh->pos.pixel_pos.x = target_point.x * 8;
 	// gh->pos.pixel_pos.y = target_point.y * 8;
 	// ghost_update_pixel_pos(gh);
+	
 	gh->invalid_dir = -1;
 	gh->target_tile = target_point;
 	ghost_sprites(g, gh->name);

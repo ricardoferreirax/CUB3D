@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/10 21:17:36 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/11 19:48:29 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ void	start_game_mode(t_game *g, t_mode mode)
 	g->mode = mode;
 	init_assets(g);
 	g->state = PLAY;
+	g->key.mouse_hidden = 1;
+	g->key.mouse_lock = 1;
+	center_mouse(g);
 }
 
 static void	init_defaults(t_game *g)
