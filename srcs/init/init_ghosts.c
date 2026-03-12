@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:28:58 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/10 23:30:42 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/12 12:22:46 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,26 +123,23 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char)
 	gh->mental_map = copy_map(g->map.grid);
 	if (!gh->mental_map)
 		exit_game(EXIT_MALLOC, g, "init_one_ghost() was unable to copy map");
-	target_point = find_c(g->map.grid, target_char); // procura no mapa o tile 'b', 'p', 'i' ou 'c'
-	spawn_point = find_spawn(g->map.grid, target_char); // determina o tile onde o ghost deve spawnar relativamente ao gate
+	target_point = find_c(g->map.grid, target_char);
+	spawn_point = find_spawn(g->map.grid, target_char);
 	if (target_point.x < 0 || target_point.y < 0 || spawn_point.x < 0 || spawn_point.y < 0)
 		return -1;
-	gh->pos.tile_pos.x = (double)spawn_point.x + 0.5; // posiciona o ghost no centro do spawn tile no eixo x
+	gh->pos.tile_pos.x = (double)spawn_point.x+ 0.5; // posiciona o ghost no centro do spawn tile no eixo x
 	gh->pos.tile_pos.y = (double)spawn_point.y + 0.5; // posiciona o ghost no centro do spawn tile no eixo y
 	gh->pos.pixel_pos.x = spawn_point.x * TILE_SIZE + TILE_SIZE / 2; // converte o spawn tile para pixels e centra o fanstasma no tile no eixo x
 	gh->pos.pixel_pos.y = spawn_point.y * TILE_SIZE + TILE_SIZE / 2; // converte o spawn tile para pixels e centra o fanstasma no tile no eixo y
-	
 	// gh->pos.tile_pos.x = (double)spawn_point.x;
 	// gh->pos.tile_pos.y = (double)spawn_point.y;
-	// gh->pos.pixel_pos.x = (spawn_point.x + TILE_SIZE / 2) * TILE_SIZE;
-	// gh->pos.pixel_pos.y = (spawn_point.y + TILE_SIZE / 2) * TILE_SIZE;
-
+	// gh->pos.pixel_pos.x = (spawn_point.x + TILE_SIZE / 2 + TILE_SIZE / 4) * TILE_SIZE;
+	// gh->pos.pixel_pos.y = (spawn_point.y + TILE_SIZE / 2 + TILE_SIZE / 4) * TILE_SIZE;
 	// gh->pos.tile_pos.x = (double)target_point.x;
 	// gh->pos.tile_pos.y = (double)target_point.y;
 	// gh->pos.pixel_pos.x = target_point.x * 8;
 	// gh->pos.pixel_pos.y = target_point.y * 8;
 	// ghost_update_pixel_pos(gh);
-	
 	gh->invalid_dir = -1;
 	gh->target_tile = target_point;
 	ghost_sprites(g, gh->name);

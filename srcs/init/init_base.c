@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 16:04:01 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/10 21:18:02 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/12 12:22:32 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,6 @@ void	flood_fill(char **map, int x, int y)
 
 int disambiguation(t_point player_spawn, char **map, t_point coord)
 {
-	ft_printf("Player in x possition: %d and y possition: %d\n", player_spawn.x, player_spawn.y);
 	flood_fill(map, player_spawn.x, player_spawn.y);
 	unsigned char	mask;
 

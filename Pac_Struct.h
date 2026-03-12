@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/11 22:20:43 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/12 12:20:06 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ typedef struct s_fc
 	double	dist;
 }	t_fc;
 
-
 typedef struct s_sprite
 {
 	double	dist; // distancia do sprite ao player
@@ -173,10 +172,8 @@ typedef struct s_anim_cord
 
 typedef struct s_player
 {
-	// vou precisar para a execução 3D
 	double	pos_x;
 	double	pos_y;
-		// vou precisar para a execução 3D
 	double	dir_x; // direção para onde o player está a olhar (eixo X)
 	double	dir_y; // direção para onde o player está a olhar (eixo Y)
 	double	plane_x; // plano (da camera de visao - fov) perpendicular à direção do player (eixo X)
@@ -188,8 +185,6 @@ typedef struct s_player
 	char	target_wall_dir; // 'N', 'S', 'E', 'W'
 	double	target_dist;   // distância perpendicular
 	
-
-
 	t_pos pos; // para o 2d (tile/pixel)
 	int lives;
 	int speed_multiplier;

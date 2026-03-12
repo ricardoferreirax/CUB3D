@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 19:44:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/11 22:34:35 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/12 12:18:41 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,38 +109,38 @@ void	ghost_move_pixel(t_ghost *gh, int dx, int dy)
 	gh->pos.tile_pos.y = (double)gh->pos.pixel_pos.y / (double)TILE_SIZE; // converte a posição y do ghost de pixels para tiles
 }
 
-int	ghost_in_penhouse(t_ghost *ghost, char **map)
-{
-	t_point	gate;
-	int		x;
-	int		y;
+// int	ghost_in_penhouse(t_ghost *ghost, char **map)
+// {
+// 	t_point	gate;
+// 	int		x;
+// 	int		y;
 
-	if (!ghost || !map)
-		return (0);
-	gate = find_c(map, GATE); // procura a posição do gate no mapa
-	if (gate.x < 0 || gate.y < 0) // verifica se o gate foi encontrado
-		return (0);
-	x = ghost->pos.pixel_pos.x / TILE_SIZE; // converte a posição x do ghost de pixeis para de tiles
-	y = ghost->pos.pixel_pos.y / TILE_SIZE; // converte a posição y do ghost de pixeis para de tiles
-	if (x < gate.x - 2 || x > gate.x + 3) // verifica se o ghost está fora da largura da penhouse 
-		return (0);
-	if (y < gate.y) // verifica se o ghost já passou em cima do gate
-		return (0); // se passou, então saiu da penhouse
-	return (1); // está dentro da penhouse
-}
+// 	if (!ghost || !map)
+// 		return (0);
+// 	gate = find_c(map, GATE); // procura a posição do gate no mapa
+// 	if (gate.x < 0 || gate.y < 0) // verifica se o gate foi encontrado
+// 		return (0);
+// 	x = ghost->pos.pixel_pos.x / TILE_SIZE; // converte a posição x do ghost de pixeis para de tiles
+// 	y = ghost->pos.pixel_pos.y / TILE_SIZE; // converte a posição y do ghost de pixeis para de tiles
+// 	if (x < gate.x - 2 || x > gate.x + 3) // verifica se o ghost está fora da largura da penhouse 
+// 		return (0);
+// 	if (y < gate.y) // verifica se o ghost já passou em cima do gate
+// 		return (0); // se passou, então saiu da penhouse
+// 	return (1); // está dentro da penhouse
+// }
 
-static t_point	find_gate_exit(char **map)
-{
-	t_point	gate; // guarda aposição do gate no mapa
+// static t_point	find_gate_exit(char **map)
+// {
+// 	t_point	gate; // guarda aposição do gate no mapa
 
-	gate = find_c(map, GATE); // procura a posição do gate no mapa
-	if (gate.x >= 0 && gate.y >= 0) // verifica se o gate foi encontrado
-	{
-		gate.x += 1; // move um tile para a direita do gate para encontrar o centro da porta
-		gate.y -= 1; // move um tile para cima do gate para encontrar a posição de saída da penhouse
-	}
-	return (gate); // devolve o tile da saída da penhouse
-}
+// 	gate = find_c(map, GATE); // procura a posição do gate no mapa
+// 	if (gate.x >= 0 && gate.y >= 0) // verifica se o gate foi encontrado
+// 	{
+// 		gate.x += 1; // move um tile para a direita do gate para encontrar o centro da porta
+// 		gate.y -= 1; // move um tile para cima do gate para encontrar a posição de saída da penhouse
+// 	}
+// 	return (gate); // devolve o tile da saída da penhouse
+// }
 
 int	chose_next_move(t_ghost *ghost, char **map)
 {
@@ -161,9 +161,9 @@ int	chose_next_move(t_ghost *ghost, char **map)
 	best_dir = -1;
 	if (!ghost || !map)
 		return (-1);
-	if (ghost_in_penhouse(ghost, map)) // se o ghost estiver na penhouse 
-		target = find_gate_exit(map); // o target passa a ser a saída da penhouse
-	else
+	// if (ghost_in_penhouse(ghost, map)) // se o ghost estiver na penhouse 
+	// 	target = find_gate_exit(map); // o target passa a ser a saída da penhouse
+	// else
 		target = ghost->target_tile; // caso contrário, o target é o tile 'b', 'p', 'i' ou 'c'
 	while (i < 4)
 	{
@@ -233,8 +233,8 @@ void	render_ghosts_into_framebuffer(t_game *game)
 	i = -1;
 	while (++i < 4)
 	{
-		if(game->ghosts[i].name == DISABLED)
-			continue;
+		if (game->ghosts[i].name == DISABLED)
+			continue ;
 		update_ghost(&game->ghosts[i]);
 		coord.x = (game->ghosts[i].pos.pixel_pos.x - 8 + game->win.width / 2);
 		coord.y = (game->ghosts[i].pos.pixel_pos.y - 8 + game->win.height / 2);
@@ -263,7 +263,7 @@ void	render_frame(t_game *game)
 	clear_sprite_z(game);
 	render_all_sprites(game);
 	render_into_framebuffer(game);
-	render_raycast_debug(game);
+	// render_raycast_debug(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr,
 		game->win.frame_buffer.img_ptr, 0, 0);
 }
