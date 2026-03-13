@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:18:28 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/09 14:25:24 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/13 12:51:57 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,32 @@ void	put_pixel_fast(t_image *img, int x, int y, int color)
 
 t_image	*ghost_tex(t_game *g, t_ghost *gh)
 {
+	int	frame;
+
 	if (!g || !gh)
 		return (NULL);
+	frame = ghost_anim_frame(gh);
 	if (gh->name == BLINKY)
-		return (&g->tex.blinky_img);
+		return (&g->tex.blinky_img[frame]);
 	if (gh->name == PINKY)
-		return (&g->tex.pinky_img);
+		return (&g->tex.pinky_img[frame]);
 	if (gh->name == INKY)
-		return (&g->tex.inky_img);
-	return (&g->tex.clyde_img);
+		return (&g->tex.inky_img[frame]);
+	if (gh->name == CLYDE)
+		return (&g->tex.clyde_img[frame]);
+	return (NULL);
+}
+
+int	ghost_anim_frame(t_ghost *gh)
+{
+	int	x;
+	int	y;
+
+	if (!gh)
+		return (0);
+	x = (int)(gh->pos.tile_pos.x * 4.0);
+	y = (int)(gh->pos.tile_pos.y * 4.0);
+	return ((x + y) & 1);
 }
 
 int	clamp_int(int value, int min, int max)

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 13:16:57 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/01 22:54:45 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/13 10:34:49 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,14 @@ static void	free_texture_paths(t_game *g)
 	free_str(&g->tex.ceiling);
 	free_str(&g->tex.pacdot);
 	free_str(&g->tex.energizer);
-	free_str(&g->tex.blinky);
-	free_str(&g->tex.pinky);
-	free_str(&g->tex.inky);
-	free_str(&g->tex.clyde);
+	free_str(&g->tex.blinky[0]);
+	free_str(&g->tex.blinky[1]);
+	free_str(&g->tex.pinky[0]);
+	free_str(&g->tex.pinky[1]);
+	free_str(&g->tex.inky[0]);
+	free_str(&g->tex.inky[1]);
+	free_str(&g->tex.clyde[0]);
+	free_str(&g->tex.clyde[1]);
 	free_str(&g->tex.gate_close);
 }
 
@@ -84,10 +88,14 @@ static void	destroy_all_images(t_game *g)
 	destroy_img(g, &g->tex.gate_close_img);
 	destroy_img(g, &g->tex.pacdot_img);
 	destroy_img(g, &g->tex.energizer_img);
-	destroy_img(g, &g->tex.blinky_img);
-	destroy_img(g, &g->tex.pinky_img);
-	destroy_img(g, &g->tex.inky_img);
-	destroy_img(g, &g->tex.clyde_img);
+	destroy_img(g, &g->tex.blinky_img[0]);
+	destroy_img(g, &g->tex.blinky_img[1]);
+	destroy_img(g, &g->tex.pinky_img[0]);
+	destroy_img(g, &g->tex.pinky_img[1]);
+	destroy_img(g, &g->tex.inky_img[0]);
+	destroy_img(g, &g->tex.inky_img[1]);
+	destroy_img(g, &g->tex.clyde_img[0]);
+	destroy_img(g, &g->tex.clyde_img[1]);
 }
 
 static void	free_pacman_arrays(t_game *g)

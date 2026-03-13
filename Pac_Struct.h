@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/12 12:20:06 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/13 09:47:56 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,11 +333,11 @@ typedef struct s_textures
 	char	*ceiling;
 	char	*pacdot;
 	char	*energizer;
-	char	*blinky;
-	char	*pinky;
-	char	*inky;
-	char	*clyde;
-	char 	*gate_close;
+	char	*blinky[2];
+	char	*pinky[2];
+	char	*inky[2];
+	char	*clyde[2];
+	char	*gate_close;
 
 	t_image	no_img;
 	t_image	so_img;
@@ -347,12 +347,11 @@ typedef struct s_textures
 	t_image	ceiling_img;
 	t_image	pacdot_img;
 	t_image	energizer_img;
-	t_image	blinky_img;
-	t_image	pinky_img;
-	t_image	inky_img;
-	t_image	clyde_img;
-	t_image gate_close_img;
-
+	t_image	blinky_img[2];
+	t_image	pinky_img[2];
+	t_image	inky_img[2];
+	t_image	clyde_img[2];
+	t_image	gate_close_img;
 }	t_textures;
 
 typedef struct s_game

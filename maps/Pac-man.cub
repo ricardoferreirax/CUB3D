@@ -8,12 +8,15 @@ C ./assets/textures/Starry_Sky.xpm
 
 PD ./assets/textures/pacdot.xpm
 EN ./assets/textures/energizer.xpm
-BL ./assets/textures/blinky.xpm
-PI ./assets/textures/pinky.xpm
-IN ./assets/textures/inky.xpm
-CL ./assets/textures/clyde.xpm
+BL0 ./assets/textures/ghosts/blinky/blinky_0.xpm
+BL1 ./assets/textures/ghosts/blinky/blinky_1.xpm
+PI0 ./assets/textures/ghosts/pinky/pinky_0.xpm
+PI1 ./assets/textures/ghosts/pinky/pinky_1.xpm
+IN0 ./assets/textures/ghosts/inky/inky_0.xpm
+IN1 ./assets/textures/ghosts/inky/inky_1.xpm
+CL0 ./assets/textures/ghosts/clyde/clyde_0.xpm
+CL1 ./assets/textures/ghosts/clyde/clyde_1.xpm
 GC ./assets/textures/gate_closed.xpm
-GO ./assets/textures/gate_open.xpm
 
  p                        b 
                             
