@@ -215,6 +215,18 @@ int	update_ghost(t_ghost *ghost)
 	return (0);
 }
 
+void render_ghost_into_framebuffer(t_game *game, t_point coord, t_ghost *ghost)
+{
+	if(ghost->invalid_dir == 0)
+		render_sprite_into_framebuffer(game, coord, &ghost->frames.down[((ghost->pos.pixel_pos.x + ghost->pos.pixel_pos.y) % 2)]);
+	if(ghost->invalid_dir == 1)
+		render_sprite_into_framebuffer(game, coord, &ghost->frames.rigth[((ghost->pos.pixel_pos.x + ghost->pos.pixel_pos.y) % 2)]);
+	if(ghost->invalid_dir == 2)
+		render_sprite_into_framebuffer(game, coord, &ghost->frames.up[((ghost->pos.pixel_pos.x + ghost->pos.pixel_pos.y) % 2)]);
+	if(ghost->invalid_dir == 3)
+		render_sprite_into_framebuffer(game, coord, &ghost->frames.left[((ghost->pos.pixel_pos.x + ghost->pos.pixel_pos.y) % 2)]);
+}
+
 void	render_ghosts_into_framebuffer(t_game *game)
 {
 	int		i;
@@ -228,8 +240,7 @@ void	render_ghosts_into_framebuffer(t_game *game)
 		update_ghost(&game->ghosts[i]);
 		coord.x = (game->ghosts[i].pos.pixel_pos.x - 8 + game->win.width / 2);
 		coord.y = (game->ghosts[i].pos.pixel_pos.y - 8 + game->win.height / 2);
-		render_sprite_into_framebuffer(game, coord,
-			&game->ghosts[i].frames.left[0]);
+		render_ghost_into_framebuffer(game, coord, &game->ghosts[i]);
 	}
 }
 

@@ -161,10 +161,10 @@ typedef struct s_anim_cord
 {
 	// Coordinates to find the sprites in the sprite sheet.
 	// Each entity has 2 animations per direction, they alternate
-	t_sprite_ref up[2];
-	t_sprite_ref left[2];
-	t_sprite_ref down[2];
-	t_sprite_ref rigth[2];
+	t_sprite_ref up[3];
+	t_sprite_ref left[3];
+	t_sprite_ref down[3];
+	t_sprite_ref rigth[3];
 	//Death animation ofr th eplayer has 12 frames
 	t_sprite_ref death[12];
 

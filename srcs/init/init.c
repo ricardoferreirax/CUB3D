@@ -99,6 +99,5 @@ void	init(t_game *g, char *path)
 	init_execution(g);
 	init_menu(g);
 	init_spritesheet(g);
-	// init_player(g);
 	init_base(g);
 }
