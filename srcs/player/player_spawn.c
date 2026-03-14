@@ -67,41 +67,47 @@ static void	set_player_spawn(t_game *game, int col, int row, char dir)
 	// game->map.grid[row][col] = OPEN_SPACE;
 }
 
-static int	find_player_spawn(t_game *game)
+static t_point	find_player_spawn(t_game *game)
 {
-	int		row;
-	int		col;
-	int		spawn_count;
+	int		y;
+	int		x;
+	bool	spawn_count;
 	char	tile;
+	t_point spawn;
 
-	spawn_count = 0;
-	row = -1;
-	while (++row < game->map.height)
-	{
-		col = -1;
-		while (++col < game->map.width)
+	spawn_count = false;
+	y = -1;
+	while (++y < game->map.height)
+	{  
+		x = -1;
+		while (++x < game->map.width)
 		{
-			tile = game->map.grid[row][col];
+			tile = game->map.grid[y][x];
 			if (tile == 'N' || tile == 'S'
 				|| tile == 'E' || tile == 'W')
 			{
-				spawn_count++;
-				set_player_spawn(game, col, row, tile);
-			}
-		}
+				if(spawn_count)
+					exit_game(EXIT_MAP, game, "find_player_spawn() has found more than one player");
+				spawn_count = true;
+				spawn.x = x;
+				spawn.y = y;
+				// set_player_spawn(game, x, y, tile);
+			}  
+		} 
 	}
-	return (spawn_count);
-}
+	if(!spawn_count)
+		exit_game(EXIT_MAP, game, "find_player_spawn() has not found a player");
 
+	return (spawn);
+}  
+ 
 void	init_player(t_game *game)
 {
-	int	spawn_count;
+	t_point	spawn_count;
 
 	if (!game || !game->map.grid)
 		exit_game(EXIT_MAP, game,
 			"init_player() invalid map pointers");
 	spawn_count = find_player_spawn(game);
-	if (spawn_count != 1)
-		exit_game(EXIT_MAP, game,
-			"init_player() must find exactly one player");
+	set_player_spawn(game, spawn_count.x, spawn_count.y, game->map.grid[spawn_count.y][spawn_count.x]);
 }

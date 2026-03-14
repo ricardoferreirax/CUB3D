@@ -19,7 +19,7 @@
 void breakpoint(void)
 {
 	int i = 0;
-	i ++;
+	i++;
 	(void)i;
 	//do nothing
 }
