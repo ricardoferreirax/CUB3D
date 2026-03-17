@@ -46,8 +46,8 @@ static void	init_defaults(t_game *g)
 	g->state = MENU;
 	g->mode = MODE_PACMAN;
 	g->ray.hit_side = -1;
-	g->player.target_map_x = -1;
-	g->player.target_map_y = -1;
+	g->player.target_map.x = -1;
+	g->player.target_map.y = -1;
 	g->map.floor_color = -1;
 	g->map.ceiling_color = -1;
 	g->gate_passable = 0;
@@ -95,9 +95,9 @@ void	init(t_game *g, char *path)
 	init_defaults(g);
 	init_minilib(g);
 	init_map(g, path);
-	init_player(g);
 	init_execution(g);
 	init_menu(g);
-	init_spritesheet(g);
+	ft_printf("Loaded %d sprites\n",init_spritesheet(g));
+	init_player(g);
 	init_base(g);
 }

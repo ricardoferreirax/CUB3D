@@ -150,7 +150,7 @@ typedef struct s_window
 	t_image			frame_buffer;
 }					t_window;
 
-typedef struct s_sprite_red
+typedef struct s_sprite_ref
 {
 	t_point coord;
 	int width;
@@ -164,25 +164,22 @@ typedef struct s_anim_cord
 	t_sprite_ref up[3];
 	t_sprite_ref left[3];
 	t_sprite_ref down[3];
-	t_sprite_ref rigth[3];
+	t_sprite_ref right[3];
 	//Death animation ofr th eplayer has 12 frames
 	t_sprite_ref death[12];
 
 } t_anim;
 
+
 typedef struct s_player
 {
 	// vou precisar para a execução 3D
-	double	pos_x;
-	double	pos_y;
+	
 		// vou precisar para a execução 3D
-	double	dir_x; // direção para onde o player está a olhar (eixo X)
-	double	dir_y; // direção para onde o player está a olhar (eixo Y)
-	double	plane_x; // plano (da camera de visao - fov) perpendicular à direção do player (eixo X)
-	double	plane_y; // plano (da camera de visao - fov) perpendicular à direção do player (eixo Y)
+	t_double_point dir;
+	t_double_point plane;
 
-	int		target_map_x;  	// coordenadas do tile que o player está a apontar no eixo x
-	int		target_map_y;  	// coordenadas do tile que o player está a apontar no eixo y
+	t_point target_map;
 	char	target_tile;    // id do tile que o player está a apontar
 	char	target_wall_dir; // 'N', 'S', 'E', 'W'
 	double	target_dist;   // distância perpendicular
@@ -193,7 +190,7 @@ typedef struct s_player
 	int lives;
 	int speed_multiplier;
 	// 4 cardinal directions, 2 frames per animation
-	t_anim *frames;
+	t_anim frames;
 }	t_player;
 
 typedef enum e_ghost

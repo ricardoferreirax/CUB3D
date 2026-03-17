@@ -18,8 +18,8 @@ static int	pacdot_near_player(t_game *g, t_pacdot *p, double r)
 	double	dx;
 	double	dy;
 
-	dx = g->player.pos_x - p->x;
-	dy = g->player.pos_y - p->y;
+	dx = g->player.pos.tile_pos.x - p->x;
+	dy = g->player.pos.tile_pos.y - p->y;
 	return ((dx * dx + dy * dy) <= (r * r));
 }
 

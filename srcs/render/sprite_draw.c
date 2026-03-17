@@ -24,11 +24,11 @@ int	sprite_project(t_game *g, double world_x, double world_y, t_sprite *sp)
 	if (!g || !sp)
 		return (0);
 	dx = get_sprite_wrap_offset_x(g, world_x, world_y);
-	dy = world_y - g->player.pos_y;
-	inv_det = 1.0 / (g->player.plane_x * g->player.dir_y
-			- g->player.dir_x * g->player.plane_y);
-	tx = inv_det * (g->player.dir_y * dx - g->player.dir_x * dy);
-	ty = inv_det * (-g->player.plane_y * dx + g->player.plane_x * dy);
+	dy = world_y - g->player.pos.tile_pos.y;
+	inv_det = 1.0 / (g->player.plane.x * g->player.dir.y
+			- g->player.dir.x * g->player.plane.y);
+	tx = inv_det * (g->player.dir.y * dx - g->player.dir.x * dy);
+	ty = inv_det * (-g->player.plane.y * dx + g->player.plane.x * dy);
 	if (ty <= 0.01)
 		return (0);
 	sp->depth = ty;

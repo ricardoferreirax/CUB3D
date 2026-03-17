@@ -52,8 +52,8 @@ void ghost_sprites(t_game *game, e_ghost ghost)
 	game->ghosts[ghost].frames.left[1] = game->sprite_sheet.sprites[201];
 	game->ghosts[ghost].frames.down[0] = game->sprite_sheet.sprites[198];
 	game->ghosts[ghost].frames.down[1] = game->sprite_sheet.sprites[199];
-	game->ghosts[ghost].frames.rigth[0] = game->sprite_sheet.sprites[196];
-	game->ghosts[ghost].frames.rigth[1] = game->sprite_sheet.sprites[197];
+	game->ghosts[ghost].frames.right[0] = game->sprite_sheet.sprites[196];
+	game->ghosts[ghost].frames.right[1] = game->sprite_sheet.sprites[197];
 }
 
 void apply_new_pallete(t_point pallet_coord, t_sprite_ref *sprite)
@@ -68,12 +68,16 @@ void change_pallete(t_point pallet_coord, t_anim *frames)
 {
 	apply_new_pallete(pallet_coord, &frames->left[0]);
 	apply_new_pallete(pallet_coord, &frames->left[1]);
-	apply_new_pallete(pallet_coord, &frames->rigth[0]);
-	apply_new_pallete(pallet_coord, &frames->rigth[1]);
+	apply_new_pallete(pallet_coord, &frames->left[2]);
+	apply_new_pallete(pallet_coord, &frames->right[0]);
+	apply_new_pallete(pallet_coord, &frames->right[1]);
+	apply_new_pallete(pallet_coord, &frames->right[2]);
 	apply_new_pallete(pallet_coord, &frames->up[0]);
 	apply_new_pallete(pallet_coord, &frames->up[1]);
+	apply_new_pallete(pallet_coord, &frames->up[2]);
 	apply_new_pallete(pallet_coord, &frames->down[0]);
 	apply_new_pallete(pallet_coord, &frames->down[1]);
+	apply_new_pallete(pallet_coord, &frames->down[2]);
 	int i = 0;
 	while(i < 12)
 	{

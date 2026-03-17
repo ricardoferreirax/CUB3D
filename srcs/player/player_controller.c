@@ -15,8 +15,8 @@
 
 static void	apply_player_movement(t_game *g, double dx, double dy)
 {
-	g->player.pos_x += dx;
-	g->player.pos_y += dy;
+	g->player.pos.tile_pos.x += dx;
+	g->player.pos.tile_pos.y += dy;
 	player_collision(g);
 	player_wrap_position(g);
 	player_collect_pacdots(g);
@@ -31,28 +31,28 @@ static void	player_rotate(t_game *g, double angle)
 
 	cos_a = cos(angle);
 	sin_a = sin(angle);
-	prev_dir_x = g->player.dir_x;
-	g->player.dir_x = g->player.dir_x * cos_a - g->player.dir_y * sin_a;
-	g->player.dir_y = prev_dir_x * sin_a + g->player.dir_y * cos_a;
-	prev_plane_x = g->player.plane_x;
-	g->player.plane_x = g->player.plane_x * cos_a - g->player.plane_y * sin_a;
-	g->player.plane_y = prev_plane_x * sin_a + g->player.plane_y * cos_a;
+	prev_dir_x = g->player.dir.x;
+	g->player.dir.x = g->player.dir.x * cos_a - g->player.dir.y * sin_a;
+	g->player.dir.y = prev_dir_x * sin_a + g->player.dir.y * cos_a;
+	prev_plane_x = g->player.plane.x;
+	g->player.plane.x = g->player.plane.x * cos_a - g->player.plane.y * sin_a;
+	g->player.plane.y = prev_plane_x * sin_a + g->player.plane.y * cos_a;
 }
 
 static void	player_apply_action(t_game *g, t_player_action act)
 {
 	if (act == MOVE_FORWARD)
-		apply_player_movement(g, g->player.dir_x * PLAYER_SPEED, g->player.dir_y
+		apply_player_movement(g, g->player.dir.x * PLAYER_SPEED, g->player.dir.y
 			* PLAYER_SPEED);
 	else if (act == MOVE_BACKWARD)
-		apply_player_movement(g, -g->player.dir_x * PLAYER_SPEED,
-			-g->player.dir_y * PLAYER_SPEED);
+		apply_player_movement(g, -g->player.dir.x * PLAYER_SPEED,
+			-g->player.dir.y * PLAYER_SPEED);
 	else if (act == MOVE_RIGHT)
-		apply_player_movement(g, -g->player.dir_y * PLAYER_SPEED,
-			g->player.dir_x * PLAYER_SPEED);
+		apply_player_movement(g, -g->player.dir.y * PLAYER_SPEED,
+			g->player.dir.x * PLAYER_SPEED);
 	else if (act == MOVE_LEFT)
-		apply_player_movement(g, g->player.dir_y * PLAYER_SPEED,
-			-g->player.dir_x * PLAYER_SPEED);
+		apply_player_movement(g, g->player.dir.y * PLAYER_SPEED,
+			-g->player.dir.x * PLAYER_SPEED);
 	else if (act == ROTATE_RIGHT)
 		player_rotate(g, ROT_SPEED);
 	else if (act == ROTATE_LEFT)

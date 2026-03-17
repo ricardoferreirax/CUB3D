@@ -44,25 +44,25 @@ void	dda_init_steps(t_game *g)
 	if (g->ray.ray_dir_x < 0)
 	{
 		g->ray.step_x = -1;
-		g->ray.side_dist_x = (g->player.pos_x - g->ray.map_x)
+		g->ray.side_dist_x = (g->player.pos.tile_pos.x - g->ray.map_x)
 			* g->ray.delta_dist_x;
 	}
 	else
 	{
 		g->ray.step_x = 1;
-		g->ray.side_dist_x = (g->ray.map_x + TILE_SIZE_3D - g->player.pos_x)
+		g->ray.side_dist_x = (g->ray.map_x + TILE_SIZE_3D - g->player.pos.tile_pos.x)
 			* g->ray.delta_dist_x;
 	}
 	if (g->ray.ray_dir_y < 0)
 	{
 		g->ray.step_y = -1;
-		g->ray.side_dist_y = (g->player.pos_y - g->ray.map_y)
+		g->ray.side_dist_y = (g->player.pos.tile_pos.y - g->ray.map_y)
 			* g->ray.delta_dist_y;
 	}
 	else
 	{
 		g->ray.step_y = 1;
-		g->ray.side_dist_y = (g->ray.map_y + TILE_SIZE_3D - g->player.pos_y)
+		g->ray.side_dist_y = (g->ray.map_y + TILE_SIZE_3D - g->player.pos.tile_pos.y)
 			* g->ray.delta_dist_y;
 	}
 }
@@ -73,10 +73,10 @@ static void	init_ray_column(t_game *g, int col)
 
 	cam_x = 2.0 * col / (double)g->win.width - 1.0;
 	g->ray.camera_x = cam_x;
-	g->ray.ray_dir_x = g->player.dir_x + g->player.plane_x * cam_x;
-	g->ray.ray_dir_y = g->player.dir_y + g->player.plane_y * cam_x;
-	g->ray.map_x = (int)g->player.pos_x;
-	g->ray.map_y = (int)g->player.pos_y;
+	g->ray.ray_dir_x = g->player.dir.x + g->player.plane.x * cam_x;
+	g->ray.ray_dir_y = g->player.dir.y + g->player.plane.y * cam_x;
+	g->ray.map_x = (int)g->player.pos.tile_pos.x;
+	g->ray.map_y = (int)g->player.pos.tile_pos.y;
 	g->ray.hit = 0;
 	g->ray.hit_side = 0;
 	g->ray.hit_tile = VOID;

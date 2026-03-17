@@ -25,14 +25,14 @@ static void	floor_row_setup(t_game *g, t_fc *fc, int y)
 	if (p < 4.0)
 		p = 4.0;
 	fc->rowdist = (0.5 * (double)g->win.height) / p;
-	r0x = g->player.dir_x - g->player.plane_x;
-	r0y = g->player.dir_y - g->player.plane_y;
-	fc->stepx = fc->rowdist * ((g->player.dir_x + g->player.plane_x) - r0x)
+	r0x = g->player.dir.x - g->player.plane.x;
+	r0y = g->player.dir.y - g->player.plane.y;
+	fc->stepx = fc->rowdist * ((g->player.dir.x + g->player.plane.x) - r0x)
 		/ (double)g->win.width;
-	fc->stepy = fc->rowdist * ((g->player.dir_y + g->player.plane_y) - r0y)
+	fc->stepy = fc->rowdist * ((g->player.dir.y + g->player.plane.y) - r0y)
 		/ (double)g->win.width;
-	fc->fx = g->player.pos_x + fc->rowdist * r0x;
-	fc->fy = g->player.pos_y + fc->rowdist * r0y;
+	fc->fx = g->player.pos.tile_pos.x + fc->rowdist * r0x;
+	fc->fy = g->player.pos.tile_pos.y + fc->rowdist * r0y;
 }
 
 static void	floor_draw_row(t_game *g, t_fc *fc, t_image *tex, int y)

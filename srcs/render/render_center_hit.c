@@ -44,8 +44,8 @@ int	register_center_hit(t_game *g, int screen_x, int hit_found)
 	if (!is_center_hit(g, hit_found, screen_x))
 		return (hit_found);
 	tile = map_get_tile(g, g->ray.map_y, g->ray.map_x);
-	g->player.target_map_x = g->ray.map_x;
-	g->player.target_map_y = g->ray.map_y;
+	g->player.target_map.x = g->ray.map_x;
+	g->player.target_map.y = g->ray.map_y;
 	g->player.target_tile = tile;
 	if (g->ray.hit_side == 0 && g->ray.ray_dir_x < 0)
 		g->player.target_wall_dir = 'W';
