@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 21:11:27 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/05 22:03:03 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/17 14:37:37 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ static void	set_player_spawn(t_game *game, int col, int row, char dir)
 			"set_player_spawn() player next to VOID tile");
 	game->player.pos.tile_pos.x = (double)col + 0.5;
 	game->player.pos.tile_pos.y = (double)row + 0.5;
+	game->player.pos.pixel_pos.x = col * TILE_SIZE + TILE_SIZE / 2;
+	game->player.pos.pixel_pos.y = row * TILE_SIZE + TILE_SIZE  / 2;
 	set_player_orientation_ns(game, dir);
 	set_player_orientation_ew(game, dir);
 	// game->map.grid[row][col] = OPEN_SPACE;
@@ -135,14 +137,5 @@ void	init_player(t_game *game)
 	set_player_spawn(game, spawn_coord.x, spawn_coord.y, game->map.grid[spawn_coord.y][spawn_coord.x]);
 	// set_player_spawn(game, spawn_coord.y, spawn_coord.x, game->map.grid[spawn_coord.y][spawn_coord.x]);
 	player_sprites(game);
-
-
-
-
-
-
-
-
-
-
+	change_pallete((t_point){.x = 2, .y = 1}, &game->player.frames);
 }

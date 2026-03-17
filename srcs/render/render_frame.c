@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 19:44:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/05 21:38:36 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/17 14:32:23 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,15 +238,23 @@ void	render_ghosts_into_framebuffer(t_game *game)
 		if (game->ghosts[i].name == DISABLED)
 			continue ;
 		update_ghost(&game->ghosts[i]);
-		coord.x = (game->ghosts[i].pos.pixel_pos.x - 8 + game->win.width / 2);
-		coord.y = (game->ghosts[i].pos.pixel_pos.y - 8 + game->win.height / 2);
+		coord.x = (game->ghosts[i].pos.pixel_pos.x - TILE_SIZE  + game->win.width / 2);
+		coord.y = (game->ghosts[i].pos.pixel_pos.y - TILE_SIZE  + game->win.height / 2);
 		render_ghost_into_framebuffer(game, coord, &game->ghosts[i]);
 	}
 }
 
 void render_player_into_framebuffer(t_game *game)
 {
-	(void)game;
+
+	t_point coord;
+	// coord.x = ((game->player.pos.tile_pos.x - 0.5) * TILE_SIZE + TILE_SIZE / 2) + game->win.width / 2;
+	coord.x = ((game->player.pos.tile_pos.x - 0.5) * TILE_SIZE) + game->win.width / 2;
+	// coord.y = ((game->player.pos.tile_pos.y - 0.5) * TILE_SIZE + TILE_SIZE / 2) + game->win.height / 2;
+	coord.y = ((game->player.pos.tile_pos.y - 0.5) * TILE_SIZE) + game->win.height / 2;
+	game->player.pos.pixel_pos.x = coord.x;
+	game->player.pos.pixel_pos.y = coord.y;
+	render_sprite_into_framebuffer(game, coord, &game->player.frames.left[0]);
 }
 
 

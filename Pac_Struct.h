@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/05 18:29:33 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/17 14:35:44 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -421,3 +421,4 @@ void	ft_pixel_put(t_image *s, int x, int y, unsigned int color);
 
 void print_2d(char **arr);
 void breakpoint(void);
+void change_pallete(t_point pallet_coord, t_anim *frames);
