@@ -55,7 +55,7 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
 	g->player.pos.tile_pos.y += dy;
 	player_snap_for_move(g, dx, dy);
 	player_collision(g);
-player_wrap_position(g);
+	player_wrap_position(g);
 	player_collect_pacdots(g);
 }
 
@@ -96,31 +96,44 @@ static void	player_apply_action(t_game *g, t_player_action act)
 		player_rotate(g, -ROT_SPEED);
 }
 
+bool can_move(t_game *game, int dir)
+{
+
+	int direction[4][2] = {
+		{-1, 0}, // 0 = up
+		{0, -1}, // 1 = left
+		{1, 0},  // 2 = down
+		{0, 1}   // 3 = right
+	};
+	if(game->map.grid[(int)game->player.pos.tile_pos.y + direction[dir][0]][(int)game->player.pos.tile_pos.x + direction[dir][1]] == '1')
+		return false;
+	return true;
+}
 
 void move(t_game *game, int dir)
 {
-	if(dir == 0)
+	if(dir == 0 && can_move(game, dir))
 	{
 		game->player.dir.x = 0;
 		game->player.dir.y = -1;
 		game->player.plane.x = 0.66;
 		game->player.plane.y = 0;
 	}
-	if(dir == 1)
+	if(dir == 1 && can_move(game, dir))
 	{
 		game->player.dir.x = -1;
 		game->player.dir.y = 0;
 		game->player.plane.x = 0;
 		game->player.plane.y = -0.66;
 	}
-	if(dir == 2)
+	if(dir == 2 && can_move(game, dir))
 	{
 		game->player.dir.x = 0;
 		game->player.dir.y = 1;
 		game->player.plane.x = -0.66;
 		game->player.plane.y = 0;
 	}
-	if(dir == 3)
+	if(dir == 3 && can_move(game, dir))
 	{
 		game->player.dir.x = 1;
 		game->player.dir.y = 0;

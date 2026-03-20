@@ -44,7 +44,7 @@ int	handle_key_press(int keycode, t_game *g)
 		g->key.left = 1;
 	else if (keycode == KEY_RIGHT)
 		g->key.right = 1;
-	else if (keycode == KEY_E)
+	else if (keycode == KEY_E && g->mode == MODE_CUBE)
 		g->key.e = 1;
 	return (0);
 }
