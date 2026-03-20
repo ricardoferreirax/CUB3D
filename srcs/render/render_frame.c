@@ -277,12 +277,25 @@ void render_player_into_framebuffer(t_game *game)
 	render_player(game, coord);
 }
 
+void render_pacdots_into_framebuffer(t_game *game)
+{
+	int i;
+	i = 0;
+	while(i < game->pacdot_count)
+	{
+		if(game->pacdots[i].active)
+			render_sprite_into_framebuffer(game, (t_point){.y = game->pacdots[i].pos.pixel_pos.y + game->win.height / 2, .x = game->pacdots[i].pos.pixel_pos.x + game->win.width / 2}, &game->sprite_sheet.sprites[37]);
+		i++;
+	}
+}
+
 
 void	render_into_framebuffer(t_game *game)
 {
 	render_base_into_framebuffer(game);
 	render_ghosts_into_framebuffer(game);
 	render_player_into_framebuffer(game);
+	render_pacdots_into_framebuffer(game);
 }
 
 void	render_frame(t_game *game)

@@ -294,12 +294,8 @@ typedef struct s_time
 
 typedef struct s_pacdot
 {
-	double x;
-	double y;
-	int active;
-	
 	t_pos pos;
-	bool eaten;
+	bool active;
 }	t_pacdot;
 
 typedef struct s_sheet
