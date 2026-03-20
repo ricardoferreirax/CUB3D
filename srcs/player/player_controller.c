@@ -18,7 +18,7 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
 	g->player.pos.tile_pos.x += dx;
 	g->player.pos.tile_pos.y += dy;
 	player_collision(g);
-	player_wrap_position(g);
+player_wrap_position(g);
 	player_collect_pacdots(g);
 }
 
@@ -59,6 +59,40 @@ static void	player_apply_action(t_game *g, t_player_action act)
 		player_rotate(g, -ROT_SPEED);
 }
 
+
+void move(t_game *game, int dir)
+{
+	if(dir == 0)
+	{
+		game->player.dir.x = 0;
+		game->player.dir.y = -1;
+		game->player.plane.x = 0.66;
+		game->player.plane.y = 0;
+	}
+	if(dir == 1)
+	{
+		game->player.dir.x = -1;
+		game->player.dir.y = 0;
+		game->player.plane.x = 0;
+		game->player.plane.y = -0.66;
+	}
+	if(dir == 2)
+	{
+		game->player.dir.x = 0;
+		game->player.dir.y = 1;
+		game->player.plane.x = -0.66;
+		game->player.plane.y = 0;
+	}
+	if(dir == 3)
+	{
+		game->player.dir.x = 1;
+		game->player.dir.y = 0;
+		game->player.plane.x = 0;
+		game->player.plane.y = 0.66;
+	}
+}
+
+
 void	player_controller(t_game *g)
 {
 	if (!g)
@@ -81,16 +115,13 @@ void	player_controller(t_game *g)
 	else if(g->mode == MODE_PACMAN)
 	{
 		if (g->key.w)
-			player_apply_action(g, MOVE_FORWARD);
+			move(g, 0);
 		if (g->key.s)
-			player_apply_action(g, MOVE_BACKWARD);
+			move(g, 2);
 		if (g->key.d)
-			player_apply_action(g, MOVE_RIGHT);
+			move(g, 3);
 		if (g->key.a)
-			player_apply_action(g, MOVE_LEFT);
-		if (g->key.right)
-			player_apply_action(g, ROTATE_RIGHT);
-		if (g->key.left)
-			player_apply_action(g, ROTATE_LEFT);
+			move(g, 1);
+		apply_player_movement(g, g->player.dir.x * PLAYER_SPEED, g->player.dir.y * PLAYER_SPEED);
 	}
 }

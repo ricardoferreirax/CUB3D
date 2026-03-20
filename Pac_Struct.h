@@ -170,6 +170,12 @@ typedef struct s_anim_cord
 
 } t_anim;
 
+typedef struct s_control
+{
+	int current_dir;
+	int input_buffer;
+	// int cycle_count;
+} t_control;
 
 typedef struct s_player
 {
@@ -189,8 +195,8 @@ typedef struct s_player
 	t_pos pos; // para o 2d (tile/pixel)
 	int lives;
 	int speed_multiplier;
-	// 4 cardinal directions, 2 frames per animation
 	t_anim frames;
+	t_control controller;
 }	t_player;
 
 typedef enum e_ghost

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 16:04:01 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/04 14:59:38 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/17 17:30:26 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,9 @@ void	put_tile_inbase(t_game *g, int tile_code, unsigned int color,
 {
 	int	ty;
 	int	tx;
-
+	t_point pallete;
+	pallete.x = 3;
+	pallete.y = 1;
 	ty = 0;
 	while (ty < g->sprite_sheet.sprites[tile_code].height)
 	{
@@ -244,8 +246,8 @@ void	put_tile_inbase(t_game *g, int tile_code, unsigned int color,
 		while (tx < g->sprite_sheet.sprites[tile_code].width)
 		{
 			color = pixel_get(&g->sprite_sheet.sprite_img,
-					g->sprite_sheet.sprites[tile_code].coord.x + tx,
-					g->sprite_sheet.sprites[tile_code].coord.y + ty);
+					g->sprite_sheet.sprites[tile_code].coord.x + pallete.x * 200 + tx,
+					g->sprite_sheet.sprites[tile_code].coord.y + pallete.y * 186 + ty);
 			if ((color >> 24) != 0xFF)
 				ft_pixel_put(&g->base, point.x * 8 + tx, point.y * 8 + ty,
 					color);

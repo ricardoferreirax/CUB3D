@@ -177,9 +177,9 @@ void	ghost_set_pixel_pos(t_ghost *gh, int px, int py)
 {
 	if (!gh)
 		return ;
-	gh->pos.pixel_pos.x = px;                                            
+	gh->pos.pixel_pos.x = px;
 		// define a posição x do ghost em pixels
-	gh->pos.pixel_pos.y = py;                                            
+	gh->pos.pixel_pos.y = py;
 		// define a posição y do ghost em pixels
 	gh->pos.tile_pos.x = (double)gh->pos.pixel_pos.x / (double)TILE_SIZE;
 		// converte a posição x do ghost de pixels para tiles
@@ -204,9 +204,9 @@ int	update_ghost(t_ghost *ghost)
 	{
 		next = continue_travel(*ghost, ghost->invalid_dir);
 			// calcula a próxima posição do ghost ao continuar na direção atual
-		ghost_set_pixel_pos(ghost, next.x, next.y);        
+		ghost_set_pixel_pos(ghost, next.x, next.y);
 			// aplica a nova posição ao ghost e sincroniza a posição em pixels com a posição em tiles
-		return (0);                                        
+		return (0);
 			// continua o movimento atual do ghost
 	}
 	ghost->invalid_dir = chose_next_move(ghost, ghost->mental_map);
@@ -244,17 +244,37 @@ void	render_ghosts_into_framebuffer(t_game *game)
 	}
 }
 
+void play_death(t_game *game, t_point coord)
+{
+	render_sprite_into_framebuffer(game, coord, &game->player.frames.death[11]);
+}
+
+
+void render_player(t_game *game, t_point coord)
+{
+	printf("PLayer is facing: X %2f, Y %2f\n", game->player.dir.x, game->player.dir.y);
+	if((game->player.dir.y) == 1)
+		render_sprite_into_framebuffer(game, coord, &game->player.frames.down[0]);
+	else if((game->player.dir.x) == 1)
+		render_sprite_into_framebuffer(game, coord, &game->player.frames.right[0]);
+	else if((game->player.dir.y) == -1)
+		render_sprite_into_framebuffer(game, coord, &game->player.frames.up[0]);
+	else if((game->player.dir.x) == -1)
+		render_sprite_into_framebuffer(game, coord, &game->player.frames.left[0]);
+	else
+		play_death(game, coord);
+}
+
+
 void render_player_into_framebuffer(t_game *game)
 {
 
 	t_point coord;
-	// coord.x = ((game->player.pos.tile_pos.x - 0.5) * TILE_SIZE + TILE_SIZE / 2) + game->win.width / 2;
 	coord.x = ((game->player.pos.tile_pos.x - 0.5) * TILE_SIZE) + game->win.width / 2;
-	// coord.y = ((game->player.pos.tile_pos.y - 0.5) * TILE_SIZE + TILE_SIZE / 2) + game->win.height / 2;
 	coord.y = ((game->player.pos.tile_pos.y - 0.5) * TILE_SIZE) + game->win.height / 2;
 	game->player.pos.pixel_pos.x = coord.x;
 	game->player.pos.pixel_pos.y = coord.y;
-	render_sprite_into_framebuffer(game, coord, &game->player.frames.left[0]);
+	render_player(game, coord);
 }
 
 
