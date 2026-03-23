@@ -51,12 +51,15 @@ static void	player_snap_for_move(t_game *g, double dx, double dy)
 
 static void	apply_player_movement(t_game *g, double dx, double dy)
 {
-	g->player.pos.tile_pos.x += dx;
-	g->player.pos.tile_pos.y += dy;
-	player_snap_for_move(g, dx, dy);
+	if(g->mode == MODE_PACMAN)
+		player_snap_for_move(g, dx, dy);
 	player_collision(g);
 	player_wrap_position(g);
-	player_collect_pacdots(g);
+	if(!player_collect_pacdots(g))
+	{
+		g->player.pos.tile_pos.x += dx;
+		g->player.pos.tile_pos.y += dy;
+	}
 }
 
 static void	player_rotate(t_game *g, double angle)

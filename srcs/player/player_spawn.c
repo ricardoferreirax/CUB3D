@@ -62,8 +62,8 @@ static void	set_player_spawn(t_game *game, int col, int row, char dir)
 			"set_player_spawn() player next to VOID tile");
 	game->player.pos.tile_pos.x = (double)col + 0.5;
 	game->player.pos.tile_pos.y = (double)row + 0.5;
-	game->player.pos.pixel_pos.x = col * TILE_SIZE + TILE_SIZE / 2;
-	game->player.pos.pixel_pos.y = row * TILE_SIZE + TILE_SIZE  / 2;
+	game->player.pos.pixel_pos.x = col * TILE_SIZE;
+	game->player.pos.pixel_pos.y = row * TILE_SIZE;
 	set_player_orientation_ns(game, dir);
 	set_player_orientation_ew(game, dir);
 	// game->map.grid[row][col] = OPEN_SPACE;
@@ -120,7 +120,7 @@ void player_sprites(t_game *game)
 	int i = 0;
 	while(i < 12)
 	{
-		ft_printf("Searchin Frame Number: %d with index %d\n", death_frames[i], i);
+		// ft_printf("Searchin Frame Number: %d with index %d\n", death_frames[i], i);
 		game->player.frames.death[i] = game->sprite_sheet.sprites[death_frames[i]];
 		i++;
 	}

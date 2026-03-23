@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdbool.h>
+
 #ifndef PLAYER3D_H
 # define PLAYER3D_H
 
@@ -21,7 +23,7 @@ typedef struct s_game	t_game;
 
 void	player_controller(t_game *g);
 void	player_collision(t_game *g);
-void		player_collect_pacdots(t_game *g);
+bool		player_collect_pacdots(t_game *g);
 int	player_hits_wall(t_game *g, int row, int col);
 int	ghost_hits_wall(t_game *g, int row, int col);
 void	init_player(t_game *g);

@@ -252,9 +252,8 @@ void play_death(t_game *game, t_point coord)
 
 void render_player(t_game *game, t_point coord)
 {
-	printf("PLayer is facing: X %2f, Y %2f\n", game->player.dir.x, game->player.dir.y);
 	if((game->player.dir.y) == 1)
-		render_sprite_into_framebuffer(game, coord, &game->player.frames.down[0]);
+		render_sprite_into_framebuffer(game, coord, &game->player.frames.down[(game->player.pos.pixel_pos.x + game->player.pos.pixel_pos.y) % 3]);
 	else if((game->player.dir.x) == 1)
 		render_sprite_into_framebuffer(game, coord, &game->player.frames.right[0]);
 	else if((game->player.dir.y) == -1)
@@ -270,8 +269,8 @@ void render_player_into_framebuffer(t_game *game)
 {
 
 	t_point coord;
-	coord.x = ((game->player.pos.tile_pos.x - 0.5) * TILE_SIZE) + game->win.width / 2;
-	coord.y = ((game->player.pos.tile_pos.y - 0.5) * TILE_SIZE) + game->win.height / 2;
+	coord.x = (((game->player.pos.tile_pos.x - 0.5) * TILE_SIZE) + game->win.width / 2) - 3;
+	coord.y = (((game->player.pos.tile_pos.y - 0.5) * TILE_SIZE) + game->win.height / 2) - 3;
 	game->player.pos.pixel_pos.x = coord.x;
 	game->player.pos.pixel_pos.y = coord.y;
 	render_player(game, coord);
