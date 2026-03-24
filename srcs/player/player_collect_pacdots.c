@@ -46,3 +46,35 @@ bool		player_collect_pacdots(t_game *g)
 	}
 	return collected;
 }
+
+
+static int	player_touching_ghost(t_game *g, t_pacdot *p, double r)
+{
+	double	dx;
+	double	dy;
+
+	dx = g->player.pos.tile_pos.x - p->pos.tile_pos.x;
+	dy = g->player.pos.tile_pos.y - p->pos.tile_pos.y;
+	return ((dx * dx + dy * dy) <= (r * r));
+}
+
+bool		player_touched_ghost(t_game *g)
+{
+	int		i;
+	double	hit_radius;
+	bool hit;
+	hit = false;
+
+
+	if (!g || !g->pacdots || g->pacdot_count <= 0)
+		return false;
+	hit_radius = 0.50;
+	i = 0;
+	while (i < 4)
+	{
+		if (g->ghosts[i].name != DISABLED && pacdot_near_player(g, &g->pacdots[i], hit_radius) && g->ghosts[i].state != FRIGHTENED && g->ghosts[i].state != EATEN)
+			hit = true;
+		i++;
+	}
+	return hit;
+}

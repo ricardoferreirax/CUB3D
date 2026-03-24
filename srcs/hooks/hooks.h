@@ -20,6 +20,8 @@
 # define KEY_D 100
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
+# define KEY_UP 65362
+# define KEY_DOWN 65364
 # define KEY_E 101
 # define KEY_H 104
 #define KEY_1 49
@@ -35,6 +37,8 @@ typedef struct s_key
 	int	d;
 	int	left;
 	int	right;
+	int up;
+	int down;
 	int	esc;
 	int	e;
 	int	e_lock;

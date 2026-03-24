@@ -44,6 +44,10 @@ int	handle_key_press(int keycode, t_game *g)
 		g->key.left = 1;
 	else if (keycode == KEY_RIGHT)
 		g->key.right = 1;
+	else if(keycode == KEY_UP)
+		g->key.up = 1;
+	else if(keycode == KEY_DOWN)
+		g->key.down = 1;
 	else if (keycode == KEY_E && g->mode == MODE_CUBE)
 		g->key.e = 1;
 	return (0);
@@ -65,6 +69,10 @@ int	handle_key_release(int keycode, t_game *g)
 		g->key.left = 0;
 	else if (keycode == KEY_RIGHT)
 		g->key.right = 0;
+	else if(keycode == KEY_UP)
+		g->key.up = 0;
+	else if(keycode == KEY_DOWN)
+		g->key.down = 0;
 	else if (keycode == KEY_E)
 	{
 		g->key.e = 0;

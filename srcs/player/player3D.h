@@ -27,5 +27,5 @@ bool		player_collect_pacdots(t_game *g);
 int	player_hits_wall(t_game *g, int row, int col);
 int	ghost_hits_wall(t_game *g, int row, int col);
 void	init_player(t_game *g);
-
+bool		player_touched_ghost(t_game *g);
 #endif

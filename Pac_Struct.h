@@ -183,7 +183,9 @@ typedef struct s_player
 	
 		// vou precisar para a execução 3D
 	t_double_point dir;
+	t_double_point target_dir;
 	t_double_point plane;
+	t_double_point target_plane;
 
 	t_point target_map;
 	char	target_tile;    // id do tile que o player está a apontar

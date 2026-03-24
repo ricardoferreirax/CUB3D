@@ -66,6 +66,8 @@ static void	set_player_spawn(t_game *game, int col, int row, char dir)
 	game->player.pos.pixel_pos.y = row * TILE_SIZE;
 	set_player_orientation_ns(game, dir);
 	set_player_orientation_ew(game, dir);
+	game->player.target_dir = game->player.dir;
+	game->player.target_plane = game->player.plane;
 	// game->map.grid[row][col] = OPEN_SPACE;
 }
 

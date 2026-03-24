@@ -252,14 +252,14 @@ void play_death(t_game *game, t_point coord)
 
 void render_player(t_game *game, t_point coord)
 {
-	if((game->player.dir.y) == 1)
+	if((game->player.target_dir.y) == 1)
 		render_sprite_into_framebuffer(game, coord, &game->player.frames.down[(game->player.pos.pixel_pos.x + game->player.pos.pixel_pos.y) % 3]);
-	else if((game->player.dir.x) == 1)
-		render_sprite_into_framebuffer(game, coord, &game->player.frames.right[0]);
-	else if((game->player.dir.y) == -1)
-		render_sprite_into_framebuffer(game, coord, &game->player.frames.up[0]);
-	else if((game->player.dir.x) == -1)
-		render_sprite_into_framebuffer(game, coord, &game->player.frames.left[0]);
+	else if((game->player.target_dir.x) == 1)
+		render_sprite_into_framebuffer(game, coord, &game->player.frames.right[(game->player.pos.pixel_pos.x + game->player.pos.pixel_pos.y) % 3]);
+	else if((game->player.target_dir.y) == -1)
+		render_sprite_into_framebuffer(game, coord, &game->player.frames.up[(game->player.pos.pixel_pos.x + game->player.pos.pixel_pos.y) % 3]);
+	else if((game->player.target_dir.x) == -1)
+		render_sprite_into_framebuffer(game, coord, &game->player.frames.left[(game->player.pos.pixel_pos.x + game->player.pos.pixel_pos.y) % 3]);
 	else
 		play_death(game, coord);
 }
@@ -292,9 +292,9 @@ void render_pacdots_into_framebuffer(t_game *game)
 void	render_into_framebuffer(t_game *game)
 {
 	render_base_into_framebuffer(game);
+	render_pacdots_into_framebuffer(game);
 	render_ghosts_into_framebuffer(game);
 	render_player_into_framebuffer(game);
-	render_pacdots_into_framebuffer(game);
 }
 
 void	render_frame(t_game *game)
