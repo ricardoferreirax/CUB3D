@@ -197,6 +197,7 @@ typedef struct s_player
 	t_pos pos; // para o 2d (tile/pixel)
 	int lives;
 	int speed_multiplier;
+	int frightened_speed;
 	t_anim frames;
 	t_control controller;
 }	t_player;
@@ -270,6 +271,8 @@ typedef struct s_ghost
 	t_point	target_tile;
 	int		global_dot_counter_call;
 	int		speed_multiplier;
+	int		speed_frightened;
+	int		speed_tunnel;
 	int		is_steping_on_pacdot;
 	t_anim	anim;
 	int		invalid_dir;
@@ -360,6 +363,18 @@ typedef struct s_textures
 
 }	t_textures;
 
+typedef struct s_lvl_config
+{
+	t_elroy elroy;
+	int ghost_speed;
+	int ghost_frightened_speed;
+	int ghost_tunnel_speed;
+	int pacman_speed;
+	int pacman_frightened_speed;
+	double frightened_time;
+	int bonus_fruit_points;
+} t_lvl_config;
+
 typedef struct s_game
 {
 	void *mlx_ptr;
@@ -377,7 +392,6 @@ typedef struct s_game
 	t_gstate state;
 	t_image menu_img;
 	t_image base;
-
 	int pacdot_count;
 	int	energizer_count;
 	int gate_passable;

@@ -49,6 +49,11 @@ static void	player_snap_for_move(t_game *g, double dx, double dy)
 		player_snap_axis(&g->player.pos.tile_pos.x, PLAYER_SPEED * 0.50, 0.03);
 }
 
+void play_death(t_game * game)
+{
+	(void)game;
+}
+
 static void	apply_player_movement(t_game *g, double dx, double dy)
 {
 	if (g->mode == MODE_PACMAN)
@@ -66,7 +71,7 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
 		if(g->player.lives <= 0)
 			exit_game(EXIT_FAILURE, g, "You are dead");
 		ft_printf("You got touhced");
-		// play_death(g);
+		play_death(g);
 	}
 }
 

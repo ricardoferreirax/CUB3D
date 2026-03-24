@@ -48,7 +48,7 @@ bool		player_collect_pacdots(t_game *g)
 }
 
 
-static int	player_touching_ghost(t_game *g, t_pacdot *p, double r)
+static int	player_touching_ghost(t_game *g, t_ghost *p, double r)
 {
 	double	dx;
 	double	dy;
@@ -72,7 +72,7 @@ bool		player_touched_ghost(t_game *g)
 	i = 0;
 	while (i < 4)
 	{
-		if (g->ghosts[i].name != DISABLED && pacdot_near_player(g, &g->pacdots[i], hit_radius) && g->ghosts[i].state != FRIGHTENED && g->ghosts[i].state != EATEN)
+		if (g->ghosts[i].name != DISABLED && player_touching_ghost(g, &g->ghosts[i], hit_radius) && g->ghosts[i].state != FRIGHTENED && g->ghosts[i].state != EATEN)
 			hit = true;
 		i++;
 	}

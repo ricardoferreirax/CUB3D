@@ -85,8 +85,8 @@ t_point	continue_travel(t_ghost ghost, int invalid_dir)
 		{0, 1},  // down
 		{1, 0}   // right
 	};
-	return ((t_point){.x = ghost.pos.pixel_pos.x + direction[dir][0],
-		.y = ghost.pos.pixel_pos.y + direction[dir][1]});
+	return ((t_point){.x = (ghost.pos.pixel_pos.x + direction[dir][0]),
+		.y = (ghost.pos.pixel_pos.y + direction[dir][1])});
 }
 
 int	distance_to_target(t_ghost *ghost, int dy, int dx)
@@ -242,9 +242,9 @@ void	render_ghosts_into_framebuffer(t_game *game)
 		coord.y = (game->ghosts[i].pos.pixel_pos.y - TILE_SIZE  + game->win.height / 2);
 		render_ghost_into_framebuffer(game, coord, &game->ghosts[i]);
 	}
-}
+}//
 
-void play_death(t_game *game, t_point coord)
+void play_ddeath(t_game *game, t_point coord)
 {
 	render_sprite_into_framebuffer(game, coord, &game->player.frames.death[11]);
 }
@@ -261,7 +261,7 @@ void render_player(t_game *game, t_point coord)
 	else if((game->player.target_dir.x) == -1)
 		render_sprite_into_framebuffer(game, coord, &game->player.frames.left[(game->player.pos.pixel_pos.x + game->player.pos.pixel_pos.y) % 3]);
 	else
-		play_death(game, coord);
+		play_ddeath(game, coord);
 }
 
 

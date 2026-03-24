@@ -140,4 +140,5 @@ void	init_player(t_game *game)
 	// set_player_spawn(game, spawn_coord.y, spawn_coord.x, game->map.grid[spawn_coord.y][spawn_coord.x]);
 	player_sprites(game);
 	change_pallete((t_point){.x = 2, .y = 1}, &game->player.frames);
+	game->player.lives = 3;
 }
