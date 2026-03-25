@@ -34,6 +34,24 @@ void print_2d(char **arr)
 	}
 }
 
+void reset_game(t_game *game, int is_death)
+{
+	if (is_death)
+		game->player.lives--;
+	
+	init_player(game, 1);
+	init_ghosts(game, 1);
+	if(is_death)
+		return;
+	int i = 0;
+	while(i < game->pacdot_count)
+	{
+		game->pacdots[i].active = true;
+		i++;
+	}
+
+}
+
 int	gameloop(t_game *game)
 {
 	long	now;

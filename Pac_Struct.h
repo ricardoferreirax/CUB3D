@@ -273,6 +273,7 @@ typedef struct s_ghost
 	int		speed_multiplier;
 	int		speed_frightened;
 	int		speed_tunnel;
+	double	speed_accumulador;
 	int		is_steping_on_pacdot;
 	t_anim	anim;
 	int		invalid_dir;
@@ -439,4 +440,6 @@ void	ft_pixel_put(t_image *s, int x, int y, unsigned int color);
 
 void print_2d(char **arr);
 void breakpoint(void);
+
+void reset_game(t_game *game, int is_death);
 void change_pallete(t_point pallet_coord, t_anim *frames);

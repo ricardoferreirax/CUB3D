@@ -128,7 +128,7 @@ void player_sprites(t_game *game)
 	}
 }
  
-void	init_player(t_game *game)
+void	init_player(t_game *game, int is_death)
 {
 	t_point	spawn_coord;
 
@@ -137,6 +137,8 @@ void	init_player(t_game *game)
 			"init_player() invalid map pointers");
 	spawn_coord = find_player_spawn(game);
 	set_player_spawn(game, spawn_coord.x, spawn_coord.y, game->map.grid[spawn_coord.y][spawn_coord.x]);
+	if(is_death)
+		return;
 	// set_player_spawn(game, spawn_coord.y, spawn_coord.x, game->map.grid[spawn_coord.y][spawn_coord.x]);
 	player_sprites(game);
 	change_pallete((t_point){.x = 2, .y = 1}, &game->player.frames);

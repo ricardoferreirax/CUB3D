@@ -71,7 +71,9 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
 		if(g->player.lives <= 0)
 			exit_game(EXIT_FAILURE, g, "You are dead");
 		ft_printf("You got touhced");
-		play_death(g);
+		// play_death(g);
+		sleep(1);
+		reset_game(g, 1);
 	}
 }
 

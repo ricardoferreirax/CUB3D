@@ -117,14 +117,13 @@ t_point find_spawn(char **map, char ghost)
 	return gate_pos;
 }
 
-static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char)
+static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char, int is_death)
 {
 	t_point	target_point;
 	t_point spawn_point;
 
-	// spawn_point.x = 0;
-	// spawn_point.y = 0;
-	gh->mental_map = copy_map(g->map.grid);
+	if(!is_death)
+		gh->mental_map = copy_map(g->map.grid);
 	if (!gh->mental_map)
 		exit_game(EXIT_MALLOC, g, "init_one_ghost() was unable to copy map");
 	target_point = find_c(g->map.grid, target_char);
@@ -135,23 +134,16 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char)
 	gh->pos.tile_pos.y = (double)spawn_point.y + 0.5; // posiciona o ghost no centro do spawn tile no eixo y
 	gh->pos.pixel_pos.x = spawn_point.x * TILE_SIZE + TILE_SIZE / 2; // converte o spawn tile para pixels e centra o fanstasma no tile no eixo x
 	gh->pos.pixel_pos.y = spawn_point.y * TILE_SIZE + TILE_SIZE / 2; // converte o spawn tile para pixels e centra o fanstasma no tile no eixo y
-	// gh->pos.tile_pos.x = (double)spawn_point.x;
-	// gh->pos.tile_pos.y = (double)spawn_point.y;
-	// gh->pos.pixel_pos.x = (spawn_point.x + TILE_SIZE / 2 + TILE_SIZE / 4) * TILE_SIZE;
-	// gh->pos.pixel_pos.y = (spawn_point.y + TILE_SIZE / 2 + TILE_SIZE / 4) * TILE_SIZE;
-	// gh->pos.tile_pos.x = (double)target_point.x;
-	// gh->pos.tile_pos.y = (double)target_point.y;
-	// gh->pos.pixel_pos.x = target_point.x * 8;
-	// gh->pos.pixel_pos.y = target_point.y * 8;
-	// ghost_update_pixel_pos(gh);
 	gh->invalid_dir = -1;
 	gh->target_tile = target_point;
+	if(is_death)
+		return 0;
 	ghost_sprites(g, gh->name);
 	ghost_color(gh);
 	return 0;
 }
 
-void	init_ghosts(t_game *g)
+void	init_ghosts(t_game *g, int is_death)
 {
 	int		i;
 	int		name;
@@ -163,9 +155,8 @@ void	init_ghosts(t_game *g)
 	while (i < 4)
 	{
 		ghost_info(i, &name, &spawn);
-		ft_bzero(&g->ghosts[i], sizeof(t_ghost));
 		g->ghosts[i].name = name;
-		if(init_one_ghost(g, &g->ghosts[i], spawn) || g->mode == MODE_CUBE)
+		if(init_one_ghost(g, &g->ghosts[i], spawn, is_death) || g->mode == MODE_CUBE)
 			g->ghosts[i].name = DISABLED;
 		i++;
 	}

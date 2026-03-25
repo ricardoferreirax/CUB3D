@@ -18,7 +18,7 @@ void	init_minilib(t_game *game);
 void	init(t_game *g, char *path);
 void	init_window(t_game *s);
 void	init_assets(t_game *g);
-void	init_ghosts(t_game *g);
+void	init_ghosts(t_game *g, int is_death);
 void	init_sprites(t_game *g);
 void	init_execution(t_game *g);
 

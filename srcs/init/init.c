@@ -71,7 +71,7 @@ void set_lvl(t_game *game)
 		game->ghosts[i].cruiser = g_lvl_config[lvl].elroy;
 		if(game->ghosts[i].name == BLINKY)
 			game->ghosts[i].cruiser.is_blinky = 1;
-		game->ghosts[i].speed_multiplier = g_lvl_config[lvl].ghost_speed;
+		ft_printf("ghost id = %d ghost speed = %d\n", i, game->ghosts[i].speed_multiplier = g_lvl_config[lvl].ghost_speed);
 		game->ghosts[i].speed_frightened = g_lvl_config[lvl].ghost_frightened_speed;
 		game->ghosts[i].speed_tunnel = g_lvl_config[lvl].ghost_tunnel_speed;
 		i++;
@@ -87,7 +87,7 @@ void	init_assets(t_game *g)
 	if (g->mode == MODE_PACMAN)
 	{
 		init_sprites(g);
-		init_ghosts(g);
+		init_ghosts(g, 0);
 	}
 }
 
@@ -114,6 +114,7 @@ static void	init_defaults(t_game *g)
 	g->map.floor_color = -1;
 	g->map.ceiling_color = -1;
 	g->gate_passable = 0;
+	g->level = 1;
 }
 
 void	init_execution(t_game *g)
@@ -161,7 +162,7 @@ void	init(t_game *g, char *path)
 	init_execution(g);
 	init_menu(g);
 	ft_printf("Loaded %d sprites\n",init_spritesheet(g));
-	init_player(g);
+	init_player(g, 0);
 	init_base(g);
 	set_lvl(g);
 }

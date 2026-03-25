@@ -74,19 +74,26 @@ void	render_sprite_into_framebuffer(t_game *game, t_point coord,
 	}
 }
 
-t_point	continue_travel(t_ghost ghost, int invalid_dir)
+t_double_point	continue_travel(t_ghost ghost, int invalid_dir)
 {
 	int	dir;
 
 	dir = (invalid_dir + 2) % 4;
 	int direction[4][2] = {
-		{0, -1}, // up
-		{-1, 0}, // left
-		{0, 1},  // down
-		{1, 0}   // right
+		{-1, 0}, // 0 = up
+		{0, -1}, // 1 = left
+		{1, 0},  // 2 = down
+		{0, 1}   // 3 = right
 	};
-	return ((t_point){.x = (ghost.pos.pixel_pos.x + direction[dir][0]),
-		.y = (ghost.pos.pixel_pos.y + direction[dir][1])});
+	ghost.speed_accumulador += ghost.speed_multiplier;
+	if (ghost.speed_accumulador >= 100)
+		ghost.speed_accumulador -= 100;
+	if (ghost.speed_accumulador > 1)
+		return ((t_double_point){.x = (ghost.pos.pixel_pos.x
+				+ direction[dir][1]), .y = (ghost.pos.pixel_pos.y
+				+ direction[dir][0])});
+	return ((t_double_point){.x = (ghost.pos.pixel_pos.x),
+		.y = (ghost.pos.pixel_pos.y)});
 }
 
 int	distance_to_target(t_ghost *ghost, int dy, int dx)
@@ -103,14 +110,14 @@ void	ghost_move_pixel(t_ghost *gh, int dx, int dy)
 {
 	if (!gh)
 		return ;
-	gh->pos.pixel_pos.x += dx;                                           
-		// adiciona o deslocamento x (pixels) à posição atual do ghost
-	gh->pos.pixel_pos.y += dy;                                           
-		// adiciona o deslocamento y (pixels) à posição atual do ghost
+	gh->pos.pixel_pos.x += dx;
+	// adiciona o deslocamento x (pixels) à posição atual do ghost
+	gh->pos.pixel_pos.y += dy;
+	// adiciona o deslocamento y (pixels) à posição atual do ghost
 	gh->pos.tile_pos.x = (double)gh->pos.pixel_pos.x / (double)TILE_SIZE;
-		// converte a posição x do ghost de pixels para tiles
+	// converte a posição x do ghost de pixels para tiles
 	gh->pos.tile_pos.y = (double)gh->pos.pixel_pos.y / (double)TILE_SIZE;
-		// converte a posição y do ghost de pixels para tiles
+	// converte a posição y do ghost de pixels para tiles
 }
 
 int	chose_next_move(t_ghost *ghost, char **map)
@@ -173,23 +180,23 @@ int	chose_next_move(t_ghost *ghost, char **map)
 // 	return (0);
 // }
 
-void	ghost_set_pixel_pos(t_ghost *gh, int px, int py)
+void	ghost_set_pixel_pos(t_ghost *gh, double px, double py)
 {
 	if (!gh)
 		return ;
 	gh->pos.pixel_pos.x = px;
-		// define a posição x do ghost em pixels
+	// define a posição x do ghost em pixels
 	gh->pos.pixel_pos.y = py;
-		// define a posição y do ghost em pixels
+	// define a posição y do ghost em pixels
 	gh->pos.tile_pos.x = (double)gh->pos.pixel_pos.x / (double)TILE_SIZE;
-		// converte a posição x do ghost de pixels para tiles
+	// converte a posição x do ghost de pixels para tiles
 	gh->pos.tile_pos.y = (double)gh->pos.pixel_pos.y / (double)TILE_SIZE;
-		// converte a posição y do ghost de pixels para tiles
+	// converte a posição y do ghost de pixels para tiles
 }
 
 int	update_ghost(t_ghost *ghost)
 {
-	t_point	next;
+	t_double_point	next;
 
 	if (!ghost)
 		return (-1);
@@ -200,14 +207,16 @@ int	update_ghost(t_ghost *ghost)
 	// }
 	if (ghost->pos.pixel_pos.x % TILE_SIZE != TILE_SIZE / 2
 		|| ghost->pos.pixel_pos.y % TILE_SIZE != TILE_SIZE / 2)
-		// verifica se o ghost ainda não chegou ao centro do tile atual
+	// verifica se o ghost ainda não chegou ao centro do tile atual
 	{
 		next = continue_travel(*ghost, ghost->invalid_dir);
-			// calcula a próxima posição do ghost ao continuar na direção atual
+		// calcula a próxima posição do ghost ao continuar na direção atual
+		printf("ghost next x = %f\n", next.x);
+		printf("ghost next y = %f\n", next.y);
 		ghost_set_pixel_pos(ghost, next.x, next.y);
-			// aplica a nova posição ao ghost e sincroniza a posição em pixels com a posição em tiles
+		// aplica a nova posição ao ghost e sincroniza a posição em pixels com a posição em tiles
 		return (0);
-			// continua o movimento atual do ghost
+		// continua o movimento atual do ghost
 	}
 	ghost->invalid_dir = chose_next_move(ghost, ghost->mental_map);
 	if (ghost->invalid_dir == -1)
@@ -215,16 +224,25 @@ int	update_ghost(t_ghost *ghost)
 	return (0);
 }
 
-void render_ghost_into_framebuffer(t_game *game, t_point coord, t_ghost *ghost)
+void	render_ghost_into_framebuffer(t_game *game, t_point coord,
+		t_ghost *ghost)
 {
-	if(ghost->invalid_dir == 0)
-		render_sprite_into_framebuffer(game, coord, &ghost->frames.down[((ghost->pos.pixel_pos.x + ghost->pos.pixel_pos.y) % 2)]);
-	if(ghost->invalid_dir == 1)
-		render_sprite_into_framebuffer(game, coord, &ghost->frames.right[((ghost->pos.pixel_pos.x + ghost->pos.pixel_pos.y) % 2)]);
-	if(ghost->invalid_dir == 2)
-		render_sprite_into_framebuffer(game, coord, &ghost->frames.up[((ghost->pos.pixel_pos.x + ghost->pos.pixel_pos.y) % 2)]);
-	if(ghost->invalid_dir == 3)
-		render_sprite_into_framebuffer(game, coord, &ghost->frames.left[((ghost->pos.pixel_pos.x + ghost->pos.pixel_pos.y) % 2)]);
+	if (ghost->invalid_dir == 0)
+		render_sprite_into_framebuffer(game, coord,
+			&ghost->frames.down[((ghost->pos.pixel_pos.x
+					+ ghost->pos.pixel_pos.y) % 2)]);
+	if (ghost->invalid_dir == 1)
+		render_sprite_into_framebuffer(game, coord,
+			&ghost->frames.right[((ghost->pos.pixel_pos.x
+					+ ghost->pos.pixel_pos.y) % 2)]);
+	if (ghost->invalid_dir == 2)
+		render_sprite_into_framebuffer(game, coord,
+			&ghost->frames.up[((ghost->pos.pixel_pos.x + ghost->pos.pixel_pos.y)
+				% 2)]);
+	if (ghost->invalid_dir == 3)
+		render_sprite_into_framebuffer(game, coord,
+			&ghost->frames.left[((ghost->pos.pixel_pos.x
+					+ ghost->pos.pixel_pos.y) % 2)]);
 }
 
 void	render_ghosts_into_framebuffer(t_game *game)
@@ -238,56 +256,68 @@ void	render_ghosts_into_framebuffer(t_game *game)
 		if (game->ghosts[i].name == DISABLED)
 			continue ;
 		update_ghost(&game->ghosts[i]);
-		coord.x = (game->ghosts[i].pos.pixel_pos.x - TILE_SIZE  + game->win.width / 2);
-		coord.y = (game->ghosts[i].pos.pixel_pos.y - TILE_SIZE  + game->win.height / 2);
+		coord.x = (game->ghosts[i].pos.pixel_pos.x - TILE_SIZE + game->win.width
+				/ 2);
+		coord.y = (game->ghosts[i].pos.pixel_pos.y - TILE_SIZE
+				+ game->win.height / 2);
 		render_ghost_into_framebuffer(game, coord, &game->ghosts[i]);
 	}
-}//
-
-void play_ddeath(t_game *game, t_point coord)
+} //
+void	play_ddeath(t_game *game, t_point coord)
 {
 	render_sprite_into_framebuffer(game, coord, &game->player.frames.death[11]);
 }
 
-
-void render_player(t_game *game, t_point coord)
+void	render_player(t_game *game, t_point coord)
 {
-	if((game->player.target_dir.y) == 1)
-		render_sprite_into_framebuffer(game, coord, &game->player.frames.down[(game->player.pos.pixel_pos.x + game->player.pos.pixel_pos.y) % 3]);
-	else if((game->player.target_dir.x) == 1)
-		render_sprite_into_framebuffer(game, coord, &game->player.frames.right[(game->player.pos.pixel_pos.x + game->player.pos.pixel_pos.y) % 3]);
-	else if((game->player.target_dir.y) == -1)
-		render_sprite_into_framebuffer(game, coord, &game->player.frames.up[(game->player.pos.pixel_pos.x + game->player.pos.pixel_pos.y) % 3]);
-	else if((game->player.target_dir.x) == -1)
-		render_sprite_into_framebuffer(game, coord, &game->player.frames.left[(game->player.pos.pixel_pos.x + game->player.pos.pixel_pos.y) % 3]);
+	if ((game->player.target_dir.y) == 1)
+		render_sprite_into_framebuffer(game, coord,
+			&game->player.frames.down[(game->player.pos.pixel_pos.x
+				+ game->player.pos.pixel_pos.y) % 3]);
+	else if ((game->player.target_dir.x) == 1)
+		render_sprite_into_framebuffer(game, coord,
+			&game->player.frames.right[(game->player.pos.pixel_pos.x
+				+ game->player.pos.pixel_pos.y) % 3]);
+	else if ((game->player.target_dir.y) == -1)
+		render_sprite_into_framebuffer(game, coord,
+			&game->player.frames.up[(game->player.pos.pixel_pos.x
+				+ game->player.pos.pixel_pos.y) % 3]);
+	else if ((game->player.target_dir.x) == -1)
+		render_sprite_into_framebuffer(game, coord,
+			&game->player.frames.left[(game->player.pos.pixel_pos.x
+				+ game->player.pos.pixel_pos.y) % 3]);
 	else
 		play_ddeath(game, coord);
 }
 
-
-void render_player_into_framebuffer(t_game *game)
+void	render_player_into_framebuffer(t_game *game)
 {
+	t_point	coord;
 
-	t_point coord;
-	coord.x = (((game->player.pos.tile_pos.x - 0.5) * TILE_SIZE) + game->win.width / 2) - 3;
-	coord.y = (((game->player.pos.tile_pos.y - 0.5) * TILE_SIZE) + game->win.height / 2) - 3;
+	coord.x = (((game->player.pos.tile_pos.x - 0.5) * TILE_SIZE)
+			+ game->win.width / 2) - 3;
+	coord.y = (((game->player.pos.tile_pos.y - 0.5) * TILE_SIZE)
+			+ game->win.height / 2) - 3;
 	game->player.pos.pixel_pos.x = coord.x;
 	game->player.pos.pixel_pos.y = coord.y;
 	render_player(game, coord);
 }
 
-void render_pacdots_into_framebuffer(t_game *game)
+void	render_pacdots_into_framebuffer(t_game *game)
 {
-	int i;
+	int	i;
+
 	i = 0;
-	while(i < game->pacdot_count)
+	while (i < game->pacdot_count)
 	{
-		if(game->pacdots[i].active)
-			render_sprite_into_framebuffer(game, (t_point){.y = game->pacdots[i].pos.pixel_pos.y + game->win.height / 2, .x = game->pacdots[i].pos.pixel_pos.x + game->win.width / 2}, &game->sprite_sheet.sprites[37]);
+		if (game->pacdots[i].active)
+			render_sprite_into_framebuffer(game,
+				(t_point){.y = game->pacdots[i].pos.pixel_pos.y
+				+ game->win.height / 2, .x = game->pacdots[i].pos.pixel_pos.x
+				+ game->win.width / 2}, &game->sprite_sheet.sprites[37]);
 		i++;
 	}
 }
-
 
 void	render_into_framebuffer(t_game *game)
 {
