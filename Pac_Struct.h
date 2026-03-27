@@ -376,6 +376,12 @@ typedef struct s_lvl_config
 	int bonus_fruit_points;
 } t_lvl_config;
 
+typedef struct s_interest_points
+{
+	t_point ghost_house;
+	t_point scatter_target[4];
+} t_target_points;
+
 typedef struct s_game
 {
 	void *mlx_ptr;
@@ -388,6 +394,7 @@ typedef struct s_game
 	t_pacdot *pacdots;
 	t_pacdot	*energizers;
 	t_ghost		ghosts[4]; 
+	t_target_points targets;
 	t_image	render;
 	t_mode mode;
 	t_gstate state;

@@ -64,16 +64,23 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
 	{
 		g->player.pos.tile_pos.x += dx;
 		g->player.pos.tile_pos.y += dy;
+
+		// g->player.pos.tile_pos.x = (g->player.pos.pixel_pos.x / 8) + 0.5;
+		// g->player.pos.tile_pos.y = (g->player.pos.pixel_pos.y / 8) + 0.5;
+		
 	}
 	if(player_touched_ghost(g))
 	{
-		g->player.lives--;
-		if(g->player.lives <= 0)
-			exit_game(EXIT_FAILURE, g, "You are dead");
 		ft_printf("You got touhced");
-		// play_death(g);
-		sleep(1);
-		reset_game(g, 1);
+		usleep(10000);
+		if(!g->debug_mode)
+		{
+			g->player.lives--;
+			if(g->player.lives <= 0)
+				exit_game(EXIT_FAILURE, g, "You are dead");
+			play_death(g);
+			reset_game(g, 1);
+		}
 	}
 }
 
@@ -207,7 +214,7 @@ void	player_controller(t_game *g)
 		if (g->key.a || g->key.left)
 			move(g, 1);
 		update_player_direction(g, 1);
-		apply_player_movement(g, g->player.target_dir.x * PLAYER_SPEED,
+		apply_player_movement(g, (g->player.target_dir.x * PLAYER_SPEED),
 			g->player.target_dir.y * PLAYER_SPEED);
 	}
 }

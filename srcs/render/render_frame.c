@@ -106,6 +106,12 @@ int	distance_to_target(t_ghost *ghost, int dy, int dx)
 	return (result);
 }
 
+double distance_between_two_points(t_double_point point1, t_double_point point2)
+{
+	double distance = sqrt(pow(point1.x - point2.x, 2) + pow(point1.y - point2.y, 2));
+	return distance;
+}
+
 void	ghost_move_pixel(t_ghost *gh, int dx, int dy)
 {
 	if (!gh)
@@ -146,7 +152,6 @@ int	chose_next_move(t_ghost *ghost, char **map)
 				+ direction[i][0]][ghost->pos.pixel_pos.x / 8
 				+ direction[i][1]] != '1') && i != ghost->invalid_dir)
 		{
-			// dist = distance_to_target(ghost, direction[i][0],direction[i][1]);
 			dist = (((ghost->pos.pixel_pos.x / TILE_SIZE) + direction[i][1])
 					- target.x) * ((((ghost->pos.pixel_pos.x / TILE_SIZE)
 							+ direction[i][1]) - target.x))
@@ -167,18 +172,6 @@ int	chose_next_move(t_ghost *ghost, char **map)
 	return ((best_dir + 2) % 4);
 }
 
-// int	update_ghost(t_ghost *ghost)
-// {
-// 	if (ghost->pos.pixel_pos.x % 8 != 4 && ghost->pos.pixel_pos.y % 8 != 4)
-// 	{
-// 		ghost->pos.pixel_pos = continue_travel(*ghost, ghost->invalid_dir);
-// 		return (0);
-// 	}
-// 	ghost->invalid_dir = chose_next_move(ghost, ghost->mental_map);
-// 	if(ghost->invalid_dir == -1)
-// 		return (-1);
-// 	return (0);
-// }
 
 void	ghost_set_pixel_pos(t_ghost *gh, double px, double py)
 {
@@ -194,27 +187,91 @@ void	ghost_set_pixel_pos(t_ghost *gh, double px, double py)
 	// converte a posição y do ghost de pixels para tiles
 }
 
-int	update_ghost(t_ghost *ghost)
+void goto_penhouse(t_game *game, t_ghost *ghost)
+{
+	ghost->target_tile = game->targets.ghost_house;
+	ghost->speed_multiplier = 99;
+
+}
+
+t_point pinky_target(t_game *game)
+{
+	if(game->player.dir.y == 1)
+		return ((t_point){.x = (game->player.pos.tile_pos.x) - 2, .y = (game->player.pos.tile_pos.y) + 2});
+	if(game->player.dir.x == -1 )
+		return((t_point){.x = (game->player.pos.tile_pos.x) - 2, .y = (game->player.pos.tile_pos.y) + 2});
+	if(game->player.dir.y == -1)
+		return ((t_point){.x = game->player.pos.tile_pos.x, .y = (game->player.pos.tile_pos.y) - 2});
+	return ((t_point){.x = (game->player.pos.tile_pos.x) + 2, .y = game->player.pos.tile_pos.y});
+}
+
+int ft_abs(int n)
+{
+	if (n < 0)
+		return -n;
+	return n;
+}
+
+t_point inky_target(t_game *game)
+{
+	int vectorx;
+	int vectory;
+	t_point pinkys_target;
+
+	pinkys_target = pinky_target(game);
+
+	vectorx = ft_abs(game->ghosts[BLINKY].pos.pixel_pos.x - pinkys_target.x);
+	vectory = ft_abs(game->ghosts[BLINKY].pos.pixel_pos.y - pinkys_target.y);
+	vectorx *= -1;
+	vectory *= -1;
+	return((t_point){.x = pinkys_target.x + vectorx, .y = pinkys_target.y + vectory});
+}
+
+t_point chase_player(t_game *game, t_ghost *ghost)
+{
+	if(ghost->name == BLINKY)
+		return ((t_point){.x = game->player.pos.tile_pos.x, .y = game->player.pos.tile_pos.y});
+	if(ghost->name == PINKY)
+		return (pinky_target(game));
+	if (ghost->name == CLYDE)
+	{
+		if(distance_between_two_points(ghost->pos.tile_pos, game->player.pos.tile_pos) >= 8)
+			return ((t_point){.x = game->player.pos.tile_pos.x, .y = game->player.pos.tile_pos.y});
+		else
+			return ((t_point){.x = game->targets.scatter_target[CLYDE].x + 0.5, .y =  game->targets.scatter_target[CLYDE].y + 0.5});
+	}
+	if(ghost->name == INKY)
+		return(inky_target(game));
+	return (t_point){0, 0};
+}
+
+void update_target(t_game *game,t_ghost *ghost, int mode)
+{
+	// if(mode == 2)
+		// goto_penhouse(game, ghost);
+	// if (mode == 1)
+	// {
+		// if(ghost->state == SCATTER)
+		// 	ghost->state = CHASE;
+		// ghost->target_tile = chase_player(game, ghost);
+	// }
+	(void)mode;	
+	ghost->target_tile = chase_player(game, ghost);
+
+}
+
+int	update_ghost(t_game *game, t_ghost *ghost)
 {
 	t_double_point	next;
 
 	if (!ghost)
 		return (-1);
-	// if (ghost->pos.pixel_pos.x % 8 != 4 && ghost->pos.pixel_pos.y % 8 != 4)
-	// {
-	// 	ghost->pos.pixel_pos = continue_travel(*ghost, ghost->invalid_dir);
-	// 	return (0);
-	// }
 	if (ghost->pos.pixel_pos.x % TILE_SIZE != TILE_SIZE / 2
 		|| ghost->pos.pixel_pos.y % TILE_SIZE != TILE_SIZE / 2)
-	// verifica se o ghost ainda não chegou ao centro do tile atual
 	{
+		update_target(game, ghost, 0);
 		next = continue_travel(*ghost, ghost->invalid_dir);
-		// calcula a próxima posição do ghost ao continuar na direção atual
-		printf("ghost next x = %f\n", next.x);
-		printf("ghost next y = %f\n", next.y);
 		ghost_set_pixel_pos(ghost, next.x, next.y);
-		// aplica a nova posição ao ghost e sincroniza a posição em pixels com a posição em tiles
 		return (0);
 		// continua o movimento atual do ghost
 	}
@@ -255,7 +312,8 @@ void	render_ghosts_into_framebuffer(t_game *game)
 	{
 		if (game->ghosts[i].name == DISABLED)
 			continue ;
-		update_ghost(&game->ghosts[i]);
+		ghost_wrap_position(game, &game->ghosts[i]);
+		update_ghost(game, &game->ghosts[i]);
 		coord.x = (game->ghosts[i].pos.pixel_pos.x - TILE_SIZE + game->win.width
 				/ 2);
 		coord.y = (game->ghosts[i].pos.pixel_pos.y - TILE_SIZE

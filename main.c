@@ -11,45 +11,48 @@
 /* ************************************************************************** */
 
 #include "srcs/init/initializer.h"
-#include "srcs/textures/textures3D.h"
-#include "srcs/render/render3D.h"
 #include "srcs/map/map3D.h"
+#include "srcs/render/render3D.h"
+#include "srcs/textures/textures3D.h"
 
-
-void breakpoint(void)
+void	breakpoint(void)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	i++;
 	(void)i;
-	//do nothing
+	// do nothing
 }
 
-void print_2d(char **arr)
+void	print_2d(char **arr)
 {
-	int i = 0;
-	while(arr && arr[i])
+	int	i;
+
+	i = 0;
+	while (arr && arr[i])
 	{
 		ft_printf("%s\n", arr[i]);
 		i++;
 	}
 }
 
-void reset_game(t_game *game, int is_death)
+void	reset_game(t_game *game, int is_death)
 {
+	int	i;
+
 	if (is_death)
 		game->player.lives--;
-	
 	init_player(game, 1);
 	init_ghosts(game, 1);
-	if(is_death)
-		return;
-	int i = 0;
-	while(i < game->pacdot_count)
+	if (is_death)
+		return ;
+	i = 0;
+	while (i < game->pacdot_count)
 	{
 		game->pacdots[i].active = true;
 		i++;
 	}
-
 }
 
 int	gameloop(t_game *game)
@@ -62,7 +65,7 @@ int	gameloop(t_game *game)
 		game->timer.last_time_up = now;
 		return (0);
 	}
-	if (now - game->timer.last_time_up < UPDATE_F )
+	if (now - game->timer.last_time_up < UPDATE_F)
 		return (0);
 	game->timer.last_time_up = now;
 	if (game->state == MENU)
@@ -73,7 +76,8 @@ int	gameloop(t_game *game)
 void	switch_mode_and_parse(t_game *g, t_mode mode, const char *path)
 {
 	if (!g || !path)
-		exit_game(EXIT_MAP, g, "switch_mode_and_parse() has not found a path or game");
+		exit_game(EXIT_MAP, g,
+			"switch_mode_and_parse() has not found a path or game");
 	g->mode = mode;
 }
 
@@ -82,13 +86,14 @@ int	main(int ac, char **av)
 	t_game	*game;
 
 	(void)av;
-	if ((ac > 3 || ac == 1) || (ac == 3 && (ft_strcmp(av[2], "debug_mode=y") != 0)))
+	if ((ac > 3 || ac == 1) || (ac == 3 && (ft_strcmp(av[2],
+					"debug_mode=y") != 0)))
 		return (ft_printf("Wrong args\n"), -1);
 	game = ft_calloc(sizeof(t_game), 1);
 	if (!game)
 		exit_game(EXIT_MALLOC, NULL, "main() failed to allocate game");
 	game->debug_mode = false;
-	if(ac == 3)
+	if (ac == 3)
 		game->debug_mode = true;
 	init(game, av[1]);
 	mlx_hook(game->win.win_ptr, 2, 1L << 0, handle_key_press, game);
@@ -98,5 +103,3 @@ int	main(int ac, char **av)
 	mlx_loop(game->mlx_ptr);
 	return (0);
 }
-
-
