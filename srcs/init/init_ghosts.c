@@ -130,7 +130,7 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char, int is_death
 	spawn_point = find_spawn(g->map.grid, target_char);
 	if (target_point.x < 0 || target_point.y < 0 || spawn_point.x < 0 || spawn_point.y < 0)
 		return -1;
-	if(gh->name == BLINKY)
+	if(gh->name == BLINKY && !is_death)
 		g->targets.ghost_house = spawn_point;
 	g->targets.scatter_target[gh->name] = spawn_point;
 	gh->pos.tile_pos.x = (double)spawn_point.x+ 0.5; // posiciona o ghost no centro do spawn tile no eixo x
