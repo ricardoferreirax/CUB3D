@@ -75,23 +75,51 @@ int	ray_wrap_x(t_game *g)
 	return (1);
 }
 
+// void	ghost_wrap_position(t_game *g, t_ghost *ghost)
+// {
+// 	int		row;
+// 	int		last;
+// 	double	width;
+//
+// 	if (!g)
+// 		return ;
+// 	row = (int)ghost->pos.tile_pos.y; // determina a row do mapa onde o player esta
+// 	last = 8 * map_row_last_col(g, row, 1); // obtém o índice da última coluna da row do player
+// 	if (last < 0) // se a row do player não tiver wrap
+// 		return ;
+// 	width = (double)(last + 1); // calcula a largura do mapa (nr de colunas) na row do player. +1 pois começa no 0
+// 	while (ghost->pos.tile_pos.x < 0.0) // se a posição x do player for menor que 0 significa que ele ultrapassou o limite esquerdo do mapa
+// 		ghost->pos.tile_pos.x += width; // ajusta a posiçao do player para o lado direito do mapa considerando que ha wrap
+// 	while (ghost->pos.tile_pos.x >= width) // se a posição x do player for maior ou igual a largura do mapa, significa que ele ultrapassou o limite direito do mapa
+// 		ghost->pos.tile_pos.x -= width; // ajusta a posiçao do player para o lado esquerdo do mapa considerando que ha wrap
+// }
+//
 void	ghost_wrap_position(t_game *g, t_ghost *ghost)
 {
 	int		row;
-	int		last;
-	double	width;
+	int		last_col;
+	double	width_px;
 
-	if (!g)
+	if (!g || !ghost)
 		return ;
-	row = (int)ghost->pos.pixel_pos.y; // determina a row do mapa onde o player esta
-	last = 8 * map_row_last_col(g, row, 1); // obtém o índice da última coluna da row do player
-	if (last < 0) // se a row do player não tiver wrap
+
+	// row in TILE coordinates, not pixel coordinates
+	row = (int)ghost->pos.tile_pos.y;
+
+	last_col = map_row_last_col(g, row, 1);
+	if (last_col < 0)
 		return ;
-	width = (double)(last + 1); // calcula a largura do mapa (nr de colunas) na row do player. +1 pois começa no 0
-	while (ghost->pos.pixel_pos.x < 0.0) // se a posição x do player for menor que 0 significa que ele ultrapassou o limite esquerdo do mapa
-		ghost->pos.pixel_pos.x += width; // ajusta a posiçao do player para o lado direito do mapa considerando que ha wrap
-	while (ghost->pos.pixel_pos.x >= width) // se a posição x do player for maior ou igual a largura do mapa, significa que ele ultrapassou o limite direito do mapa
-		ghost->pos.pixel_pos.x -= width; // ajusta a posiçao do player para o lado esquerdo do mapa considerando que ha wrap
+
+	// number of columns in this row * tile size (8)
+	width_px = (double)(last_col + 1) * 8.0;
+
+	while (ghost->pos.pixel_pos.x < 0.0)
+		ghost->pos.pixel_pos.x += width_px;
+	while (ghost->pos.pixel_pos.x >= width_px)
+		ghost->pos.pixel_pos.x -= width_px;
+
+	// keep tile position synchronized
+	ghost->pos.tile_pos.x = ghost->pos.pixel_pos.x / 8.0;
 }
 
 void	player_wrap_position(t_game *g)
