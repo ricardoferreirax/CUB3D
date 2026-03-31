@@ -81,7 +81,11 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
 			play_death(g);
 			reset_game(g, 1);
 		}
+		// if(g->debug_mode)
+		// 	change_pallete((t_point){.x = -2, .y = -1}, &g->player.frames);
 	}
+	// else if(g->player.frames.left->coord.x != )
+	// 	change_pallete((t_point){.x = 2, .y = 1}, &g->player.frames);
 }
 
 static void	player_rotate(t_game *g, double angle)

@@ -81,6 +81,8 @@ static t_point	find_player_spawn(t_game *game)
 
 	spawn_count = false;
 	y = -1;
+	print_2d(game->map.grid);
+	sleep(1);
 	while (++y < game->map.height)
 	{  
 		x = -1;
