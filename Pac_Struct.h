@@ -197,6 +197,7 @@ typedef struct s_player
 	t_pos pos; // para o 2d (tile/pixel)
 	int lives;
 	int speed_multiplier;
+	int collected_dots;
 	int frightened_speed;
 	t_anim frames;
 	t_control controller;

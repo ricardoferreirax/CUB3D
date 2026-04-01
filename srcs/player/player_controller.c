@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+/* ************************************************************************* */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   player_controller.c                                :+:      :+:    :+:   */
@@ -12,6 +12,7 @@
 
 #include "../../Pac_Struct.h"
 #include "player3D.h"
+#include "../../srcs/render/render3D.h"
 
 static void	player_snap_axis(double *pos, double pull, double eps)
 {
@@ -49,9 +50,18 @@ static void	player_snap_for_move(t_game *g, double dx, double dy)
 		player_snap_axis(&g->player.pos.tile_pos.x, PLAYER_SPEED * 0.50, 0.03);
 }
 
-void play_death(t_game * game)
+void	play_death(t_game *game, t_point coord)
 {
-	(void)game;
+	int i = 0;
+	while(i < 12)
+	{
+		render_sprite_into_framebuffer(game, coord, &game->player.frames.death[i]);
+
+			mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr, game->win.frame_buffer.img_ptr, 0, 0);
+		usleep(pow(10, 5));
+		i++;
+	}
+	ft_printf("YOU ARE DEAD\n");
 }
 
 static void	apply_player_movement(t_game *g, double dx, double dy)
@@ -78,12 +88,14 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
 			g->player.lives--;
 			if(g->player.lives <= 0)
 				exit_game(EXIT_FAILURE, g, "You are dead");
-			play_death(g);
+			play_death(g, (t_point){.x = g->player.pos.pixel_pos.x, .y = g->player.pos.pixel_pos.y});
 			reset_game(g, 1);
 		}
 		// if(g->debug_mode)
 		// 	change_pallete((t_point){.x = -2, .y = -1}, &g->player.frames);
 	}
+	if(g->player.collected_dots >= g->pacdot_count)
+		reset_game(g, 0);
 	// else if(g->player.frames.left->coord.x != )
 	// 	change_pallete((t_point){.x = 2, .y = 1}, &g->player.frames);
 }

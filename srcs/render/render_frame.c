@@ -310,7 +310,14 @@ int	ghost_in_penhouse(t_ghost *ghost, char **map)
 //
 // }
 
-int ghost_penhouse_dance(t_ghost *ghost, t_point gate)
+bool can_ghost_exit_penhouse(t_game *game, t_ghost *ghost)
+{
+	if (ghost->dot_counter < game->player.collected_dots)
+		return false;
+	return false;
+}
+
+int ghost_penhouse_dance(t_game *game, t_ghost *ghost, t_point gate)
 {
 	t_double_point	next;
 	int				top_px;
@@ -325,6 +332,9 @@ int ghost_penhouse_dance(t_ghost *ghost, t_point gate)
 		ghost->invalid_dir = 0;
 	else if (y >= bottom_px)
 		ghost->invalid_dir = 2;
+	else if(can_ghost_exit_penhouse(game, ghost))
+		ghost->invalid_dir = 2;
+
 
 	next = continue_travel(*ghost, ghost->invalid_dir);
 	ghost_set_pixel_pos(ghost, next.x, next.y);
@@ -338,7 +348,7 @@ int	update_ghost(t_game *game, t_ghost *ghost)
 	if (!ghost)
 		return (-1);
 	if(ghost_in_penhouse(ghost, ghost->mental_map))
-		return ghost_penhouse_dance(ghost, find_c(ghost->mental_map, 'G'));
+		return ghost_penhouse_dance(game, ghost, find_c(ghost->mental_map, 'G'));
 	if (ghost->pos.pixel_pos.x % TILE_SIZE != TILE_SIZE / 2
 		|| ghost->pos.pixel_pos.y % TILE_SIZE != TILE_SIZE / 2)
 	{
@@ -395,10 +405,6 @@ void	render_ghosts_into_framebuffer(t_game *game)
 	}
 }
 
-void	play_ddeath(t_game *game, t_point coord)
-{
-	render_sprite_into_framebuffer(game, coord, &game->player.frames.death[11]);
-}
 
 void	render_player(t_game *game, t_point coord)
 {
@@ -418,8 +424,6 @@ void	render_player(t_game *game, t_point coord)
 		render_sprite_into_framebuffer(game, coord,
 			&game->player.frames.left[(game->player.pos.pixel_pos.x
 				+ game->player.pos.pixel_pos.y) % 3]);
-	else
-		play_ddeath(game, coord);
 }
 
 void	render_player_into_framebuffer(t_game *game)

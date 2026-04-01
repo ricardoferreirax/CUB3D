@@ -41,6 +41,7 @@ bool		player_collect_pacdots(t_game *g)
 		{
 			g->pacdots[i].active = 0;
 			collected = true;
+			g->player.collected_dots++;
 		}
 		i++;
 	}
@@ -68,7 +69,7 @@ bool		player_touched_ghost(t_game *g)
 
 	if (!g || !g->pacdots || g->pacdot_count <= 0)
 		return false;
-	hit_radius = 0.50;
+	hit_radius = 1;
 	i = 0;
 	while (i < 4)
 	{

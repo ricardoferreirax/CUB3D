@@ -55,3 +55,6 @@ t_image	*ghost_tex(t_game *g, t_ghost *gh);
 void	render_all_sprites(t_game *g);
 int	sprite_draw_col(t_game *g, t_sprite *b, int x, t_image *tex);
 int	clampi(int v, int lo, int hi);
+
+void	render_sprite_into_framebuffer(t_game *game, t_point coord,
+		t_sprite_ref *sprite);

@@ -53,6 +53,8 @@ void	reset_game(t_game *game, int is_death)
 		game->pacdots[i].active = true;
 		i++;
 	}
+	game->level++;
+	game->player.collected_dots = 0;
 }
 
 int	gameloop(t_game *game)
