@@ -33,6 +33,9 @@
 
 #define TEXTURES "./assets/textures/"
 
+#define MAP_PALLETE_X 3
+#define MAP_PALLETE_Y 1
+
 #define UPDATE_F 16666
 #define MAX_UPDATES 5
 #define SPEED 75.5757625

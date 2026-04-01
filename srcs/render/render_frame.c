@@ -222,8 +222,8 @@ t_point inky_target(t_game *game)
 
 	pinkys_target = pinky_target(game);
 
-	vectorx = ft_abs(game->ghosts[BLINKY].pos.pixel_pos.x - pinkys_target.x);
-	vectory = ft_abs(game->ghosts[BLINKY].pos.pixel_pos.y - pinkys_target.y);
+	vectorx = ft_abs(game->ghosts[BLINKY].pos.tile_pos.x - pinkys_target.x);
+	vectory = ft_abs(game->ghosts[BLINKY].pos.tile_pos.y - pinkys_target.y);
 	vectorx *= -1;
 	vectory *= -1;
 	return((t_point){.x = pinkys_target.x + vectorx, .y = pinkys_target.y + vectory});
@@ -313,7 +313,7 @@ int	ghost_in_penhouse(t_ghost *ghost, char **map)
 bool can_ghost_exit_penhouse(t_game *game, t_ghost *ghost)
 {
 	if (ghost->dot_counter < game->player.collected_dots)
-		return false;
+		return true;
 	return false;
 }
 
@@ -328,13 +328,13 @@ int ghost_penhouse_dance(t_game *game, t_ghost *ghost, t_point gate)
 	bottom_px = (gate.y + 3) * TILE_SIZE + TILE_SIZE / 2;
 	y = (int)ghost->pos.pixel_pos.y;
 
-	if (y <= top_px)
+
+	if(can_ghost_exit_penhouse(game, ghost))
+		ghost->invalid_dir = 2;
+	else if (y <= top_px)
 		ghost->invalid_dir = 0;
 	else if (y >= bottom_px)
 		ghost->invalid_dir = 2;
-	else if(can_ghost_exit_penhouse(game, ghost))
-		ghost->invalid_dir = 2;
-
 
 	next = continue_travel(*ghost, ghost->invalid_dir);
 	ghost_set_pixel_pos(ghost, next.x, next.y);

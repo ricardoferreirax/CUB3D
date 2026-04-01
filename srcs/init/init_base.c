@@ -243,8 +243,8 @@ void	put_tile_inbase(t_game *g, int tile_code, unsigned int color,
 	int	ty;
 	int	tx;
 	t_point pallete;
-	pallete.x = 3;
-	pallete.y = 1;
+	pallete.x = MAP_PALLETE_X;
+	pallete.y = MAP_PALLETE_Y;
 	ty = 0;
 	while (ty < g->sprite_sheet.sprites[tile_code].height)
 	{
