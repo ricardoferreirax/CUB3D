@@ -140,6 +140,7 @@ int	chose_next_move(t_ghost *ghost, char **map)
 		{1, 0},  // 2 = down
 		{0, 1}   // 3 = right
 	};
+
 	i = 0;
 	best = -1;
 	best_dir = -1;
@@ -159,8 +160,7 @@ int	chose_next_move(t_ghost *ghost, char **map)
 							+ direction[i][1]) - target.x))
 				+ ((((ghost->pos.pixel_pos.y / TILE_SIZE) + direction[i][0])
 						- target.y) * ((((ghost->pos.pixel_pos.y / TILE_SIZE)
-								+ direction[i][0]) - target.y))); //
-			if (best == -1 || dist < best)
+								+ direction[i][0]) - target.y)));
 			{
 				best = dist;
 				best_dir = i;
@@ -472,11 +472,12 @@ void	render_frame(t_game *game)
 	player_controller(game);
 	render_ceiling_texture(game);
 	render_floor_texture(game);
-	process_raycasting(game);
+	raycast_frame(game);
 	handle_gate_toggle(game);
 	clear_sprite_z(game);
 	render_all_sprites(game);
 	render_into_framebuffer(game);
+	// render_raycast_debug(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr,
 		game->win.frame_buffer.img_ptr, 0, 0);
 }

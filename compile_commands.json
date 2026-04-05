@@ -642,37 +642,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/render/render_floor_texture.o",
-      "srcs/render/render_floor_texture.c"
+      "objs/srcs/render/render_floor_ceiling.o",
+      "srcs/render/render_floor_ceiling.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/render/render_floor_texture.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/render/render_floor_texture.o"
-  },
-  {
-    "arguments": [
-      "/home/pedro/.local/bin/clang-12",
-      "-O3",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Wpedantic",
-      "-Wshadow",
-      "-Wdouble-promotion",
-      "-Wformat=2",
-      "-Wstrict-aliasing=2",
-      "-fno-omit-frame-pointer",
-      "-g",
-      "-Iinclude",
-      "-Ilibft",
-      "-c",
-      "-o",
-      "objs/srcs/render/render_ceiling_texture.o",
-      "srcs/render/render_ceiling_texture.c"
-    ],
-    "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/render/render_ceiling_texture.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/render/render_ceiling_texture.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/render/render_floor_ceiling.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/render/render_floor_ceiling.o"
   },
   {
     "arguments": [
@@ -742,12 +717,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/render/process_raycasting.o",
-      "srcs/render/process_raycasting.c"
+      "objs/srcs/render/raycast_frame.o",
+      "srcs/render/raycast_frame.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/render/process_raycasting.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/render/process_raycasting.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/render/raycast_frame.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/render/raycast_frame.o"
   },
   {
     "arguments": [
@@ -817,12 +792,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/render/perform_dda.o",
-      "srcs/render/perform_dda.c"
+      "objs/srcs/render/raycast_dda.o",
+      "srcs/render/raycast_dda.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/render/perform_dda.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/render/perform_dda.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/render/raycast_dda.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/render/raycast_dda.o"
   },
   {
     "arguments": [
@@ -848,6 +823,31 @@
     "directory": "/var/home/pedro/Code/42/CUB3D",
     "file": "/var/home/pedro/Code/42/CUB3D/srcs/render/render_fill_color.c",
     "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/render/render_fill_color.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/srcs/render/debug_raycast.o",
+      "srcs/render/debug_raycast.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/render/debug_raycast.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/render/debug_raycast.o"
   },
   {
     "arguments": [
@@ -1023,6 +1023,31 @@
     "directory": "/var/home/pedro/Code/42/CUB3D",
     "file": "/var/home/pedro/Code/42/CUB3D/srcs/hooks/handle_gate_toggle.c",
     "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/hooks/handle_gate_toggle.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/srcs/hooks/handle_mouse.o",
+      "srcs/hooks/handle_mouse.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/hooks/handle_mouse.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/hooks/handle_mouse.o"
   },
   {
     "arguments": [

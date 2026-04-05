@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/26 23:10:57 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/13 09:54:14 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,39 +22,48 @@ typedef struct s_ghost	t_ghost;
 #define SPR_ENERGIZER  2
 #define SPR_GHOST      3
 
-#define CEILING_DIST 2.8  // CEILING_DIST > 1.0 O ceiling parece que fica mais longe (menos zoom na textura)
-#define CEILING_HORIZON 40.0 // ajusta a posição do horizonte. Valores positivos desce e negativos sobe
-#define CEILING_P_MIN 6.0
+#define CEILING_DIST 2.8
+#define CEILING_HORIZON 40.0
+#define CEILING_MIN_SCREEN_DIST 6.0
+#define CEILING_CENTER_MARGIN 2
+
+#define FLOOR_START_OFFSET 2
+#define FLOOR_MIN_DIST 4.0
 
 #endif
 
 #include "../../Pac_Struct.h"
 
 void	render_frame(t_game *game);
-void	process_raycasting(t_game *g);
-int	perform_dda(t_game *g);
-void	calculate_dda_step(t_game *g);
+void	raycast_frame(t_game *g);
+int	raycast_dda(t_game *g);
 int		register_center_hit(t_game *g, int screen_x, int hit_found);
 void	put_pixel_fast(t_image *img, int x, int y, int color);
-void	render_wall_col(t_game *g, int screen_x);
+void	render_wall_column(t_game *g, int screen_x);
 void	render_floor_texture(t_game *g);
 void	render_ceiling_texture(t_game *g);
 void	render_menu(t_game *g);
 double	fract_pos(double x);
+void	ray_init_steps(t_game *g);
+void	ray_init(t_game *g, int col);
+void ray_perp_wall_distance(t_game *g);
+void	ray_draw_range(t_game *g);
 
 unsigned int	tex_pixel(t_image *tex, int x, int y);
 void	parse_floor_ceiling_color(t_game *g, const char *s, int *dst);
 void	parse_floor_ceiling_line(t_game *g, char id, char *value);
 void	fill_floor_color(t_image *img, int color, int horizon);
 void	fill_ceiling_color(t_image *img, int color, int horizon);
-void	convert_texture_coords(t_fc *fc, t_image *tex, int *tx, int *ty);
 void	sprite_draw(t_game *g, t_sprite *b, t_image *tex);
 int	sprite_project(t_game *g, double x, double y, t_sprite *b);
 int	sprite_build(t_game *g, t_sprite *b, int size_div);
-t_image	*ghost_tex(t_game *g, t_ghost *gh);
 void	render_all_sprites(t_game *g);
 int	sprite_draw_col(t_game *g, t_sprite *b, int x, t_image *tex);
-int	clampi(int v, int lo, int hi);
-
+int	clamp_int(int value, int min, int max);
+int	clamp_tex_coord(int value, int max);
+void	render_raycast_debug(t_game *g);
+int	ghost_anim_frame(t_ghost *gh);
+t_image	*ghost_tex(t_game *g, t_ghost *gh);
 void	render_sprite_into_framebuffer(t_game *game, t_point coord,
 		t_sprite_ref *sprite);
+

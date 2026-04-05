@@ -6,70 +6,53 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 19:40:03 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/15 19:40:16 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/07 22:38:33 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "render3D.h"
 
-static void	fill_row_fast(t_image *img, int y, int color)
+static void	fill_rows(t_image *img, int start, int end, int color)
 {
-	unsigned int	*row;
+	unsigned int	*pixels;
+	int				row;
+	int				col;
 	int				stride;
-	int				x;
 
+	start = clamp_int(start, 0, img->height);
+	end = clamp_int(end, 0, img->height);
 	stride = img->l_len / 4;
-	row = (unsigned int *)img->img_addr + (y * stride);
-	x = 0;
-	while (x < img->width)
-		row[x++] = (unsigned int)color;
+	row = start;
+	while (row < end)
+	{
+		pixels = (unsigned int *)img->img_addr + (row * stride);
+		col = 0;
+		while (col < img->width)
+		{
+			pixels[col] = (unsigned int)color;
+			col++;
+		}
+		row++;
+	}
 }
 
 void	fill_ceiling_color(t_image *img, int color, int horizon)
 {
-	int	y;
 	int	end;
 
 	if (!img || !img->img_addr)
 		return ;
 	end = img->height / 2 - horizon;
-	if (end < 0) 
-		end = 0;
-	if (end > img->height) 
-		end = img->height;
-	y = 0;
-	while (y < end)
-		fill_row_fast(img, y++, color);
+	fill_rows(img, 0, end, color);
 }
 
 void	fill_floor_color(t_image *img, int color, int horizon)
 {
-	int	y;
 	int	start;
 
 	if (!img || !img->img_addr)
 		return ;
 	start = img->height / 2 - horizon;
-	if (start < 0) 
-		start = 0;
-	if (start > img->height) 
-		start = img->height;
-	y = start;
-	while (y < img->height)
-		fill_row_fast(img, y++, color);
+	fill_rows(img, start, img->height, color);
 }
-//
-// void	render_frame(t_game *game)
-// {
-// 	if (!game)
-// 		return ;
-// 	if (game->key.esc)
-// 		exit_game(EXIT_QUIT, game);
-// 	apply_input(game);
-// 	fill_ceiling_color(&game->win.frame_buffer, game->map.ceiling_color, 0);
-// 	fill_floor_color(&game->win.frame_buffer, game->map.floor_color, 0);
-// 	process_raycasting(game);
-// 	render_minimap_test(game);
-// }
-

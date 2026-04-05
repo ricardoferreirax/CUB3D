@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_spritesheet.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 16:01:33 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/02/25 16:06:39 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/03/08 23:07:48 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

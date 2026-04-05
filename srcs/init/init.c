@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/05 21:59:09 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/11 19:48:29 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,6 +302,9 @@ void	start_game_mode(t_game *g, t_mode mode)
 	g->mode = mode;
 	init_assets(g);
 	g->state = PLAY;
+	g->key.mouse_hidden = 1;
+	g->key.mouse_lock = 1;
+	center_mouse(g);
 }
 
 static void	init_defaults(t_game *g)
@@ -361,6 +364,7 @@ void	init(t_game *g, char *path)
 	init_defaults(g);
 	init_minilib(g);
 	init_map(g, path);
+	print_2d(g->map.grid);
 	init_execution(g);
 	init_menu(g);
 	ft_printf("Loaded %d sprites\n", init_spritesheet(g));
