@@ -133,12 +133,11 @@ int	chose_next_move(t_ghost *ghost, char **map)
 	int		best_dir;
 	t_point	target;
 	int		dist;
-
-	int direction[4][2] = {
-		{-1, 0}, // 0 = up
-		{0, -1}, // 1 = left
-		{1, 0},  // 2 = down
-		{0, 1}   // 3 = right
+	int		direction[4][2] = {
+		{-1, 0}, // up
+		{0, -1}, // left
+		{1, 0},  // down
+		{0, 1}   // right
 	};
 
 	i = 0;
@@ -149,18 +148,18 @@ int	chose_next_move(t_ghost *ghost, char **map)
 	target = ghost->target_tile;
 	while (i < 4)
 	{
-		if ((map[ghost->pos.pixel_pos.y / 8
-				+ direction[i][0]][ghost->pos.pixel_pos.x / 8
-				+ direction[i][1]] != '1' && map[ghost->pos.pixel_pos.y / 8
-				+ direction[i][0]][ghost->pos.pixel_pos.x / 8
-				+ direction[i][1]] != 'G') && i != ghost->invalid_dir)
+		if ((map[ghost->pos.pixel_pos.y / TILE_SIZE + direction[i][0]]
+				[ghost->pos.pixel_pos.x / TILE_SIZE + direction[i][1]] != '1'
+			&& map[ghost->pos.pixel_pos.y / TILE_SIZE + direction[i][0]]
+				[ghost->pos.pixel_pos.x / TILE_SIZE + direction[i][1]] != 'G')
+			&& i != ghost->invalid_dir)
 		{
-			dist = (((ghost->pos.pixel_pos.x / TILE_SIZE) + direction[i][1])
-					- target.x) * ((((ghost->pos.pixel_pos.x / TILE_SIZE)
-							+ direction[i][1]) - target.x))
-				+ ((((ghost->pos.pixel_pos.y / TILE_SIZE) + direction[i][0])
-						- target.y) * ((((ghost->pos.pixel_pos.y / TILE_SIZE)
-								+ direction[i][0]) - target.y)));
+			dist = (((ghost->pos.pixel_pos.x / TILE_SIZE) + direction[i][1]) - target.x)
+				* ((((ghost->pos.pixel_pos.x / TILE_SIZE) + direction[i][1]) - target.x))
+				+ ((((ghost->pos.pixel_pos.y / TILE_SIZE) + direction[i][0]) - target.y)
+				* ((((ghost->pos.pixel_pos.y / TILE_SIZE) + direction[i][0]) - target.y)));
+
+			if (best == -1 || dist < best)
 			{
 				best = dist;
 				best_dir = i;
