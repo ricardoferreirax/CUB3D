@@ -290,10 +290,12 @@ typedef struct s_time
 {
 	double level_time;
 	double mode_timer;
+	double mode_time_start;
 	//starts when ghosts are in the pen and pac-man refuses to eat dots
 	double timeout_timer;
 	int energizer;
 	double frightened_time;
+	double frightened_time_start;
 	//timers related to making sure the game updates at 60Hz
 	long last_time_up;
 	long accumulator;
@@ -304,7 +306,6 @@ typedef struct s_pacdot
 {
 	t_pos pos;
 	bool active;
-	bool is_energizer;
 }	t_pacdot;
 
 typedef struct s_sheet
@@ -334,6 +335,7 @@ typedef enum e_player_action
 	ROTATE_LEFT,
 	ROTATE_RIGHT
 }	t_player_action;
+
 
 typedef struct s_textures
 {

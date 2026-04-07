@@ -41,6 +41,8 @@ void	reset_game(t_game *game, int is_death)
 {
 	int	i;
 
+	if(game->mode == MODE_CUBE)
+		return;
 	if (is_death)
 		game->player.lives--;
 	init_player(game, 1);

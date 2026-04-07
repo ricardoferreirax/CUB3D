@@ -70,7 +70,7 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
 		player_snap_for_move(g, dx, dy);
 	player_collision(g);
 	player_wrap_position(g);
-	if (!player_collect_pacdots(g))
+	if (!player_collect_pacdots(g) && !player_collect_energizer(g))
 	{
 		g->player.pos.tile_pos.x += dx;
 		g->player.pos.tile_pos.y += dy;

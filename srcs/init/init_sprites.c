@@ -57,8 +57,6 @@ static void	fill_from_map(t_game *g, t_pacdot *sprites, char target)
 				sprites[i].pos.pixel_pos.x = x * 8;
 				sprites[i].pos.pixel_pos.y = y * 8;
 				sprites[i].active = true;
-				if(target == ENERGIZER)
-					sprites->is_energizer = true;
 				i++;
 			}
 			x++;

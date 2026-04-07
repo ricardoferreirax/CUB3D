@@ -124,7 +124,7 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char, int is_death
 
 	if(!is_death)
 		gh->mental_map = copy_map(g->map.grid);
-	if (!gh->mental_map)
+	if (!gh->mental_map && !is_death)
 		exit_game(EXIT_MALLOC, g, "init_one_ghost() was unable to copy map");
 	target_point = find_c(g->map.grid, target_char);
 	spawn_point = find_spawn(g->map.grid, target_char);

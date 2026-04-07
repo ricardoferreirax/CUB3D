@@ -248,17 +248,13 @@ t_point chase_player(t_game *game, t_ghost *ghost)
 
 void update_target(t_game *game,t_ghost *ghost, int mode)
 {
-	// if(mode == 2)
-		// goto_penhouse(game, ghost);
-	// if (mode == 1)
-	// {
-		// if(ghost->state == SCATTER)
-		// 	ghost->state = CHASE;
-		// ghost->target_tile = chase_player(game, ghost);
-	// }
-	(void)mode;	
-	ghost->target_tile = chase_player(game, ghost);
-
+	(void)mode;
+	if(ghost->state == EATEN)
+		goto_penhouse(game, ghost);
+	if(ghost->state == SCATTER)
+		ghost->target_tile = game->targets.scatter_target[ghost->name];
+	if(ghost->state == CHASE)
+		ghost->target_tile = chase_player(game, ghost);
 }
 
 int	ghost_in_penhouse(t_ghost *ghost, char **map)
@@ -445,12 +441,8 @@ void	render_pacdots_into_framebuffer(t_game *game)
 	i = 0;
 	while (i < game->pacdot_count)
 	{
-		if (game->pacdots[i].active && game->pacdots[i].is_energizer)
-			render_sprite_into_framebuffer(game,
-				(t_point){.y = game->pacdots[i].pos.pixel_pos.y
-				+ game->win.height / 2, .x = game->pacdots[i].pos.pixel_pos.x
-				+ game->win.width / 2}, &game->sprite_sheet.sprites[81]);
-		else if(game->pacdots[i].active)
+
+		if(game->pacdots[i].active)
 			render_sprite_into_framebuffer(game,
 				(t_point){.y = game->pacdots[i].pos.pixel_pos.y
 				+ game->win.height / 2, .x = game->pacdots[i].pos.pixel_pos.x
@@ -459,10 +451,29 @@ void	render_pacdots_into_framebuffer(t_game *game)
 	}
 }
 
+void render_energizers_into_framebuffer(t_game *game)
+{
+
+	int	i;
+
+	i = 0;
+	while (i < game->energizer_count)
+	{
+
+		if(game->energizers[i].active)
+			render_sprite_into_framebuffer(game,
+				(t_point){.y = game->energizers[i].pos.pixel_pos.y
+				+ game->win.height / 2, .x = game->energizers[i].pos.pixel_pos.x
+				+ game->win.width / 2}, &game->sprite_sheet.sprites[81]);
+		i++;
+	}
+}
+
 void	render_into_framebuffer(t_game *game)
 {
 	render_base_into_framebuffer(game);
 	render_pacdots_into_framebuffer(game);
+render_energizers_into_framebuffer(game);
 	render_ghosts_into_framebuffer(game);
 	render_player_into_framebuffer(game);
 }

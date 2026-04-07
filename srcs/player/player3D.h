@@ -34,4 +34,5 @@ int	player_hits_wall(t_game *g, int row, int col);
 int	ghost_hits_wall(t_game *g, int row, int col);
 void	player_rotate(t_game *g, double angle);
 
+bool		player_collect_energizer(t_game *g);
 #endif

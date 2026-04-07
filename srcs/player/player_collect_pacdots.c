@@ -23,6 +23,31 @@ static int	pacdot_near_player(t_game *g, t_pacdot *p, double r)
 	return ((dx * dx + dy * dy) <= (r * r));
 }
 
+bool		player_collect_energizer(t_game *g)
+{
+	int		i;
+	double	pickup_radius;
+	bool collected;
+	collected = false;
+
+
+	if (!g || !g->energizers || g->energizer_count <= 0)
+		return false;
+	pickup_radius = 0.50;
+	i = 0;
+	while (i < g->energizer_count)
+	{
+		if (g->energizers[i].active && pacdot_near_player(g, &g->energizers[i], pickup_radius))
+		{
+			g->energizers[i].active = 0;
+			collected = true;
+			g->player.collected_dots++;
+		}
+		i++;
+	}
+	return collected;
+}
+
 bool		player_collect_pacdots(t_game *g)
 {
 	int		i;
