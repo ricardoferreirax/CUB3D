@@ -12,6 +12,7 @@
 
 #include "Pac_Struct.h"
 
+//returns microseconds, which are 10⁶ smaller than seconds
 long get_time_us(void)
 {
 	struct timeval tv;

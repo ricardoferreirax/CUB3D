@@ -297,12 +297,14 @@ typedef struct s_time
 	//timers related to making sure the game updates at 60Hz
 	long last_time_up;
 	long accumulator;
+	long start_time;
 }	t_timer;
 
 typedef struct s_pacdot
 {
 	t_pos pos;
 	bool active;
+	bool is_energizer;
 }	t_pacdot;
 
 typedef struct s_sheet

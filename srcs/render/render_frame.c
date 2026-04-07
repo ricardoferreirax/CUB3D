@@ -445,7 +445,12 @@ void	render_pacdots_into_framebuffer(t_game *game)
 	i = 0;
 	while (i < game->pacdot_count)
 	{
-		if (game->pacdots[i].active)
+		if (game->pacdots[i].active && game->pacdots[i].is_energizer)
+			render_sprite_into_framebuffer(game,
+				(t_point){.y = game->pacdots[i].pos.pixel_pos.y
+				+ game->win.height / 2, .x = game->pacdots[i].pos.pixel_pos.x
+				+ game->win.width / 2}, &game->sprite_sheet.sprites[81]);
+		else if(game->pacdots[i].active)
 			render_sprite_into_framebuffer(game,
 				(t_point){.y = game->pacdots[i].pos.pixel_pos.y
 				+ game->win.height / 2, .x = game->pacdots[i].pos.pixel_pos.x
