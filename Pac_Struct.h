@@ -168,6 +168,7 @@ typedef struct s_anim_cord
 	t_sprite_ref left[3];
 	t_sprite_ref down[3];
 	t_sprite_ref right[3];
+	t_sprite_ref scared[2];
 	//Death animation ofr th eplayer has 12 frames
 	t_sprite_ref death[12];
 

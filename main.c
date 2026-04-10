@@ -49,12 +49,12 @@ void	reset_game(t_game *game, int is_death)
 	init_ghosts(game, 1);
 	if (is_death)
 		return ;
-	i = 0;
-	while (i < game->pacdot_count)
-	{
+	i = -1;
+	while (++i < game->pacdot_count)
 		game->pacdots[i].active = true;
-		i++;
-	}
+	i = -1;
+	while(++i < game->energizer_count)
+		game->energizers[i].active = true;
 	game->level++;
 	game->player.collected_dots = 0;
 }

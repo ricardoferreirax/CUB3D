@@ -79,9 +79,16 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
 		// g->player.pos.tile_pos.y = (g->player.pos.pixel_pos.y / 8) + 0.5;
 		
 	}
-	if(player_touched_ghost(g))
+	int slayer;
+	if((slayer = player_touched_ghost(g)))
 	{
-		ft_printf("You got touhced");
+		if(g->ghosts[slayer - 1].state == FRIGHTENED)
+		{
+			g->ghosts[slayer - 1].state = EATEN;
+		}
+		else
+		{
+			ft_printf("You got touhced");
 		usleep(10000);
 		if(!g->debug_mode)
 		{
@@ -92,9 +99,9 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
 			reset_game(g, 1);
 		}
 		// if(g->debug_mode)
-		// 	change_pallete((t_point){.x = -2, .y = -1}, &g->player.frames);
+		}// 	change_pallete((t_point){.x = -2, .y = -1}, &g->player.frames);
 	}
-	if(g->player.collected_dots >= g->pacdot_count)
+	if(g->player.collected_dots >= g->pacdot_count + g->energizer_count)
 		reset_game(g, 0);
 	// else if(g->player.frames.left->coord.x != )
 	// 	change_pallete((t_point){.x = 2, .y = 1}, &g->player.frames);

@@ -45,6 +45,16 @@ bool		player_collect_energizer(t_game *g)
 		}
 		i++;
 	}
+	if(collected)
+	{
+		i = 0;
+		while(i < 4)
+		{
+			g->ghosts[i].state = FRIGHTENED;
+			i++;
+		}
+		g->timer.frightened_time_start = get_time_us();
+	}
 	return collected;
 }
 
@@ -84,12 +94,13 @@ static int	player_touching_ghost(t_game *g, t_ghost *p, double r)
 	return ((dx * dx + dy * dy) <= (r * r));
 }
 
-bool		player_touched_ghost(t_game *g)
+int		player_touched_ghost(t_game *g)
 {
 	int		i;
 	double	hit_radius;
 	bool hit;
 	hit = false;
+	int slayer;
 
 
 	if (!g || !g->pacdots || g->pacdot_count <= 0)
@@ -99,8 +110,13 @@ bool		player_touched_ghost(t_game *g)
 	while (i < 4)
 	{
 		if (g->ghosts[i].name != DISABLED && player_touching_ghost(g, &g->ghosts[i], hit_radius) && g->ghosts[i].state != FRIGHTENED && g->ghosts[i].state != EATEN)
+		{
 			hit = true;
+			slayer = i;
+		}
 		i++;
 	}
-	return hit;
+	if(!hit)
+		return 0;
+	return slayer + 1;
 }

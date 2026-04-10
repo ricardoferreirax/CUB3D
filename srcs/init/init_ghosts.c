@@ -54,6 +54,8 @@ void ghost_sprites(t_game *game, e_ghost ghost)
 	game->ghosts[ghost].frames.down[1] = game->sprite_sheet.sprites[199];
 	game->ghosts[ghost].frames.right[0] = game->sprite_sheet.sprites[196];
 	game->ghosts[ghost].frames.right[1] = game->sprite_sheet.sprites[197];
+	game->ghosts[ghost].frames.scared[0] = game->sprite_sheet.sprites[246];
+	game->ghosts[ghost].frames.scared[1] = game->sprite_sheet.sprites[247];
 }
 
 void apply_new_pallete(t_point pallet_coord, t_sprite_ref *sprite)
