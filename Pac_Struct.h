@@ -23,6 +23,8 @@
 #include <fcntl.h>
 #include <math.h>
 #include <sys/time.h>
+//Controller support
+#include <linux/input.h>
 
 #define SPRITE_SHEET "./assets/sprites/SpriteSheet.xpm"
 
@@ -415,6 +417,7 @@ typedef struct s_game
 	int global_dot_counter;
 	int score;
 	int level;
+	int controller_fd;
 	// SpriteShit is 200x186
 	t_sprite_sheet sprite_sheet;
 }	t_game;

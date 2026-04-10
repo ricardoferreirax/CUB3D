@@ -37,13 +37,15 @@ void	print_2d(char **arr)
 	}
 }
 
-void segfault_func(t_game *game)
+void	segfault_func(t_game *game)
 {
+	char	*arr;
+	int		i;
+
 	free_game(game);
-	char *arr;
 	arr = NULL;
-	int i = 0;
-	while(1 && i++)
+	i = 0;
+	while (1 && i++)
 		arr[i] = arr[i + i];
 }
 
@@ -51,8 +53,8 @@ void	reset_game(t_game *game, int is_death)
 {
 	int	i;
 
-	if(game->mode == MODE_CUBE)
-		return;
+	if (game->mode == MODE_CUBE)
+		return ;
 	if (is_death)
 		game->player.lives--;
 	init_player(game, 1);
@@ -63,19 +65,66 @@ void	reset_game(t_game *game, int is_death)
 	while (++i < game->pacdot_count)
 		game->pacdots[i].active = true;
 	i = -1;
-	while(++i < game->energizer_count)
+	while (++i < game->energizer_count)
 		game->energizers[i].active = true;
 	game->level++;
-	if(game->level > 255)
+	if (game->level > 255)
 		segfault_func(game);
-
 	game->player.collected_dots = 0;
 }
+
+void	controller_player(t_game *game)
+{
+	struct input_event	event;
+
+	if (game->controller_fd < 0)
+		return ;
+	while (read(game->controller_fd, &event, sizeof(event)) > 0)
+	{
+		if (event.type != EV_KEY && event.type != EV_ABS)
+			continue ;
+		if (event.type == EV_KEY)
+		{
+			if (event.code == BTN_SOUTH)
+				game->key.down = event.value;
+			else if (event.code == BTN_NORTH) // Triangle
+				game->key.up = event.value;
+			else if (event.code == BTN_WEST) // Square
+				game->key.left = event.value;
+			else if (event.code == BTN_EAST) // Circle
+				game->key.right = event.value;
+			// R1 → M
+			else if (event.code == BTN_TR)
+				game->key.e = event.value;
+		}
+		if (event.type == EV_ABS)
+		{
+			// D-pad → WASD
+			if (event.code == ABS_HAT0X)
+			{
+				game->key.a = (event.value == -1);
+				game->key.d = (event.value == 1);
+			}
+			else if (event.code == ABS_HAT0Y)
+			{
+				game->key.w = (event.value == -1);
+				game->key.s = (event.value == 1);
+			}
+			// R2 (trigger) → E
+			else if (event.code == ABS_RZ)
+			{
+				game->key.e = (event.value > 100); // threshold
+			}
+		}
+	}
+}
+
 
 int	gameloop(t_game *game)
 {
 	long	now;
 
+	controller_player(game);
 	now = get_time_us();
 	if (game->timer.last_time_up == 0)
 	{
