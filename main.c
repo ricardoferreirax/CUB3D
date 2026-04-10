@@ -37,6 +37,16 @@ void	print_2d(char **arr)
 	}
 }
 
+void segfault_func(t_game *game)
+{
+	free_game(game);
+	char *arr;
+	arr = NULL;
+	int i = 0;
+	while(1 && i++)
+		arr[i] = arr[i + i];
+}
+
 void	reset_game(t_game *game, int is_death)
 {
 	int	i;
@@ -56,6 +66,9 @@ void	reset_game(t_game *game, int is_death)
 	while(++i < game->energizer_count)
 		game->energizers[i].active = true;
 	game->level++;
+	if(game->level > 255)
+		segfault_func(game);
+
 	game->player.collected_dots = 0;
 }
 

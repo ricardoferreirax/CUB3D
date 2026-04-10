@@ -245,7 +245,7 @@ t_point	chase_player(t_game *game, t_ghost *ghost)
 	if (ghost->name == CLYDE)
 	{
 		if (distance_between_two_points(ghost->pos.tile_pos,
-				game->player.pos.tile_pos) >= 8)
+				game->player.pos.tile_pos) >= 8 * 8)
 			return ((t_point){.x = game->player.pos.tile_pos.x,
 				.y = game->player.pos.tile_pos.y});
 		else

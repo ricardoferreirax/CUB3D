@@ -127,8 +127,7 @@ void	init_execution(t_game *g)
 			"init_execution() has not found necessary pointers");
 	g->ray.z_buffer = malloc(sizeof(double) * g->win.width);
 	if (!g->ray.z_buffer)
-		exit_game(EXIT_MALLOC, g,
-			"init_execution() has failed to allocate memory E1");
+		exit_game(EXIT_MALLOC, g, "init_execution() has failed to allocate memory E1");
 	g->ray.sprite_z = malloc(sizeof(double) * g->win.width * g->win.height);
 	if (!g->ray.sprite_z)
 		exit_game(EXIT_MALLOC, g,
