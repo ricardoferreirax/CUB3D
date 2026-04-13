@@ -109,7 +109,7 @@ int		player_touched_ghost(t_game *g)
 	i = 0;
 	while (i < 4)
 	{
-		if (g->ghosts[i].name != DISABLED && player_touching_ghost(g, &g->ghosts[i], hit_radius) && g->ghosts[i].state != FRIGHTENED && g->ghosts[i].state != EATEN)
+		if (g->ghosts[i].name != DISABLED && g->ghosts[i].state != EATEN && player_touching_ghost(g, &g->ghosts[i], hit_radius))
 		{
 			hit = true;
 			slayer = i;

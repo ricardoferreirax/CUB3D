@@ -89,15 +89,15 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
 		else
 		{
 			ft_printf("You got touhced");
-		usleep(10000);
-		if(!g->debug_mode)
-		{
-			g->player.lives--;
-			if(g->player.lives <= 0)
-				exit_game(EXIT_FAILURE, g, "You are dead");
-			play_death(g, (t_point){.x = g->player.pos.pixel_pos.x, .y = g->player.pos.pixel_pos.y});
-			reset_game(g, 1);
-		}
+			usleep(10000);
+			if(!g->debug_mode)
+			{
+				g->player.lives--;
+				if(g->player.lives <= 0)
+					exit_game(EXIT_FAILURE, g, "You are dead");
+				play_death(g, (t_point){.x = g->player.pos.pixel_pos.x, .y = g->player.pos.pixel_pos.y});
+				reset_game(g, 1);
+			}
 		// if(g->debug_mode)
 		}// 	change_pallete((t_point){.x = -2, .y = -1}, &g->player.frames);
 	}

@@ -377,15 +377,8 @@ int	update_ghost(t_game *game, t_ghost *ghost)
 	return (0);
 }
 
-void	render_ghost_into_framebuffer(t_game *game, t_point coord,
-		t_ghost *ghost)
+void render_normal_ghost(t_game *game, t_point coord, t_ghost *ghost)
 {
-	if (ghost->state == FRIGHTENED)
-		render_sprite_into_framebuffer(game, coord,
-			&ghost->frames.scared[((ghost->pos.pixel_pos.x
-					+ ghost->pos.pixel_pos.y) % 2)]);
-	else
-	{
 		if (ghost->invalid_dir == 0)
 			render_sprite_into_framebuffer(game, coord,
 				&ghost->frames.down[((ghost->pos.pixel_pos.x
@@ -402,6 +395,34 @@ void	render_ghost_into_framebuffer(t_game *game, t_point coord,
 			render_sprite_into_framebuffer(game, coord,
 				&ghost->frames.left[((ghost->pos.pixel_pos.x
 						+ ghost->pos.pixel_pos.y) % 2)]);
+}
+
+void render_eaten_ghost(t_game *game, t_point coord, t_ghost *ghost)
+{
+		if (ghost->invalid_dir == 0)
+			render_sprite_into_framebuffer(game, coord, &ghost->frames.down[2]);
+		if (ghost->invalid_dir == 1)
+			render_sprite_into_framebuffer(game, coord, &ghost->frames.right[2]);
+		if (ghost->invalid_dir == 2)
+			render_sprite_into_framebuffer(game, coord, &ghost->frames.up[2]);
+		if (ghost->invalid_dir == 3)
+			render_sprite_into_framebuffer(game, coord, &ghost->frames.left[2]);
+}
+
+void	render_ghost_into_framebuffer(t_game *game, t_point coord,
+		t_ghost *ghost)
+{
+	if (ghost->state == FRIGHTENED)
+		render_sprite_into_framebuffer(game, coord,
+			&ghost->frames.scared[((ghost->pos.pixel_pos.x
+					+ ghost->pos.pixel_pos.y) % 2)]);
+	else
+	{
+		if(ghost->state != EATEN)
+			render_normal_ghost(game, coord, ghost);
+		else
+			render_eaten_ghost(game, coord, ghost);
+
 	}
 }
 void	render_ghosts_into_framebuffer(t_game *game)
