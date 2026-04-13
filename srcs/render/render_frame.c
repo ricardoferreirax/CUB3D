@@ -77,6 +77,7 @@ void	render_sprite_into_framebuffer(t_game *game, t_point coord,
 t_double_point	continue_travel(t_ghost ghost, int invalid_dir)
 {
 	int	dir;
+	int runnning;
 
 	dir = (invalid_dir + 2) % 4;
 	int direction[4][2] = {
@@ -85,13 +86,16 @@ t_double_point	continue_travel(t_ghost ghost, int invalid_dir)
 		{1, 0},  // 2 = down
 		{0, 1}   // 3 = right
 	};
-	ghost.speed_accumulador += ghost.speed_multiplier;
+	runnning = 0;
+	if (ghost.state == EATEN)
+		runnning = 100;
+	ghost.speed_accumulador += ghost.speed_multiplier + runnning;
 	if (ghost.speed_accumulador >= 100)
 		ghost.speed_accumulador -= 100;
 	if (ghost.speed_accumulador > 1)
 		return ((t_double_point){.x = (ghost.pos.pixel_pos.x
-				+ direction[dir][1]), .y = (ghost.pos.pixel_pos.y
-				+ direction[dir][0])});
+				+ (direction[dir][1])), .y = (ghost.pos.pixel_pos.y
+				+ (direction[dir][0]))});
 	return ((t_double_point){.x = (ghost.pos.pixel_pos.x),
 		.y = (ghost.pos.pixel_pos.y)});
 }
@@ -351,8 +355,7 @@ int	ghost_penhouse_dance(t_game *game, t_ghost *ghost, t_point gate)
 
 bool is_on_penhouse(t_point ghost_pos, t_point gate_pos)
 {
-	printf("%d :%d\n%d : %d\n", ghost_pos.x / 8, gate_pos.x, ghost_pos.y / 8, gate_pos.y);
-	if(ghost_pos.x / 8 == gate_pos.x -1 && ghost_pos.y / 8 == gate_pos.y -1)
+	if(ghost_pos.x / 8 == gate_pos.x && ghost_pos.y / 8 == gate_pos.y)
 		return true;
 	return false;
 }
