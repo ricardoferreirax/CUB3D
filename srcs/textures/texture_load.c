@@ -47,12 +47,6 @@ void	texture_load_cube(t_game *g)
 		texture_load_xpm(g, &g->tex.floor_img, g->tex.floor);
 	if (g->tex.ceiling)
 		texture_load_xpm(g, &g->tex.ceiling_img, g->tex.ceiling);
-	if (g->mode == MODE_PACMAN)
-	{
-		if (!g->tex.gate_close)
-			exit_game(EXIT_MAP, g, "texture_load_cube() did not found gate close texture");
-		texture_load_xpm(g, &g->tex.gate_close_img, g->tex.gate_close);
-	}
 }
 	
 void	texture_load_sprites(t_game *g)
@@ -79,4 +73,6 @@ void	texture_load_sprites(t_game *g)
 	texture_load_xpm(g, &g->tex.inky_img[1], g->tex.inky[1]);
 	texture_load_xpm(g, &g->tex.clyde_img[0], g->tex.clyde[0]);
 	texture_load_xpm(g, &g->tex.clyde_img[1], g->tex.clyde[1]);
+	texture_load_xpm(g, &g->tex.other_state_img[0], g->tex.other_state[0]);
+	texture_load_xpm(g, &g->tex.other_state_img[1], g->tex.other_state[1]);
 }

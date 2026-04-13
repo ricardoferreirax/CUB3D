@@ -56,7 +56,13 @@ static int	parse_pacman_texture_line(t_game *g, char *p)
 		return (set_texture_path(&g->tex.energizer, p + 2, g), 1);
 	if (!ft_strncmp(p, "GC", 2) && (p[2] == ' ' || p[2] == '\t'))
 		return (set_texture_path(&g->tex.gate_close, p + 2, g), 1);
+	if (!ft_strncmp(p, "SC", 2) && (p[2] == ' ' || p[2] == '\t'))
+		return (set_texture_path(&g->tex.other_state[0], p + 2, g), 1);
+	if (!ft_strncmp(p, "ET", 2) && (p[2] == ' ' || p[2] == '\t'))
+		return (set_texture_path(&g->tex.other_state[1], p + 2, g), 1);
 	return (0);
+
+
 }
 
 static void	parse_texture_line(t_game *g, char *line)
@@ -101,6 +107,6 @@ void	parse_texture_path(t_game *g, const char *path)
 	// {
 	if (!g->tex.pacdot || !g->tex.energizer || !g->tex.blinky[0] || !g->tex.blinky[1]
 	|| !g->tex.pinky[0] || !g->tex.pinky[1] || !g->tex.inky[0] || !g->tex.inky[1]
-	|| !g->tex.clyde[0] || !g->tex.clyde[1] || !g->tex.gate_close)
+	|| !g->tex.clyde[0] || !g->tex.clyde[1])
 		exit_game(EXIT_MAP, g, "parse_texture_path() was unable to find all textures E2");
 }

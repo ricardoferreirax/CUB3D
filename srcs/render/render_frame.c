@@ -349,6 +349,14 @@ int	ghost_penhouse_dance(t_game *game, t_ghost *ghost, t_point gate)
 	return (0);
 }
 
+bool is_on_penhouse(t_point ghost_pos, t_point gate_pos)
+{
+	printf("%d :%d\n%d : %d\n", ghost_pos.x / 8, gate_pos.x, ghost_pos.y / 8, gate_pos.y);
+	if(ghost_pos.x / 8 == gate_pos.x -1 && ghost_pos.y / 8 == gate_pos.y -1)
+		return true;
+	return false;
+}
+
 int	update_ghost(t_game *game, t_ghost *ghost)
 {
 	t_double_point	next;
@@ -359,9 +367,9 @@ int	update_ghost(t_game *game, t_ghost *ghost)
 		return (ghost_penhouse_dance(game, ghost, find_c(ghost->mental_map,
 					'G')));
 	if (ghost->state == FRIGHTENED && get_time_us() - game->timer.frightened_time_start > (long)(game->timer.frightened_time * 1000000.0))
-	{
 		ghost->state = CHASE;
-	}
+	if (ghost->state == EATEN && is_on_penhouse(ghost->pos.pixel_pos, game->targets.ghost_house))
+		ghost->state = CHASE;
 	if (ghost->pos.pixel_pos.x % TILE_SIZE != TILE_SIZE / 2
 		|| ghost->pos.pixel_pos.y % TILE_SIZE != TILE_SIZE / 2)
 	{
