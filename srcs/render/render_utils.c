@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:18:28 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/20 22:10:49 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/13 12:51:57 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,53 +27,51 @@ void	put_pixel_fast(t_image *img, int x, int y, int color)
 	buf[y * stride + x] = (unsigned int)color;
 }
 
-double	fract_pos(double x)
-{
-	int	i;
-
-	i = (int)x;
-	if (x < 0.0 && (double)i != x)
-		i -= 1;
-	return (x - (double)i);
-}
-
 t_image	*ghost_tex(t_game *g, t_ghost *gh)
 {
+	int	frame;
+
 	if (!g || !gh)
 		return (NULL);
+	frame = ghost_anim_frame(gh);
 	if (gh->name == BLINKY)
-		return (&g->tex.blinky_img);
+		return (&g->tex.blinky_img[frame]);
 	if (gh->name == PINKY)
-		return (&g->tex.pinky_img);
+		return (&g->tex.pinky_img[frame]);
 	if (gh->name == INKY)
-		return (&g->tex.inky_img);
-	return (&g->tex.clyde_img);
+		return (&g->tex.inky_img[frame]);
+	if (gh->name == CLYDE)
+		return (&g->tex.clyde_img[frame]);
+	return (NULL);
 }
 
-void	convert_texture_coords(t_fc *fc, t_image *tex, int *tx, int *ty)
+int	ghost_anim_frame(t_ghost *gh)
 {
-	double	u;
-	double	v;
+	int	x;
+	int	y;
 
-	u = fract_pos(fc->fx);
-	v = fract_pos(fc->fy);
-	*tx = (int)(u * (double)tex->width);
-	*ty = (int)(v * (double)tex->height);
-	if (*tx < 0)
-		*tx = 0;
-	if (*ty < 0)
-		*ty = 0;
-	if (*tx >= tex->width)
-		*tx = tex->width - 1;
-	if (*ty >= tex->height)
-		*ty = tex->height - 1;
+	if (!gh)
+		return (0);
+	x = (int)(gh->pos.tile_pos.x * 4.0);
+	y = (int)(gh->pos.tile_pos.y * 4.0);
+	return ((x + y) & 1);
 }
 
-int	clampi(int v, int lo, int hi)
+int	clamp_int(int value, int min, int max)
 {
-	if (v < lo)
-		return (lo);
-	if (v > hi)
-		return (hi);
-	return (v);
+	if (value < min)
+		return (min);
+	if (value > max)
+		return (max);
+	return (value);
+}
+
+double	fract_pos(double x)
+{
+	int	i; // guarda a parte inteira de x
+
+	i = (int)x;         // converte x para inteiro ao truncar a parte decimal
+	if (x < 0.0 && (double)i != x) // se x for negativo e tiver parte decimal
+		i -= 1;       // ajusta a parte inteira para o próximo número inteiro menor
+	return (x - (double)i);  // devolve so a parte fracionaria positiva
 }

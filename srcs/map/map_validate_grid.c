@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:53:00 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/05 15:33:03 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/10 21:07:49 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	map_is_valid_tile(t_game *g, char c)
 {
+	return 1;
 	if (c == '\0')
 		return (0);
 	if (c == '\n')

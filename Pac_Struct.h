@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/17 14:35:44 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/03/13 09:47:56 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 #include <fcntl.h>
 #include <math.h>
 #include <sys/time.h>
+//Controller support
+#include <linux/input.h>
 
 #define SPRITE_SHEET "./assets/sprites/SpriteSheet.xpm"
 
@@ -99,24 +101,24 @@ typedef struct s_image
 
 typedef struct s_fc
 {
-	double	fx;
-	double	fy;
-	double	stepx;
-	double	stepy;
-	double	rowdist;
+	double	pos_x;
+	double	pos_y;
+	double	step_x;
+	double	step_y;
+	double	dist;
 }	t_fc;
 
 typedef struct s_sprite
 {
-	double	depth;
-	int		screen_x;
-	int		size;
-	int		x0;
-	int		x1;
-	int		y0;
-	int		y1;
-	int raw_x0;
-	int raw_y0;
+	double	dist; // distancia do sprite ao player
+	int		screen_x; // posição horizontal do sprite na tela (coluna onde o centro do sprite deve ser desenhado)
+	int		size; // tamanho do sprite projetado na tela 
+	int		draw_start_x; // coluna inicial onde o sprite começa a desenhar
+	int		draw_end_x; // coluna final onde o sprite termina de desenhar
+	int		draw_start_y; // linha inicial onde o sprite começa a desenhar
+	int		draw_end_y; // linha final onde o sprite termina de desenhar
+	int 	tex_start_x; // coordenada x da textura correspondente à coluna draw_start_x do sprite
+	int 	tex_start_y; // coordenada y da textura correspondente à linha draw_start_y do
 }	t_sprite;
 
 typedef struct s_raycasting
@@ -168,6 +170,7 @@ typedef struct s_anim_cord
 	t_sprite_ref left[3];
 	t_sprite_ref down[3];
 	t_sprite_ref right[3];
+	t_sprite_ref scared[2];
 	//Death animation ofr th eplayer has 12 frames
 	t_sprite_ref death[12];
 
@@ -189,14 +192,11 @@ typedef struct s_player
 	t_double_point target_dir;
 	t_double_point plane;
 	t_double_point target_plane;
-
 	t_point target_map;
 	char	target_tile;    // id do tile que o player está a apontar
 	char	target_wall_dir; // 'N', 'S', 'E', 'W'
 	double	target_dist;   // distância perpendicular
 	
-
-
 	t_pos pos; // para o 2d (tile/pixel)
 	int lives;
 	int speed_multiplier;
@@ -293,13 +293,16 @@ typedef struct s_time
 {
 	double level_time;
 	double mode_timer;
+	double mode_time_start;
 	//starts when ghosts are in the pen and pac-man refuses to eat dots
 	double timeout_timer;
 	int energizer;
 	double frightened_time;
+	double frightened_time_start;
 	//timers related to making sure the game updates at 60Hz
 	long last_time_up;
 	long accumulator;
+	long start_time;
 }	t_timer;
 
 typedef struct s_pacdot
@@ -336,6 +339,7 @@ typedef enum e_player_action
 	ROTATE_RIGHT
 }	t_player_action;
 
+
 typedef struct s_textures
 {
 	char	*no;
@@ -346,11 +350,11 @@ typedef struct s_textures
 	char	*ceiling;
 	char	*pacdot;
 	char	*energizer;
-	char	*blinky;
-	char	*pinky;
-	char	*inky;
-	char	*clyde;
-	char 	*gate_close;
+	char	*blinky[2];
+	char	*pinky[2];
+	char	*inky[2];
+	char	*clyde[2];
+	char	*gate_close;
 
 	t_image	no_img;
 	t_image	so_img;
@@ -360,12 +364,11 @@ typedef struct s_textures
 	t_image	ceiling_img;
 	t_image	pacdot_img;
 	t_image	energizer_img;
-	t_image	blinky_img;
-	t_image	pinky_img;
-	t_image	inky_img;
-	t_image	clyde_img;
-	t_image gate_close_img;
-
+	t_image	blinky_img[2];
+	t_image	pinky_img[2];
+	t_image	inky_img[2];
+	t_image	clyde_img[2];
+	t_image	gate_close_img;
 }	t_textures;
 
 typedef struct s_lvl_config
@@ -414,6 +417,7 @@ typedef struct s_game
 	int global_dot_counter;
 	int score;
 	int level;
+	int controller_fd;
 	// SpriteShit is 200x186
 	t_sprite_sheet sprite_sheet;
 }	t_game;
@@ -442,8 +446,6 @@ t_point	find_c(char **map, char c);
 
 int		xtile(char **map);
 int		ytile(char **map);
-
-void	init_game(t_game *game);
 
 int	pixel_get(t_image *data, int x, int y);
 int	pixeL_get_coord(t_sprite_sheet *sheet, int i, int x, int y);

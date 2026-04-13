@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:28:58 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/02 09:52:07 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/12 12:22:46 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,18 @@ void ghost_sprites(t_game *game, e_ghost ghost)
 {
 	game->ghosts[ghost].frames.up[0] = game->sprite_sheet.sprites[202];
 	game->ghosts[ghost].frames.up[1] = game->sprite_sheet.sprites[203];
+	game->ghosts[ghost].frames.up[2] = game->sprite_sheet.sprites[209];
 	game->ghosts[ghost].frames.left[0] = game->sprite_sheet.sprites[200];
 	game->ghosts[ghost].frames.left[1] = game->sprite_sheet.sprites[201];
+	game->ghosts[ghost].frames.left[2] = game->sprite_sheet.sprites[208];
 	game->ghosts[ghost].frames.down[0] = game->sprite_sheet.sprites[198];
 	game->ghosts[ghost].frames.down[1] = game->sprite_sheet.sprites[199];
+	game->ghosts[ghost].frames.down[2] = game->sprite_sheet.sprites[207];
 	game->ghosts[ghost].frames.right[0] = game->sprite_sheet.sprites[196];
 	game->ghosts[ghost].frames.right[1] = game->sprite_sheet.sprites[197];
+	game->ghosts[ghost].frames.right[2] = game->sprite_sheet.sprites[206];
+	game->ghosts[ghost].frames.scared[0] = game->sprite_sheet.sprites[246];
+	game->ghosts[ghost].frames.scared[1] = game->sprite_sheet.sprites[247];
 }
 
 void apply_new_pallete(t_point pallet_coord, t_sprite_ref *sprite)
