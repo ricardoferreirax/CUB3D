@@ -355,6 +355,7 @@ typedef struct s_textures
 	char	*inky[2];
 	char	*clyde[2];
 	char	*gate_close;
+	char *other_state[2];
 
 	t_image	no_img;
 	t_image	so_img;
@@ -368,7 +369,8 @@ typedef struct s_textures
 	t_image	pinky_img[2];
 	t_image	inky_img[2];
 	t_image	clyde_img[2];
-	t_image	gate_close_img;
+	t_image gate_close_img;
+	t_image	other_state_img[2];
 }	t_textures;
 
 typedef struct s_lvl_config

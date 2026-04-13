@@ -51,6 +51,10 @@ static int	map_pacman_mode_prefix(char *p)
 		return (1);
 	if (!ft_strncmp(p, "GC", 2) && is_whitespace(p[2]))
 		return (1);
+	if (!ft_strncmp(p, "SC", 2) && is_whitespace(p[2]))
+		return (1);
+	if (!ft_strncmp(p, "ET", 2) && is_whitespace(p[2]))
+		return (1);
 	return (0);
 }
 
@@ -95,11 +99,7 @@ int	map_is_map_line(t_game *g, char *line)
 		return (0);
 	p = skip_whitespace(line);
 	if (!*p || *p == '\n' || map_is_cub_prefix(p))
-	{
-		ft_printf("TEST: ");
-		ft_printf("%s", line);
 		return (0);
-	}
 	has_tile = 0;
 	while (*p && *p != '\n')
 	{

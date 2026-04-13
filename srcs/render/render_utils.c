@@ -34,6 +34,10 @@ t_image	*ghost_tex(t_game *g, t_ghost *gh)
 	if (!g || !gh)
 		return (NULL);
 	frame = ghost_anim_frame(gh);
+	if(gh->state == FRIGHTENED)
+		return(&g->tex.other_state_img[0]);
+	if(gh->state == EATEN)
+		return(&g->tex.other_state_img[1]);
 	if (gh->name == BLINKY)
 		return (&g->tex.blinky_img[frame]);
 	if (gh->name == PINKY)

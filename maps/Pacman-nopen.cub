@@ -16,7 +16,8 @@ IN0 ./assets/textures/ghosts/inky/inky_0.xpm
 IN1 ./assets/textures/ghosts/inky/inky_1.xpm
 CL0 ./assets/textures/ghosts/clyde/clyde_0.xpm
 CL1 ./assets/textures/ghosts/clyde/clyde_1.xpm
-GC ./assets/textures/gate_closed.xpm
+ET ./assets/textures/ghosts/eaten.xpm
+SC ./assets/textures/ghosts/scared.xpm
 
  p                        b 
                             
