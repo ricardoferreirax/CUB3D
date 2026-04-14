@@ -19,6 +19,7 @@ void	breakpoint(void)
 {
 	int	i;
 
+
 	i = 0;
 	i++;
 	(void)i;
@@ -110,11 +111,8 @@ void	controller_player(t_game *game)
 				game->key.w = (event.value == -1);
 				game->key.s = (event.value == 1);
 			}
-			// R2 (trigger) → E
 			else if (event.code == ABS_RZ)
-			{
 				game->key.e = (event.value > 100); // threshold
-			}
 		}
 	}
 }
@@ -146,6 +144,7 @@ void	switch_mode_and_parse(t_game *g, t_mode mode, const char *path)
 			"switch_mode_and_parse() has not found a path or game");
 	g->mode = mode;
 }
+
 
 int	main(int ac, char **av)
 {

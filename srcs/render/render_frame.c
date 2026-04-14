@@ -110,8 +110,8 @@ int	distance_to_target(t_ghost *ghost, int dy, int dx)
 	return (result);
 }
 
-double	distance_between_two_points(t_double_point point1,
-		t_double_point point2)
+double	distance_between_two_points(t_point point1,
+		t_point point2)
 {
 	double	distance;
 
@@ -248,13 +248,13 @@ t_point	chase_player(t_game *game, t_ghost *ghost)
 		return (pinky_target(game));
 	if (ghost->name == CLYDE)
 	{
-		if (distance_between_two_points(ghost->pos.tile_pos,
-				game->player.pos.tile_pos) >= 8 * 8)
+		if (distance_between_two_points(ghost->pos.pixel_pos,
+				game->player.pos.pixel_pos) >= 64)
 			return ((t_point){.x = game->player.pos.tile_pos.x,
 				.y = game->player.pos.tile_pos.y});
 		else
-			return ((t_point){.x = game->targets.scatter_target[CLYDE].x + 0.5,
-				.y = game->targets.scatter_target[CLYDE].y + 0.5});
+			return ((t_point){.x = game->targets.scatter_target[CLYDE].x,
+				.y = game->targets.scatter_target[CLYDE].y});
 	}
 	if (ghost->name == INKY)
 		return (inky_target(game));
@@ -370,9 +370,15 @@ int	update_ghost(t_game *game, t_ghost *ghost)
 		return (ghost_penhouse_dance(game, ghost, find_c(ghost->mental_map,
 					'G')));
 	if (ghost->state == FRIGHTENED && get_time_us() - game->timer.frightened_time_start > (long)(game->timer.frightened_time * 1000000.0))
+	{
 		ghost->state = CHASE;
+		ghost->invalid_dir = (ghost->invalid_dir + 2) % 4;
+	}
 	if (ghost->state == EATEN && is_on_penhouse(ghost->pos.pixel_pos, game->targets.ghost_house))
+	{
 		ghost->state = CHASE;
+		ghost->invalid_dir = (ghost->invalid_dir + 2) % 4;
+	}
 	if (ghost->pos.pixel_pos.x % TILE_SIZE != TILE_SIZE / 2
 		|| ghost->pos.pixel_pos.y % TILE_SIZE != TILE_SIZE / 2)
 	{

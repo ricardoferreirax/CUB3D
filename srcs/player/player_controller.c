@@ -74,16 +74,13 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
 	{
 		g->player.pos.tile_pos.x += dx;
 		g->player.pos.tile_pos.y += dy;
-
-		// g->player.pos.tile_pos.x = (g->player.pos.pixel_pos.x / 8) + 0.5;
-		// g->player.pos.tile_pos.y = (g->player.pos.pixel_pos.y / 8) + 0.5;
-		
 	}
 	int slayer;
 	if((slayer = player_touched_ghost(g)))
 	{
 		if(g->ghosts[slayer - 1].state == FRIGHTENED)
 		{
+			// usleep(2 * 1e5);
 			g->ghosts[slayer - 1].state = EATEN;
 		}
 		else
@@ -159,7 +156,7 @@ bool	can_move(t_game *game, int dir)
 	return (true);
 }
 
-void	move(t_game *game, int dir)
+void	player_move(t_game *game, int dir)
 {
 	if (dir == 0 && can_move(game, dir))
 	{
@@ -229,13 +226,13 @@ void	player_controller(t_game *g)
 	else if (g->mode == MODE_PACMAN)
 	{
 		if (g->key.w || g->key.up)
-			move(g, 0);
+			player_move(g, 0);
 		if (g->key.s || g->key.down)
-			move(g, 2);
+			player_move(g, 2);
 		if (g->key.d || g->key.right)
-			move(g, 3);
+			player_move(g, 3);
 		if (g->key.a || g->key.left)
-			move(g, 1);
+			player_move(g, 1);
 		update_player_direction(g, 1);
 		apply_player_movement(g, (g->player.target_dir.x * PLAYER_SPEED),
 			g->player.target_dir.y * PLAYER_SPEED);

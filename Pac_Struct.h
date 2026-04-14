@@ -24,6 +24,7 @@
 #include <math.h>
 #include <sys/time.h>
 //Controller support
+#include <alsa/asoundlib.h>
 #include <linux/input.h>
 
 #define SPRITE_SHEET "./assets/sprites/SpriteSheet.xpm"

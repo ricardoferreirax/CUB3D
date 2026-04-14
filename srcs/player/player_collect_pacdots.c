@@ -51,6 +51,7 @@ bool		player_collect_energizer(t_game *g)
 		while(i < 4)
 		{
 			g->ghosts[i].state = FRIGHTENED;
+			g->ghosts[i].invalid_dir = (g->ghosts[i].invalid_dir + 2) % 4;
 			i++;
 		}
 		g->timer.frightened_time_start = get_time_us();
