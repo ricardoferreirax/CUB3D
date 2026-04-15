@@ -38,8 +38,8 @@ static void	draw_plane_row(t_game *g, t_fc *plane, t_image *tex, int row)
 	col = 0; // começa a desenhar na primeira coluna da linha
 	while (col < g->win.width) // percorre todas as colunas da linha atual
 	{
-		tex_x = (int)(fract_pos(plane->pos_x) * tex->width); // calcula a coordenada x da textura correspondente à posição atual no mundo do plano para esta coluna
-		tex_y = (int)(fract_pos(plane->pos_y) * tex->height);
+		tex_x = (int)(plane->pos_x * tex->width) % tex->width;
+		tex_y = (int)(plane->pos_y * tex->height) % tex->height;
 		pixels[col] = tex_pixel(tex, tex_x, tex_y); // copia o pixel da textura para o frame buffer na posição correspondente à coluna atual da linha
 		plane->pos_x += plane->step_x; // avança a posição x no mundo do plano para o próximo pixel da linha
 		plane->pos_y += plane->step_y; // avança a posição y no mundo do plano para o próximo pixel da linha

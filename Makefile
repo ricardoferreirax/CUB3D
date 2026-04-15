@@ -28,7 +28,7 @@ MLX_CFLAGS = -Wall -Wextra -Werror \
 	-Wno-unused-variable \
 	-Wno-unused-but-set-variable
 
-INCS    = -Iinclude -Ilibft -lasound
+INCS    = -Iinclude -Ilibft
 
 LIBFT   = libft/libft.a
 MLX_PATH = minilibx-linux
