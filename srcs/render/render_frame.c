@@ -110,13 +110,11 @@ int	distance_to_target(t_ghost *ghost, int dy, int dx)
 	return (result);
 }
 
-double	distance_between_two_points(t_point point1,
-		t_point point2)
+int	distance_squared(t_double_point a, t_double_point b)
 {
-	double	distance;
-
-	distance = sqrt(pow(point1.x - point2.x, 2) + pow(point1.y - point2.y, 2));
-	return (distance);
+	int dx = a.x - b.x;
+	int dy = a.y - b.y;
+	return (dx * dx + dy * dy);
 }
 
 void	ghost_move_pixel(t_ghost *gh, int dx, int dy)
@@ -202,19 +200,42 @@ void	goto_penhouse(t_game *game, t_ghost *ghost)
 	ghost->speed_multiplier = 99;
 }
 
-t_point	pinky_target(t_game *game)
+t_point	pinky_target(t_game *game , int n)
 {
-	if (game->player.dir.y == 1)
-		return ((t_point){.x = (game->player.pos.tile_pos.x) - 2,
-			.y = (game->player.pos.tile_pos.y) + 2});
-	if (game->player.dir.x == -1)
-		return ((t_point){.x = (game->player.pos.tile_pos.x) - 2,
-			.y = (game->player.pos.tile_pos.y) + 2});
-	if (game->player.dir.y == -1)
-		return ((t_point){.x = game->player.pos.tile_pos.x,
-			.y = (game->player.pos.tile_pos.y) - 2});
-	return ((t_point){.x = (game->player.pos.tile_pos.x) + 2,
-		.y = game->player.pos.tile_pos.y});
+	t_point target;
+	int px = game->player.pos.tile_pos.x;
+	int py = game->player.pos.tile_pos.y;
+	//
+	// if (game->player.target_dir.x == 1) // RIGHT
+	// {
+	// 	target.x = px + 4;
+	// 	target.y = py;
+	// }
+	// else if (game->player.target_dir.x == -1) // LEFT
+	// {
+	// 	target.x = px - 4;
+	// 	target.y = py;
+	// }
+	// else if (game->player.target_dir.y == 1) // DOWN
+	// {
+	// 	target.x = px;
+	// 	target.y = py + 4;
+	// }
+	// else // UP (bugged behavior)
+	// {
+	// 	target.x = px - 4;
+	// 	target.y = py - 4;
+	// }
+
+	if (game->player.target_dir.x == 1) // RIGHT
+		return ((t_point){px + n, py});
+	else if (game->player.target_dir.x == -1) // LEFT
+		return ((t_point){px - n, py});
+	else if (game->player.target_dir.y == 1) // DOWN
+		return ((t_point){px, py + n});
+	else // UP (bug!)
+		return ((t_point){px - n, py - n});
+	return (target);
 }
 
 int	ft_abs(int n)
@@ -226,17 +247,34 @@ int	ft_abs(int n)
 
 t_point	inky_target(t_game *game)
 {
-	int		vectorx;
-	int		vectory;
-	t_point	pinkys_target;
+	t_point pivot;
+	t_double_point blinky;
+	t_point target;
 
-	pinkys_target = pinky_target(game);
-	vectorx = ft_abs(game->ghosts[BLINKY].pos.tile_pos.x - pinkys_target.x);
-	vectory = ft_abs(game->ghosts[BLINKY].pos.tile_pos.y - pinkys_target.y);
-	vectorx *= -1;
-	vectory *= -1;
-	return ((t_point){.x = pinkys_target.x + vectorx, .y = pinkys_target.y
-		+ vectory});
+	// Step 1: 2 tiles ahead of Pac-Man
+	pivot = pinky_target(game, 2);
+
+	// Step 2: Blinky position
+	blinky = game->ghosts[BLINKY].pos.tile_pos;
+
+	// Step 3: vector from Blinky to pivot
+	int vx = pivot.x - blinky.x;
+	int vy = pivot.y - blinky.y;
+
+	// Step 4: double it
+	vx *= 2;
+	vy *= 2;
+
+	// Step 5: final target
+	target.x = blinky.x + vx;
+	target.y = blinky.y + vy;
+
+	return (target);
+}
+
+t_point ghost_pos_intile(t_point pos)
+{
+	return((t_point){.x = pos.x *8, .y = pos.y * 8});
 }
 
 t_point	chase_player(t_game *game, t_ghost *ghost)
@@ -245,11 +283,10 @@ t_point	chase_player(t_game *game, t_ghost *ghost)
 		return ((t_point){.x = game->player.pos.tile_pos.x,
 			.y = game->player.pos.tile_pos.y});
 	if (ghost->name == PINKY)
-		return (pinky_target(game));
+		return (pinky_target(game, 4));
 	if (ghost->name == CLYDE)
 	{
-		if (distance_between_two_points(ghost->pos.pixel_pos,
-				game->player.pos.pixel_pos) >= 64)
+		if (distance_squared(ghost->pos.tile_pos, game->player.pos.tile_pos) >= 8 * TILE_SIZE)
 			return ((t_point){.x = game->player.pos.tile_pos.x,
 				.y = game->player.pos.tile_pos.y});
 		else
@@ -527,6 +564,35 @@ void	render_energizers_into_framebuffer(t_game *game)
 	}
 }
 
+void render_targets(t_game *game)
+{
+	t_point coord;
+
+	t_point pivot_coord;
+	t_sprite_ref target_tile;
+	target_tile = game->sprite_sheet.sprites[253];
+	int i = 0;
+	pivot_coord = pinky_target(game, 2);
+	pivot_coord.x = (pivot_coord.x * 8) + game->win.width / 2;
+	pivot_coord.y = (pivot_coord.y * 8) + game->win.height / 2;
+	render_sprite_into_framebuffer(game, pivot_coord, &game->sprite_sheet.sprites[81]);
+	while(i < 4)
+	{
+		coord.x = ((game->ghosts[i].target_tile.x * 8) + game->win.width / 2);
+		coord.y = ((game->ghosts[i].target_tile.y * 8) + game->win.height / 2);
+
+		render_sprite_into_framebuffer(game, coord, &target_tile);
+		target_tile.coord.x += 200;
+		i++;
+	}
+}
+
+void render_debug_symbols(t_game *game)
+{
+	render_raycast_debug(game);
+	render_targets(game);
+}
+
 void	render_into_framebuffer(t_game *game)
 {
 	render_base_into_framebuffer(game);
@@ -534,6 +600,8 @@ void	render_into_framebuffer(t_game *game)
 	render_energizers_into_framebuffer(game);
 	render_ghosts_into_framebuffer(game);
 	render_player_into_framebuffer(game);
+	if(game->debug_mode)
+		render_debug_symbols(game);
 }
 
 void	render_frame(t_game *game)
@@ -550,8 +618,6 @@ void	render_frame(t_game *game)
 	clear_sprite_z(game);
 	render_all_sprites(game);
 	render_into_framebuffer(game);
-	if(game->debug_mode == true)
-		render_raycast_debug(game);
 	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr,
 		game->win.frame_buffer.img_ptr, 0, 0);
 }

@@ -85,7 +85,7 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
 		}
 		else
 		{
-			ft_printf("You got touhced");
+			// ft_printf("You got touhced");
 			usleep(10000);
 			if(!g->debug_mode)
 			{

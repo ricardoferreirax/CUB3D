@@ -138,7 +138,7 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char, int is_death
 		return -1;
 	if(gh->name == BLINKY && !is_death)
 		g->targets.ghost_house = spawn_point;
-	g->targets.scatter_target[gh->name] = spawn_point;
+	g->targets.scatter_target[gh->name] = target_point;
 	gh->pos.tile_pos.x = (double)spawn_point.x+ 0.5; // posiciona o ghost no centro do spawn tile no eixo x
 	gh->pos.tile_pos.y = (double)spawn_point.y + 0.5; // posiciona o ghost no centro do spawn tile no eixo y
 	gh->pos.pixel_pos.x = spawn_point.x * TILE_SIZE + TILE_SIZE / 2; // converte o spawn tile para pixels e centra o fanstasma no tile no eixo x
