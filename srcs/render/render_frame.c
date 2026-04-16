@@ -131,6 +131,27 @@ void	ghost_move_pixel(t_ghost *gh, int dx, int dy)
 	// converte a posição y do ghost de pixels para tiles
 }
 
+// int	get_weighted_direction(double *weight)
+// {
+// 	int total = 0;
+// 	int i = 0;
+//
+// 	while (i < 4)
+// 		total += weight[i++];
+//
+// 	int r = rand() % total;
+//
+// 	i = 0;
+// 	while (i < 4)
+// 	{
+// 		if (r < weight[i])
+// 			return i;
+// 		r -= weight[i];
+// 		i++;
+// 	}
+// 	return 0;
+// }
+
 int	chose_next_move(t_ghost *ghost, char **map)
 {
 	int		i;
@@ -153,6 +174,39 @@ int	chose_next_move(t_ghost *ghost, char **map)
 	target = ghost->target_tile;
 	while (i < 4)
 	{
+// 	if (ghost->state == FRIGHTENED)
+// {
+// 	// double weight[4] = {16.3, 29.9, 28.5, 25.2}; // adjust freely
+// 	// int start = get_weighted_direction(weight);
+// 	// int j = 0;
+// 	//
+// 	// while (j < 4)
+// 	// {
+// 	// 	int g = (start + j) % 4;
+// 	//
+// 	// 	int ny = ghost->pos.pixel_pos.y / TILE_SIZE + direction[g][0];
+// 	// 	int nx = ghost->pos.pixel_pos.x / TILE_SIZE + direction[g][1];
+// 	//
+// 	// 	if ((map[ny][nx] != '1' && map[ny][nx] != 'G')
+// 	// 		&& g != ghost->invalid_dir)
+// 	// 	{
+// 	// 		ghost_move_pixel(ghost,
+// 	// 			direction[g][1],
+// 	// 			direction[g][0]);
+// 	// 		return ((g + 2) % 4);
+// 	// 	}
+// 	// 	j++;
+// 	// }
+// 		int rng_num = rand() % 8192;
+// 		if(rng_num < 1338)
+// 				best_dir =  ;
+// 		if(rng_num < 3402)
+// 				return right;
+// 		if (rng_num < 5740)
+// 			return down;
+// 		if(rng_num < 8192)
+// 				return left;
+// }
 		if ((map[ghost->pos.pixel_pos.y / TILE_SIZE
 				+ direction[i][0]][ghost->pos.pixel_pos.x / TILE_SIZE
 				+ direction[i][1]] != '1' && map[ghost->pos.pixel_pos.y
@@ -491,6 +545,16 @@ void	render_ghosts_into_framebuffer(t_game *game)
 			continue ;
 		ghost_wrap_position(game, &game->ghosts[i]);
 		update_ghost(game, &game->ghosts[i]);
+		if(get_time_us() - game->timer.mode_time_start > (long)(game->timer.mode_timer) * 1000000.0)
+		{
+		if(game->ghosts[i].state == SCATTER)
+			game->ghosts[i].state = CHASE;
+		else if(game->ghosts[i].state == CHASE)
+			game->ghosts[i].state = SCATTER;
+		game->ghosts[i].invalid_dir = (game->ghosts[i].invalid_dir + 2) % 4;
+		if(i == 3)
+			game->timer.mode_time_start = get_time_us();
+		}
 		coord.x = (game->ghosts[i].pos.pixel_pos.x - TILE_SIZE + game->win.width
 				/ 2);
 		coord.y = (game->ghosts[i].pos.pixel_pos.y - TILE_SIZE

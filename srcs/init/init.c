@@ -119,7 +119,8 @@ static void	init_defaults(t_game *g)
 	g->gate_passable = 0;
 	g->level = 1;
 	g->controller_fd = -1;
-
+	set_lvl(g);
+	g->timer.mode_timer = 20.0;
 }
 
 void	init_execution(t_game *g)

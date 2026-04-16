@@ -46,6 +46,9 @@ void	segfault_func(t_game *game)
 	free_game(game);
 	arr = NULL;
 	i = 0;
+	ft_printf("You acctually managed to reach level 256?\n");
+	ft_printf("You probably cheated to get here, no one would play this for that long\n");
+	ft_printf("Anyways, I hope you know that this is the kill screen so here's your award\n");
 	while (1 && i++)
 		arr[i] = arr[i + i];
 }

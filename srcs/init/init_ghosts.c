@@ -145,8 +145,15 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char, int is_death
 	gh->pos.pixel_pos.y = spawn_point.y * TILE_SIZE + TILE_SIZE / 2; // converte o spawn tile para pixels e centra o fanstasma no tile no eixo y
 	gh->invalid_dir = -1;
 	gh->target_tile = target_point;
+	gh->state = SCATTER;
 	if(is_death)
 		return 0;
+	if(gh->name == PINKY)
+		gh->dot_counter = 7;
+	if(gh->name == INKY)
+		gh->dot_counter = 17;
+	if(gh->name == CLYDE)
+		gh->dot_counter = 32;
 	ghost_sprites(g, gh->name);
 	ghost_color(gh);
 	return 0;
