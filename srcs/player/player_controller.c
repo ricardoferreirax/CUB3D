@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
-#include "player3D.h"
 #include "../../srcs/render/render3D.h"
+#include "player3D.h"
 
 static void	player_snap_axis(double *pos, double pull, double eps)
 {
@@ -52,12 +52,15 @@ static void	player_snap_for_move(t_game *g, double dx, double dy)
 
 void	play_death(t_game *game, t_point coord)
 {
-	int i = 0;
-	while(i < 12)
-	{
-		render_sprite_into_framebuffer(game, coord, &game->player.frames.death[i]);
+	int	i;
 
-			mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr, game->win.frame_buffer.img_ptr, 0, 0);
+	i = 0;
+	while (i < 12)
+	{
+		render_sprite_into_framebuffer(game, coord,
+			&game->player.frames.death[i]);
+		mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr,
+			game->win.frame_buffer.img_ptr, 0, 0);
 		usleep(pow(10, 5));
 		i++;
 	}
@@ -66,6 +69,8 @@ void	play_death(t_game *game, t_point coord)
 
 static void	apply_player_movement(t_game *g, double dx, double dy)
 {
+	int	slayer;
+
 	if (g->mode == MODE_PACMAN)
 		player_snap_for_move(g, dx, dy);
 	player_collision(g);
@@ -75,10 +80,9 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
 		g->player.pos.tile_pos.x += dx;
 		g->player.pos.tile_pos.y += dy;
 	}
-	int slayer;
-	if((slayer = player_touched_ghost(g)))
+	if ((slayer = player_touched_ghost(g)))
 	{
-		if(g->ghosts[slayer - 1].state == FRIGHTENED)
+		if (g->ghosts[slayer - 1].state == FRIGHTENED)
 		{
 			// usleep(2 * 1e5);
 			g->ghosts[slayer - 1].state = EATEN;
@@ -87,18 +91,19 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
 		{
 			// ft_printf("You got touhced");
 			usleep(10000);
-			if(!g->debug_mode)
+			if (!g->debug_mode)
 			{
 				g->player.lives--;
-				if(g->player.lives <= 0)
+				if (g->player.lives <= 0)
 					exit_game(EXIT_FAILURE, g, "You are dead");
-				play_death(g, (t_point){.x = g->player.pos.pixel_pos.x, .y = g->player.pos.pixel_pos.y});
+				play_death(g, (t_point){.x = g->player.pos.pixel_pos.x,
+					.y = g->player.pos.pixel_pos.y});
 				reset_game(g, 1);
 			}
-		// if(g->debug_mode)
-		}// 	change_pallete((t_point){.x = -2, .y = -1}, &g->player.frames);
+			// if(g->debug_mode)
+		} // 	change_pallete((t_point){.x = -2, .y = -1}, &g->player.frames);
 	}
-	if(g->player.collected_dots >= g->pacdot_count + g->energizer_count)
+	if (g->player.collected_dots >= g->pacdot_count + g->energizer_count)
 		reset_game(g, 0);
 	// else if(g->player.frames.left->coord.x != )
 	// 	change_pallete((t_point){.x = 2, .y = 1}, &g->player.frames);
@@ -234,7 +239,9 @@ void	player_controller(t_game *g)
 		if (g->key.a || g->key.left)
 			player_move(g, 1);
 		update_player_direction(g, 1);
-		apply_player_movement(g, (g->player.target_dir.x * PLAYER_SPEED),
-			g->player.target_dir.y * PLAYER_SPEED);
+		apply_player_movement(g, (g->player.target_dir.x * (PLAYER_SPEED
+					* (double)g->player.speed_multiplier / 100)),
+			g->player.target_dir.y * (PLAYER_SPEED
+				* (double)g->player.speed_multiplier / 100));
 	}
 }

@@ -74,7 +74,7 @@ void	render_sprite_into_framebuffer(t_game *game, t_point coord,
 	}
 }
 
-t_double_point	continue_travel(t_ghost ghost, int invalid_dir)
+t_double_point	continue_travel(t_ghost *ghost, int invalid_dir)
 {
 	int	dir;
 	int runnning;
@@ -87,17 +87,23 @@ t_double_point	continue_travel(t_ghost ghost, int invalid_dir)
 		{0, 1}   // 3 = right
 	};
 	runnning = 0;
-	if (ghost.state == EATEN)
+	if (ghost->state == EATEN)
 		runnning = 100;
-	ghost.speed_accumulador += ghost.speed_multiplier + runnning;
-	if (ghost.speed_accumulador >= 100)
-		ghost.speed_accumulador -= 100;
-	if (ghost.speed_accumulador > 1)
-		return ((t_double_point){.x = (ghost.pos.pixel_pos.x
-				+ (direction[dir][1])), .y = (ghost.pos.pixel_pos.y
+	
+	if(ghost->state == FRIGHTENED)
+		ghost->speed_accumulador += ghost->speed_frightened;
+	else
+		ghost->speed_accumulador += ghost->speed_multiplier + runnning;
+	// if (ghost->speed_accumulador >= 100)
+	if (ghost->speed_accumulador > 100)
+	{
+		ghost->speed_accumulador -= 100;
+		return ((t_double_point){.x = (ghost->pos.pixel_pos.x
+				+ (direction[dir][1])), .y = (ghost->pos.pixel_pos.y
 				+ (direction[dir][0]))});
-	return ((t_double_point){.x = (ghost.pos.pixel_pos.x),
-		.y = (ghost.pos.pixel_pos.y)});
+	}
+	return ((t_double_point){.x = (ghost->pos.pixel_pos.x),
+		.y = (ghost->pos.pixel_pos.y)});
 }
 
 int	distance_to_target(t_ghost *ghost, int dy, int dx)
@@ -152,6 +158,8 @@ void	ghost_move_pixel(t_ghost *gh, int dx, int dy)
 // 	return 0;
 // }
 
+
+
 int	chose_next_move(t_ghost *ghost, char **map)
 {
 	int		i;
@@ -172,41 +180,37 @@ int	chose_next_move(t_ghost *ghost, char **map)
 	if (!map)
 		return (-1);
 	target = ghost->target_tile;
+	if (ghost->state == FRIGHTENED)
+	{
+		int rng_num = rand() % 8192;
+		if(rng_num < 1338)
+			best_dir =  0;
+		else if(rng_num < 3402)
+			best_dir = 3;
+		else if (rng_num < 5740)
+			best_dir = 2;
+		else if(rng_num < 8192)
+			best_dir = 1;
+		int tries = 0;
+		while(tries < 4)
+		{
+			if ((map[ghost->pos.pixel_pos.y / TILE_SIZE
+				+ direction[best_dir][0]][ghost->pos.pixel_pos.x / TILE_SIZE
+				+ direction[best_dir][1]] != '1' && map[ghost->pos.pixel_pos.y
+				/ TILE_SIZE + direction[best_dir][0]][ghost->pos.pixel_pos.x
+				/ TILE_SIZE + direction[best_dir][1]] != 'G')
+			&& best_dir != ghost->invalid_dir)
+			{
+				ghost_move_pixel(ghost, direction[best_dir][1], direction [best_dir][0]);
+				return((best_dir + 2) % 4); 
+			}
+			best_dir = (best_dir  + 3) % 4;
+			tries++;
+		}
+	}
 	while (i < 4)
 	{
-// 	if (ghost->state == FRIGHTENED)
-// {
-// 	// double weight[4] = {16.3, 29.9, 28.5, 25.2}; // adjust freely
-// 	// int start = get_weighted_direction(weight);
-// 	// int j = 0;
-// 	//
-// 	// while (j < 4)
-// 	// {
-// 	// 	int g = (start + j) % 4;
-// 	//
-// 	// 	int ny = ghost->pos.pixel_pos.y / TILE_SIZE + direction[g][0];
-// 	// 	int nx = ghost->pos.pixel_pos.x / TILE_SIZE + direction[g][1];
-// 	//
-// 	// 	if ((map[ny][nx] != '1' && map[ny][nx] != 'G')
-// 	// 		&& g != ghost->invalid_dir)
-// 	// 	{
-// 	// 		ghost_move_pixel(ghost,
-// 	// 			direction[g][1],
-// 	// 			direction[g][0]);
-// 	// 		return ((g + 2) % 4);
-// 	// 	}
-// 	// 	j++;
-// 	// }
-// 		int rng_num = rand() % 8192;
-// 		if(rng_num < 1338)
-// 				best_dir =  ;
-// 		if(rng_num < 3402)
-// 				return right;
-// 		if (rng_num < 5740)
-// 			return down;
-// 		if(rng_num < 8192)
-// 				return left;
-// }
+
 		if ((map[ghost->pos.pixel_pos.y / TILE_SIZE
 				+ direction[i][0]][ghost->pos.pixel_pos.x / TILE_SIZE
 				+ direction[i][1]] != '1' && map[ghost->pos.pixel_pos.y
@@ -439,7 +443,7 @@ int	ghost_penhouse_dance(t_game *game, t_ghost *ghost, t_point gate)
 		ghost->invalid_dir = 0;
 	else if (y >= bottom_px)
 		ghost->invalid_dir = 2;
-	next = continue_travel(*ghost, ghost->invalid_dir);
+	next = continue_travel(ghost, ghost->invalid_dir);
 	ghost_set_pixel_pos(ghost, next.x, next.y);
 	return (0);
 }
@@ -474,7 +478,7 @@ int	update_ghost(t_game *game, t_ghost *ghost)
 		|| ghost->pos.pixel_pos.y % TILE_SIZE != TILE_SIZE / 2)
 	{
 		update_target(game, ghost, 0);
-		next = continue_travel(*ghost, ghost->invalid_dir);
+		next = continue_travel(ghost, ghost->invalid_dir);
 		ghost_set_pixel_pos(ghost, next.x, next.y);
 		return (0);
 		// continua o movimento atual do ghost
