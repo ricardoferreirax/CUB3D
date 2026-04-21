@@ -98,6 +98,8 @@ typedef struct s_image
 	int				l_len;
 	int				endian;
 	void			*img_ptr;
+	unsigned int *data;
+	int stride;
 }					t_image;
 
 typedef struct s_fc
