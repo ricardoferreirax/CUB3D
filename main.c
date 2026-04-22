@@ -150,18 +150,45 @@ void	switch_mode_and_parse(t_game *g, t_mode mode, const char *path)
 	g->mode = mode;
 }
 
+bool wrong_args(t_game *game, int ac, char **argv)
+{
+	return true;
+	if(ac > 4 || ac == 1)
+		return true;
+	if(ac >= 3)
+	{
+		game->debug_mode = false;
+		if(ft_strcmp(argv[2], "debug_mode=y") == 0)
+			game->debug_mode = true;
+		else if(ac == 4 && ft_strcmp(argv[2], "debug_mode=y") == 0	)
+			game->debug_mode = true;
+		else
+			return true;
+		if(ft_atoi(argv[2]) != 0)
+			game->controller_fd = open(ft_strjoin("/dev/input/event", argv[2]), O_RDONLY | O_NONBLOCK);
+		else if(ac == 4 && ft_atoi(argv[3]) != 0)
+			game->controller_fd = open(ft_strjoin("/dev/input/event", argv[3]), O_RDONLY | O_NONBLOCK);
+		else
+			return true;
+		if(game->controller_fd < 1)
+			return true;
+	}
+	return false;
+}
 
 int	main(int ac, char **av)
 {
 	t_game	*game;
 
 	(void)av;
-	if ((ac > 3 || ac == 1) || (ac == 3 && (ft_strcmp(av[2],
+	if ((ac > 4 || ac == 1) || (ac == 3 && (ft_strcmp(av[2],
 					"debug_mode=y") != 0)))
 		return (ft_printf("Wrong args\n"), -1);
 	game = ft_calloc(sizeof(t_game), 1);
 	if (!game)
 		exit_game(EXIT_MALLOC, NULL, "main() failed to allocate game");
+	if(wrong_args(game, ac, av))
+		exit_game(EXIT_FAILURE, game, "Wrong Args");
 	game->debug_mode = false;
 	if (ac == 3)
 		game->debug_mode = true;

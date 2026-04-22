@@ -158,7 +158,7 @@ void	init(t_game *g, char *path)
 	init_minilib(g);
 	init_map(g, path);
 	print_2d(g->map.grid);
-	g->controller_fd = open("/dev/input/event29", O_RDONLY | O_NONBLOCK);
+	// g->controller_fd = open("/dev/input/event29", O_RDONLY | O_NONBLOCK);
 	init_execution(g);
 	init_menu(g);
 	ft_printf("Loaded %d sprites\n", init_spritesheet(g));
