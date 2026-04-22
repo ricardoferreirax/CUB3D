@@ -392,6 +392,7 @@ typedef struct s_interest_points
 {
 	t_point ghost_house;
 	t_point scatter_target[4];
+	t_point player_spawn;
 } t_target_points;
 
 typedef struct s_game

@@ -1,0 +1,588 @@
+diff --git a/Pac_Struct.h b/Pac_Struct.h
+index 60d2b2b..392f310 100644
+--- a/Pac_Struct.h
++++ b/Pac_Struct.h
+@@ -98,6 +98,8 @@ typedef struct s_image
+ 	int				l_len;
+ 	int				endian;
+ 	void			*img_ptr;
++	unsigned int *data;
++	int stride;
+ }					t_image;
+ 
+ typedef struct s_fc
+diff --git a/cub3d b/cub3d
+index 6a7d1bc..a9d2b6a 100755
+Binary files a/cub3d and b/cub3d differ
+diff --git a/main.c b/main.c
+index fb86693..c9f837f 100644
+--- a/main.c
++++ b/main.c
+@@ -46,6 +46,9 @@ void	segfault_func(t_game *game)
+ 	free_game(game);
+ 	arr = NULL;
+ 	i = 0;
++	ft_printf("You acctually managed to reach level 256?\n");
++	ft_printf("You probably cheated to get here, no one would play this for that long\n");
++	ft_printf("Anyways, I hope you know that this is the kill screen so here's your award\n");
+ 	while (1 && i++)
+ 		arr[i] = arr[i + i];
+ }
+diff --git a/perf.data b/perf.data
+index 983c5d8..9110a84 100644
+Binary files a/perf.data and b/perf.data differ
+diff --git a/perf.data.old b/perf.data.old
+index 2b700d2..050ba2b 100644
+Binary files a/perf.data.old and b/perf.data.old differ
+diff --git a/srcs/init/init.c b/srcs/init/init.c
+index c83aed2..cb91947 100644
+--- a/srcs/init/init.c
++++ b/srcs/init/init.c
+@@ -119,7 +119,7 @@ static void	init_defaults(t_game *g)
+ 	g->gate_passable = 0;
+ 	g->level = 1;
+ 	g->controller_fd = -1;
+-
++	g->timer.mode_timer = 20.0;
+ }
+ 
+ void	init_execution(t_game *g)
+diff --git a/srcs/init/init_ghosts.c b/srcs/init/init_ghosts.c
+index 423dd3a..cba03a7 100644
+--- a/srcs/init/init_ghosts.c
++++ b/srcs/init/init_ghosts.c
+@@ -145,8 +145,15 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char, int is_death
+ 	gh->pos.pixel_pos.y = spawn_point.y * TILE_SIZE + TILE_SIZE / 2; // converte o spawn tile para pixels e centra o fanstasma no tile no eixo y
+ 	gh->invalid_dir = -1;
+ 	gh->target_tile = target_point;
++	gh->state = SCATTER;
+ 	if(is_death)
+ 		return 0;
++	if(gh->name == PINKY)
++		gh->dot_counter = 7;
++	if(gh->name == INKY)
++		gh->dot_counter = 17;
++	if(gh->name == CLYDE)
++		gh->dot_counter = 32;
+ 	ghost_sprites(g, gh->name);
+ 	ghost_color(gh);
+ 	return 0;
+diff --git a/srcs/player/player3D.h b/srcs/player/player3D.h
+index 526e579..091ec70 100644
+--- a/srcs/player/player3D.h
++++ b/srcs/player/player3D.h
+@@ -15,7 +15,7 @@
+ #ifndef PLAYER3D_H
+ # define PLAYER3D_H
+ 
+-# define PLAYER_SPEED 0.12
++# define PLAYER_SPEED 0.15
+ # define ROT_SPEED 0.06
+ # define PLAYER_RADIUS 0.18
+ 
+diff --git a/srcs/player/player_controller.c b/srcs/player/player_controller.c
+index c5efb28..16e555e 100644
+--- a/srcs/player/player_controller.c
++++ b/srcs/player/player_controller.c
+@@ -11,8 +11,8 @@
+ /* ************************************************************************** */
+ 
+ #include "../../Pac_Struct.h"
+-#include "player3D.h"
+ #include "../../srcs/render/render3D.h"
++#include "player3D.h"
+ 
+ static void	player_snap_axis(double *pos, double pull, double eps)
+ {
+@@ -52,12 +52,15 @@ static void	player_snap_for_move(t_game *g, double dx, double dy)
+ 
+ void	play_death(t_game *game, t_point coord)
+ {
+-	int i = 0;
+-	while(i < 12)
+-	{
+-		render_sprite_into_framebuffer(game, coord, &game->player.frames.death[i]);
++	int	i;
+ 
+-			mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr, game->win.frame_buffer.img_ptr, 0, 0);
++	i = 0;
++	while (i < 12)
++	{
++		render_sprite_into_framebuffer(game, coord,
++			&game->player.frames.death[i]);
++		mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr,
++			game->win.frame_buffer.img_ptr, 0, 0);
+ 		usleep(pow(10, 5));
+ 		i++;
+ 	}
+@@ -66,6 +69,8 @@ void	play_death(t_game *game, t_point coord)
+ 
+ static void	apply_player_movement(t_game *g, double dx, double dy)
+ {
++	int	slayer;
++
+ 	if (g->mode == MODE_PACMAN)
+ 		player_snap_for_move(g, dx, dy);
+ 	player_collision(g);
+@@ -75,10 +80,9 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
+ 		g->player.pos.tile_pos.x += dx;
+ 		g->player.pos.tile_pos.y += dy;
+ 	}
+-	int slayer;
+-	if((slayer = player_touched_ghost(g)))
++	if ((slayer = player_touched_ghost(g)))
+ 	{
+-		if(g->ghosts[slayer - 1].state == FRIGHTENED)
++		if (g->ghosts[slayer - 1].state == FRIGHTENED)
+ 		{
+ 			// usleep(2 * 1e5);
+ 			g->ghosts[slayer - 1].state = EATEN;
+@@ -87,18 +91,19 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
+ 		{
+ 			// ft_printf("You got touhced");
+ 			usleep(10000);
+-			if(!g->debug_mode)
++			if (!g->debug_mode)
+ 			{
+ 				g->player.lives--;
+-				if(g->player.lives <= 0)
++				if (g->player.lives <= 0)
+ 					exit_game(EXIT_FAILURE, g, "You are dead");
+-				play_death(g, (t_point){.x = g->player.pos.pixel_pos.x, .y = g->player.pos.pixel_pos.y});
++				play_death(g, (t_point){.x = g->player.pos.pixel_pos.x,
++					.y = g->player.pos.pixel_pos.y});
+ 				reset_game(g, 1);
+ 			}
+-		// if(g->debug_mode)
+-		}// 	change_pallete((t_point){.x = -2, .y = -1}, &g->player.frames);
++			// if(g->debug_mode)
++		} // 	change_pallete((t_point){.x = -2, .y = -1}, &g->player.frames);
+ 	}
+-	if(g->player.collected_dots >= g->pacdot_count + g->energizer_count)
++	if (g->player.collected_dots >= g->pacdot_count + g->energizer_count)
+ 		reset_game(g, 0);
+ 	// else if(g->player.frames.left->coord.x != )
+ 	// 	change_pallete((t_point){.x = 2, .y = 1}, &g->player.frames);
+@@ -234,7 +239,9 @@ void	player_controller(t_game *g)
+ 		if (g->key.a || g->key.left)
+ 			player_move(g, 1);
+ 		update_player_direction(g, 1);
+-		apply_player_movement(g, (g->player.target_dir.x * PLAYER_SPEED),
+-			g->player.target_dir.y * PLAYER_SPEED);
++		apply_player_movement(g, (g->player.target_dir.x * (PLAYER_SPEED
++					* (double)g->player.speed_multiplier / 100)),
++			g->player.target_dir.y * (PLAYER_SPEED
++				* (double)g->player.speed_multiplier / 100));
+ 	}
+ }
+diff --git a/srcs/render/render_floor_ceiling.c b/srcs/render/render_floor_ceiling.c
+index 8a332e7..4017d4b 100644
+--- a/srcs/render/render_floor_ceiling.c
++++ b/srcs/render/render_floor_ceiling.c
+@@ -15,45 +15,73 @@
+ 
+ static void	set_plane(t_game *g, t_fc *plane, double dist)
+ {
+-	double	left_x; // componente x do vetor direção do raio que passa pelo canto esquerdo da tela
+-	double	left_y; // componente y do vetor direção do raio que passa pelo canto esquerdo da tela
+-
+-	left_x = g->player.dir.x - g->player.plane.x; // direção do raio para o canto esquerdo da tela no eixo x
+-	left_y = g->player.dir.y - g->player.plane.y; // direção do raio para o canto esquerdo da tela no eixo y
+-	plane->step_x = dist * (2.0 * g->player.plane.x) / g->win.width; // avanço no eixo x no mundo para cada pixel da linha
+-	plane->step_y = dist * (2.0 * g->player.plane.y) / g->win.width;  // avanço no eixo y no mundopara cada pixel da linha
+-	plane->pos_x = g->player.pos.tile_pos.x + dist * left_x; // posição inicial x no mundo para a linha atual - o primeiro pixel da linha
+-	plane->pos_y = g->player.pos.tile_pos.y + dist * left_y; // posição inicial y no mundo para a linha atual - o primeiro pixel da linha 
++	double left_x;
++		// componente x do vetor direção do raio que passa pelo canto esquerdo da tela
++	double left_y;
++		// componente y do vetor direção do raio que passa pelo canto esquerdo da tela
++	left_x = g->player.dir.x - g->player.plane.x;                   
++		// direção do raio para o canto esquerdo da tela no eixo x
++	left_y = g->player.dir.y - g->player.plane.y;                   
++		// direção do raio para o canto esquerdo da tela no eixo y
++	plane->step_x = dist * (2.0 * g->player.plane.x) / g->win.width;
++		// avanço no eixo x no mundo para cada pixel da linha
++	plane->step_y = dist * (2.0 * g->player.plane.y) / g->win.width;
++		// avanço no eixo y no mundopara cada pixel da linha
++	plane->pos_x = g->player.pos.tile_pos.x + dist * left_x;        
++	plane->pos_y = g->player.pos.tile_pos.y + dist * left_y;        
+ }
+ 
+ static void	draw_plane_row(t_game *g, t_fc *plane, t_image *tex, int row)
+ {
+-	unsigned int	*pixels; // linha atual do frame buffer onde os pixels vão ser escritos
+-	int				col; // coluna atual do frame buffer no ecrã onde o pixel vai ser desenhado
+-	int				tex_x; // coordenada x da textura correspondente ao pixel atual da linha a ser desenhada
+-	int				tex_y; // coordenada y da textura correspondente ao pixel atual da linha a ser desenhada
+-
+-	pixels = (unsigned int *)(g->win.frame_buffer.img_addr + row 
+-		* g->win.frame_buffer.l_len); // calcula o endereço do início da linha row atual no frame buffer para a escrita dos pixels
+-	col = 0; // começa a desenhar na primeira coluna da linha
+-	while (col < g->win.width) // percorre todas as colunas da linha atual
++	unsigned int *pixels;
++	int col;
++	int tex_x;
++	int tex_y;
++	pixels = (unsigned int *)(g->win.frame_buffer.img_addr + row
++			* g->win.frame_buffer.l_len);
++	col = 0;
++	tex->data = (unsigned int *)tex->img_addr;
++	// while (col < g->win.width) // percorre todas as colunas da linha atual
++	// {
++	// 	tex_x = (int)(plane->pos_x * tex->width) % tex->width;
++	// 	tex_y = (int)(plane->pos_y * tex->height) % tex->height;
++	// 	pixels[col] = tex_pixel(tex, tex_x, tex_y);
++	// 	plane->pos_x += plane->step_x;
++	// 	plane->pos_y += plane->step_y;
++	// 	col++; // passa para a próxima coluna da linha
++	// }
++	int stride = tex->l_len / 4;
++	if (!tex->img_addr)
+ 	{
+-		tex_x = (int)(plane->pos_x * tex->width) % tex->width;
+-		tex_y = (int)(plane->pos_y * tex->height) % tex->height;
+-		pixels[col] = tex_pixel(tex, tex_x, tex_y); // copia o pixel da textura para o frame buffer na posição correspondente à coluna atual da linha
+-		plane->pos_x += plane->step_x; // avança a posição x no mundo do plano para o próximo pixel da linha
+-		plane->pos_y += plane->step_y; // avança a posição y no mundo do plano para o próximo pixel da linha
+-		col++; // passa para a próxima coluna da linha
++		while (col < g->win.width)
++		{
++			pixels[col] = 128;
++			col++;
++		}
++	}
++	else
++	{
++		while (col < g->win.width)
++		{
++			tex_x = (int)(plane->pos_x * tex->width) % tex->width;
++			tex_y = (int)(plane->pos_y * tex->height) % tex->height;
++			pixels[col] = tex->data[tex_y * stride + tex_x];
++			plane->pos_x += plane->step_x;
++			plane->pos_y += plane->step_y;
++			col++;
++		}
+ 	}
+ }
+ 
+ void	render_floor_texture(t_game *g)
+ {
+-	t_fc	plane; // guarda os dados da linha atual do floor
+-	int		row; // linha atual do frame buffer no ecrã onde os pixels do chão vão ser desenhados
+-	double	dist; // distância perpendicular do player ao plano do chão para a linha atual do chão a ser desenhada
+-	double	screen_dist; // distância vertical da linha atual do chão ao centro da tela
+-
++	t_fc plane;         // guarda os dados da linha atual do floor
++	int row;           
++		// linha atual do frame buffer no ecrã onde os pixels do chão vão ser desenhados
++	double dist;       
++		// distância perpendicular do player ao plano do chão para a linha atual do chão a ser desenhada
++	double screen_dist;
++		// distância vertical da linha atual do chão ao centro da tela
+ 	if (!g || !g->win.frame_buffer.img_addr)
+ 		return ;
+ 	if (!g->tex.floor_img.img_ptr)
+@@ -61,16 +89,24 @@ void	render_floor_texture(t_game *g)
+ 		fill_floor_color(&g->win.frame_buffer, g->map.floor_color, 0);
+ 		return ;
+ 	}
+-	row = g->win.height / 2 + FLOOR_START_OFFSET; // começa a desenhar o floor a partir do centro da tela
+-	while (row < g->win.height) // percorre todas as linhas do floor até ao final/fundo da tela
++	row = g->win.height / 2 + FLOOR_START_OFFSET;
++		// começa a desenhar o floor a partir do centro da tela
++	while (row < g->win.height)                  
++		// percorre todas as linhas do floor até ao final/fundo da tela
+ 	{
+-		screen_dist = row - g->win.height * 0.5; // calcula a distância vertical da linha atual do chão ao centro da tela
+-		if (screen_dist < FLOOR_MIN_DIST) // evita valores demasiado pequenos
++		screen_dist = row - g->win.height * 0.5;
++			// calcula a distância vertical da linha atual do chão ao centro da tela
++		if (screen_dist < FLOOR_MIN_DIST)       
++			// evita valores demasiado pequenos
+ 			screen_dist = FLOOR_MIN_DIST;
+-		dist = (g->win.height * 0.5) / screen_dist; // converte a distância na tela para a distancia perpendicular no mundo 
+-		set_plane(g, &plane, dist); // prepara a posição inicial e os steps da linha atual do chão a ser desenhada
+-		draw_plane_row(g, &plane, &g->tex.floor_img, row); // desenha a linha atual do chão com a textura do chão
+-		row++; // passa para a próxima linha do chão a ser desenhada
++		dist = (g->win.height * 0.5) / screen_dist;       
++			// converte a distância na tela para a distancia perpendicular no mundo
++		set_plane(g, &plane, dist);                       
++			// prepara a posição inicial e os steps da linha atual do chão a ser desenhada
++		draw_plane_row(g, &plane, &g->tex.floor_img, row);
++			// desenha a linha atual do chão com a textura do chão
++		row++;                                            
++			// passa para a próxima linha do chão a ser desenhada
+ 	}
+ }
+ 
+diff --git a/srcs/render/render_frame.c b/srcs/render/render_frame.c
+index 0c12003..0b34862 100644
+--- a/srcs/render/render_frame.c
++++ b/srcs/render/render_frame.c
+@@ -74,7 +74,7 @@ void	render_sprite_into_framebuffer(t_game *game, t_point coord,
+ 	}
+ }
+ 
+-t_double_point	continue_travel(t_ghost ghost, int invalid_dir)
++t_double_point	continue_travel(t_ghost *ghost, int invalid_dir)
+ {
+ 	int	dir;
+ 	int runnning;
+@@ -87,17 +87,23 @@ t_double_point	continue_travel(t_ghost ghost, int invalid_dir)
+ 		{0, 1}   // 3 = right
+ 	};
+ 	runnning = 0;
+-	if (ghost.state == EATEN)
++	if (ghost->state == EATEN)
+ 		runnning = 100;
+-	ghost.speed_accumulador += ghost.speed_multiplier + runnning;
+-	if (ghost.speed_accumulador >= 100)
+-		ghost.speed_accumulador -= 100;
+-	if (ghost.speed_accumulador > 1)
+-		return ((t_double_point){.x = (ghost.pos.pixel_pos.x
+-				+ (direction[dir][1])), .y = (ghost.pos.pixel_pos.y
++	
++	if(ghost->state == FRIGHTENED)
++		ghost->speed_accumulador += ghost->speed_frightened;
++	else
++		ghost->speed_accumulador += ghost->speed_multiplier + runnning;
++	// if (ghost->speed_accumulador >= 100)
++	if (ghost->speed_accumulador > 100)
++	{
++		ghost->speed_accumulador -= 100;
++		return ((t_double_point){.x = (ghost->pos.pixel_pos.x
++				+ (direction[dir][1])), .y = (ghost->pos.pixel_pos.y
+ 				+ (direction[dir][0]))});
+-	return ((t_double_point){.x = (ghost.pos.pixel_pos.x),
+-		.y = (ghost.pos.pixel_pos.y)});
++	}
++	return ((t_double_point){.x = (ghost->pos.pixel_pos.x),
++		.y = (ghost->pos.pixel_pos.y)});
+ }
+ 
+ int	distance_to_target(t_ghost *ghost, int dy, int dx)
+@@ -131,6 +137,29 @@ void	ghost_move_pixel(t_ghost *gh, int dx, int dy)
+ 	// converte a posição y do ghost de pixels para tiles
+ }
+ 
++// int	get_weighted_direction(double *weight)
++// {
++// 	int total = 0;
++// 	int i = 0;
++//
++// 	while (i < 4)
++// 		total += weight[i++];
++//
++// 	int r = rand() % total;
++//
++// 	i = 0;
++// 	while (i < 4)
++// 	{
++// 		if (r < weight[i])
++// 			return i;
++// 		r -= weight[i];
++// 		i++;
++// 	}
++// 	return 0;
++// }
++
++
++
+ int	chose_next_move(t_ghost *ghost, char **map)
+ {
+ 	int		i;
+@@ -151,8 +180,37 @@ int	chose_next_move(t_ghost *ghost, char **map)
+ 	if (!map)
+ 		return (-1);
+ 	target = ghost->target_tile;
++	if (ghost->state == FRIGHTENED)
++	{
++		int rng_num = rand() % 8192;
++		if(rng_num < 1338)
++			best_dir =  0;
++		else if(rng_num < 3402)
++			best_dir = 3;
++		else if (rng_num < 5740)
++			best_dir = 2;
++		else if(rng_num < 8192)
++			best_dir = 1;
++		int tries = 0;
++		while(tries < 4)
++		{
++			if ((map[ghost->pos.pixel_pos.y / TILE_SIZE
++				+ direction[best_dir][0]][ghost->pos.pixel_pos.x / TILE_SIZE
++				+ direction[best_dir][1]] != '1' && map[ghost->pos.pixel_pos.y
++				/ TILE_SIZE + direction[best_dir][0]][ghost->pos.pixel_pos.x
++				/ TILE_SIZE + direction[best_dir][1]] != 'G')
++			&& best_dir != ghost->invalid_dir)
++			{
++				ghost_move_pixel(ghost, direction[best_dir][1], direction [best_dir][0]);
++				return((best_dir + 2) % 4); 
++			}
++			best_dir = (best_dir  + 3) % 4;
++			tries++;
++		}
++	}
+ 	while (i < 4)
+ 	{
++
+ 		if ((map[ghost->pos.pixel_pos.y / TILE_SIZE
+ 				+ direction[i][0]][ghost->pos.pixel_pos.x / TILE_SIZE
+ 				+ direction[i][1]] != '1' && map[ghost->pos.pixel_pos.y
+@@ -385,7 +443,7 @@ int	ghost_penhouse_dance(t_game *game, t_ghost *ghost, t_point gate)
+ 		ghost->invalid_dir = 0;
+ 	else if (y >= bottom_px)
+ 		ghost->invalid_dir = 2;
+-	next = continue_travel(*ghost, ghost->invalid_dir);
++	next = continue_travel(ghost, ghost->invalid_dir);
+ 	ghost_set_pixel_pos(ghost, next.x, next.y);
+ 	return (0);
+ }
+@@ -420,7 +478,7 @@ int	update_ghost(t_game *game, t_ghost *ghost)
+ 		|| ghost->pos.pixel_pos.y % TILE_SIZE != TILE_SIZE / 2)
+ 	{
+ 		update_target(game, ghost, 0);
+-		next = continue_travel(*ghost, ghost->invalid_dir);
++		next = continue_travel(ghost, ghost->invalid_dir);
+ 		ghost_set_pixel_pos(ghost, next.x, next.y);
+ 		return (0);
+ 		// continua o movimento atual do ghost
+@@ -491,6 +549,16 @@ void	render_ghosts_into_framebuffer(t_game *game)
+ 			continue ;
+ 		ghost_wrap_position(game, &game->ghosts[i]);
+ 		update_ghost(game, &game->ghosts[i]);
++		if(get_time_us() - game->timer.mode_time_start > (long)(game->timer.mode_timer) * 1000000.0)
++		{
++		if(game->ghosts[i].state == SCATTER)
++			game->ghosts[i].state = CHASE;
++		else if(game->ghosts[i].state == CHASE)
++			game->ghosts[i].state = SCATTER;
++		game->ghosts[i].invalid_dir = (game->ghosts[i].invalid_dir + 2) % 4;
++		if(i == 3)
++			game->timer.mode_time_start = get_time_us();
++		}
+ 		coord.x = (game->ghosts[i].pos.pixel_pos.x - TILE_SIZE + game->win.width
+ 				/ 2);
+ 		coord.y = (game->ghosts[i].pos.pixel_pos.y - TILE_SIZE
+diff --git a/srcs/render/render_wall_texture.c b/srcs/render/render_wall_texture.c
+index 67b1c2d..0f087c9 100644
+--- a/srcs/render/render_wall_texture.c
++++ b/srcs/render/render_wall_texture.c
+@@ -32,27 +32,80 @@ static int	get_wall_tex_x(t_game *g, t_image *tex)
+ 	return (tex_x);                    // devolve a coluna da textura a usar
+ }
+ 
++// void	render_wall_column(t_game *g, int screen_x)
++// {
++// 	t_image	*wall_tex;     // textura da parede do lado atingido
++// 	int		screen_y;      // linha atual do ecrã onde vai ser desenhado o pixel
++// 	int		tex_x;         // coluna da textura da parede atingida
++// 	double	tex_y_pos;     // posição vertical atual dentro da textura
++//
++// 	if (g->ray.line_h <= 0)    // se a altura da parede for inválida, não desenha nada
++// 		return ;
++// 	wall_tex = texture_pick_wall(g);   // escolhe a textura correta conforme o lado/tile atingido
++// 	tex_x = get_wall_tex_x(g, wall_tex); // calcula a coluna horizontal da textura para esta parede
++// 	tex_y_pos = (g->ray.draw_start - g->win.height / 2.0
++// 			+ g->ray.line_h / 2.0)
++// 		* ((double)wall_tex->height / g->ray.line_h); // calcula a posição inicial vertical na textura
++// 	screen_y = g->ray.draw_start;      // começa a desenhar na primeira linha visível da parede
++// 	while (screen_y <= g->ray.draw_end) // percorre todas as linhas da coluna da parede no ecrã
++// 	{
++// 		put_pixel_fast(&g->win.frame_buffer, screen_x, screen_y,
++// 			(int)tex_pixel(wall_tex, tex_x,
++// 			clamp_int((int)tex_y_pos, 0, wall_tex->height - 1))); // escreve no frame buffer o pixel correspondente da textura
++// 		tex_y_pos += (double)wall_tex->height / g->ray.line_h;   // avança na textura para a próxima linha do ecrã
++// 		screen_y++;                                              // passa para a próxima linha do ecrã
++// 	}
++// }
++
+ void	render_wall_column(t_game *g, int screen_x)
+ {
+-	t_image	*wall_tex;     // textura da parede do lado atingido
+-	int		screen_y;      // linha atual do ecrã onde vai ser desenhado o pixel
+-	int		tex_x;         // coluna da textura da parede atingida
+-	double	tex_y_pos;     // posição vertical atual dentro da textura
+-
+-	if (g->ray.line_h <= 0)    // se a altura da parede for inválida, não desenha nada
+-		return ;
+-	wall_tex = texture_pick_wall(g);   // escolhe a textura correta conforme o lado/tile atingido
+-	tex_x = get_wall_tex_x(g, wall_tex); // calcula a coluna horizontal da textura para esta parede
++	t_image	*wall_tex;
++	int		screen_y;
++	int		tex_x;
++	double	tex_y_pos;
++	int		tex_y;
++	double	step;
++
++	if (g->ray.line_h <= 0)
++		return;
++
++	wall_tex = texture_pick_wall(g);
++	tex_x = get_wall_tex_x(g, wall_tex);
++
+ 	tex_y_pos = (g->ray.draw_start - g->win.height / 2.0
+ 			+ g->ray.line_h / 2.0)
+-		* ((double)wall_tex->height / g->ray.line_h); // calcula a posição inicial vertical na textura
+-	screen_y = g->ray.draw_start;      // começa a desenhar na primeira linha visível da parede
+-	while (screen_y <= g->ray.draw_end) // percorre todas as linhas da coluna da parede no ecrã
++		* ((double)wall_tex->height / g->ray.line_h);
++
++	screen_y = g->ray.draw_start;
++	step = (double)wall_tex->height / g->ray.line_h;
++
++	if (!wall_tex->img_addr)
+ 	{
++		while (screen_y <= g->ray.draw_end)
++		{
++			put_pixel_fast(&g->win.frame_buffer, screen_x, screen_y, 128);
++			screen_y++;
++		}
++		return;
++	}
++
++	unsigned int *data = (unsigned int *)wall_tex->img_addr;
++	int stride = wall_tex->l_len >> 2;
++
++	while (screen_y <= g->ray.draw_end)
++	{
++		tex_y = (int)tex_y_pos;
++
++		// clamp (can also be optimized later)
++		if (tex_y < 0)
++			tex_y = 0;
++		else if (tex_y >= wall_tex->height)
++			tex_y = wall_tex->height - 1;
++
+ 		put_pixel_fast(&g->win.frame_buffer, screen_x, screen_y,
+-			(int)tex_pixel(wall_tex, tex_x,
+-			clamp_int((int)tex_y_pos, 0, wall_tex->height - 1))); // escreve no frame buffer o pixel correspondente da textura
+-		tex_y_pos += (double)wall_tex->height / g->ray.line_h;   // avança na textura para a próxima linha do ecrã
+-		screen_y++;                                              // passa para a próxima linha do ecrã
++			data[tex_y * stride + tex_x]);
++
++		tex_y_pos += step;
++		screen_y++;
+ 	}
+ }
+diff --git a/srcs/textures/texture_pick_wall.c b/srcs/textures/texture_pick_wall.c
+index 7df869f..d2a9af5 100644
+--- a/srcs/textures/texture_pick_wall.c
++++ b/srcs/textures/texture_pick_wall.c
+@@ -15,15 +15,13 @@
+ 
+ unsigned int	tex_pixel(t_image *tex, int x, int y)
+ {
+-	unsigned int	*data;
+ 	int				stride;
+ 
+ 	stride = tex->l_len / 4; // o nr de pixels por linha (l_len é o nr de bytes por linha, dividindo por 4 obtemos o número de pixels)
+ 
+ 	if(!tex->img_addr)
+ 		return 128;
+-	data = (unsigned int *)tex->img_addr; // converte o img_addr para um unsigned int, onde cada int representa a cor de um pixel
+-	return (data[y * stride + x]); // devolve a cor do pixel na posição (x, y) da textura calculando o índice como y * stride + x
++	return (tex->data[y * stride + x]); // devolve a cor do pixel na posição (x, y) da textura calculando o índice como y * stride + x
+ }
+ 
+ t_image	*texture_pick_wall(t_game *g)

@@ -240,8 +240,8 @@ void	player_controller(t_game *g)
 			player_move(g, 1);
 		update_player_direction(g, 1);
 		apply_player_movement(g, (g->player.target_dir.x * (PLAYER_SPEED
-					* (double)g->player.speed_multiplier / 100)),
+					+ 0 * (double)g->player.speed_multiplier / 100)),
 			g->player.target_dir.y * (PLAYER_SPEED
-				* (double)g->player.speed_multiplier / 100));
+				 + 0 * (double)g->player.speed_multiplier / 100));
 	}
 }

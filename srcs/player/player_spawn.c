@@ -139,6 +139,7 @@ void	init_player(t_game *game, int is_death)
 			"init_player() invalid map pointers");
 	spawn_coord = find_player_spawn(game);
 	set_player_spawn(game, spawn_coord.x, spawn_coord.y, game->map.grid[spawn_coord.y][spawn_coord.x]);
+	game->targets.player_spawn = spawn_coord;
 	if(is_death)
 		return;
 	// set_player_spawn(game, spawn_coord.y, spawn_coord.x, game->map.grid[spawn_coord.y][spawn_coord.x]);

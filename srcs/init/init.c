@@ -150,11 +150,6 @@ void	init_map(t_game *g, const char *path)
 	map_validate_chars(g);
 }
 
-// void init_player(t_game *game)
-// {
-// 	game->player.pos.pixel_pos = find_c(game->map.grid, 'E');
-// }
-
 void	init(t_game *g, char *path)
 {
 	if (!g)

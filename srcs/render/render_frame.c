@@ -13,6 +13,9 @@
 #include "../../Pac_Struct.h"
 #include "render3D.h"
 
+#define X_POS 1920 / 2 - 100 
+#define Y_POS 1080 / 2 + 100
+
 void	clear_sprite_z(t_game *g)
 {
 	int	i;
@@ -43,8 +46,8 @@ void	render_base_into_framebuffer(t_game *s)
 		{
 			color = pixel_get(&s->base, x, y);
 			if ((color >> 24) != 0xFF)
-				ft_pixel_put(&s->win.frame_buffer, x + s->win.width / 2, y
-					+ s->win.height / 2, color);
+				ft_pixel_put(&s->win.frame_buffer, x + X_POS, y
+					+ Y_POS, color);
 			x++;
 		}
 		y++;
@@ -158,9 +161,25 @@ void	ghost_move_pixel(t_ghost *gh, int dx, int dy)
 // 	return 0;
 // }
 
+bool cannot_move_up(t_game *game, t_ghost *ghost)
+{
+	int x = ghost->pos.pixel_pos.x / 8;
+	int y = ghost->pos.pixel_pos.y / 8;
+	if(y == game->targets.player_spawn.y)
+	{
+		if(x > game->targets.player_spawn.x - 4 && x < game->targets.player_spawn.x + 4)
+			return true;
+	}
+	if(y == game->targets.ghost_house.y)
+	{
 
+		if(x > game->targets.ghost_house.x - 4 && x < game->targets.ghost_house.x + 4)
+			return true;
+	}
+	return false;
+}
 
-int	chose_next_move(t_ghost *ghost, char **map)
+int	chose_next_move(t_game *game, t_ghost *ghost, char **map)
 {
 	int		i;
 	int		best;
@@ -210,7 +229,6 @@ int	chose_next_move(t_ghost *ghost, char **map)
 	}
 	while (i < 4)
 	{
-
 		if ((map[ghost->pos.pixel_pos.y / TILE_SIZE
 				+ direction[i][0]][ghost->pos.pixel_pos.x / TILE_SIZE
 				+ direction[i][1]] != '1' && map[ghost->pos.pixel_pos.y
@@ -234,6 +252,8 @@ int	chose_next_move(t_ghost *ghost, char **map)
 	}
 	if (best_dir == -1)
 		best_dir = (ghost->invalid_dir + 2) % 4;
+	if (best_dir == 0 && cannot_move_up(game, ghost))
+		return (ghost_move_pixel(ghost, direction[(ghost->invalid_dir + 2) % 4][1], direction[(ghost->invalid_dir + 2) % 4][0]), ghost->invalid_dir);
 	ghost_move_pixel(ghost, direction[best_dir][1], direction[best_dir][0]);
 	return ((best_dir + 2) % 4);
 }
@@ -263,28 +283,6 @@ t_point	pinky_target(t_game *game , int n)
 	t_point target;
 	int px = game->player.pos.tile_pos.x;
 	int py = game->player.pos.tile_pos.y;
-	//
-	// if (game->player.target_dir.x == 1) // RIGHT
-	// {
-	// 	target.x = px + 4;
-	// 	target.y = py;
-	// }
-	// else if (game->player.target_dir.x == -1) // LEFT
-	// {
-	// 	target.x = px - 4;
-	// 	target.y = py;
-	// }
-	// else if (game->player.target_dir.y == 1) // DOWN
-	// {
-	// 	target.x = px;
-	// 	target.y = py + 4;
-	// }
-	// else // UP (bugged behavior)
-	// {
-	// 	target.x = px - 4;
-	// 	target.y = py - 4;
-	// }
-
 	if (game->player.target_dir.x == 1) // RIGHT
 		return ((t_point){px + n, py});
 	else if (game->player.target_dir.x == -1) // LEFT
@@ -379,14 +377,10 @@ int	ghost_in_penhouse(t_ghost *ghost, char **map)
 	if (gate.x < 0 || gate.y < 0) // verifica se o gate foi encontrado
 		return (0);
 	x = ghost->pos.pixel_pos.x / TILE_SIZE;
-		// converte a posição x do ghost de pixeis para de tiles
 	y = ghost->pos.pixel_pos.y / TILE_SIZE;
-		// converte a posição y do ghost de pixeis para de tiles
 	if (x < gate.x - 2 || x > gate.x + 3)  
-		// verifica se o ghost está fora da largura da penhouse
 		return (0);
 	if (y < gate.y || y > gate.y + 3)
-		// verifica se o ghost já passou em cima do gate
 		return (0);                   // se passou, então saiu da penhouse
 	return (1);                       // está dentro da penhouse
 }
@@ -444,6 +438,7 @@ int	ghost_penhouse_dance(t_game *game, t_ghost *ghost, t_point gate)
 	else if (y >= bottom_px)
 		ghost->invalid_dir = 2;
 	next = continue_travel(ghost, ghost->invalid_dir);
+
 	ghost_set_pixel_pos(ghost, next.x, next.y);
 	return (0);
 }
@@ -483,7 +478,7 @@ int	update_ghost(t_game *game, t_ghost *ghost)
 		return (0);
 		// continua o movimento atual do ghost
 	}
-	ghost->invalid_dir = chose_next_move(ghost, ghost->mental_map);
+	ghost->invalid_dir = chose_next_move(game, ghost, ghost->mental_map);
 	if (ghost->invalid_dir == -1)
 		return (-1);
 	return (0);
@@ -559,10 +554,9 @@ void	render_ghosts_into_framebuffer(t_game *game)
 		if(i == 3)
 			game->timer.mode_time_start = get_time_us();
 		}
-		coord.x = (game->ghosts[i].pos.pixel_pos.x - TILE_SIZE + game->win.width
-				/ 2);
+		coord.x = (game->ghosts[i].pos.pixel_pos.x - TILE_SIZE + X_POS);
 		coord.y = (game->ghosts[i].pos.pixel_pos.y - TILE_SIZE
-				+ game->win.height / 2);
+				+ Y_POS);
 		render_ghost_into_framebuffer(game, coord, &game->ghosts[i]);
 	}
 }
@@ -592,9 +586,9 @@ void	render_player_into_framebuffer(t_game *game)
 	t_point	coord;
 
 	coord.x = (((game->player.pos.tile_pos.x - 0.5) * TILE_SIZE)
-			+ game->win.width / 2) - 3;
+			+ X_POS) - 3;
 	coord.y = (((game->player.pos.tile_pos.y - 0.5) * TILE_SIZE)
-			+ game->win.height / 2) - 3;
+			+ Y_POS) - 3;
 	game->player.pos.pixel_pos.x = coord.x;
 	game->player.pos.pixel_pos.y = coord.y;
 	render_player(game, coord);
@@ -610,8 +604,8 @@ void	render_pacdots_into_framebuffer(t_game *game)
 		if (game->pacdots[i].active)
 			render_sprite_into_framebuffer(game,
 				(t_point){.y = game->pacdots[i].pos.pixel_pos.y
-				+ game->win.height / 2, .x = game->pacdots[i].pos.pixel_pos.x
-				+ game->win.width / 2}, &game->sprite_sheet.sprites[37]);
+				+ Y_POS, .x = game->pacdots[i].pos.pixel_pos.x
+				+ X_POS}, &game->sprite_sheet.sprites[37]);
 		i++;
 	}
 }
@@ -626,8 +620,8 @@ void	render_energizers_into_framebuffer(t_game *game)
 		if (game->energizers[i].active)
 			render_sprite_into_framebuffer(game,
 				(t_point){.y = game->energizers[i].pos.pixel_pos.y
-				+ game->win.height / 2, .x = game->energizers[i].pos.pixel_pos.x
-				+ game->win.width / 2}, &game->sprite_sheet.sprites[81]);
+				+ Y_POS, .x = game->energizers[i].pos.pixel_pos.x
+				+ X_POS}, &game->sprite_sheet.sprites[81]);
 		i++;
 	}
 }
@@ -641,13 +635,13 @@ void render_targets(t_game *game)
 	target_tile = game->sprite_sheet.sprites[253];
 	int i = 0;
 	pivot_coord = pinky_target(game, 2);
-	pivot_coord.x = (pivot_coord.x * 8) + game->win.width / 2;
-	pivot_coord.y = (pivot_coord.y * 8) + game->win.height / 2;
+	pivot_coord.x = (pivot_coord.x * 8) + X_POS;
+	pivot_coord.y = (pivot_coord.y * 8) + Y_POS;
 	render_sprite_into_framebuffer(game, pivot_coord, &game->sprite_sheet.sprites[81]);
 	while(i < 4)
 	{
-		coord.x = ((game->ghosts[i].target_tile.x * 8) + game->win.width / 2);
-		coord.y = ((game->ghosts[i].target_tile.y * 8) + game->win.height / 2);
+		coord.x = ((game->ghosts[i].target_tile.x * 8) + X_POS);
+		coord.y = ((game->ghosts[i].target_tile.y * 8) + Y_POS);
 
 		render_sprite_into_framebuffer(game, coord, &target_tile);
 		target_tile.coord.x += 200;

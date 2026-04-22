@@ -15,7 +15,7 @@
 #ifndef PLAYER3D_H
 # define PLAYER3D_H
 
-# define PLAYER_SPEED 0.15
+# define PLAYER_SPEED 0.12
 # define ROT_SPEED 0.06
 # define PLAYER_RADIUS 0.18
 

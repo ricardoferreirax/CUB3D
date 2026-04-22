@@ -77,7 +77,7 @@ SRC_FILES = main.c \
 	srcs/hooks/handle_gate_toggle.c \
 	srcs/hooks/handle_mouse.c \
 	utils/free.c  \
-	rendering/pixels.c \
+	srcs/rendering/pixels.c \
 
 OBJ_DIR   = objs
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))

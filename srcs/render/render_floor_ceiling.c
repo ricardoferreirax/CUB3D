@@ -40,11 +40,10 @@ static void	draw_plane_row(t_game *g, t_fc *plane, t_image *tex, int row)
 	pixels = (unsigned int *)(g->win.frame_buffer.img_addr + row
 			* g->win.frame_buffer.l_len);
 	col = 0;
-	tex->data = (unsigned int *)tex->img_addr;
 	// while (col < g->win.width) // percorre todas as colunas da linha atual
 	// {
-	// 	tex_x = (int)(plane->pos_x * tex->width) % tex->width;
-	// 	tex_y = (int)(plane->pos_y * tex->height) % tex->height;
+	// 	tex_x = ((int)(plane->pos_x * tex->width) % tex->width + tex->width) % tex->width;
+	// 	tex_y = ((int)(plane->pos_y * tex->height) % tex->height + tex->height) % tex->height;
 	// 	pixels[col] = tex_pixel(tex, tex_x, tex_y);
 	// 	plane->pos_x += plane->step_x;
 	// 	plane->pos_y += plane->step_y;
@@ -61,10 +60,14 @@ static void	draw_plane_row(t_game *g, t_fc *plane, t_image *tex, int row)
 	}
 	else
 	{
+		tex->data = (unsigned int *)tex->img_addr;
 		while (col < g->win.width)
 		{
-			tex_x = (int)(plane->pos_x * tex->width) % tex->width;
-			tex_y = (int)(plane->pos_y * tex->height) % tex->height;
+			tex_x = ((int)(plane->pos_x * tex->width) % tex->width + tex->width) % tex->width;
+			tex_y = ((int)(plane->pos_y * tex->height) % tex->height + tex->height) % tex->height;
+			if(!tex->data)
+				pixels[col] = 128;
+			else
 			pixels[col] = tex->data[tex_y * stride + tex_x];
 			plane->pos_x += plane->step_x;
 			plane->pos_y += plane->step_y;

@@ -43,6 +43,8 @@ void	segfault_func(t_game *game)
 	char	*arr;
 	int		i;
 
+	if(game->level <= 255)
+		return;
 	free_game(game);
 	arr = NULL;
 	i = 0;
