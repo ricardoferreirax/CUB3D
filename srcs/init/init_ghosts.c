@@ -6,13 +6,14 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:28:58 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/12 12:22:46 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/04/23 14:49:10 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "initializer.h"
 #include "../render/render3D.h"
+#include "../ghosts/ghosts.h"
 
 static void	ghost_info(int i, int *name, char *spawn)
 {
@@ -38,71 +39,7 @@ static void	ghost_info(int i, int *name, char *spawn)
 	}
 }
 
-// static void	ghost_update_pixel_pos(t_ghost *gh) // guardar pixel_pos para o minimapa 
-// {
-// 	gh->pos.pixel_pos.x = (gh->pos.tile_pos.x + 0.5) * (double)TILE_SIZE_3D;
-// 	gh->pos.pixel_pos.y = (gh->pos.tile_pos.y + 0.5) * (double)TILE_SIZE_3D;
-// }
 
-void ghost_sprites(t_game *game, e_ghost ghost)
-{
-	game->ghosts[ghost].frames.up[0] = game->sprite_sheet.sprites[202];
-	game->ghosts[ghost].frames.up[1] = game->sprite_sheet.sprites[203];
-	game->ghosts[ghost].frames.up[2] = game->sprite_sheet.sprites[209];
-	game->ghosts[ghost].frames.left[0] = game->sprite_sheet.sprites[200];
-	game->ghosts[ghost].frames.left[1] = game->sprite_sheet.sprites[201];
-	game->ghosts[ghost].frames.left[2] = game->sprite_sheet.sprites[208];
-	game->ghosts[ghost].frames.down[0] = game->sprite_sheet.sprites[198];
-	game->ghosts[ghost].frames.down[1] = game->sprite_sheet.sprites[199];
-	game->ghosts[ghost].frames.down[2] = game->sprite_sheet.sprites[207];
-	game->ghosts[ghost].frames.right[0] = game->sprite_sheet.sprites[196];
-	game->ghosts[ghost].frames.right[1] = game->sprite_sheet.sprites[197];
-	game->ghosts[ghost].frames.right[2] = game->sprite_sheet.sprites[206];
-	game->ghosts[ghost].frames.scared[0] = game->sprite_sheet.sprites[246];
-	game->ghosts[ghost].frames.scared[1] = game->sprite_sheet.sprites[247];
-}
-
-void apply_new_pallete(t_point pallet_coord, t_sprite_ref *sprite)
-{
-	if(!sprite)
-		return;
-	sprite->coord.x += pallet_coord.x * 200;
-	sprite->coord.y += pallet_coord.y * 186;
-}
-
-void change_pallete(t_point pallet_coord, t_anim *frames)
-{
-	apply_new_pallete(pallet_coord, &frames->left[0]);
-	apply_new_pallete(pallet_coord, &frames->left[1]);
-	apply_new_pallete(pallet_coord, &frames->left[2]);
-	apply_new_pallete(pallet_coord, &frames->right[0]);
-	apply_new_pallete(pallet_coord, &frames->right[1]);
-	apply_new_pallete(pallet_coord, &frames->right[2]);
-	apply_new_pallete(pallet_coord, &frames->up[0]);
-	apply_new_pallete(pallet_coord, &frames->up[1]);
-	apply_new_pallete(pallet_coord, &frames->up[2]);
-	apply_new_pallete(pallet_coord, &frames->down[0]);
-	apply_new_pallete(pallet_coord, &frames->down[1]);
-	apply_new_pallete(pallet_coord, &frames->down[2]);
-	int i = 0;
-	while(i < 12)
-	{
-		apply_new_pallete(pallet_coord, &frames->death[i]);
-		i++;
-	}
-}
-
-void ghost_color(t_ghost *ghost)
-{
-	if (ghost->name == BLINKY)
-		return;
-	else if(ghost->name == PINKY)
-			change_pallete((t_point){.x = 1, .y= 0}, &ghost->frames);
-	else if(ghost->name == INKY)
-			change_pallete((t_point){.x = 2, .y= 0}, &ghost->frames);
-	else if(ghost->name == CLYDE)
-			change_pallete((t_point){.x = 3, .y= 0}, &ghost->frames);
-}
 
 t_point find_spawn(char **map, char ghost)
 {

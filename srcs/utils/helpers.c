@@ -1,0 +1,118 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   helpers.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/23 11:01:19 by pfreire-          #+#    #+#             */
+/*   Updated: 2026/04/23 14:53:56 by pfreire-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "helpers.h"
+
+
+int xtile(char **map)
+{
+	int i = 0;
+	int total = 0;
+	while(map && map[i])
+	{
+		if(total < (int)ft_strlen(map[i]))
+			total = ft_strlen(map[i]);
+		i++;
+	}
+	return total;
+}
+
+int ytile(char **map)
+{
+	int i = 0;
+	while(map && map[i])
+		i++;
+	return i;
+}
+
+
+int	ft_abs(int n)
+{
+	if (n < 0)
+		return (-n);
+	return (n);
+}
+
+// char **copy_map(char **map)
+// {
+// 	char **copy;
+// 	copy = ft_calloc(sizeof(char *), ytile(map) + 1);
+// 	int i = 0;
+// 	while(map && map[i])
+// 	{
+// 		int j = 0;
+// 		copy[i] = ft_calloc(sizeof(char) , ft_strlen(map[i]) + 1);
+// 		while(map[i][j] != '\0')
+// 		{
+// 			if(map[i][j] == 'M')
+// 				copy[i][j] = '1';
+// 			else
+// 				copy[i][j] = map[i][j];
+// 			j++;
+// 		}
+// 		copy[i][j] = '\0';
+// 		i++;
+// 	}
+// 	copy[i] = NULL;
+// 	return copy;
+// }
+
+char *parse_chars(char *str)
+{
+	char *dup;
+	dup = ft_calloc(ft_strlen(str), sizeof(char));
+	int i = 0;
+	int j = 0;
+	while(str[i])
+	{
+		if(str[i] != '\n')
+		{
+			if(str[i] == 'M')
+				dup[j] = '1';
+			else
+				dup[j] = str[i];
+			j++;
+		}
+		i++;
+	}
+	return dup;
+}
+
+char **remove_char(char **array)
+{
+	int i = 0;
+	char **final = ft_calloc(ytile(array) + 1, sizeof(char *));
+	while(array[i] != NULL)
+	{
+		final[i] = parse_chars(array[i]);
+		i++;
+	}
+	final[i] = NULL;
+	return final;
+}
+
+int	distance_to_target(t_ghost *ghost, int dy, int dx)
+{
+	int	result;
+
+	result = pow((((ghost->pos.pixel_pos.x / 8) + dx) - ghost->target_tile.x),
+			2) + pow((((ghost->pos.pixel_pos.y / 8) + dy)
+				- ghost->target_tile.y), 2);
+	return (result);
+}
+
+int	distance_squared(t_double_point a, t_double_point b)
+{
+	int dx = a.x - b.x;
+	int dy = a.y - b.y;
+	return (dx * dx + dy * dy);
+}

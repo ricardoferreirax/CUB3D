@@ -1,21 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pixels.c                                           :+:      :+:    :+:   */
+/*   render_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/10 10:57:26 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/03 16:47:49 by rmedeiro         ###   ########.fr       */
+/*   Created: 2026/04/23 11:46:55 by pfreire-          #+#    #+#             */
+/*   Updated: 2026/04/23 11:48:57 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "render.h"
-
-/* void	clear_terminal(void)
-{
-	write(1, "\033[H", 3);
-} */
+#include "helpers.h"
 
 void	ft_pixel_put(t_image *s, int x, int y, unsigned int color)
 {

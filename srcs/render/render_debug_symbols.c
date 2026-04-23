@@ -1,0 +1,43 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_debug_symbols.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/23 11:52:56 by pfreire-          #+#    #+#             */
+/*   Updated: 2026/04/23 11:57:03 by pfreire-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "render3D.h"
+#include "../ghosts/ghosts.h"
+
+void render_targets(t_game *game)
+{
+	t_point coord;
+
+	t_point pivot_coord;
+	t_sprite_ref target_tile;
+	target_tile = game->sprite_sheet.sprites[253];
+	int i = 0;
+	pivot_coord = pinky_target(game, 2);
+	pivot_coord.x = (pivot_coord.x * 8) + X_POS;
+	pivot_coord.y = (pivot_coord.y * 8) + Y_POS;
+	render_sprite_into_framebuffer(game, pivot_coord, &game->sprite_sheet.sprites[81]);
+	while(i < 4)
+	{
+		coord.x = ((game->ghosts[i].target_tile.x * 8) + X_POS);
+		coord.y = ((game->ghosts[i].target_tile.y * 8) + Y_POS);
+
+		render_sprite_into_framebuffer(game, coord, &target_tile);
+		target_tile.coord.x += 200;
+		i++;
+	}
+}
+
+void render_debug_symbols(t_game *game)
+{
+	render_raycast_debug(game);
+	render_targets(game);
+}

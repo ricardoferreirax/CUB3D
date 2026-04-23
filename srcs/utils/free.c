@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/17 13:16:57 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/13 10:34:49 by rmedeiro         ###   ########.fr       */
+/*   Created: 2026/04/23 11:43:18 by pfreire-          #+#    #+#             */
+/*   Updated: 2026/04/23 11:46:07 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Pac_Struct.h"
+#include "helpers.h"
 
 void	exit_game(int errcode, t_game *g, char *str)
 {

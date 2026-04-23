@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/16 14:37:42 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/02 09:50:19 by rmedeiro         ###   ########.fr       */
+/*   Created: 2026/04/23 11:19:08 by pfreire-          #+#    #+#             */
+/*   Updated: 2026/04/23 11:20:52 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Pac_Struct.h"
+#include "time.h"
 
-//returns microseconds, which are 10⁶ smaller than seconds
+
 long get_time_us(void)
 {
 	struct timeval tv;
-	gettimeofday(&tv, NULL);
+	gettimeofday(&tv, (void *)0);
 	return(tv.tv_sec * 1000000L + tv.tv_usec);
 }

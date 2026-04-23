@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/13 09:47:56 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/04/23 14:42:49 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,11 @@
 #include "unistd.h"
 #include "stdio.h"
 #include "string.h"
-#include "libft/libft.h"
+#include "./libft/libft.h"
 #include <fcntl.h>
 #include <math.h>
 #include <sys/time.h>
 //Controller support
-#include <alsa/asoundlib.h>
 #include <linux/input.h>
 
 #define SPRITE_SHEET "./assets/sprites/SpriteSheet.xpm"

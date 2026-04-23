@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/13 09:54:14 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/04/23 14:07:31 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ typedef struct s_ghost	t_ghost;
 
 #define FLOOR_START_OFFSET 2
 #define FLOOR_MIN_DIST 4.0
+
+#define X_POS 1920 / 2 - 100 
+#define Y_POS 1080 / 2 + 100
 
 #endif
 
@@ -67,3 +70,5 @@ t_image	*ghost_tex(t_game *g, t_ghost *gh);
 void	render_sprite_into_framebuffer(t_game *game, t_point coord,
 		t_sprite_ref *sprite);
 
+void render_debug_symbols(t_game *game);
+void	render_into_framebuffer(t_game *game);

@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.h                                           :+:      :+:    :+:   */
+/*   time.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/21 16:51:52 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/01/21 16:53:02 by pfreire-         ###   ########.fr       */
+/*   Created: 2026/04/23 11:19:25 by pfreire-          #+#    #+#             */
+/*   Updated: 2026/04/23 11:20:37 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RENDER_H
-#define RENDER_H
+#ifndef TIME_H
+#define TIME_H
 
+#include <sys/time.h>
 
-#include "../Pac_Struct.h"
-
-#endif
+#endif // !TIME_H
