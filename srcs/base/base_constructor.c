@@ -135,8 +135,15 @@ int	which_wall(char **original_map, t_map map, t_point *coord)
 
 int	which_tile(char **original_map, t_map *map, t_point coord, bool debug)
 {
+	int tile;
 	if (map->grid[coord.y][coord.x] == '1')
-		return (which_wall(original_map, *map, &coord));
+	{
+
+		tile = (which_wall(original_map, *map, &coord));
+		if(tile == 0)
+			return(rand() % 255);
+		return tile;
+	}
 	else
 	{
 		if(debug)
@@ -154,14 +161,28 @@ void	put_tile_inbase(t_game *g, int tile_code, unsigned int color,
 	pallete.x = MAP_PALLETE_X;
 	pallete.y = MAP_PALLETE_Y;
 	ty = 0;
+	t_point sprite_randomizer;
+	sprite_randomizer.x = 0;
+	sprite_randomizer.y = 0;
+	t_point pallete_randomizer;
+	pallete_randomizer.x = 1;
+	pallete_randomizer.y = 1;
+	if(tile_code == 0)
+	{
+		srand(get_time_us());
+		sprite_randomizer.x = rand() % 1000;
+		sprite_randomizer.y = rand() % 552; 
+		pallete_randomizer.x = rand() % 5;
+		pallete_randomizer.y = rand() % 3;
+	}
 	while (ty < g->sprite_sheet.sprites[tile_code].height)
 	{
 		tx = 0;
 		while (tx < g->sprite_sheet.sprites[tile_code].width)
 		{
 			color = pixel_get(&g->sprite_sheet.sprite_img,
-					g->sprite_sheet.sprites[tile_code].coord.x + pallete.x * 200 + tx,
-					g->sprite_sheet.sprites[tile_code].coord.y + pallete.y * 186 + ty);
+					 (g->sprite_sheet.sprites[tile_code].coord.x + sprite_randomizer.x) + pallete.x * (pallete_randomizer.x * 200) + tx,
+					 (g->sprite_sheet.sprites[tile_code].coord.y + sprite_randomizer.y) + pallete.y * (pallete_randomizer.y * 186) + ty);
 			if ((color >> 24) != 0xFF)
 				ft_pixel_put(&g->base, point.x * 8 + tx, point.y * 8 + ty,
 					color);

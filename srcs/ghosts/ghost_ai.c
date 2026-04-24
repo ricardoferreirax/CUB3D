@@ -36,8 +36,7 @@ t_double_point	continue_travel(t_game *game, t_ghost *ghost, int ignore_walls)
 {
 	int				dir;
 	int				runnning;
-	int				next_tile_y;
-	int				next_tile_x;
+	t_point				next_tile;
 	static int		direction[4][2] = {
 		{-1, 0}, // 0 = up
 		{0, -1}, // 1 = left
@@ -58,10 +57,10 @@ t_double_point	continue_travel(t_game *game, t_ghost *ghost, int ignore_walls)
 		ghost->speed_accumulador -= 100;
 
 		// tile in front of ghost (in current continue direction)
-		next_tile_y = (ghost->pos.pixel_pos.y / TILE_SIZE) + direction[dir][0];
-		next_tile_x = (ghost->pos.pixel_pos.x / TILE_SIZE) + direction[dir][1];
+		next_tile.y = (ghost->pos.pixel_pos.y / TILE_SIZE) + direction[dir][0];
+		next_tile.x = (ghost->pos.pixel_pos.x / TILE_SIZE) + direction[dir][1];
 
-		if (!ignore_walls && (game->map.grid[next_tile_y][next_tile_x] == '1' || game->map.grid[next_tile_y][next_tile_x] == 'G'))
+		if (!ignore_walls && (game->map.grid[next_tile.y][next_tile.x] == '1' || game->map.grid[next_tile.y][next_tile.x] == 'G'))
 		{
 			if (passed_center(ghost))
 			{
@@ -156,14 +155,13 @@ int	chose_next_move(t_game *game, t_ghost *ghost, char **map)
 				/ TILE_SIZE + direction[best_dir][0]][ghost->pos.pixel_pos.x
 				/ TILE_SIZE + direction[best_dir][1]] != 'G')
 			&& best_dir != ghost->invalid_dir)
-			{
-				ghost_move_pixel(ghost, direction[best_dir][1], direction [best_dir][0]);
-				return((best_dir + 2) % 4); 
-			}
+				break;
 			best_dir = (best_dir  + 3) % 4;
 			tries++;
 		}
 	}
+	else
+	{
 	while (i < 4)
 	{
 		if ((map[ghost->pos.pixel_pos.y / TILE_SIZE
@@ -186,6 +184,7 @@ int	chose_next_move(t_game *game, t_ghost *ghost, char **map)
 			}
 		}
 		i++;
+	}
 	}
 	if (best_dir == -1)
 		best_dir = (ghost->invalid_dir + 2) % 4;

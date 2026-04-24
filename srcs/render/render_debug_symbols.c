@@ -27,8 +27,8 @@ void render_targets(t_game *game)
 	render_sprite_into_framebuffer(game, pivot_coord, &game->sprite_sheet.sprites[81]);
 	while(i < 4)
 	{
-		coord.x = ((game->ghosts[i].target_tile.x * 8) + X_POS);
-		coord.y = ((game->ghosts[i].target_tile.y * 8) + Y_POS);
+		coord.x = ((game->ghosts[i].target_tile.x * 8) + X_POS) % 1920;
+		coord.y = ((game->ghosts[i].target_tile.y * 8) + Y_POS) % 1080;
 
 		render_sprite_into_framebuffer(game, coord, &target_tile);
 		target_tile.coord.x += 200;
