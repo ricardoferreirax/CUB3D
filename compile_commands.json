@@ -17,11 +17,61 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/utils/helpers.o",
-      "srcs/utils/helpers.c"
+      "objs/srcs/ghosts/ghost_ai.o",
+      "srcs/ghosts/ghost_ai.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/utils/helpers.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/utils/helpers.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/ghosts/ghost_ai.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/ghosts/ghost_ai.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/srcs/ghosts/sprites.o",
+      "srcs/ghosts/sprites.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/ghosts/sprites.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/ghosts/sprites.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/srcs/clock/time.o",
+      "srcs/clock/time.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/clock/time.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/clock/time.o"
   }
 ]

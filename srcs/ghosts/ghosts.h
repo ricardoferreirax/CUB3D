@@ -16,7 +16,7 @@
 #include "../../Pac_Struct.h"
 
 
-t_double_point	continue_travel(t_game *game, t_ghost *ghost, int invalid_dir);
+t_double_point	continue_travel(t_game *game, t_ghost *ghost, int ignore_walls);
 
 void	ghost_move_pixel(t_ghost *gh, int dx, int dy);
 bool cannot_move_up(t_game *game, t_ghost *ghost);

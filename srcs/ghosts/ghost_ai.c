@@ -13,7 +13,26 @@
 #include "ghosts.h"
 #include "../utils/helpers.h"
 
-t_double_point	continue_travel(t_game *game, t_ghost *ghost, int invalid_dir)
+int passed_center(t_ghost *ghost)
+{
+	int cx, cy;
+	cx = ghost->pos.pixel_pos.x % TILE_SIZE;
+	cy = ghost->pos.pixel_pos.y % TILE_SIZE;
+	int center = TILE_SIZE / 2;
+	int passed_center = 0;
+	if(ghost->invalid_dir == 2)
+		passed_center = (cy < center);
+	if(ghost->invalid_dir == 3)
+		passed_center = (cx < center);
+	if(ghost->invalid_dir == 0)
+		passed_center = (cy > center);
+	if(ghost->invalid_dir == 1)
+		passed_center = (cx > center);
+	return passed_center;
+}
+
+
+t_double_point	continue_travel(t_game *game, t_ghost *ghost, int ignore_walls)
 {
 	int				dir;
 	int				runnning;
@@ -26,7 +45,7 @@ t_double_point	continue_travel(t_game *game, t_ghost *ghost, int invalid_dir)
 		{0, 1}   // 3 = right
 	};
 
-	dir = (invalid_dir + 2) % 4; // continue forward
+	dir = (ghost->invalid_dir + 2) % 4; // continue forward
 	runnning = 0;
 	if (ghost->state == EATEN)
 		runnning = 100;
@@ -34,7 +53,7 @@ t_double_point	continue_travel(t_game *game, t_ghost *ghost, int invalid_dir)
 		ghost->speed_accumulador += ghost->speed_frightened;
 	else
 		ghost->speed_accumulador += ghost->speed_multiplier + runnning;
-	if (ghost->speed_accumulador > 100)
+	if (ghost->speed_accumulador >= 100)
 	{
 		ghost->speed_accumulador -= 100;
 
@@ -42,21 +61,14 @@ t_double_point	continue_travel(t_game *game, t_ghost *ghost, int invalid_dir)
 		next_tile_y = (ghost->pos.pixel_pos.y / TILE_SIZE) + direction[dir][0];
 		next_tile_x = (ghost->pos.pixel_pos.x / TILE_SIZE) + direction[dir][1];
 
-		// wall/ghost-gate check
-		if (game->map.grid[next_tile_y][next_tile_x] == '1'
-			|| game->map.grid[next_tile_y][next_tile_x] == 'G')
+		if (!ignore_walls && (game->map.grid[next_tile_y][next_tile_x] == '1' || game->map.grid[next_tile_y][next_tile_x] == 'G'))
 		{
-			// OPTION A: simple 180 turn
-			ghost->invalid_dir = dir;
-			dir = (dir + 2) % 4;
-
-			return ((t_double_point){
-			.x = ghost->pos.pixel_pos.x + direction[dir][1],
-			.y = ghost->pos.pixel_pos.y + direction[dir][0]});
-			// OPTION B (recommended): choose a valid direction instead
-			// return (chose_next_move(game, ghost, game->map.grid), (t_double_point){.x = ghost->pos.pixel_pos.x, .y = ghost->pos.pixel_pos.y}); // adapt signature/return type
+			if (passed_center(ghost))
+			{
+				ghost->invalid_dir = dir;
+				dir = (dir + 2) % 4;
+			}
 		}
-
 		return ((t_double_point){
 			.x = ghost->pos.pixel_pos.x + direction[dir][1],
 			.y = ghost->pos.pixel_pos.y + direction[dir][0]
@@ -328,7 +340,7 @@ int	ghost_penhouse_dance(t_game *game, t_ghost *ghost, t_point gate)
 		ghost->invalid_dir = 0;
 	else if (y >= bottom_px)
 		ghost->invalid_dir = 2;
-	next = continue_travel(game, ghost, ghost->invalid_dir);
+	next = continue_travel(game, ghost, 1);
 
 	ghost_set_pixel_pos(ghost, next.x, next.y);
 	return (0);
@@ -364,7 +376,7 @@ int	update_ghost(t_game *game, t_ghost *ghost)
 		|| ghost->pos.pixel_pos.y % TILE_SIZE != TILE_SIZE / 2)
 	{
 		update_target(game, ghost, 0);
-		next = continue_travel(game, ghost, ghost->invalid_dir);
+		next = continue_travel(game, ghost, 0);
 		ghost_set_pixel_pos(ghost, next.x, next.y);
 		return (0);
 		// continua o movimento atual do ghost
