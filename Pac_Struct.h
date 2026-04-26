@@ -228,9 +228,8 @@ typedef enum e_state
 
 typedef struct s_elroy_level
 {
-	//Elroy becomes active when few dots are left in the maze
+	int enabled;
 	int dots_left;
-	//It gains more speed and it stays in chase mode
 	int speed_multiplier;
 }	t_elroy_level;
 
@@ -423,6 +422,7 @@ typedef struct s_game
 	int score;
 	int level;
 	int controller_fd;
+	e_state global_state;
 	// SpriteShit is 200x186
 	t_sprite_sheet sprite_sheet;
 }	t_game;

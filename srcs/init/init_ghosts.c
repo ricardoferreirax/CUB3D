@@ -45,6 +45,8 @@ t_point find_spawn(char **map, char ghost)
 {
 	t_point gate_pos;
 	gate_pos = find_c(map, GATE);
+	if(gate_pos.x < 0 || gate_pos.y < 0)
+		return gate_pos;
 	if(ghost == BLINKY_T)
 	{
 		gate_pos.y -= 1;
@@ -96,6 +98,17 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char, int is_death
 	return 0;
 }
 
+void annouce_disabled(int i)
+{
+	if(i == 0)
+		ft_printf("Blinky was disabled\n");
+	if(i == 1)
+		ft_printf("Pinky was disabled\n");
+	if(i == 2)
+		ft_printf("Inky was disabled\n");
+	if(i == 3)
+		ft_printf("ClydE was disabled\n");
+}
 void	init_ghosts(t_game *g, int is_death)
 {
 	int		i;
@@ -110,7 +123,11 @@ void	init_ghosts(t_game *g, int is_death)
 		ghost_info(i, &name, &spawn);
 		g->ghosts[i].name = name;
 		if(init_one_ghost(g, &g->ghosts[i], spawn, is_death) || g->mode == MODE_CUBE)
+		{
+			if(g->debug_mode)
+				annouce_disabled(i);
 			g->ghosts[i].name = DISABLED;
+		}
 		i++;
 	}
 }

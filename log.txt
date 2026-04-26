@@ -1,0 +1,3 @@
+Opening file: maps/Pacman.cub
+Maps ends at line number 56
+Loaded 256 sprites

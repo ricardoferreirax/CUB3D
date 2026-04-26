@@ -290,10 +290,27 @@ void	update_target(t_game *game, t_ghost *ghost, int mode)
 	(void)mode;
 	if (ghost->state == EATEN)
 		goto_penhouse(game, ghost);
-	if (ghost->state == SCATTER)
+	if (ghost->state == SCATTER && (!ghost->cruiser.is_blinky || !(ghost->cruiser.one.enabled || ghost->cruiser.two.enabled)))
 		ghost->target_tile = game->targets.scatter_target[ghost->name];
-	if (ghost->state == CHASE)
+	if (ghost->state == CHASE || (ghost->cruiser.is_blinky && (ghost->cruiser.one.enabled || ghost->cruiser.two.enabled)))
 		ghost->target_tile = chase_player(game, ghost);
+	if(ghost->cruiser.is_blinky)
+	{
+		if(!ghost->cruiser.two.enabled && ft_abs(game->player.collected_dots - game->pacdot_count) >= ghost->cruiser.one.dots_left)
+		{
+			if(game->debug_mode)
+				ft_printf("Blinky is Elroy level 1\n");
+			ghost->speed_multiplier = ghost->cruiser.one.speed_multiplier;
+			ghost->cruiser.one.enabled = true;
+		}
+		if(!ghost->cruiser.two.enabled && ft_abs(game->player.collected_dots - game->pacdot_count) >= ghost->cruiser.two.dots_left)
+		{
+			if(game->debug_mode)
+				ft_printf("Blinky is Elroy level 2\n");
+			ghost->speed_multiplier = ghost->cruiser.two.speed_multiplier;
+			ghost->cruiser.two.enabled = true;
+		}
+	}
 }
 
 int	ghost_in_penhouse(t_ghost *ghost, char **map)
@@ -363,12 +380,12 @@ int	update_ghost(t_game *game, t_ghost *ghost)
 					'G')));
 	if (ghost->state == FRIGHTENED && get_time_us() - game->timer.frightened_time_start > (long)(game->timer.frightened_time * 1000000.0))
 	{
-		ghost->state = CHASE;
+		ghost->state = game->global_state;
 		ghost->invalid_dir = (ghost->invalid_dir + 2) % 4;
 	}
 	if (ghost->state == EATEN && is_on_penhouse(ghost->pos.pixel_pos, game->targets.ghost_house))
 	{
-		ghost->state = CHASE;
+		ghost->state = game->global_state;
 		ghost->invalid_dir = (ghost->invalid_dir + 2) % 4;
 	}
 	if (ghost->pos.pixel_pos.x % TILE_SIZE != TILE_SIZE / 2
@@ -391,17 +408,16 @@ bool ghost_ai(t_game *game, t_ghost *ghost, int i)
 {
 		if (ghost->name == DISABLED)
 			return true ;
+		(void)i;
 		ghost_wrap_position(game, ghost);
 		update_ghost(game, ghost);
-		if(get_time_us() - game->timer.mode_time_start > (long)(game->timer.mode_timer) * 1000000.0)
+		if(ghost->state != game->global_state)
 		{
 			if(ghost->state == SCATTER)
 				ghost->state = CHASE;
 			else if(ghost->state == CHASE)
 				ghost->state = SCATTER;
 			ghost->invalid_dir = (ghost->invalid_dir + 2) % 4;
-			if(i == 3)
-				game->timer.mode_time_start = get_time_us();
 		}
 	return false;
 }

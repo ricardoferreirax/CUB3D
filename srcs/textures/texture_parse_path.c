@@ -86,7 +86,8 @@ void	parse_texture_path(t_game *g, const char *path)
 	int		fd;
 	char	*line;
 
-	ft_printf("Opening file: %s\n", path);
+	if(g->debug_mode)
+		ft_printf("Opening file: %s\n", path);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		exit_game(EXIT_MAP, g, "parse_texture_path() has not found a valid fd");

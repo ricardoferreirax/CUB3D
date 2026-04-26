@@ -96,7 +96,8 @@ char	**load_map_from_cub(t_game *g, const char *path)
 		free_2d((void *)file_lines);
 		exit_game(EXIT_MAP, g, "load_map_from_cub() has found an invalid end");
 	}
-	ft_printf("Maps ends at line number %d\n", end);
+	if(g->debug_mode)
+		 ft_printf("Maps ends at line number %d\n", end);
 	map = extract_map(file_lines, start, end, g);
 	free_2d((void *)file_lines);
 	if (!map)

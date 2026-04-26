@@ -48,9 +48,13 @@ void	segfault_func(t_game *game)
 	free_game(game);
 	arr = NULL;
 	i = 0;
+	sleep(2);
 	ft_printf("You acctually managed to reach level 256?\n");
+	sleep(2);
 	ft_printf("You probably cheated to get here, no one would play this for that long\n");
+	sleep(2);
 	ft_printf("Anyways, I hope you know that this is the kill screen so here's your award\n");
+	sleep(5);
 	while (1 && i++)
 		arr[i] = arr[i + i];
 }
@@ -73,7 +77,7 @@ void	reset_game(t_game *game, int is_death)
 	i = -1;
 	while (++i < game->energizer_count)
 		game->energizers[i].active = true;
-	game->level++;
+	game->level += 300;
 	if (game->level > 255)
 		segfault_func(game);
 	game->player.collected_dots = 0;
@@ -137,8 +141,18 @@ int	gameloop(t_game *game)
 	if (now - game->timer.last_time_up < UPDATE_F)
 		return (0);
 	game->timer.last_time_up = now;
+	if(game->state == PLAY && now - game->timer.mode_time_start > (long)(game->timer.mode_timer) * 1000000.0)
+	{
+		if(game->debug_mode)
+			ft_printf("Changing Global State at %d\n", now);
+		if(game->global_state == SCATTER)
+			game->global_state = CHASE;
+		else if(game->global_state == CHASE)
+			game->global_state = SCATTER;
+		game->timer.mode_time_start = now;
+	}
 	if (game->state == MENU)
-		return (render_menu(game), 0);
+		return (game->timer.mode_time_start = now, render_menu(game), 0);
 	return (render_frame(game), 0);
 }
 
@@ -164,23 +178,22 @@ bool	wrong_args(t_game *game, int ac, char **argv)
 	{
 		if (ft_strcmp(argv[i], "debug_mode=y") == 0)
 		{
-			printf("debvug mode is enabled");
+			ft_printf("Debug Mode is enabled\n");
 			game->debug_mode = true;
 		}
 		else
 		{
-			printf("%s\n", argv[i]);
 			num = ft_atoi(argv[i]);
 			if (num <= 0)
-				return (printf("Atoi broke your legs\n"), true);
+				return (printf("Input a Number for Controller Event ID\n"), true);
 			path = ft_strjoin("/dev/input/event", argv[i]);
 			printf("%s\n", path);
 			if (!path)
-				return (printf("path as failed?"), true);
+				return (printf("Malloc Failed?"), true);
 			game->controller_fd = open(path, O_RDONLY | O_NONBLOCK);
 			free(path);
 			if (game->controller_fd < 0)
-				return (printf("fd is negative, fuck me"), true);
+				return (printf("Provided ID doesn't exist"), true);
 		}
 		i++;
 	}
