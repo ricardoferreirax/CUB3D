@@ -77,6 +77,8 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
 	player_wrap_position(g);
 	if (!player_collect_pacdots(g) && !player_collect_energizer(g))
 	{
+
+		// ft_printf("dots ledt in maze : %d dots needed for cruiser: one %d ; two: %d\n", g->pacdot_count - g->player.collected_dots, g->ghosts[BLINKY].cruiser.one.dots_left, g->ghosts[BLINKY].cruiser.two.dots_left);
 		g->player.pos.tile_pos.x += dx;
 		g->player.pos.tile_pos.y += dy;
 	}

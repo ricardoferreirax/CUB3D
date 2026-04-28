@@ -168,10 +168,10 @@ typedef struct s_anim_cord
 {
 	// Coordinates to find the sprites in the sprite sheet.
 	// Each entity has 2 animations per direction, they alternate
-	t_sprite_ref up[3];
-	t_sprite_ref left[3];
-	t_sprite_ref down[3];
-	t_sprite_ref right[3];
+	t_sprite_ref up[4];
+	t_sprite_ref left[4];
+	t_sprite_ref down[4];
+	t_sprite_ref right[4];
 	t_sprite_ref scared[2];
 	//Death animation ofr th eplayer has 12 frames
 	t_sprite_ref death[12];
@@ -241,31 +241,6 @@ typedef struct s_elroy
 	t_elroy_level one;
 	t_elroy_level two;
 }	t_elroy;
-
-/* typedef struct s_ghost
-{
-	//Self Explaining, it is the ghost's name
-	e_ghost name;
-	t_pos pos;
-	//dot_counter for the penhouse (not effective for Blinky since he's always out of the penhouse)
-	//At game start Pinky, Inky and Clyde make a Queue to leave the penhouse in this order, only one counter can be active at a time see end of struct for more info
-	//They can get out in 2 ways, if the dot_counter reaches a certain level or the Player stalls untill the timeout timer (t_time->timeout_timer) triggers
-	//the dot_counter goes only up and only resets at level start
-	//when the dot_counter limit is reached it gets deactivated but not reset 
-	//when the player dies these dot_counter's stay deactivated, the game refers to the global dot counter instead
-	int dot_counter;
-	t_point target_tile;
-	int global_dot_counter_call;
-	int speed_multiplier;
-	int is_steping_on_pacdot;
-	t_anim *frames;
-	int invalid_dir;
-	char **mental_map;
-	t_elroy cruiser;
-	e_state state;
-} t_ghost; */
-//At game start one of the penhouse ghost will activate it's counter, it will count up each dot pacman eats
-//if pacman eats all the dots it gets out, but if the ghost is forced out by timeout its dot counter is not reset and the next ghost dot counter starts counting.
 
 typedef struct s_ghost
 {

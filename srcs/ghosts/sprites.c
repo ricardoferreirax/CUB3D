@@ -28,6 +28,13 @@ void ghost_sprites(t_game *game, e_ghost ghost)
 	game->ghosts[ghost].frames.right[2] = game->sprite_sheet.sprites[206];
 	game->ghosts[ghost].frames.scared[0] = game->sprite_sheet.sprites[246];
 	game->ghosts[ghost].frames.scared[1] = game->sprite_sheet.sprites[247];
+	if(game->ghosts[ghost].name == BLINKY)
+	{
+		game->ghosts[ghost].frames.up[3] = game->sprite_sheet.sprites[213];
+		game->ghosts[ghost].frames.left[3] = game->sprite_sheet.sprites[212];
+		game->ghosts[ghost].frames.down[3] = game->sprite_sheet.sprites[211];
+		game->ghosts[ghost].frames.right[3] = game->sprite_sheet.sprites[210];
+	}
 }
 
 void apply_new_pallete(t_point pallet_coord, t_sprite_ref *sprite)

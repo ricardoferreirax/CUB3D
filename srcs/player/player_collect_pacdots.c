@@ -50,8 +50,11 @@ bool		player_collect_energizer(t_game *g)
 		i = 0;
 		while(i < 4)
 		{
-			g->ghosts[i].state = FRIGHTENED;
-			g->ghosts[i].invalid_dir = (g->ghosts[i].invalid_dir + 2) % 4;
+			if(g->ghosts[i].state != EATEN)
+			{
+				g->ghosts[i].state = FRIGHTENED;
+				g->ghosts[i].invalid_dir = (g->ghosts[i].invalid_dir + 2) % 4;
+			}
 			i++;
 		}
 		g->timer.frightened_time_start = get_time_us();
@@ -83,7 +86,6 @@ bool		player_collect_pacdots(t_game *g)
 	}
 	return collected;
 }
-
 
 static int	player_touching_ghost(t_game *g, t_ghost *p, double r)
 {

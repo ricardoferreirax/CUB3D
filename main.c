@@ -55,7 +55,7 @@ void	segfault_func(t_game *game)
 	sleep(2);
 	ft_printf("Anyways, I hope you know that this is the kill screen so here's your award\n");
 	sleep(5);
-	while (1 && i++)
+	while (1 || i++)
 		arr[i] = arr[i + i];
 }
 
@@ -77,7 +77,7 @@ void	reset_game(t_game *game, int is_death)
 	i = -1;
 	while (++i < game->energizer_count)
 		game->energizers[i].active = true;
-	game->level += 300;
+	game->level++;
 	if (game->level > 255)
 		segfault_func(game);
 	game->player.collected_dots = 0;
@@ -95,13 +95,13 @@ void	controller_player(t_game *game)
 			continue ;
 		if (event.type == EV_KEY)
 		{
-			if (event.code == BTN_SOUTH)
+			if (event.code == BTN_SOUTH) // Xis
 				game->key.down = event.value;
-			else if (event.code == BTN_NORTH) // Triangle
+			else if (event.code == BTN_NORTH) // Triangulo
 				game->key.up = event.value;
-			else if (event.code == BTN_WEST) // Square
+			else if (event.code == BTN_WEST) // Quadrado
 				game->key.left = event.value;
-			else if (event.code == BTN_EAST) // Circle
+			else if (event.code == BTN_EAST) // Bolinha
 				game->key.right = event.value;
 			// R1 → M
 			else if (event.code == BTN_TR)
@@ -155,15 +155,6 @@ int	gameloop(t_game *game)
 		return (game->timer.mode_time_start = now, render_menu(game), 0);
 	return (render_frame(game), 0);
 }
-
-void	switch_mode_and_parse(t_game *g, t_mode mode, const char *path)
-{
-	if (!g || !path)
-		exit_game(EXIT_MAP, g,
-			"switch_mode_and_parse() has not found a path or game");
-	g->mode = mode;
-}
-
 
 bool	wrong_args(t_game *game, int ac, char **argv)
 {
