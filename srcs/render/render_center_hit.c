@@ -39,9 +39,10 @@ int	register_center_hit(t_game *g, int col, int found)
 		return (found);
 	tile = map_get_tile(g, g->ray.map_y, g->ray.map_x);
 	if (tile == OPEN_SPACE || tile == VOID)
+
 		return (found);
-	g->player.target_map_x = g->ray.map_x;
-	g->player.target_map_y = g->ray.map_y;
+	g->player.target_map.x = g->ray.map_x;
+	g->player.target_map.y = g->ray.map_y;
 	g->player.target_tile = tile;
 	g->player.target_wall_dir = get_hit_wall_dir(g);
 	g->player.target_dist = g->ray.perp_wall_dist;

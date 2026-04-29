@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/11 22:20:43 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/04/23 14:42:49 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@
 #include "unistd.h"
 #include "stdio.h"
 #include "string.h"
-#include "libft/libft.h"
+#include "./libft/libft.h"
 #include <fcntl.h>
 #include <math.h>
 #include <sys/time.h>
+//Controller support
+#include <linux/input.h>
 
 #define SPRITE_SHEET "./assets/sprites/SpriteSheet.xpm"
 
@@ -32,6 +34,9 @@
 #define TILE_SIZE 8
 
 #define TEXTURES "./assets/textures/"
+
+#define MAP_PALLETE_X 3
+#define MAP_PALLETE_Y 1
 
 #define UPDATE_F 16666
 #define MAX_UPDATES 5
@@ -92,6 +97,8 @@ typedef struct s_image
 	int				l_len;
 	int				endian;
 	void			*img_ptr;
+	unsigned int *data;
+	int stride;
 }					t_image;
 
 typedef struct s_fc
@@ -102,7 +109,6 @@ typedef struct s_fc
 	double	step_y;
 	double	dist;
 }	t_fc;
-
 
 typedef struct s_sprite
 {
@@ -151,7 +157,7 @@ typedef struct s_window
 	t_image			frame_buffer;
 }					t_window;
 
-typedef struct s_sprite_red
+typedef struct s_sprite_ref
 {
 	t_point coord;
 	int width;
@@ -162,39 +168,44 @@ typedef struct s_anim_cord
 {
 	// Coordinates to find the sprites in the sprite sheet.
 	// Each entity has 2 animations per direction, they alternate
-	t_sprite_ref up[2];
-	t_sprite_ref left[2];
-	t_sprite_ref down[2];
-	t_sprite_ref rigth[2];
+	t_sprite_ref up[4];
+	t_sprite_ref left[4];
+	t_sprite_ref down[4];
+	t_sprite_ref right[4];
+	t_sprite_ref scared[2];
 	//Death animation ofr th eplayer has 12 frames
 	t_sprite_ref death[12];
 
 } t_anim;
 
+typedef struct s_control
+{
+	int current_dir;
+	int input_buffer;
+	// int cycle_count;
+} t_control;
+
 typedef struct s_player
 {
 	// vou precisar para a execução 3D
-	double	pos_x;
-	double	pos_y;
+	
 		// vou precisar para a execução 3D
-	double	dir_x; // direção para onde o player está a olhar (eixo X)
-	double	dir_y; // direção para onde o player está a olhar (eixo Y)
-	double	plane_x; // plano (da camera de visao - fov) perpendicular à direção do player (eixo X)
-	double	plane_y; // plano (da camera de visao - fov) perpendicular à direção do player (eixo Y)
-
-	int		target_map_x;  	// coordenadas do tile que o player está a apontar no eixo x
-	int		target_map_y;  	// coordenadas do tile que o player está a apontar no eixo y
+	t_double_point dir;
+	t_double_point target_dir;
+	t_double_point plane;
+	t_double_point target_plane;
+	t_point target_map;
 	char	target_tile;    // id do tile que o player está a apontar
 	char	target_wall_dir; // 'N', 'S', 'E', 'W'
 	double	target_dist;   // distância perpendicular
 	
-
-
 	t_pos pos; // para o 2d (tile/pixel)
 	int lives;
 	int speed_multiplier;
-	// 4 cardinal directions, 2 frames per animation
-	t_anim *frames;
+	int collected_dots;
+	int frightened_speed;
+	t_anim frames;
+	t_control controller;
 }	t_player;
 
 typedef enum e_ghost
@@ -217,9 +228,8 @@ typedef enum e_state
 
 typedef struct s_elroy_level
 {
-	//Elroy becomes active when few dots are left in the maze
+	int enabled;
 	int dots_left;
-	//It gains more speed and it stays in chase mode
 	int speed_multiplier;
 }	t_elroy_level;
 
@@ -232,31 +242,6 @@ typedef struct s_elroy
 	t_elroy_level two;
 }	t_elroy;
 
-/* typedef struct s_ghost
-{
-	//Self Explaining, it is the ghost's name
-	e_ghost name;
-	t_pos pos;
-	//dot_counter for the penhouse (not effective for Blinky since he's always out of the penhouse)
-	//At game start Pinky, Inky and Clyde make a Queue to leave the penhouse in this order, only one counter can be active at a time see end of struct for more info
-	//They can get out in 2 ways, if the dot_counter reaches a certain level or the Player stalls untill the timeout timer (t_time->timeout_timer) triggers
-	//the dot_counter goes only up and only resets at level start
-	//when the dot_counter limit is reached it gets deactivated but not reset 
-	//when the player dies these dot_counter's stay deactivated, the game refers to the global dot counter instead
-	int dot_counter;
-	t_point target_tile;
-	int global_dot_counter_call;
-	int speed_multiplier;
-	int is_steping_on_pacdot;
-	t_anim *frames;
-	int invalid_dir;
-	char **mental_map;
-	t_elroy cruiser;
-	e_state state;
-} t_ghost; */
-//At game start one of the penhouse ghost will activate it's counter, it will count up each dot pacman eats
-//if pacman eats all the dots it gets out, but if the ghost is forced out by timeout its dot counter is not reset and the next ghost dot counter starts counting.
-
 typedef struct s_ghost
 {
 	e_ghost	name;
@@ -266,6 +251,9 @@ typedef struct s_ghost
 	t_point	target_tile;
 	int		global_dot_counter_call;
 	int		speed_multiplier;
+	int		speed_frightened;
+	int		speed_tunnel;
+	double	speed_accumulador;
 	int		is_steping_on_pacdot;
 	t_anim	anim;
 	int		invalid_dir;
@@ -281,23 +269,24 @@ typedef struct s_time
 {
 	double level_time;
 	double mode_timer;
+	double mode_time_start;
 	//starts when ghosts are in the pen and pac-man refuses to eat dots
 	double timeout_timer;
 	int energizer;
 	double frightened_time;
+	double frightened_time_start;
 	//timers related to making sure the game updates at 60Hz
 	long last_time_up;
 	long accumulator;
+	long start_time;
+	int mode;
+	int times[8];
 }	t_timer;
 
 typedef struct s_pacdot
 {
-	double x;
-	double y;
-	int active;
-	
 	t_pos pos;
-	bool eaten;
+	bool active;
 }	t_pacdot;
 
 typedef struct s_sheet
@@ -328,6 +317,7 @@ typedef enum e_player_action
 	ROTATE_RIGHT
 }	t_player_action;
 
+
 typedef struct s_textures
 {
 	char	*no;
@@ -338,11 +328,12 @@ typedef struct s_textures
 	char	*ceiling;
 	char	*pacdot;
 	char	*energizer;
-	char	*blinky;
-	char	*pinky;
-	char	*inky;
-	char	*clyde;
-	char 	*gate_close;
+	char	*blinky[2];
+	char	*pinky[2];
+	char	*inky[2];
+	char	*clyde[2];
+	char	*gate_close;
+	char *other_state[2];
 
 	t_image	no_img;
 	t_image	so_img;
@@ -352,13 +343,33 @@ typedef struct s_textures
 	t_image	ceiling_img;
 	t_image	pacdot_img;
 	t_image	energizer_img;
-	t_image	blinky_img;
-	t_image	pinky_img;
-	t_image	inky_img;
-	t_image	clyde_img;
+	t_image	blinky_img[2];
+	t_image	pinky_img[2];
+	t_image	inky_img[2];
+	t_image	clyde_img[2];
 	t_image gate_close_img;
-
+	t_image	other_state_img[2];
 }	t_textures;
+
+typedef struct s_lvl_config
+{
+	t_elroy elroy;
+	int ghost_speed;
+	int ghost_frightened_speed;
+	int ghost_tunnel_speed;
+	int pacman_speed;
+	int pacman_frightened_speed;
+	double frightened_time;
+	int bonus_fruit_points;
+	int time[8];
+} t_lvl_config;
+
+typedef struct s_interest_points
+{
+	t_point ghost_house;
+	t_point scatter_target[4];
+	t_point player_spawn;
+} t_target_points;
 
 typedef struct s_game
 {
@@ -372,12 +383,12 @@ typedef struct s_game
 	t_pacdot *pacdots;
 	t_pacdot	*energizers;
 	t_ghost		ghosts[4]; 
+	t_target_points targets;
 	t_image	render;
 	t_mode mode;
 	t_gstate state;
 	t_image menu_img;
 	t_image base;
-
 	int pacdot_count;
 	int	energizer_count;
 	int gate_passable;
@@ -388,6 +399,8 @@ typedef struct s_game
 	int global_dot_counter;
 	int score;
 	int level;
+	int controller_fd;
+	e_state global_state;
 	// SpriteShit is 200x186
 	t_sprite_sheet sprite_sheet;
 }	t_game;
@@ -423,3 +436,6 @@ void	ft_pixel_put(t_image *s, int x, int y, unsigned int color);
 
 void print_2d(char **arr);
 void breakpoint(void);
+
+void reset_game(t_game *game, int is_death);
+void change_pallete(t_point pallet_coord, t_anim *frames);

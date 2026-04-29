@@ -34,6 +34,7 @@
 ////////////////////////////////
 
 typedef struct s_game	t_game;
+typedef struct s_ghost	t_ghost ;
 
 typedef struct s_map
 {
@@ -61,6 +62,8 @@ char	**map_read_file(const char *path);
 int	map_is_wrap_tile(t_game *g, int row, int col);
 int	ray_wrap_x(t_game *g);
 void	player_wrap_position(t_game *g);
+
+void	ghost_wrap_position(t_game *g, t_ghost *ghost);
 double	get_sprite_wrap_offset_x(t_game *g, double sprite_x, double sprite_y);
 int	is_whitespace(char c);
 char	**copy_map(char **map_grid);

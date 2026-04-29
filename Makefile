@@ -6,13 +6,13 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/03/11 21:19:17 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/04/23 14:40:03 by pfreire-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    = cub3d
 
-CC      = clang-12 -O3
+CC      = clang-12 -Og
 CFLAGS  = -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion  -Wformat=2 -Wstrict-aliasing=2 \
 		-fno-omit-frame-pointer \
 		-g 
@@ -35,49 +35,55 @@ MLX_PATH = minilibx-linux
 MLX = $(MLX_PATH)/libmlx.a
 
 SRC_FILES = main.c \
-	aux_funcs.c  \
+	srcs/hooks/handle_close.c \
+	srcs/hooks/handle_gate_toggle.c \
+	srcs/hooks/handle_keys.c \
+	srcs/hooks/handle_mouse.c \
+	srcs/init/init_mlx.c \
+	srcs/init/init_spritesheet.c \
+	srcs/init/init_sprites.c \
 	srcs/init/init.c \
 	srcs/init/init_base.c \
-	srcs/init/init_spritesheet.c \
-	srcs/init/init_mlx.c \
 	srcs/init/init_ghosts.c \
-	srcs/init/init_sprites.c \
-	time.c \
-	srcs/map/map_load.c \
 	srcs/map/map_read.c \
+	srcs/map/map_utils.c \
+	srcs/map/map_load.c \
+	srcs/map/map_wrap.c \
+	srcs/map/map_ghost.c \
 	srcs/map/map_validate_grid.c \
 	srcs/map/map_parse_lines.c \
-	srcs/map/map_ghost.c \
-	srcs/map/map_wrap.c \
-	srcs/map/map_utils.c \
-	srcs/textures/texture_parse_path.c \
-	srcs/textures/texture_parse_color.c \
-	srcs/textures/texture_load.c \
-	srcs/textures/texture_pick_wall.c \
-	srcs/textures/texture_utils.c \
-	srcs/render/render_frame.c \
-	srcs/render/render_wall_texture.c \
-	srcs/render/sprite_draw.c \
-	srcs/render/render_sprites.c \
-	srcs/render/render_floor_ceiling.c \
-	srcs/render/render_utils.c \
+	srcs/player/player_collision.c \
+	srcs/player/player_collect_pacdots.c \
+	srcs/player/player_controller.c \
+	srcs/player/player_spawn.c \
 	srcs/render/render_menu.c \
 	srcs/render/raycast_frame.c \
 	srcs/render/render_center_hit.c \
+	srcs/render/render_fill_color.c \
+	srcs/render/render_sprites.c \
+	srcs/render/sprite_draw.c \
 	srcs/render/sprite_draw_col.c \
 	srcs/render/raycast_dda.c \
-	srcs/render/render_fill_color.c \
+	srcs/render/render_utils.c \
+	srcs/render/render_wall_texture.c \
+	srcs/render/render_floor_ceiling.c \
+	srcs/render/render_debug_symbols.c \
+	srcs/render/render_frame.c \
+	srcs/render/render_into_framebuffer.c \
 	srcs/render/debug_raycast.c \
-	srcs/player/player_collision.c \
-	srcs/player/player_controller.c \
-	srcs/player/player_collect_pacdots.c \
-	srcs/player/player_spawn.c \
-	srcs/hooks/handle_close.c \
-	srcs/hooks/handle_keys.c \
-	srcs/hooks/handle_gate_toggle.c \
-	srcs/hooks/handle_mouse.c \
-	utils/free.c  \
-	rendering/pixels.c \
+	srcs/textures/texture_parse_color.c \
+	srcs/textures/texture_utils.c \
+	srcs/textures/texture_load.c \
+	srcs/textures/texture_parse_path.c \
+	srcs/textures/texture_pick_wall.c \
+	srcs/utils/helpers.c \
+	srcs/utils/free.c \
+	srcs/utils/render_utils.c \
+	srcs/base/base_constructor.c \
+	srcs/base/base_bitmasking.c \
+	srcs/ghosts/ghost_ai.c \
+	srcs/ghosts/sprites.c  \
+	srcs/clock/time.c
 
 OBJ_DIR   = objs
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 21:17:49 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/11 22:23:57 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/04/23 14:25:10 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,18 +238,18 @@ static int	cast_debug_ray(t_game *g, int col, t_raycasting *ray)
 	return (1);
 }
 
-static t_point	debug_player_point(t_game *g)
-{
-	return (debug_world_to_screen(g->player.pos_x, g->player.pos_y));
-}
+// static t_point	debug_player_point(t_game *g)
+// {
+// 	return (debug_world_to_screen(g->player.pos.tile_pos.x, g->player.pos.tile_pos.y));
+// }
 
 static t_point	debug_hit_point(t_game *g, t_raycasting ray)
 {
 	double	hit_x;
 	double	hit_y;
 
-	hit_x = g->player.pos_x + ray.perp_wall_dist * ray.ray_dir_x;
-	hit_y = g->player.pos_y + ray.perp_wall_dist * ray.ray_dir_y;
+	hit_x = g->player.pos.tile_pos.x + ray.perp_wall_dist * ray.ray_dir_x;
+	hit_y = g->player.pos.tile_pos.y + ray.perp_wall_dist * ray.ray_dir_y;
 	return (debug_world_to_screen(hit_x, hit_y));
 }
 
@@ -271,7 +271,8 @@ void	render_raycast_debug(t_game *g)
 	if (!g)
 		return ;
 	draw_debug_map(g);
-	start = debug_player_point(g);
+	// start = debug_player_point(g);
+	start = debug_world_to_screen(g->player.pos.tile_pos.x, g->player.pos.tile_pos.y);
 	col = 0;
 	while (col < g->win.width)
 	{

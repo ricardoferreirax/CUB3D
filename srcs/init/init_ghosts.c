@@ -6,13 +6,14 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:28:58 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/10 23:30:42 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/04/23 14:49:10 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "initializer.h"
 #include "../render/render3D.h"
+#include "../ghosts/ghosts.h"
 
 static void	ghost_info(int i, int *name, char *spawn)
 {
@@ -38,66 +39,14 @@ static void	ghost_info(int i, int *name, char *spawn)
 	}
 }
 
-// static void	ghost_update_pixel_pos(t_ghost *gh) // guardar pixel_pos para o minimapa 
-// {
-// 	gh->pos.pixel_pos.x = (gh->pos.tile_pos.x + 0.5) * (double)TILE_SIZE_3D;
-// 	gh->pos.pixel_pos.y = (gh->pos.tile_pos.y + 0.5) * (double)TILE_SIZE_3D;
-// }
 
-void ghost_sprites(t_game *game, e_ghost ghost)
-{
-	game->ghosts[ghost].frames.up[0] = game->sprite_sheet.sprites[202];
-	game->ghosts[ghost].frames.up[1] = game->sprite_sheet.sprites[203];
-	game->ghosts[ghost].frames.left[0] = game->sprite_sheet.sprites[200];
-	game->ghosts[ghost].frames.left[1] = game->sprite_sheet.sprites[201];
-	game->ghosts[ghost].frames.down[0] = game->sprite_sheet.sprites[198];
-	game->ghosts[ghost].frames.down[1] = game->sprite_sheet.sprites[199];
-	game->ghosts[ghost].frames.rigth[0] = game->sprite_sheet.sprites[196];
-	game->ghosts[ghost].frames.rigth[1] = game->sprite_sheet.sprites[197];
-}
-
-void apply_new_pallete(t_point pallet_coord, t_sprite_ref *sprite)
-{
-	if(!sprite)
-		return;
-	sprite->coord.x += pallet_coord.x * 200;
-	sprite->coord.y += pallet_coord.y * 186;
-}
-
-void change_pallete(t_point pallet_coord, t_anim *frames)
-{
-	apply_new_pallete(pallet_coord, &frames->left[0]);
-	apply_new_pallete(pallet_coord, &frames->left[1]);
-	apply_new_pallete(pallet_coord, &frames->rigth[0]);
-	apply_new_pallete(pallet_coord, &frames->rigth[1]);
-	apply_new_pallete(pallet_coord, &frames->up[0]);
-	apply_new_pallete(pallet_coord, &frames->up[1]);
-	apply_new_pallete(pallet_coord, &frames->down[0]);
-	apply_new_pallete(pallet_coord, &frames->down[1]);
-	int i = 0;
-	while(i < 12)
-	{
-		apply_new_pallete(pallet_coord, &frames->death[i]);
-		i++;
-	}
-}
-
-void ghost_color(t_ghost *ghost)
-{
-	if (ghost->name == BLINKY)
-		return;
-	else if(ghost->name == PINKY)
-			change_pallete((t_point){.x = 1, .y= 0}, &ghost->frames);
-	else if(ghost->name == INKY)
-			change_pallete((t_point){.x = 2, .y= 0}, &ghost->frames);
-	else if(ghost->name == CLYDE)
-			change_pallete((t_point){.x = 3, .y= 0}, &ghost->frames);
-}
 
 t_point find_spawn(char **map, char ghost)
 {
 	t_point gate_pos;
 	gate_pos = find_c(map, GATE);
+	if(gate_pos.x < 0 || gate_pos.y < 0)
+		return gate_pos;
 	if(ghost == BLINKY_T)
 	{
 		gate_pos.y -= 1;
@@ -113,42 +62,72 @@ t_point find_spawn(char **map, char ghost)
 	return gate_pos;
 }
 
-static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char)
+static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char, int is_death)
 {
 	t_point	target_point;
 	t_point spawn_point;
-
-	// spawn_point.x = 0;
-	// spawn_point.y = 0;
-	gh->mental_map = copy_map(g->map.grid);
-	if (!gh->mental_map)
+	if(g->mode == MODE_CUBE)
+		return -1;
+	if(!is_death)
+		gh->mental_map = copy_map(g->map.grid);
+	if (!gh->mental_map && !is_death)
 		exit_game(EXIT_MALLOC, g, "init_one_ghost() was unable to copy map");
-	target_point = find_c(g->map.grid, target_char); // procura no mapa o tile 'b', 'p', 'i' ou 'c'
-	spawn_point = find_spawn(g->map.grid, target_char); // determina o tile onde o ghost deve spawnar relativamente ao gate
+	target_point = find_c(g->map.grid, target_char);
+	spawn_point = find_spawn(g->map.grid, target_char);
 	if (target_point.x < 0 || target_point.y < 0 || spawn_point.x < 0 || spawn_point.y < 0)
 		return -1;
+	if(gh->name == BLINKY && !is_death)
+		g->targets.ghost_house = spawn_point;
+	g->targets.scatter_target[gh->name] = target_point;
 	gh->pos.tile_pos.x = (double)spawn_point.x+ 0.5; // posiciona o ghost no centro do spawn tile no eixo x
 	gh->pos.tile_pos.y = (double)spawn_point.y + 0.5; // posiciona o ghost no centro do spawn tile no eixo y
 	gh->pos.pixel_pos.x = spawn_point.x * TILE_SIZE + TILE_SIZE / 2; // converte o spawn tile para pixels e centra o fanstasma no tile no eixo x
 	gh->pos.pixel_pos.y = spawn_point.y * TILE_SIZE + TILE_SIZE / 2; // converte o spawn tile para pixels e centra o fanstasma no tile no eixo y
-	// gh->pos.tile_pos.x = (double)spawn_point.x;
-	// gh->pos.tile_pos.y = (double)spawn_point.y;
-	// gh->pos.pixel_pos.x = (spawn_point.x + TILE_SIZE / 2 + TILE_SIZE / 4) * TILE_SIZE;
-	// gh->pos.pixel_pos.y = (spawn_point.y + TILE_SIZE / 2 + TILE_SIZE / 4) * TILE_SIZE;
-	// gh->pos.tile_pos.x = (double)target_point.x;
-	// gh->pos.tile_pos.y = (double)target_point.y;
-	// gh->pos.pixel_pos.x = target_point.x * 8;
-	// gh->pos.pixel_pos.y = target_point.y * 8;
-	// ghost_update_pixel_pos(gh);
-	
-	gh->invalid_dir = -1;
+	gh->invalid_dir = 3;
 	gh->target_tile = target_point;
+	gh->state = SCATTER;
+	if(gh->name == BLINKY)
+	{
+		gh->cruiser.is_blinky = 1;
+		gh->cruiser.one.enabled = 0;
+		gh->cruiser.two.enabled = 0;
+	}
+	else if(gh->name == PINKY)
+	{
+		gh->dot_counter = 7;
+		gh->cruiser.is_blinky = 0;
+	}
+	else if(gh->name == INKY)
+	{
+		gh->dot_counter = 17;
+		gh->cruiser.is_blinky = 0;
+	}
+	else if(gh->name == CLYDE)
+	{
+		gh->dot_counter = 32;
+		gh->cruiser.is_blinky = 0;
+	}
+	else
+		return -1;
+	if(is_death)
+		return 0;
 	ghost_sprites(g, gh->name);
 	ghost_color(gh);
 	return 0;
 }
 
-void	init_ghosts(t_game *g)
+void annouce_disabled(int i)
+{
+	if(i == 0)
+		ft_printf("Blinky was disabled\n");
+	if(i == 1)
+		ft_printf("Pinky was disabled\n");
+	if(i == 2)
+		ft_printf("Inky was disabled\n");
+	if(i == 3)
+		ft_printf("ClydE was disabled\n");
+}
+void	init_ghosts(t_game *g, int is_death)
 {
 	int		i;
 	int		name;
@@ -160,10 +139,13 @@ void	init_ghosts(t_game *g)
 	while (i < 4)
 	{
 		ghost_info(i, &name, &spawn);
-		ft_bzero(&g->ghosts[i], sizeof(t_ghost));
 		g->ghosts[i].name = name;
-		if(init_one_ghost(g, &g->ghosts[i], spawn) || g->mode == MODE_CUBE)
+		if(init_one_ghost(g, &g->ghosts[i], spawn, is_death) || g->mode == MODE_CUBE)
+		{
+			if(g->debug_mode)
+				annouce_disabled(i);
 			g->ghosts[i].name = DISABLED;
+		}
 		i++;
 	}
 }

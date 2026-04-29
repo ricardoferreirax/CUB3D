@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_gate_toggle.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/17 13:36:59 by pfreire-          #+#    #+#             */
+/*   Updated: 2026/03/17 13:37:00 by pfreire-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../Pac_Struct.h"
 
 static int	get_front_tile_coord(t_game *g, int *map_x, int *map_y)
@@ -7,8 +19,8 @@ static int	get_front_tile_coord(t_game *g, int *map_x, int *map_y)
 
 	if (!g || !map_x || !map_y)
 		return (0);
-	front_x = g->player.pos_x + g->player.dir_x * 0.60;
-	front_y = g->player.pos_y + g->player.dir_y * 0.60;
+	front_x = g->player.pos.tile_pos.x + g->player.dir.x * 0.60;
+	front_y = g->player.pos.tile_pos.y + g->player.dir.y * 0.60;
 	*map_x = (int)front_x;
 	*map_y = (int)front_y;
 	if (*map_x < 0 || *map_x >= g->map.width)

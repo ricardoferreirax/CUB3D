@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 22:38:39 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/10 22:42:05 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/12 12:22:15 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ static int	map_pacman_mode_prefix(char *p)
 	if (!ft_strncmp(p, "CL", 2) && is_whitespace(p[2]))
 		return (1);
 	if (!ft_strncmp(p, "GC", 2) && is_whitespace(p[2]))
+		return (1);
+	if (!ft_strncmp(p, "SC", 2) && is_whitespace(p[2]))
+		return (1);
+	if (!ft_strncmp(p, "ET", 2) && is_whitespace(p[2]))
 		return (1);
 	return (0);
 }

@@ -13,18 +13,20 @@
 #ifndef HOOKS_H
 # define HOOKS_H
 
-# define KEY_ESC 65307
-# define KEY_W 119
-# define KEY_A 97
-# define KEY_S 115
-# define KEY_D 100
-# define KEY_LEFT 65361
-# define KEY_RIGHT 65363
-# define KEY_E 101
-# define KEY_H 104
-#define KEY_M 109
-# define KEY_1 49
-# define KEY_2 50
+// # define KEY_ESC 65307
+// # define KEY_W 119
+// # define KEY_A 97
+// # define KEY_S 115
+// # define KEY_D 100
+// # define KEY_LEFT 65361
+// # define KEY_RIGHT 65363
+// # define KEY_UP 65362
+// # define KEY_DOWN 65364
+// # define KEY_E 101
+// # define KEY_H 104
+// #define KEY_M 109
+// # define KEY_1 49
+// # define KEY_2 50
 
 #define MOUSE_SENS 0.00035
 
@@ -38,11 +40,15 @@ typedef struct s_key
 	int	d;
 	int	left;
 	int	right;
+	int up;
+	int down;
 	int	esc;
 	int	e;
 	int	e_lock;
 	int	mouse_lock;
 	int mouse_hidden;
+	int k;
+	int controller_start;
 }	t_key;
 
 int		handle_close(t_game *g);

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 17:59:33 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/01 22:53:05 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/13 12:51:39 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,29 +47,32 @@ void	texture_load_cube(t_game *g)
 		texture_load_xpm(g, &g->tex.floor_img, g->tex.floor);
 	if (g->tex.ceiling)
 		texture_load_xpm(g, &g->tex.ceiling_img, g->tex.ceiling);
-	if (g->mode == MODE_PACMAN)
-	{
-		if (!g->tex.gate_close)
-			exit_game(EXIT_MAP, g, "texture_load_cube() did not found gate close texture");
-		texture_load_xpm(g, &g->tex.gate_close_img, g->tex.gate_close);
-	}
 }
 	
 void	texture_load_sprites(t_game *g)
 {
 	if (!g || !g->mlx_ptr)
-		exit_game(EXIT_MLX, g, "texture_load_sprites was given invalid pointers");
+		exit_game(EXIT_MLX, g,
+			"texture_load_sprites() was given invalid pointers");
 	if (g->mode != MODE_PACMAN)
 		return ;
 	if (!g->tex.pacdot || !g->tex.energizer
-		|| !g->tex.blinky || !g->tex.pinky
-		|| !g->tex.inky || !g->tex.clyde)
-		exit_game(EXIT_MAP, g, "texture_load_sprites() was unable to find textures");
+		|| !g->tex.blinky[0] || !g->tex.blinky[1]
+		|| !g->tex.pinky[0] || !g->tex.pinky[1]
+		|| !g->tex.inky[0] || !g->tex.inky[1]
+		|| !g->tex.clyde[0] || !g->tex.clyde[1])
+		exit_game(EXIT_MAP, g,
+			"texture_load_sprites() was unable to find textures");
 	texture_load_xpm(g, &g->tex.pacdot_img, g->tex.pacdot);
 	texture_load_xpm(g, &g->tex.energizer_img, g->tex.energizer);
-	texture_load_xpm(g, &g->tex.blinky_img, g->tex.blinky);
-	texture_load_xpm(g, &g->tex.pinky_img, g->tex.pinky);
-	texture_load_xpm(g, &g->tex.inky_img, g->tex.inky);
-	texture_load_xpm(g, &g->tex.clyde_img, g->tex.clyde);
+	texture_load_xpm(g, &g->tex.blinky_img[0], g->tex.blinky[0]);
+	texture_load_xpm(g, &g->tex.blinky_img[1], g->tex.blinky[1]);
+	texture_load_xpm(g, &g->tex.pinky_img[0], g->tex.pinky[0]);
+	texture_load_xpm(g, &g->tex.pinky_img[1], g->tex.pinky[1]);
+	texture_load_xpm(g, &g->tex.inky_img[0], g->tex.inky[0]);
+	texture_load_xpm(g, &g->tex.inky_img[1], g->tex.inky[1]);
+	texture_load_xpm(g, &g->tex.clyde_img[0], g->tex.clyde[0]);
+	texture_load_xpm(g, &g->tex.clyde_img[1], g->tex.clyde[1]);
+	texture_load_xpm(g, &g->tex.other_state_img[0], g->tex.other_state[0]);
+	texture_load_xpm(g, &g->tex.other_state_img[1], g->tex.other_state[1]);
 }
-

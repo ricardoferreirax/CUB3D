@@ -39,28 +39,29 @@ static int	count_in_map(t_game *g, char target)
 
 static void	fill_from_map(t_game *g, t_pacdot *sprites, char target)
 {
-	int	row;
-	int	col;
+	int	x;
+	int	y;
 	int	i;
 
-	row = 0;
+	y = 0;
 	i = 0;
-	while (g->map.grid[row])
+	while (g->map.grid[y])
 	{
-		col = 0;
-		while (g->map.grid[row][col])
+		x = 0;
+		while (g->map.grid[y][x])
 		{
-			if (g->map.grid[row][col] == target)
+			if (g->map.grid[y][x] == target)
 			{
-				sprites[i].x = (double)col + 0.5;
-				sprites[i].y = (double)row + 0.5;
-				sprites[i].active = 1;
-				sprites[i].eaten = false;
+				sprites[i].pos.tile_pos.x = (double)x + 0.5;
+				sprites[i].pos.tile_pos.y = (double)y + 0.5;
+				sprites[i].pos.pixel_pos.x = x * 8;
+				sprites[i].pos.pixel_pos.y = y * 8;
+				sprites[i].active = true;
 				i++;
 			}
-			col++;
+			x++;
 		}
-		row++;
+		y++;
 	}
 }
 
@@ -91,7 +92,8 @@ void	init_sprites(t_game *g)
 void	init_menu(t_game *g)
 {
 
-	g->menu_img.img_ptr = mlx_xpm_file_to_image(g->mlx_ptr, "./assets/textures/menu.xpm", &g->menu_img.width, &g->menu_img.height);
+	g->menu_img.img_ptr = mlx_xpm_file_to_image(g->mlx_ptr, "./assets/sprites/Menu.xpm", &g->menu_img.width, &g->menu_img.height);
+
 	if (!g->menu_img.img_ptr)
 		exit_game(EXIT_MLX, g, "init_menu() was unable to create img_ptr");
 	g->menu_img.img_addr = mlx_get_data_addr(g->menu_img.img_ptr, &g->menu_img.bpp,

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:19:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/08 23:08:31 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/13 09:51:09 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,35 @@ static int	parse_cube_texture_line(t_game *g, char *p)
 
 static int	parse_pacman_texture_line(t_game *g, char *p)
 {
-	if (!ft_strncmp(p, "BL", 2) && (p[2] == ' ' || p[2] == '\t'))
-		return (set_texture_path(&g->tex.blinky, p + 2, g), 1);
-	if (!ft_strncmp(p, "PI", 2) && (p[2] == ' ' || p[2] == '\t'))
-		return (set_texture_path(&g->tex.pinky, p + 2, g), 1);
-	if (!ft_strncmp(p, "IN", 2) && (p[2] == ' ' || p[2] == '\t'))
-		return (set_texture_path(&g->tex.inky, p + 2, g), 1);
-	if (!ft_strncmp(p, "CL", 2) && (p[2] == ' ' || p[2] == '\t'))
-		return (set_texture_path(&g->tex.clyde, p + 2, g), 1);
+	if (!ft_strncmp(p, "BL0", 3) && (p[3] == ' ' || p[3] == '\t'))
+		return (set_texture_path(&g->tex.blinky[0], p + 3, g), 1);
+	if (!ft_strncmp(p, "BL1", 3) && (p[3] == ' ' || p[3] == '\t'))
+		return (set_texture_path(&g->tex.blinky[1], p + 3, g), 1);
+	if (!ft_strncmp(p, "PI0", 3) && (p[3] == ' ' || p[3] == '\t'))
+		return (set_texture_path(&g->tex.pinky[0], p + 3, g), 1);
+	if (!ft_strncmp(p, "PI1", 3) && (p[3] == ' ' || p[3] == '\t'))
+		return (set_texture_path(&g->tex.pinky[1], p + 3, g), 1);
+	if (!ft_strncmp(p, "IN0", 3) && (p[3] == ' ' || p[3] == '\t'))
+		return (set_texture_path(&g->tex.inky[0], p + 3, g), 1);
+	if (!ft_strncmp(p, "IN1", 3) && (p[3] == ' ' || p[3] == '\t'))
+		return (set_texture_path(&g->tex.inky[1], p + 3, g), 1);
+	if (!ft_strncmp(p, "CL0", 3) && (p[3] == ' ' || p[3] == '\t'))
+		return (set_texture_path(&g->tex.clyde[0], p + 3, g), 1);
+	if (!ft_strncmp(p, "CL1", 3) && (p[3] == ' ' || p[3] == '\t'))
+		return (set_texture_path(&g->tex.clyde[1], p + 3, g), 1);
 	if (!ft_strncmp(p, "PD", 2) && (p[2] == ' ' || p[2] == '\t'))
 		return (set_texture_path(&g->tex.pacdot, p + 2, g), 1);
 	if (!ft_strncmp(p, "EN", 2) && (p[2] == ' ' || p[2] == '\t'))
 		return (set_texture_path(&g->tex.energizer, p + 2, g), 1);
 	if (!ft_strncmp(p, "GC", 2) && (p[2] == ' ' || p[2] == '\t'))
 		return (set_texture_path(&g->tex.gate_close, p + 2, g), 1);
+	if (!ft_strncmp(p, "SC", 2) && (p[2] == ' ' || p[2] == '\t'))
+		return (set_texture_path(&g->tex.other_state[0], p + 2, g), 1);
+	if (!ft_strncmp(p, "ET", 2) && (p[2] == ' ' || p[2] == '\t'))
+		return (set_texture_path(&g->tex.other_state[1], p + 2, g), 1);
 	return (0);
+
+
 }
 
 static void	parse_texture_line(t_game *g, char *line)
@@ -72,7 +86,8 @@ void	parse_texture_path(t_game *g, const char *path)
 	int		fd;
 	char	*line;
 
-	ft_printf("Opening file: %s\n", path);
+	if(g->debug_mode)
+		ft_printf("Opening file: %s\n", path);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		exit_game(EXIT_MAP, g, "parse_texture_path() has not found a valid fd");
@@ -91,8 +106,8 @@ void	parse_texture_path(t_game *g, const char *path)
 		exit_game(EXIT_MAP, g, "parse_texture_path() was unable to find all textures E1");
 	// if (g->mode == MODE_PACMAN)
 	// {
-	if (!g->tex.pacdot || !g->tex.energizer || !g->tex.blinky || !g->tex.pinky
-		|| !g->tex.inky || !g->tex.clyde || !g->tex.gate_close)
+	if (!g->tex.pacdot || !g->tex.energizer || !g->tex.blinky[0] || !g->tex.blinky[1]
+	|| !g->tex.pinky[0] || !g->tex.pinky[1] || !g->tex.inky[0] || !g->tex.inky[1]
+	|| !g->tex.clyde[0] || !g->tex.clyde[1])
 		exit_game(EXIT_MAP, g, "parse_texture_path() was unable to find all textures E2");
-	// }
 }

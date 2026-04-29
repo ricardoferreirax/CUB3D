@@ -29,7 +29,7 @@ int	handle_mouse_move(int x, int y, t_game *g)
 	double	angle;
 
 	(void)y;
-	if (!g || g->state == MENU)
+	if (!g || g->state == MENU || g->mode == MODE_PACMAN)
 		return (0);
 	if (g->key.mouse_lock)
 	{

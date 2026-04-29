@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 22:13:51 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/09 17:40:07 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/03/12 12:19:02 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ int	sprite_project(t_game *g, double wx, double wy, t_sprite *sp)
 	if (!g || !sp)
 		return (0);
 	dx = get_sprite_wrap_offset_x(g, wx, wy); // calcula o deslocamento do sprite no eixo x considerando o wrap do mapa
-	dy = wy - g->player.pos_y; // calcula o deslocamento do sprite no eixo y em relação ao player
-	cam_inv_det = 1.0 / (g->player.plane_x * g->player.dir_y - g->player.dir_x 
-		* g->player.plane_y);
-	depth = cam_inv_det * (-g->player.plane_y * dx + g->player.plane_x * dy); // calcula a distancia perpendicular do sprite à camera do player 
+	dy = wy - g->player.pos.tile_pos.y; // calcula o deslocamento do sprite no eixo y em relação ao player
+	cam_inv_det = 1.0 / (g->player.plane.x * g->player.dir.y - g->player.dir.x 
+		* g->player.plane.y);
+	depth = cam_inv_det * (-g->player.plane.y * dx + g->player.plane.x * dy); // calcula a distancia perpendicular do sprite à camera do player 
 	if (depth <= 0.01) // se o sprite estiver muito perto ou atrás do player, não projeta
 		return (0);
 	sp->dist = depth; // guarda a distancia do sprite 
 	sp->screen_x = (int)(g->win.width * 0.5
-			* (1.0 + (cam_inv_det * (g->player.dir_y * dx
-						- g->player.dir_x * dy)) / depth)); // calcula a posição horizontal do sprite na tela (coluna onde o centro do sprite deve ser desenhado)
+			* (1.0 + (cam_inv_det * (g->player.dir.y * dx
+						- g->player.dir.x * dy)) / depth)); // calcula a posição horizontal do sprite na tela (coluna onde o centro do sprite deve ser desenhado)
 	return (1); // projeção bem sucedida
 }
 

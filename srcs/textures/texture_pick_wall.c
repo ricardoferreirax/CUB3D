@@ -15,14 +15,14 @@
 
 unsigned int	tex_pixel(t_image *tex, int x, int y)
 {
-	unsigned int	*data;
 	int				stride;
+	unsigned int *data;
 
 	stride = tex->l_len / 4; // o nr de pixels por linha (l_len é o nr de bytes por linha, dividindo por 4 obtemos o número de pixels)
 
 	if(!tex->img_addr)
 		return 128;
-	data = (unsigned int *)tex->img_addr; // converte o img_addr para um unsigned int, onde cada int representa a cor de um pixel
+	data = (unsigned int *)tex->img_addr;
 	return (data[y * stride + x]); // devolve a cor do pixel na posição (x, y) da textura calculando o índice como y * stride + x
 }
 

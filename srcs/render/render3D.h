@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/11 22:08:57 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/04/23 14:07:31 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ typedef struct s_ghost	t_ghost;
 
 #define FLOOR_START_OFFSET 2
 #define FLOOR_MIN_DIST 4.0
+
+#define X_POS 1920 / 2 - 100 
+#define Y_POS 1080 / 2 + 100
 
 #endif
 
@@ -57,9 +60,15 @@ void	fill_ceiling_color(t_image *img, int color, int horizon);
 void	sprite_draw(t_game *g, t_sprite *b, t_image *tex);
 int	sprite_project(t_game *g, double x, double y, t_sprite *b);
 int	sprite_build(t_game *g, t_sprite *b, int size_div);
-t_image	*ghost_tex(t_game *g, t_ghost *gh);
 void	render_all_sprites(t_game *g);
 int	sprite_draw_col(t_game *g, t_sprite *b, int x, t_image *tex);
 int	clamp_int(int value, int min, int max);
 int	clamp_tex_coord(int value, int max);
 void	render_raycast_debug(t_game *g);
+int	ghost_anim_frame(t_ghost *gh);
+t_image	*ghost_tex(t_game *g, t_ghost *gh);
+void	render_sprite_into_framebuffer(t_game *game, t_point coord,
+		t_sprite_ref *sprite);
+
+void render_debug_symbols(t_game *game);
+void	render_into_framebuffer(t_game *game);
