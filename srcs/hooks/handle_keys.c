@@ -17,7 +17,7 @@ static int	handle_menu_key(int keycode, t_game *g)
 {
 	if (keycode == 65307)
 		handle_close(g);
-	else if (keycode == 49)
+	else if (keycode == 49 || g->key.controller_start == 1)
 		start_game_mode(g, MODE_PACMAN);
 	else if (keycode == 50)
 		start_game_mode(g, MODE_CUBE);
@@ -44,9 +44,9 @@ int	handle_key_press(int keycode, t_game *g)
 		g->key.left = 1;
 	else if (keycode == 65363)
 		g->key.right = 1;
-	else if(keycode == 65362)
+	else if (keycode == 65362)
 		g->key.up = 1;
-	else if(keycode == 65364)
+	else if (keycode == 65364)
 		g->key.down = 1;
 	else if (keycode == 101 && g->mode == MODE_CUBE)
 		g->key.e = 1;
@@ -84,9 +84,9 @@ int	handle_key_release(int keycode, t_game *g)
 		g->key.left = 0;
 	else if (keycode == 65363)
 		g->key.right = 0;
-	else if(keycode == 65362)
+	else if (keycode == 65362)
 		g->key.up = 0;
-	else if(keycode == 65364)
+	else if (keycode == 65364)
 		g->key.down = 0;
 	else if (keycode == 101)
 	{

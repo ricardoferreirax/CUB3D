@@ -87,8 +87,6 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char, int is_death
 	gh->invalid_dir = 3;
 	gh->target_tile = target_point;
 	gh->state = SCATTER;
-	if(is_death)
-		return 0;
 	if(gh->name == BLINKY)
 	{
 		gh->cruiser.is_blinky = 1;
@@ -112,6 +110,8 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char, int is_death
 	}
 	else
 		return -1;
+	if(is_death)
+		return 0;
 	ghost_sprites(g, gh->name);
 	ghost_color(gh);
 	return 0;

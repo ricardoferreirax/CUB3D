@@ -47,6 +47,8 @@ typedef struct s_key
 	int	e_lock;
 	int	mouse_lock;
 	int mouse_hidden;
+	int k;
+	int controller_start;
 }	t_key;
 
 int		handle_close(t_game *g);

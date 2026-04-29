@@ -151,6 +151,8 @@ void	free_game(t_game *g)
 		free(g->mlx_ptr);
 		g->mlx_ptr = NULL;
 	}
+	if(g->controller_fd != -1)
+		close(g->controller_fd);
 	free(g);
 }
 

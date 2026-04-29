@@ -279,6 +279,8 @@ typedef struct s_time
 	long last_time_up;
 	long accumulator;
 	long start_time;
+	int mode;
+	int times[8];
 }	t_timer;
 
 typedef struct s_pacdot
@@ -359,6 +361,7 @@ typedef struct s_lvl_config
 	int pacman_frightened_speed;
 	double frightened_time;
 	int bonus_fruit_points;
+	int time[8];
 } t_lvl_config;
 
 typedef struct s_interest_points

@@ -19,7 +19,6 @@ void	breakpoint(void)
 {
 	int	i;
 
-
 	i = 0;
 	i++;
 	(void)i;
@@ -43,8 +42,8 @@ void	segfault_func(t_game *game)
 	char	*arr;
 	int		i;
 
-	if(game->level <= 255)
-		return;
+	if (game->level <= 255)
+		return ;
 	free_game(game);
 	arr = NULL;
 	i = 0;
@@ -105,7 +104,9 @@ void	controller_player(t_game *game)
 				game->key.right = event.value;
 			// R1 → M
 			else if (event.code == BTN_TR)
-				game->key.e = event.value;
+				game->key.k = event.value;
+			else if (event.code == BTN_START)
+				game->key.controller_start = event.value;
 		}
 		if (event.type == EV_ABS)
 		{
@@ -126,7 +127,6 @@ void	controller_player(t_game *game)
 	}
 }
 
-
 int	gameloop(t_game *game)
 {
 	long	now;
@@ -141,13 +141,17 @@ int	gameloop(t_game *game)
 	if (now - game->timer.last_time_up < UPDATE_F)
 		return (0);
 	game->timer.last_time_up = now;
-	if(game->state == PLAY && now - game->timer.mode_time_start > (long)(game->timer.mode_timer) * 1000000.0)
+	if (game->timer.mode < 8 && game->state == PLAY
+		&& game->timer.times[game->timer.mode] >= 0 && now
+		- game->timer.mode_time_start > (long)(game->timer.times[game->timer.mode])
+		* 1000000.0)
 	{
-		if(game->debug_mode)
-			ft_printf("Changing Global State at %d\n", now);
-		if(game->global_state == SCATTER)
+		if (game->debug_mode)
+			printf("Changing Global State at %ld\n", now);
+		game->timer.mode++;
+		if (game->global_state == SCATTER)
 			game->global_state = CHASE;
-		else if(game->global_state == CHASE)
+		else if (game->global_state == CHASE)
 			game->global_state = SCATTER;
 		game->timer.mode_time_start = now;
 	}
@@ -176,9 +180,10 @@ bool	wrong_args(t_game *game, int ac, char **argv)
 		{
 			num = ft_atoi(argv[i]);
 			if (num <= 0)
-				return (printf("Input a Number for Controller Event ID\n"), true);
+				return (printf("Input a Number for Controller Event ID.\nController Event ID cannot be \"0\".\n"),
+					true);
 			path = ft_strjoin("/dev/input/event", argv[i]);
-			printf("%s\n", path);
+			printf("Looking for Controller: %s\n", path);
 			if (!path)
 				return (printf("Malloc Failed?"), true);
 			game->controller_fd = open(path, O_RDONLY | O_NONBLOCK);
@@ -191,21 +196,30 @@ bool	wrong_args(t_game *game, int ac, char **argv)
 	return (false);
 }
 
+bool	print_usage(void)
+{
+	ft_printf("Unkown arguments found\n");
+	ft_printf("Usage: ./cub3d [FILE]... [OPTIONS]...\n");
+	ft_printf("Runs Pac-Man 3D using X11\n");
+	ft_printf("\n\n\tdebug_mode=y\tRuns the game in Debug Mode\n");
+	ft_printf("\t[XX]\t\tSpecify a number for the controller event file. (see README.md for more details)\n");
+	ft_printf("\n\n\tExamples:\n\t./cub3d map.cub 12 debug_mode=y\n");
+	ft_printf("\t./cub3d ./path/to/file.cub\n");
+	ft_printf("\t./cub3d map.cub debug_mode=y\n");
+	return (true);
+}
+
 int	main(int ac, char **av)
 {
 	t_game	*game;
 
-	// (void)av;
 	if ((ac > 4 || ac < 2))
-		return (ft_printf("Wrong args\n"), -1);
+		return (print_usage(), -1);
 	game = ft_calloc(sizeof(t_game), 1);
 	if (!game)
 		exit_game(EXIT_MALLOC, NULL, "main() failed to allocate game");
-	if(wrong_args(game, ac, av))
+	if (wrong_args(game, ac, av) && print_usage())
 		exit_game(EXIT_FAILURE, game, "Wrong Args");
-	// game->debug_mode = false;
-	// if (ac == 3)
-	// 	game->debug_mode = true;
 	init(game, av[1]);
 	mlx_hook(game->win.win_ptr, 2, 1L << 0, handle_key_press, game);
 	mlx_hook(game->win.win_ptr, 3, 1L << 1, handle_key_release, game);
