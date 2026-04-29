@@ -26,4 +26,5 @@ int	pixel_get(t_image *data, int x, int y);
 char **remove_char(char **array);
 int	distance_to_target(t_ghost *ghost, int dy, int dx);
 int	distance_squared(t_double_point a, t_double_point b);
+bool	print_usage(void);
 #endif //  HELPERS_H

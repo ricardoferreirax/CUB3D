@@ -14,16 +14,7 @@
 #include "srcs/map/map3D.h"
 #include "srcs/render/render3D.h"
 #include "srcs/textures/textures3D.h"
-
-void	breakpoint(void)
-{
-	int	i;
-
-	i = 0;
-	i++;
-	(void)i;
-	// do nothing
-}
+#include "srcs/utils/helpers.h"
 
 void	print_2d(char **arr)
 {
@@ -160,6 +151,8 @@ int	gameloop(t_game *game)
 	return (render_frame(game), 0);
 }
 
+
+
 bool	wrong_args(t_game *game, int ac, char **argv)
 {
 	int		i;
@@ -196,18 +189,6 @@ bool	wrong_args(t_game *game, int ac, char **argv)
 	return (false);
 }
 
-bool	print_usage(void)
-{
-	ft_printf("Unkown arguments found\n");
-	ft_printf("Usage: ./cub3d [FILE]... [OPTIONS]...\n");
-	ft_printf("Runs Pac-Man 3D using X11\n");
-	ft_printf("\n\n\tdebug_mode=y\tRuns the game in Debug Mode\n");
-	ft_printf("\t[XX]\t\tSpecify a number for the controller event file. (see README.md for more details)\n");
-	ft_printf("\n\n\tExamples:\n\t./cub3d map.cub 12 debug_mode=y\n");
-	ft_printf("\t./cub3d ./path/to/file.cub\n");
-	ft_printf("\t./cub3d map.cub debug_mode=y\n");
-	return (true);
-}
 
 int	main(int ac, char **av)
 {

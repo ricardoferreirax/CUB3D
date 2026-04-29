@@ -21,7 +21,7 @@ void	exit_game(int errcode, t_game *g, char *str)
 	else if (errcode == EXIT_MALLOC)
 		ft_dprintf(2, "\nError: malloc failed\n");
 	else if (errcode == EXIT_MLX)
-		ft_dprintf(2, "\n%s\nError: MLX failed\n");
+		ft_dprintf(2, "\nError: MLX failed\n");
 	else if (errcode == EXIT_MAP)
 		ft_dprintf(2, "\nError: map parsing failed\n");
 	else if (errcode == EXIT_INPUT)
@@ -71,6 +71,8 @@ static void	free_texture_paths(t_game *g)
 	free_str(&g->tex.clyde[0]);
 	free_str(&g->tex.clyde[1]);
 	free_str(&g->tex.gate_close);
+	free_str(&g->tex.other_state[0]);
+	free_str(&g->tex.other_state[1]);
 }
 
 static void	destroy_all_images(t_game *g)
@@ -96,6 +98,8 @@ static void	destroy_all_images(t_game *g)
 	destroy_img(g, &g->tex.inky_img[1]);
 	destroy_img(g, &g->tex.clyde_img[0]);
 	destroy_img(g, &g->tex.clyde_img[1]);
+	destroy_img(g, &g->base);
+	destroy_img(g, &g->sprite_sheet.sprite_img);
 }
 
 static void	free_pacman_arrays(t_game *g)

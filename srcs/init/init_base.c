@@ -44,4 +44,5 @@ void	init_base(t_game *s)
 		}
 		point.y++;
 	}
+	free_2d((void**)parsed_map.grid);
 }

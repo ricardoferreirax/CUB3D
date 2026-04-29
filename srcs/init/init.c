@@ -170,5 +170,6 @@ void	init(t_game *g, char *path)
 		ft_printf("Loaded %d sprites\n", sprites);
 	init_player(g, 0);
 	init_base(g);
+
 	set_lvl(g);
 }

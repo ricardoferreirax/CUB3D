@@ -116,3 +116,19 @@ int	distance_squared(t_double_point a, t_double_point b)
 	int dy = a.y - b.y;
 	return (dx * dx + dy * dy);
 }
+
+
+bool	print_usage(void)
+{
+	ft_printf("Unkown arguments found\n");
+	ft_printf("Usage: ./cub3d [FILE]... [OPTIONS]...\n");
+	ft_printf("Runs Pac-Man 3D using X11\n");
+	ft_printf("\n\n\tdebug_mode=y\tRuns the game in Debug Mode\n");
+	ft_printf("\t[XX]\t\tSpecify a number for the controller event file.");
+	ft_printf(" (see README.md for more details)\n");
+	ft_printf("\n\n\tExamples:\n\t./cub3d map.cub 12 debug_mode=y\n");
+	ft_printf("\t./cub3d ./path/to/file.cub\n");
+	ft_printf("\t./cub3d map.cub debug_mode=y\n");
+	return (true);
+}
+

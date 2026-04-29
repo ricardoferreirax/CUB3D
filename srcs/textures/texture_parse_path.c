@@ -104,8 +104,6 @@ void	parse_texture_path(t_game *g, const char *path)
 	close(fd);
 	if (!g->tex.no || !g->tex.so || !g->tex.we || !g->tex.ea)
 		exit_game(EXIT_MAP, g, "parse_texture_path() was unable to find all textures E1");
-	// if (g->mode == MODE_PACMAN)
-	// {
 	if (!g->tex.pacdot || !g->tex.energizer || !g->tex.blinky[0] || !g->tex.blinky[1]
 	|| !g->tex.pinky[0] || !g->tex.pinky[1] || !g->tex.inky[0] || !g->tex.inky[1]
 	|| !g->tex.clyde[0] || !g->tex.clyde[1])
