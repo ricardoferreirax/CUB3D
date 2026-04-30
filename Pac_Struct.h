@@ -291,7 +291,7 @@ typedef struct s_pacdot
 
 typedef struct s_sheet
 {
-	t_sprite_ref *sprites;
+	t_sprite_ref sprites[256];
 	t_image sprite_img;
 }	t_sprite_sheet;
 

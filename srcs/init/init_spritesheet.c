@@ -27,7 +27,7 @@ int	init_spritesheet(t_game *game)
 	t_point	control;
 	int		i;
 
-	game->sprite_sheet.sprites = malloc(sizeof(t_sprite_ref) * 256);
+	// game->sprite_sheet.sprites = malloc(sizeof(t_sprite_ref) * 256);
 	i = 0;
 	control.y = 1;
 	while (control.y <= 74)

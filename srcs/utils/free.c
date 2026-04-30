@@ -98,6 +98,8 @@ static void	destroy_all_images(t_game *g)
 	destroy_img(g, &g->tex.inky_img[1]);
 	destroy_img(g, &g->tex.clyde_img[0]);
 	destroy_img(g, &g->tex.clyde_img[1]);
+	destroy_img(g, &g->tex.other_state_img[0]);
+	destroy_img(g, &g->tex.other_state_img[1]);
 	destroy_img(g, &g->base);
 	destroy_img(g, &g->sprite_sheet.sprite_img);
 }
@@ -130,6 +132,12 @@ static void	free_pacman_arrays(t_game *g)
 	}
 }
 
+void free_ghost(t_ghost *ghost)
+{
+	free_2d((void **)ghost->mental_map);
+}
+
+
 void	free_game(t_game *g)
 {
 	if (!g)
@@ -155,6 +163,9 @@ void	free_game(t_game *g)
 		free(g->mlx_ptr);
 		g->mlx_ptr = NULL;
 	}
+	int i = -1;
+	while(++i < 4)
+		free_ghost(&g->ghosts[i]);
 	if(g->controller_fd != -1)
 		close(g->controller_fd);
 	free(g);
