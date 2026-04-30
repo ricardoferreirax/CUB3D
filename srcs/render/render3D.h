@@ -33,6 +33,9 @@ typedef struct s_ghost	t_ghost;
 #define X_POS 1920 / 2 - 100 
 #define Y_POS 1080 / 2 + 100
 
+// #define X_POS 1920 / 2 - 100 
+// #define Y_POS 0
+
 #endif
 
 #include "../../Pac_Struct.h"

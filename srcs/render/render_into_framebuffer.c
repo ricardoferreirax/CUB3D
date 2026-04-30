@@ -20,10 +20,10 @@ void	render_base_into_framebuffer(t_game *s)
 	unsigned int	color;
 
 	y = 0;
-	while (y < s->base.height)
+	while (y < s->base.height && y + Y_POS < s->win.height)
 	{
 		x = 0;
-		while (x < s->base.width)
+		while (x < s->base.width && x + X_POS < s->win.width)
 		{
 			color = pixel_get(&s->base, x, y);
 			if ((color >> 24) != 0xFF)
@@ -41,10 +41,10 @@ void	render_sprite_into_framebuffer(t_game *game, t_point coord,
 	unsigned int	color;
 
 	point.y = 0;
-	while (point.y < sprite->height)
+	while (point.y < sprite->height && point.y + coord.y < game->win.frame_buffer.height)
 	{
 		point.x = 0;
-		while (point.x < sprite->width)
+		while (point.x < sprite->width && point.x + coord.x < game->win.frame_buffer.width)
 		{
 			color = pixel_get(&game->sprite_sheet.sprite_img, point.x
 					+ sprite->coord.x, point.y + sprite->coord.y);
