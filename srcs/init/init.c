@@ -65,14 +65,11 @@ void	set_lvl(t_game *game)
 	game->player.speed_multiplier = g_lvl_config[lvl].pacman_speed;
 	game->player.frightened_speed = g_lvl_config[lvl].pacman_frightened_speed;
 	game->timer.mode = 0;
-	i = 0;
-	while(i <  8)
-	{
+	i = -1;
+	while(++i <  8)
 		game->timer.times[i] = g_lvl_config[lvl].time[i];
-		i++;
-	}
-	i = 0;
-	while (i < 4)
+	i = -1;
+	while (++i < 4)
 	{
 		game->ghosts[i].cruiser = g_lvl_config[lvl].elroy;
 		if (game->ghosts[i].name == BLINKY)
@@ -80,7 +77,6 @@ void	set_lvl(t_game *game)
 		game->ghosts[i].speed_multiplier = g_lvl_config[lvl].ghost_speed;
 		game->ghosts[i].speed_frightened = g_lvl_config[lvl].ghost_frightened_speed;
 		game->ghosts[i].speed_tunnel = g_lvl_config[lvl].ghost_tunnel_speed;
-		i++;
 	}
 }
 
@@ -143,16 +139,36 @@ void	init_execution(t_game *g)
 			"init_execution() had failed to allocate memory E2");
 }
 
+int init_game_grid(t_game *game, char **temp)
+{
+	game->map.grid = ft_calloc(sizeof(char *), game->map.height + 1);
+	if(!game->map.grid)
+		return -1;
+	int i = 0;
+	while(temp && temp[i])
+	{
+		game->map.grid[i] = ft_calloc(sizeof(char), game->map.width + 1);
+		if(!game->map.grid[i])
+			return -1;
+		ft_memcpy(game->map.grid[i], temp[i], ft_strlen(temp[i]));
+		i++;
+	}
+	return 0;
+}
+
 void	init_map(t_game *g, const char *path)
 {
+	char **temp;
 	parse_texture_path(g, path);
 	if (g->map.grid)
 		free_2d((void *)g->map.grid);
-	g->map.grid = load_map_from_cub(g, path);
-	if (!g->map.grid)
+	temp = load_map_from_cub(g, path);
+	if (!temp)
 		exit_game(EXIT_MAP, g, "parse() has not found a grid");
-	g->map.height = ytile(g->map.grid);
-	g->map.width = xtile(g->map.grid);
+	g->map.height = ytile(temp);
+	g->map.width = xtile(temp);
+	if(init_game_grid(g, temp))
+		exit_game(EXIT_MALLOC, g, "SOmething broke");
 	map_validate_chars(g);
 }
 

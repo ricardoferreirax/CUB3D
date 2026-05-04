@@ -125,6 +125,8 @@ int	which_wall(char **original_map, t_map map, t_point *coord)
 	int final = find_sprite(mask);
 	char **temp;
 	temp = copy_map(map.grid);
+	if(!temp)
+		return -1;
 	if(final == 0)
 		final = disambiguation(player_spawn(original_map), temp, *coord);
 	if(original_map[coord->y][coord->x] == 'M')
@@ -136,6 +138,8 @@ int	which_wall(char **original_map, t_map map, t_point *coord)
 int	which_tile(char **original_map, t_map *map, t_point coord, bool debug)
 {
 	int tile;
+	if(map->grid[coord.y][coord.x] == '\0')
+		return(10);
 	if (map->grid[coord.y][coord.x] == '1')
 	{
 

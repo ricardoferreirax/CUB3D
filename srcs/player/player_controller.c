@@ -148,19 +148,29 @@ static void	player_apply_action(t_game *g, t_player_action act)
 		player_rotate(g, -ROT_SPEED);
 }
 
-bool	can_move(t_game *game, int dir)
+static bool safe_is_wall(t_map map, int y, int x)
 {
-	int direction[4][2] = {
-		{-1, 0}, // 0 = up
-		{0, -1}, // 1 = left
-		{1, 0},  // 2 = down
-		{0, 1}   // 3 = right
-	};
-	if (game->map.grid[(int)game->player.pos.tile_pos.y
-		+ direction[dir][0]][(int)game->player.pos.tile_pos.x
-		+ direction[dir][1]] == '1')
-		return (false);
-	return (true);
+    if (y < 0 || y >= map.height) return true; // treat out of bounds as blocked
+    if (x < 0) return true;
+    if (x >= (int)ft_strlen(map.grid[y])) return true;
+    return map.grid[y][x] == '1';
+}
+
+bool can_move(t_game *game, int dir)
+{
+    static int direction[4][2] = {
+        {-1, 0}, // up
+        {0, -1}, // left
+        {1, 0},  // down
+        {0, 1}   // right
+    };
+
+    int y = (int)game->player.pos.tile_pos.y + direction[dir][0];
+    int x = (int)game->player.pos.tile_pos.x + direction[dir][1];
+
+    if (safe_is_wall(game->map, y, x))
+        return false;
+    return true;
 }
 
 void	player_move(t_game *game, int dir)

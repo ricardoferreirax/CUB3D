@@ -53,6 +53,7 @@ void	reset_game(t_game *game, int is_death)
 {
 	int	i;
 
+	sleep(2);
 	if (game->mode == MODE_CUBE)
 		return ;
 	if (is_death)
@@ -173,8 +174,7 @@ bool	wrong_args(t_game *game, int ac, char **argv)
 		{
 			num = ft_atoi(argv[i]);
 			if (num <= 0)
-				return (printf("Input a Number for Controller Event ID.\nController Event ID cannot be \"0\".\n"),
-					true);
+				return (printf("Input a valid integer for Controller Event ID.\n"), true);
 			path = ft_strjoin("/dev/input/event", argv[i]);
 			printf("Looking for Controller: %s\n", path);
 			if (!path)

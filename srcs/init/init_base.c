@@ -21,10 +21,6 @@ void	init_base(t_game *s)
 	t_point			point;
 	unsigned int	color;
 
-	t_map parsed_map;
-	parsed_map.grid = remove_char(s->map.grid);
-	parsed_map.height = s->map.height;
-	parsed_map.width = s->map.width - 1;
 	color = 0;
 	point.x = 0;
 	point.y = 0;
@@ -33,16 +29,17 @@ void	init_base(t_game *s)
 			&s->base.l_len, &s->base.endian);
 	s->base.width = s->map.width * TILE_SIZE;
 	s->base.height = s->map.height * TILE_SIZE;
-	while (s->map.grid[point.y])
+	while (point.y < s->map.height)
 	{
 		point.x = 0;
-		while (s->map.grid[point.y][point.x])
+		while (point.x < s->map.width)
 		{
-			tile = which_tile(s->map.grid, &parsed_map, point, s->debug_mode);
+			tile = which_tile(s->map.grid, &s->map, point, s->debug_mode);
+			if(tile == -1)
+				exit_game(EXIT_MALLOC, s, "init_base(): Something when very wrong in tile selection");
 			put_tile_inbase(s, tile, color, point);
 			point.x++;
 		}
 		point.y++;
 	}
-	free_2d((void**)parsed_map.grid);
 }

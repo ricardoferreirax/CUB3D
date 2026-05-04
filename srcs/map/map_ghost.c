@@ -53,17 +53,19 @@ char	**copy_map(char **map_grid)
 	char	**map_copy;
 	int		row;
 	int		height;
+	int		width;
 
 	if (!map_grid)
 		return (NULL);
 	height = ytile(map_grid);
+	width = xtile(map_grid);
 	map_copy = ft_calloc((size_t)height + 1, sizeof(char *));
 	if (!map_copy)
 		return (NULL);
 	row = 0;
 	while (row < height)
 	{
-		map_copy[row] = ft_calloc(ft_strlen(map_grid[row]) + 1, sizeof(char));
+		map_copy[row] = ft_calloc(width + 1, sizeof(char));
 		if (!map_copy[row])
 			return (free_copy_partial(map_copy, row), NULL);
 		copy_map_row(map_copy[row], map_grid[row]);
@@ -84,11 +86,7 @@ t_point	find_c(char **map_grid, char target)
 		while (map_grid[cord.y][cord.x])
 		{
 			if (map_grid[cord.y][cord.x] == target)
-			{
-				// cord.x *= 2;
-				// cord.y *= 2;
 				return (cord);
-			}
 			cord.x++;
 		}
 		cord.y++;
