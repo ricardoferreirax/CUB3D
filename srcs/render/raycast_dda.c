@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   perform_dda.c                                      :+:      :+:    :+:   */
+/*   raycast_dda.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 21:39:40 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/07 21:45:17 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/04 16:22:16 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 #include "render3D.h"
 
+// Advances the ray to the next map cell using one step of the DDA algorithm.
+// side_dist_x stores the distance from the player to the next vertical grid
+// line. side_dist_y stores the distance from the player to the next horizontal
+// grid line.
+// If side_dist_x is smaller, the ray reaches a vertical grid line first, so
+// the algorithm advances one tile on the X axis. Otherwise, it advances one
+// tile on the Y axis.
+// hit_side is saved because it tells the renderer which kind of wall was hit:
+// 0 means the ray crossed an X boundary, so the wall is an east/west wall;
+// 1 means the ray crossed a Y boundary, so the wall is a north/south wall.
 static void	ray_step(t_game *g)
 {
 	if (g->ray.side_dist_x < g->ray.side_dist_y)
@@ -29,6 +39,19 @@ static void	ray_step(t_game *g)
 	}
 }
 
+// Checks whether the ray is still inside a valid map area after moving.
+// This function implements horizontal wrapping, used for Pac-Man style.
+// A normal raycaster would stop when the ray leaves the map bounds.
+// Some rows can connect the left and right edges of the map.
+// If the current row supports wrapping: when the ray exits before column 0, 
+// it is moved to the last valid column; when the ray exits after the last column,
+// it is moved back to column 0.
+// If the row does not support wrapping, the function only accepts positions
+// between column 0 and the last valid column of that row.
+// This is important because map rows may have different lengths, especially
+// if the map is parsed with irregular line sizes.
+// Return 1 means the ray position is valid and DDA can continue;
+// Return 0 means the ray left the playable/map area and DDA should stop.
 static int	ray_validate_wrap_x(t_game *g)
 {
 	int	last;
@@ -50,6 +73,20 @@ static int	ray_validate_wrap_x(t_game *g)
 	return (1);
 }
 
+// Runs the DDA loop for the current ray until a blocking tile is hit.
+// The ray starts in the player's current map cell. On each loop iteration,
+// ray_step() moves it to the next cell crossed by the ray direction.
+// After each step, the position is validated. This protects the raycaster from
+// reading outside the map array and also applies horizontal wrapping when the
+// ray crosses a tunnel row.
+// The ray stops if the tile blocks vision.
+// A closed gate: GATE blocks the ray only when gate_passable == 0.
+// A solid map tile: any tile classified as TILE_SOLID blocks the ray.
+// When a blocking tile is found, the tile type is saved in hit_tile so the
+// renderer can choose the correct texture.
+// The loop limit prevents infinite ray traversal.
+// Returns 1 if the ray hit a blocking tile;
+// Returns 0 if the ray stopped without finding a valid wall hit.
 int	raycast_dda(t_game *g)
 {
 	int		i;
