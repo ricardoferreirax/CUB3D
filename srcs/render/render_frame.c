@@ -6,13 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 19:44:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/04/23 14:42:00 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/05 20:54:53 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
-#include "render3D.h"
 #include "../ghosts/ghosts.h"
+#include "render3D.h"
 
 void	clear_sprite_z(t_game *g)
 {
@@ -44,7 +44,6 @@ void	render_frame(t_game *game)
 	clear_sprite_z(game);
 	render_all_sprites(game);
 	render_into_framebuffer(game);
-	// printf("Pacdots eaten: %d -- Pacdots Left %d -- Total %d\n", game->player.collected_dots, game->pacdot_count - game->player.collected_dots, game->pacdot_count);
 	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr,
 		game->win.frame_buffer.img_ptr, 0, 0);
 }

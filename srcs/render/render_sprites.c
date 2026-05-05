@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 22:09:52 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/13 09:53:29 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/05 21:04:56 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static void	draw_pacdots(t_game *g)
 	{
 		if (g->pacdots[i].active)
 		{
-			if (sprite_project(g, g->pacdots[i].pos.tile_pos.x, g->pacdots[i].pos.tile_pos.y, &box))
+			if (sprite_project(g, g->pacdots[i].pos.tile_pos.x,
+					g->pacdots[i].pos.tile_pos.y, &box))
 			{
 				if (sprite_build(g, &box, 6))
 					sprite_draw(g, &box, &g->tex.pacdot_img);
@@ -47,7 +48,8 @@ static void	draw_energizers(t_game *g)
 	{
 		if (g->energizers[i].active)
 		{
-			if (sprite_project(g, g->energizers[i].pos.tile_pos.x, g->energizers[i].pos.tile_pos.y, &box))
+			if (sprite_project(g, g->energizers[i].pos.tile_pos.x,
+					g->energizers[i].pos.tile_pos.y, &box))
 			{
 				if (sprite_build(g, &box, 3))
 					sprite_draw(g, &box, &g->tex.energizer_img);
