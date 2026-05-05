@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/04/23 14:07:31 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/05 17:34:10 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,13 @@ typedef struct s_ghost	t_ghost;
 #define X_POS 1920 / 2 - 100 
 #define Y_POS 1080 / 2 + 100
 
-// #define X_POS 1920 / 2 - 100 
-// #define Y_POS 0
-
 #endif
 
 #include "../../Pac_Struct.h"
 
 void	render_frame(t_game *game);
 void	raycast_frame(t_game *g);
-int	raycast_dda(t_game *g);
+int		raycast_find_wall(t_game *g);
 int		register_center_hit(t_game *g, int screen_x, int hit_found);
 void	put_pixel_fast(t_image *img, int x, int y, int color);
 void	render_wall_column(t_game *g, int screen_x);
@@ -52,7 +49,7 @@ void	render_menu(t_game *g);
 double	fract_pos(double x);
 void	ray_init_steps(t_game *g);
 void	ray_init(t_game *g, int col);
-void ray_perp_wall_distance(t_game *g);
+void 	ray_perp_wall_distance(t_game *g);
 void	ray_draw_range(t_game *g);
 
 unsigned int	tex_pixel(t_image *tex, int x, int y);
@@ -61,17 +58,17 @@ void	parse_floor_ceiling_line(t_game *g, char id, char *value);
 void	fill_floor_color(t_image *img, int color, int horizon);
 void	fill_ceiling_color(t_image *img, int color, int horizon);
 void	sprite_draw(t_game *g, t_sprite *b, t_image *tex);
-int	sprite_project(t_game *g, double x, double y, t_sprite *b);
-int	sprite_build(t_game *g, t_sprite *b, int size_div);
+int		sprite_project(t_game *g, double x, double y, t_sprite *b);
+int		sprite_build(t_game *g, t_sprite *b, int size_div);
 void	render_all_sprites(t_game *g);
-int	sprite_draw_col(t_game *g, t_sprite *b, int x, t_image *tex);
-int	clamp_int(int value, int min, int max);
-int	clamp_tex_coord(int value, int max);
+int		sprite_draw_col(t_game *g, t_sprite *b, int x, t_image *tex);
+int		clamp_int(int value, int min, int max);
+int		clamp_tex_coord(int value, int max);
 void	render_raycast_debug(t_game *g);
-int	ghost_anim_frame(t_ghost *gh);
+int		ghost_anim_frame(t_ghost *gh);
 t_image	*ghost_tex(t_game *g, t_ghost *gh);
 void	render_sprite_into_framebuffer(t_game *game, t_point coord,
 		t_sprite_ref *sprite);
 
-void render_debug_symbols(t_game *game);
+void 	render_debug_symbols(t_game *game);
 void	render_into_framebuffer(t_game *game);

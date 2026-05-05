@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/11 21:17:49 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/04/23 14:25:10 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/05 17:33:34 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ static int	cast_debug_ray(t_game *g, int col, t_raycasting *ray)
 	saved = g->ray;
 	ray_init(g, col);
 	ray_init_steps(g);
-	if (!raycast_dda(g))
+	if (!raycast_find_wall(g))
 		return (g->ray = saved, 0);
 	ray_perp_wall_distance(g);
 	ray_draw_range(g);
@@ -237,11 +237,6 @@ static int	cast_debug_ray(t_game *g, int col, t_raycasting *ray)
 	g->ray = saved;
 	return (1);
 }
-
-// static t_point	debug_player_point(t_game *g)
-// {
-// 	return (debug_world_to_screen(g->player.pos.tile_pos.x, g->player.pos.tile_pos.y));
-// }
 
 static t_point	debug_hit_point(t_game *g, t_raycasting ray)
 {
@@ -271,7 +266,6 @@ void	render_raycast_debug(t_game *g)
 	if (!g)
 		return ;
 	draw_debug_map(g);
-	// start = debug_player_point(g);
 	start = debug_world_to_screen(g->player.pos.tile_pos.x, g->player.pos.tile_pos.y);
 	col = 0;
 	while (col < g->win.width)

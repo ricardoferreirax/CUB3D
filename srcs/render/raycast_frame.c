@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/05 17:20:43 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/05 17:32:25 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ void	raycast_frame(t_game *g)
 	{
 		ray_init(g, col);
 		ray_init_steps(g);
-		if (raycast_dda(g))
+		if (raycast_find_wall(g))
 		{
 			ray_perp_wall_distance(g);
 			ray_draw_range(g);

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 21:39:40 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/04 16:22:16 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/05 17:30:20 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 // hit_side is saved because it tells the renderer which kind of wall was hit:
 // 0 means the ray crossed an X boundary, so the wall is an east/west wall;
 // 1 means the ray crossed a Y boundary, so the wall is a north/south wall.
-static void	ray_step(t_game *g)
+static void	advance_ray_step(t_game *g)
 {
 	if (g->ray.side_dist_x < g->ray.side_dist_y)
 	{
@@ -52,7 +52,7 @@ static void	ray_step(t_game *g)
 // if the map is parsed with irregular line sizes.
 // Return 1 means the ray position is valid and DDA can continue;
 // Return 0 means the ray left the playable/map area and DDA should stop.
-static int	ray_validate_wrap_x(t_game *g)
+static int	handle_ray_horizontal_wrap(t_game *g)
 {
 	int	last;
 
@@ -75,7 +75,7 @@ static int	ray_validate_wrap_x(t_game *g)
 
 // Runs the DDA loop for the current ray until a blocking tile is hit.
 // The ray starts in the player's current map cell. On each loop iteration,
-// ray_step() moves it to the next cell crossed by the ray direction.
+// advance_ray_step() moves it to the next cell crossed by the ray direction.
 // After each step, the position is validated. This protects the raycaster from
 // reading outside the map array and also applies horizontal wrapping when the
 // ray crosses a tunnel row.
@@ -87,7 +87,7 @@ static int	ray_validate_wrap_x(t_game *g)
 // The loop limit prevents infinite ray traversal.
 // Returns 1 if the ray hit a blocking tile;
 // Returns 0 if the ray stopped without finding a valid wall hit.
-int	raycast_dda(t_game *g)
+int	raycast_find_wall(t_game *g)
 {
 	int		i;
 	int		limit;
@@ -99,8 +99,8 @@ int	raycast_dda(t_game *g)
 	hit = 0;
 	while (++i < limit)
 	{
-		ray_step(g);
-		if (!ray_validate_wrap_x(g))
+		advance_ray_step(g);
+		if (!handle_ray_horizontal_wrap(g))
 			break ;
 		tile = map_get_tile(g, g->ray.map_y, g->ray.map_x);
 		if ((tile == GATE && g->gate_passable == 0) 
