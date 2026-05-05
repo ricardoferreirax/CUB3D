@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 21:39:40 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/05 17:30:20 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/05 20:50:54 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ static void	advance_ray_step(t_game *g)
 // This function implements horizontal wrapping, used for Pac-Man style.
 // A normal raycaster would stop when the ray leaves the map bounds.
 // Some rows can connect the left and right edges of the map.
-// If the current row supports wrapping: when the ray exits before column 0, 
-// it is moved to the last valid column; when the ray exits after the last column,
-// it is moved back to column 0.
+// If the current row supports wrapping: when the ray exits before column 0,
+// it is moved to the last valid column; when the ray exits after the last 
+// column, it is moved back to column 0.
 // If the row does not support wrapping, the function only accepts positions
 // between column 0 and the last valid column of that row.
 // This is important because map rows may have different lengths, especially
 // if the map is parsed with irregular line sizes.
-// Return 1 means the ray position is valid and DDA can continue;
+// Return 1 means the ray position is valid and DDA can continue ;
 // Return 0 means the ray left the playable/map area and DDA should stop.
 static int	handle_ray_horizontal_wrap(t_game *g)
 {
@@ -103,8 +103,8 @@ int	raycast_find_wall(t_game *g)
 		if (!handle_ray_horizontal_wrap(g))
 			break ;
 		tile = map_get_tile(g, g->ray.map_y, g->ray.map_x);
-		if ((tile == GATE && g->gate_passable == 0) 
-			|| (tile != GATE && map_tile_type(tile, TILE_SOLID)))
+		if ((tile == GATE && g->gate_passable == 0) || (tile != GATE
+				&& map_tile_type(tile, TILE_SOLID)))
 		{
 			g->ray.hit_tile = tile;
 			hit = 1;

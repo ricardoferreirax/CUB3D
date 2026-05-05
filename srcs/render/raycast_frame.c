@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/05 17:32:25 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/05 20:51:22 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,15 @@
 
 // Calculates which vertical part of the screen must be filled by the wall.
 // Raycasting renders the 3D one vertical column at a time. After the DDA
-// finds a wall, we know how far the wall is from the player. This distance is 
+// finds a wall, we know how far the wall is from the player. This distance is
 // then converted into a projected wall height.
 // The projection formula is: wall height on screen = screen height / wall dist
 // A close wall gives a small distance, producing a large column. A far wall
 // gives a large distance, producing a small column.
 // line_h stores the final height of the wall column in pixels to be drawn.
 // draw_start and draw_end define the vertical pixel range where the wall will
-// be drawn: draw_start is above the screen center; draw_end is below the screen center.
+// be drawn: draw_start is above the screen center; draw_end is below the screen
+// center.
 // Finally, the values are clamped to the screen limits so the renderer never
 // writes pixels outside the image buffer.
 void	ray_draw_range(t_game *g)
@@ -45,8 +46,9 @@ void	ray_draw_range(t_game *g)
 // During the DDA loop, side_dist_x and side_dist_y are increased before the
 // tile collision is checked, 'cause of that, when a wall is found, the side
 // distance has already moved one delta too far.
-// To recover the real hit distance: we subtract delta_dist_x if the last step 
-// was on the X axis; or subtract delta_dist_y if the last step was on the Y axis.
+// To recover the real hit distance: we subtract delta_dist_x if the last step
+// was on the X axis; or subtract delta_dist_y if the last step was on the Y 
+// axis.
 // This distance is called "perpendicular" 'cause it represents the distance
 // from the player to the camera plane.
 // Using perpendicular distance is essential to avoid the fish-eye effect.
@@ -55,14 +57,14 @@ void	ray_draw_range(t_game *g)
 // The minimum value protects the projection formula from division by zero.
 // Without this guard, a wall extremely close to the player could produce an
 // invalid or infinitely tall wall column.
-void ray_perp_wall_distance(t_game *g) 
-{ 
-	if (g->ray.hit_side == 0) 
-		g->ray.perp_wall_dist = g->ray.side_dist_x - g->ray.delta_dist_x; 
-	else 
-		g->ray.perp_wall_dist = g->ray.side_dist_y - g->ray.delta_dist_y; 
-	if (g->ray.perp_wall_dist < 1e-6) 
- 		g->ray.perp_wall_dist = 1e-6; 
+void	ray_perp_wall_distance(t_game *g)
+{
+	if (g->ray.hit_side == 0)
+		g->ray.perp_wall_dist = g->ray.side_dist_x - g->ray.delta_dist_x;
+	else
+		g->ray.perp_wall_dist = g->ray.side_dist_y - g->ray.delta_dist_y;
+	if (g->ray.perp_wall_dist < 1e-6)
+		g->ray.perp_wall_dist = 1e-6;
 }
 
 // Initializes the DDA stepping direction and the first grid distances.
@@ -94,8 +96,8 @@ void	ray_init_steps(t_game *g)
 	else
 	{
 		g->ray.step_x = 1;
-		g->ray.side_dist_x = (g->ray.map_x + TILE_SIZE_3D - g->player.pos.tile_pos.x)
-			* g->ray.delta_dist_x;
+		g->ray.side_dist_x = (g->ray.map_x + TILE_SIZE_3D
+				- g->player.pos.tile_pos.x) * g->ray.delta_dist_x;
 	}
 	if (g->ray.ray_dir_y < 0)
 	{
@@ -106,8 +108,8 @@ void	ray_init_steps(t_game *g)
 	else
 	{
 		g->ray.step_y = 1;
-		g->ray.side_dist_y = (g->ray.map_y + TILE_SIZE_3D - g->player.pos.tile_pos.y)
-			* g->ray.delta_dist_y;
+		g->ray.side_dist_y = (g->ray.map_y + TILE_SIZE_3D
+				- g->player.pos.tile_pos.y) * g->ray.delta_dist_y;
 	}
 }
 
@@ -123,8 +125,8 @@ void	ray_init_steps(t_game *g)
 // that direction and controls the field of view. Multiplying the plane by
 // cam_x spreads the rays across the screen.
 
-// map_x and map_y store the current map cell containing the player. 
-// The DDA algorithm starts from this cell and then walks through the grid until 
+// map_x and map_y store the current map cell containing the player.
+// The DDA algorithm starts from this cell and then walks through the grid until
 // it finds a blocking tile.
 
 // delta_dist_x and delta_dist_y represent how much distance must be added to
