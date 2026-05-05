@@ -65,33 +65,6 @@ int disambiguation(t_point player_spawn, char **map, t_point coord)
 	return final;
 }
 
-int squared_corners(int final)
-{
-	if(final == 148)
-		return(63);
-	if(final == 82)
-		return(19);
-	if(final == 85)
-		return(21);
-	if(final == 149)
-		return(65);
-	return(final);
-}
-
-t_point player_spawn(char **map)
-{
-	t_point pos;
-	char *str = "NEWS";
-	int i = 0;
-	while(str[i])
-	{
-		pos = find_c(map, str[i]);
-		if(pos.x >= 0 && pos.y >= 0)
-			break;
-		i++;
-	}
-	return pos;
-}
 
 int	which_wall(char **original_map, t_map map, t_point *coord)
 {
@@ -187,7 +160,8 @@ void	put_tile_inbase(t_game *g, int tile_code, unsigned int color,
 			color = pixel_get(&g->sprite_sheet.sprite_img,
 					 (g->sprite_sheet.sprites[tile_code].coord.x + sprite_randomizer.x) + pallete.x * (pallete_randomizer.x * 200) + tx,
 					 (g->sprite_sheet.sprites[tile_code].coord.y + sprite_randomizer.y) + pallete.y * (pallete_randomizer.y * 186) + ty);
-			if ((color >> 24) != 0xFF)
+		if ((color >> 24) != 0xFF)
+
 				ft_pixel_put(&g->base, point.x * 8 + tx, point.y * 8 + ty,
 					color);
 			tx++;

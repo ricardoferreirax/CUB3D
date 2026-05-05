@@ -169,6 +169,7 @@ void	init_map(t_game *g, const char *path)
 	g->map.width = xtile(temp);
 	if(init_game_grid(g, temp))
 		exit_game(EXIT_MALLOC, g, "SOmething broke");
+	free_2d((void **)temp);
 	map_validate_chars(g);
 }
 

@@ -119,6 +119,15 @@ void	controller_player(t_game *game)
 	}
 }
 
+int change_game_mode(t_game *game)
+{
+	if(game->timer.mode >= 7)
+		return CHASE;
+	else if(game->timer.mode % 2 == 0)
+		return SCATTER;
+	return CHASE;
+}
+
 int	gameloop(t_game *game)
 {
 	long	now;
@@ -138,13 +147,8 @@ int	gameloop(t_game *game)
 		- game->timer.mode_time_start > (long)(game->timer.times[game->timer.mode])
 		* 1000000.0)
 	{
-		if (game->debug_mode)
-			printf("Changing Global State at %ld\n", now);
 		game->timer.mode++;
-		if (game->global_state == SCATTER)
-			game->global_state = CHASE;
-		else if (game->global_state == CHASE)
-			game->global_state = SCATTER;
+		game->global_state = change_game_mode(game);
 		game->timer.mode_time_start = now;
 	}
 	if (game->state == MENU)
@@ -152,13 +156,24 @@ int	gameloop(t_game *game)
 	return (render_frame(game), 0);
 }
 
-
+int controller_finder(char *argv)
+{
+	int num;
+	num = ft_atoi(argv);
+	if(num <= 0)
+		return (ft_printf("Input a valid positive integer for Controller Event ID\n"), -1);
+	char *path = ft_strjoin("/dev/input/event", argv);
+	ft_printf("Looking for Controller: %s\n", path);
+	if (!path)
+		return (ft_printf("Malloc Failed?"), -1);
+	num = open(path, O_RDONLY | O_NONBLOCK);
+	free(path);
+	return(num);
+}
 
 bool	wrong_args(t_game *game, int ac, char **argv)
 {
 	int		i;
-	char	*path;
-	int		num;
 
 	i = 2;
 	game->debug_mode = false;
@@ -166,21 +181,10 @@ bool	wrong_args(t_game *game, int ac, char **argv)
 	while (i < ac)
 	{
 		if (ft_strcmp(argv[i], "debug_mode=y") == 0)
-		{
-			ft_printf("Debug Mode is enabled\n");
 			game->debug_mode = true;
-		}
 		else
 		{
-			num = ft_atoi(argv[i]);
-			if (num <= 0)
-				return (printf("Input a valid integer for Controller Event ID.\n"), true);
-			path = ft_strjoin("/dev/input/event", argv[i]);
-			printf("Looking for Controller: %s\n", path);
-			if (!path)
-				return (printf("Malloc Failed?"), true);
-			game->controller_fd = open(path, O_RDONLY | O_NONBLOCK);
-			free(path);
+			game->controller_fd = controller_finder(argv[i]);
 			if (game->controller_fd < 0)
 				return (printf("Provided ID doesn't exist"), true);
 		}
@@ -188,7 +192,6 @@ bool	wrong_args(t_game *game, int ac, char **argv)
 	}
 	return (false);
 }
-
 
 int	main(int ac, char **av)
 {

@@ -107,3 +107,30 @@ int find_disamb_sprite(unsigned int mask)
 }
 
 
+int squared_corners(int final)
+{
+	if(final == 148)
+		return(63);
+	if(final == 82)
+		return(19);
+	if(final == 85)
+		return(21);
+	if(final == 149)
+		return(65);
+	return(final);
+}
+
+t_point player_spawn(char **map)
+{
+	t_point pos;
+	char *str = "NEWS";
+	int i = 0;
+	while(str[i])
+	{
+		pos = find_c(map, str[i]);
+		if(pos.x >= 0 && pos.y >= 0)
+			break;
+		i++;
+	}
+	return pos;
+}

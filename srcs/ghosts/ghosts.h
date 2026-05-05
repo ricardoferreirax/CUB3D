@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 11:21:48 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/04/23 14:48:32 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/05 14:47:23 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,8 @@ void ghost_sprites(t_game *game, e_ghost ghost);
 
 void ghost_color(t_ghost *ghost);
 
+int	passed_center(t_ghost *ghost);
+
+bool	in_bounds(t_map *map, t_point coord);
 #endif // !GHOSTS_H
 //

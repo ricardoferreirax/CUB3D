@@ -22,6 +22,7 @@ t_point player_spawn(char **map);
 int	which_wall(char **original_map, t_map map, t_point *coord);
 int	which_tile(char **original_map, t_map *map, t_point coord, bool debug);
 
+int squared_corners(int final);
 void	put_tile_inbase(t_game *g, int tile_code, unsigned int color,
 		t_point point);
 #endif // !BASE_H
