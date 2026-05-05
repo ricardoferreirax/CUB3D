@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/05/04 14:55:59 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/05/05 18:49:36 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,12 +70,16 @@ SRC_FILES = main.c \
 	srcs/render/render_debug_symbols.c \
 	srcs/render/render_frame.c \
 	srcs/render/render_into_framebuffer.c \
-	srcs/render/debug_raycast.c \
 	srcs/textures/texture_parse_color.c \
 	srcs/textures/texture_utils.c \
 	srcs/textures/texture_load.c \
 	srcs/textures/texture_parse_path.c \
 	srcs/textures/texture_pick_wall.c \
+	srcs/debug/ray_debug_cast.c \
+	srcs/debug/ray_debug_line.c \
+	srcs/debug/ray_debug_render.c \
+	srcs/debug/ray_debug_utils.c \
+	srcs/debug/ray_debug_draw.c \
 	srcs/utils/helpers.c \
 	srcs/utils/free.c \
 	srcs/utils/render_utils.c \
