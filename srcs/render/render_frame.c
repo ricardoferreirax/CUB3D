@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 19:44:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/05 20:54:53 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/06 17:54:23 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	render_frame(t_game *game)
 	if (game->key.esc)
 		exit_game(EXIT_QUIT, game, NULL);
 	player_controller(game);
+	player_wrap_position(game);
 	render_ceiling_texture(game);
 	render_floor_texture(game);
 	raycast_frame(game);
