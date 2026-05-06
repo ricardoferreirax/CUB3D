@@ -6,13 +6,42 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 18:46:34 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/05 18:46:43 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/06 18:45:14 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "debug.h"
 
-int	debug_cast_screen_ray(t_game *g, int col, t_raycasting *ray)
+static int	debug_tile_color(t_game *g, int x, int y)
+{
+	char	tile;
+
+	tile = map_get_tile(g, y, x);
+	if (map_tile_type(tile, TILE_SOLID) || tile == GATE)
+		return (DEBUG_WALL);
+	return (DEBUG_BG);
+}
+
+static void	debug_map(t_game *g)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < g->map.height)
+	{
+		x = 0;
+		while (x < g->map.width)
+		{
+			debug_square(g, debug_pos(x, y), DEBUG_CELL - 1,
+				debug_tile_color(g, x, y));
+			x++;
+		}
+		y++;
+	}
+}
+
+int	debug_ray(t_game *g, int col, t_raycasting *ray)
 {
 	t_raycasting	saved;
 
@@ -30,21 +59,34 @@ int	debug_cast_screen_ray(t_game *g, int col, t_raycasting *ray)
 	return (1);
 }
 
-t_point	debug_get_ray_hit_point(t_game *g, t_raycasting ray)
-{
-	double	x;
-	double	y;
-
-	x = g->player.pos.tile_pos.x + ray.perp_wall_dist * ray.ray_dir_x;
-	y = g->player.pos.tile_pos.y + ray.perp_wall_dist * ray.ray_dir_y;
-	return (debug_world_to_screen(x, y));
-}
-
-void	debug_draw_casted_ray(t_game *g, t_point start, t_raycasting ray)
+static void	debug_draw_ray(t_game *g, t_point start, t_raycasting ray)
 {
 	t_point	end;
 
-	end = debug_get_ray_hit_point(g, ray);
-	debug_draw_ray_line(g, start, end);
-	debug_draw_hit_marker(g, end);
+	end = debug_pos(g->player.pos.tile_pos.x
+			+ ray.perp_wall_dist * ray.ray_dir_x,
+			g->player.pos.tile_pos.y
+			+ ray.perp_wall_dist * ray.ray_dir_y);
+	debug_line(g, start, end);
+	debug_square(g, (t_point){end.x - 1, end.y - 1}, 3, DEBUG_HIT);
+}
+
+void	render_raycast_debug(t_game *g)
+{
+	t_raycasting	ray;
+	t_point			start;
+	int				col;
+
+	if (!g)
+		return ;
+	debug_map(g);
+	start = debug_pos(g->player.pos.tile_pos.x, g->player.pos.tile_pos.y);
+	col = 0;
+	while (col < g->win.width)
+	{
+		if (debug_ray(g, col, &ray))
+			debug_draw_ray(g, start, ray);
+		col += DEBUG_RAY_STEP;
+	}
+	debug_square(g, (t_point){start.x - 2, start.y - 2}, 5, DEBUG_PLAYER);
 }

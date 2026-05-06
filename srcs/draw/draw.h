@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/06 15:22:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/06 15:33:42 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/06 18:06:55 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,7 @@ int	build_sprite_box(t_game *g, t_sprite *sp, int scale_div);
 void	draw_sprite(t_game *g, t_sprite *sp, t_image *tex);
 int	draw_sprite_column(t_game *g, t_sprite *sp, int col, t_image *tex);
 void	draw_wall_column(t_game *g, int screen_x);
+void	draw_plane_row(t_game *g, t_fc *plane, t_image *tex, int row);
+void	set_plane(t_game *g, t_fc *plane, double dist);
 
 #endif

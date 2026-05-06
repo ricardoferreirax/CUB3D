@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/05/06 17:18:32 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/05/06 18:17:36 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,11 +61,11 @@ SRC_FILES = main.c \
 	srcs/render/raycast_dda.c \
 	srcs/render/render_utils.c \
 	srcs/render/render_plane.c \
-	srcs/render/draw_plane.c \
 	srcs/render/render_debug_symbols.c \
 	srcs/render/render_frame.c \
 	srcs/render/render_into_framebuffer.c \
 	srcs/render/render_sprites.c \
+	srcs/draw/draw_plane.c \
 	srcs/draw/draw_background.c \
 	srcs/draw/draw_wall_column.c \
 	srcs/draw/draw_menu.c \
@@ -77,9 +77,6 @@ SRC_FILES = main.c \
 	srcs/textures/texture_parse_path.c \
 	srcs/textures/texture_pick_wall.c \
 	srcs/debug/ray_debug_cast.c \
-	srcs/debug/ray_debug_line.c \
-	srcs/debug/ray_debug_render.c \
-	srcs/debug/ray_debug_utils.c \
 	srcs/debug/ray_debug_draw.c \
 	srcs/utils/helpers.c \
 	srcs/utils/free.c \
