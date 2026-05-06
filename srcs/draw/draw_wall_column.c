@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 18:15:08 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/06 15:24:59 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/06 17:27:48 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,54 +26,57 @@ static int	get_wall_tex_x(t_game *g, t_image *tex)
 		wall_offset = g->player.pos.tile_pos.x + g->ray.perp_wall_dist
 			* g->ray.ray_dir_x;
 	wall_offset = fract_pos(wall_offset);
-	tex_x = (int)(wall_offset * (double)tex->width);
-	tex_x = clamp_int(tex_x, 0, tex->width - 1);
-	if ((g->ray.hit_side == 0 && g->ray.ray_dir_x < 0) || (g->ray.hit_side == 1
-			&& g->ray.ray_dir_y > 0))
+	tex_x = clamp_int((int)(wall_offset * tex->width), 0, tex->width - 1);
+	if ((g->ray.hit_side == 0 && g->ray.ray_dir_x < 0)
+		|| (g->ray.hit_side == 1 && g->ray.ray_dir_y > 0))
 		tex_x = tex->width - tex_x - 1;
 	return (tex_x);
 }
 
+static void	draw_wall_texture(t_game *g, t_image *tex, int screen_x, int tex_x)
+{
+	unsigned int	*data;
+	double			tex_pos;
+	double			step;
+	int				y;
+	int				tex_y;
+
+	data = (unsigned int *)tex->img_addr;
+	step = (double)tex->height / g->ray.line_h;
+	tex_pos = (g->ray.draw_start - g->win.height / 2.0
+			+ g->ray.line_h / 2.0) * step;
+	y = g->ray.draw_start;
+	while (y <= g->ray.draw_end)
+	{
+		tex_y = clamp_int((int)tex_pos, 0, tex->height - 1);
+		put_pixel_fast(&g->win.frame_buffer, screen_x, y,
+			data[tex_y * (tex->l_len >> 2) + tex_x]);
+		tex_pos += step;
+		y++;
+	}
+}
+
 void	draw_wall_column(t_game *g, int screen_x)
 {
-	t_image			*wall_tex;
-	int				screen_y;
-	int				tex_x;
-	double			tex_y_pos;
-	int				tex_y;
-	double			step;
-	unsigned int	*data;
-	int				stride;
+	t_image	*tex;
+	int		y;
+	int		tex_x;
 
-	if (g->ray.line_h <= 0)
+	if (!g || g->ray.line_h <= 0)
 		return ;
-	wall_tex = texture_pick_wall(g);
-	tex_x = get_wall_tex_x(g, wall_tex);
-	tex_y_pos = (g->ray.draw_start - g->win.height / 2.0 + g->ray.line_h / 2.0)
-		* ((double)wall_tex->height / g->ray.line_h);
-	screen_y = g->ray.draw_start;
-	step = (double)wall_tex->height / g->ray.line_h;
-	if (!wall_tex->img_addr)
+	tex = texture_pick_wall(g);
+	if (!tex)
+		return ;
+	y = g->ray.draw_start;
+	if (!tex->img_addr || tex->width <= 0 || tex->height <= 0)
 	{
-		while (screen_y <= g->ray.draw_end)
+		while (y <= g->ray.draw_end)
 		{
-			put_pixel_fast(&g->win.frame_buffer, screen_x, screen_y, 128);
-			screen_y++;
+			put_pixel_fast(&g->win.frame_buffer, screen_x, y, 128);
+			y++;
 		}
 		return ;
 	}
-	data = (unsigned int *)wall_tex->img_addr;
-	stride = wall_tex->l_len >> 2;
-	while (screen_y <= g->ray.draw_end)
-	{
-		tex_y = (int)tex_y_pos;
-		if (tex_y < 0)
-			tex_y = 0;
-		else if (tex_y >= wall_tex->height)
-			tex_y = wall_tex->height - 1;
-		put_pixel_fast(&g->win.frame_buffer, screen_x, screen_y, data[tex_y
-			* stride + tex_x]);
-		tex_y_pos += step;
-		screen_y++;
-	}
+	tex_x = get_wall_tex_x(g, tex);
+	draw_wall_texture(g, tex, screen_x, tex_x);
 }
