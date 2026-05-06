@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/05 17:34:10 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/06 15:11:53 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int		ghost_anim_frame(t_ghost *gh);
 t_image	*ghost_tex(t_game *g, t_ghost *gh);
 void	render_sprite_into_framebuffer(t_game *game, t_point coord,
 		t_sprite_ref *sprite);
+void	set_plane(t_game *g, t_fc *plane, double dist);
+void	draw_plane_row(t_game *g, t_fc *plane, t_image *tex, int row);
 
 void 	render_debug_symbols(t_game *game);
 void	render_into_framebuffer(t_game *game);
