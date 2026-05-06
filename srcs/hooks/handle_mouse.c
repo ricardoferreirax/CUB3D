@@ -11,15 +11,15 @@
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
-#include "hooks.h"
 #include "../player/player3D.h"
+#include "hooks.h"
 
 void	center_mouse(t_game *g)
 {
 	if (!g || !g->mlx_ptr || !g->win.win_ptr)
 		return ;
-	mlx_mouse_move(g->mlx_ptr, g->win.win_ptr,
-		g->win.width / 2, g->win.height / 2);
+	mlx_mouse_move(g->mlx_ptr, g->win.win_ptr, g->win.width / 2, g->win.height
+		/ 2);
 }
 
 int	handle_mouse_move(int x, int y, t_game *g)

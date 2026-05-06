@@ -41,4 +41,3 @@ bool	in_bounds(t_map *map, t_point coord)
 		return (false);
 	return (true);
 }
-

@@ -14,7 +14,7 @@
 
 static int	map_is_valid_tile(t_game *g, char c)
 {
-	return 1;
+	return (1);
 	if (c == '\0')
 		return (0);
 	if (c == '\n')
@@ -25,9 +25,9 @@ static int	map_is_valid_tile(t_game *g, char c)
 		return (1);
 	if (g->mode == MODE_PACMAN)
 	{
-		if (c == PACDOT || c == ENERGIZER || c == WRAP_PORTS
-			|| c == BLINKY_T || c == PINKY_T || c == INKY_T || c == CLYDE_T
-			|| c == GATE || c == PLAYER)
+		if (c == PACDOT || c == ENERGIZER || c == WRAP_PORTS || c == BLINKY_T
+			|| c == PINKY_T || c == INKY_T || c == CLYDE_T || c == GATE
+			|| c == PLAYER)
 			return (1);
 	}
 	return (0);
@@ -71,14 +71,15 @@ void	map_validate_closed(t_game *g)
 		while (++col < g->map.width)
 		{
 			tile = map_get_tile(g, row, col);
-			if (!map_tile_type(tile, TILE_WALKABLE)
-				|| (tile == WRAP_PORTS && map_is_wrap_tile(g, row, col)))
+			if (!map_tile_type(tile, TILE_WALKABLE) || (tile == WRAP_PORTS
+					&& map_is_wrap_tile(g, row, col)))
 				continue ;
 			if (map_tile_type(map_get_tile(g, row, col + 1), TILE_VOID)
 				|| map_tile_type(map_get_tile(g, row, col - 1), TILE_VOID)
 				|| map_tile_type(map_get_tile(g, row + 1, col), TILE_VOID)
 				|| map_tile_type(map_get_tile(g, row - 1, col), TILE_VOID))
-				exit_game(EXIT_MAP, g, "map_validate_closed: map is not closed");
+				exit_game(EXIT_MAP, g,
+					"map_validate_closed: map is not closed");
 		}
 	}
 }

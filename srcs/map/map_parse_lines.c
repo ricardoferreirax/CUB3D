@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
-#include "map3D.h"
 #include "../textures/textures3D.h"
+#include "map3D.h"
 
 static int	map_cube_mode_prefix(char *p)
 {
@@ -67,24 +67,23 @@ static int	map_is_cub_prefix(char *p)
 	return (0);
 }
 
-bool target_tile(char c)
+bool	target_tile(char c)
 {
-	if(c == 'L' || c == 'V' || c == 'K' || c == 'Y')
-		return true;
-	return false;
+	if (c == 'L' || c == 'V' || c == 'K' || c == 'Y')
+		return (true);
+	return (false);
 }
 
 static int	map_is_valid_char_in_line(char c, t_mode mode)
 {
-	if (c == '\n' || c == ' ' || c == '\t'
-		|| c == WALL || c == OPEN_SPACE
+	if (c == '\n' || c == ' ' || c == '\t' || c == WALL || c == OPEN_SPACE
 		|| c == 'N' || c == 'S' || c == 'E' || c == 'W')
 		return (1);
 	if (mode == MODE_PACMAN)
 	{
-		if (c == PACDOT || c == WRAP_PORTS || c == ENERGIZER
-			|| c == BLINKY_T || c == PINKY_T || c == INKY_T || c == CLYDE_T
-			|| c == GATE || c == PLAYER || c == 'M')
+		if (c == PACDOT || c == WRAP_PORTS || c == ENERGIZER || c == BLINKY_T
+			|| c == PINKY_T || c == INKY_T || c == CLYDE_T || c == GATE
+			|| c == PLAYER || c == 'M')
 			return (1);
 	}
 	return (0);

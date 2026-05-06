@@ -12,30 +12,29 @@
 
 #include "base.h"
 
-
 void	flood_fill(char **map, int x, int y)
 {
-	if (x < 0 || x >= xtile(map) || y < 0
-		|| y >= ytile(map) || map[y][x] == 'F'
+	if (x < 0 || x >= xtile(map) || y < 0 || y >= ytile(map) || map[y][x] == 'F'
 		|| map[y][x] == '1' || map[y][x] == 'D')
 		return ;
-	if(map[y][x] == 'G')
+	if (map[y][x] == 'G')
 	{
 		map[y][x] = 'F';
-		return;
+		return ;
 	}
-    map[y][x] = 'F';
+	map[y][x] = 'F';
 	flood_fill(map, x + 1, y);
 	flood_fill(map, x - 1, y);
 	flood_fill(map, x, y + 1);
 	flood_fill(map, x, y - 1);
 }
 
-int disambiguation(t_point player_spawn, char **map, t_point coord)
+int	disambiguation(t_point player_spawn, char **map, t_point coord)
 {
-	flood_fill(map, player_spawn.x, player_spawn.y);
 	unsigned char	mask;
+	int				final;
 
+	flood_fill(map, player_spawn.x, player_spawn.y);
 	mask = 0;
 	if (coord.y != 0 && map[coord.y - 1][coord.x] == 'F')
 		mask |= (1 << 7);
@@ -49,26 +48,25 @@ int disambiguation(t_point player_spawn, char **map, t_point coord)
 	{
 		if (coord.x != 0 && map[coord.y - 1][coord.x - 1] == 'F')
 			mask |= (1 << 2);
-		if (coord.x != xtile(map) - 1 && map[coord.y - 1][coord.x
-			+ 1] == 'F')
+		if (coord.x != xtile(map) - 1 && map[coord.y - 1][coord.x + 1] == 'F')
 			mask |= (1 << 3);
 	}
 	if (coord.y != ytile(map) - 1)
 	{
 		if (coord.x != 0 && map[coord.y + 1][coord.x - 1] == 'F')
 			mask |= (1 << 1);
-		if (coord.x != xtile(map) - 1 && map[coord.y + 1][coord.x
-			+ 1] == 'F')
+		if (coord.x != xtile(map) - 1 && map[coord.y + 1][coord.x + 1] == 'F')
 			mask |= (1 << 0);
 	}
-	int final = find_disamb_sprite(mask);
-	return final;
+	final = find_disamb_sprite(mask);
+	return (final);
 }
-
 
 int	which_wall(char **original_map, t_map map, t_point *coord)
 {
 	unsigned char	mask;
+	int				final;
+	char			**temp;
 
 	mask = 0;
 	if (coord->y != 0 && map.grid[coord->y - 1][coord->x] == '1')
@@ -95,36 +93,35 @@ int	which_wall(char **original_map, t_map map, t_point *coord)
 			+ 1] == '1')
 			mask |= (1 << 0);
 	}
-	int final = find_sprite(mask);
-	char **temp;
+	final = find_sprite(mask);
 	temp = copy_map(map.grid);
-	if(!temp)
-		return -1;
-	if(final == 0)
+	if (!temp)
+		return (-1);
+	if (final == 0)
 		final = disambiguation(player_spawn(original_map), temp, *coord);
-	if(original_map[coord->y][coord->x] == 'M')
+	if (original_map[coord->y][coord->x] == 'M')
 		final = squared_corners(final);
 	free_2d((void **)temp);
-	return final;
+	return (final);
 }
 
 int	which_tile(char **original_map, t_map *map, t_point coord, bool debug)
 {
-	int tile;
-	if(map->grid[coord.y][coord.x] == '\0')
-		return(10);
+	int	tile;
+
+	if (map->grid[coord.y][coord.x] == '\0')
+		return (10);
 	if (map->grid[coord.y][coord.x] == '1')
 	{
-
 		tile = (which_wall(original_map, *map, &coord));
-		if(tile == 0)
-			return(rand() % 255);
-		return tile;
+		if (tile == 0)
+			return (rand() % 255);
+		return (tile);
 	}
 	else
 	{
-		if(debug)
-			return(59);
+		if (debug)
+			return (59);
 		return (170);
 	}
 }
@@ -132,23 +129,24 @@ int	which_tile(char **original_map, t_map *map, t_point coord, bool debug)
 void	put_tile_inbase(t_game *g, int tile_code, unsigned int color,
 		t_point point)
 {
-	int	ty;
-	int	tx;
-	t_point pallete;
+	int		ty;
+	int		tx;
+	t_point	pallete;
+	t_point	sprite_randomizer;
+	t_point	pallete_randomizer;
+
 	pallete.x = MAP_PALLETE_X;
 	pallete.y = MAP_PALLETE_Y;
 	ty = 0;
-	t_point sprite_randomizer;
 	sprite_randomizer.x = 0;
 	sprite_randomizer.y = 0;
-	t_point pallete_randomizer;
 	pallete_randomizer.x = 1;
 	pallete_randomizer.y = 1;
-	if(tile_code == 0)
+	if (tile_code == 0)
 	{
 		srand(get_time_us());
 		sprite_randomizer.x = rand() % 1000;
-		sprite_randomizer.y = rand() % 552; 
+		sprite_randomizer.y = rand() % 552;
 		pallete_randomizer.x = rand() % 5;
 		pallete_randomizer.y = rand() % 3;
 	}
@@ -158,10 +156,13 @@ void	put_tile_inbase(t_game *g, int tile_code, unsigned int color,
 		while (tx < g->sprite_sheet.sprites[tile_code].width)
 		{
 			color = pixel_get(&g->sprite_sheet.sprite_img,
-					 (g->sprite_sheet.sprites[tile_code].coord.x + sprite_randomizer.x) + pallete.x * (pallete_randomizer.x * 200) + tx,
-					 (g->sprite_sheet.sprites[tile_code].coord.y + sprite_randomizer.y) + pallete.y * (pallete_randomizer.y * 186) + ty);
-		if ((color >> 24) != 0xFF)
-
+					(g->sprite_sheet.sprites[tile_code].coord.x
+						+ sprite_randomizer.x) + pallete.x
+					* (pallete_randomizer.x * 200) + tx,
+					(g->sprite_sheet.sprites[tile_code].coord.y
+						+ sprite_randomizer.y) + pallete.y
+					* (pallete_randomizer.y * 186) + ty);
+			if ((color >> 24) != 0xFF)
 				ft_pixel_put(&g->base, point.x * 8 + tx, point.y * 8 + ty,
 					color);
 			tx++;

@@ -29,6 +29,6 @@ void	render_menu(t_game *g)
 		x = 0;
 	if (y < 0)
 		y = 0;
-	mlx_put_image_to_window(g->mlx_ptr, g->win.win_ptr,
-		g->menu_img.img_ptr, x, y);
+	mlx_put_image_to_window(g->mlx_ptr, g->win.win_ptr, g->menu_img.img_ptr, x,
+		y);
 }

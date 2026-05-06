@@ -28,34 +28,34 @@
 // # define KEY_1 49
 // # define KEY_2 50
 
-#define MOUSE_SENS 0.00035
+# define MOUSE_SENS 0.00035
 
 typedef struct s_game	t_game;
 
 typedef struct s_key
 {
-	int	w;
-	int	a;
-	int	s;
-	int	d;
-	int	left;
-	int	right;
-	int up;
-	int down;
-	int	esc;
-	int	e;
-	int	e_lock;
-	int	mouse_lock;
-	int mouse_hidden;
-	int k;
-	int controller_start;
-}	t_key;
+	int					w;
+	int					a;
+	int					s;
+	int					d;
+	int					left;
+	int					right;
+	int					up;
+	int					down;
+	int					esc;
+	int					e;
+	int					e_lock;
+	int					mouse_lock;
+	int					mouse_hidden;
+	int					k;
+	int					controller_start;
+}						t_key;
 
-int		handle_close(t_game *g);
-int		handle_key_press(int keycode, t_game *g);
-int		handle_key_release(int keycode, t_game *g);
-void	handle_gate_toggle(t_game *g);
-int		handle_mouse_move(int x, int y, t_game *g);
-void	center_mouse(t_game *g);
+int						handle_close(t_game *g);
+int						handle_key_press(int keycode, t_game *g);
+int						handle_key_release(int keycode, t_game *g);
+void					handle_gate_toggle(t_game *g);
+int						handle_mouse_move(int x, int y, t_game *g);
+void					center_mouse(t_game *g);
 
 #endif

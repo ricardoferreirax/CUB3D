@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #ifndef TIME_H
-#define TIME_H
+# define TIME_H
 
-#include <sys/time.h>
+# include <sys/time.h>
 
 #endif // !TIME_H

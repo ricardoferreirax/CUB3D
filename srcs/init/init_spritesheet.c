@@ -22,10 +22,11 @@ int	uselesstile(t_point point)
 	return (0);
 }
 
-t_sprite_ref init_sprite(t_point control)
+t_sprite_ref	init_sprite(t_point control)
 {
-	t_sprite_ref sprite;
-	if(control.y <= 74)
+	t_sprite_ref	sprite;
+
+	if (control.y <= 74)
 	{
 		sprite.coord = control;
 		sprite.height = 8;
@@ -33,16 +34,17 @@ t_sprite_ref init_sprite(t_point control)
 	}
 	else
 	{
-	sprite.coord = control;
-	sprite.width = 16;
-	sprite.height = 16;
+		sprite.coord = control;
+		sprite.width = 16;
+		sprite.height = 16;
 	}
-	return sprite;
+	return (sprite);
 }
 
-void fill_small_sprites(t_game *game, int *i)
+void	fill_small_sprites(t_game *game, int *i)
 {
-	t_point control;
+	t_point	control;
+
 	control.y = 1;
 	while (control.y <= 74)
 	{
@@ -62,9 +64,10 @@ void fill_small_sprites(t_game *game, int *i)
 	}
 }
 
-void fill_big_sprites(t_game *game, int *i)
+void	fill_big_sprites(t_game *game, int *i)
 {
-	t_point control;
+	t_point	control;
+
 	control.y = 83;
 	while (control.y <= 168)
 	{
@@ -83,10 +86,11 @@ void fill_big_sprites(t_game *game, int *i)
 
 int	init_spritesheet(t_game *game)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	fill_small_sprites(game, &i);
 	fill_big_sprites(game, &i);
-	
 	game->sprite_sheet.sprite_img.img_ptr = mlx_xpm_file_to_image(game->mlx_ptr,
 			SPRITE_SHEET, &game->sprite_sheet.sprite_img.width,
 			&game->sprite_sheet.sprite_img.height);

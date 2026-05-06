@@ -14,7 +14,7 @@
 
 void	exit_game(int errcode, t_game *g, char *str)
 {
-	if(str)
+	if (str)
 		ft_dprintf(2, "\n%s\n", str);
 	if (errcode == EXIT_QUIT)
 		ft_dprintf(2, "\nQuitting Pac-Man...\n");
@@ -132,14 +132,15 @@ static void	free_pacman_arrays(t_game *g)
 	}
 }
 
-void free_ghost(t_ghost *ghost)
+void	free_ghost(t_ghost *ghost)
 {
 	free_2d((void **)ghost->mental_map);
 }
 
-
 void	free_game(t_game *g)
 {
+	int	i;
+
 	if (!g)
 		return ;
 	if (g->ray.z_buffer)
@@ -163,11 +164,10 @@ void	free_game(t_game *g)
 		free(g->mlx_ptr);
 		g->mlx_ptr = NULL;
 	}
-	int i = -1;
-	while(++i < 4)
+	i = -1;
+	while (++i < 4)
 		free_ghost(&g->ghosts[i]);
-	if(g->controller_fd != -1)
+	if (g->controller_fd != -1)
 		close(g->controller_fd);
 	free(g);
 }
-

@@ -74,18 +74,25 @@ void	reset_game(t_game *game, int is_death)
 	game->player.collected_dots = 0;
 }
 
-void	controller_player(t_game *game)
+void d_pad_handler(t_game *game, struct input_event event)
 {
-	struct input_event	event;
+			if (event.code == ABS_HAT0X)
+			{
+				game->key.a = (event.value == -1);
+				game->key.d = (event.value == 1);
+			}
+			else if (event.code == ABS_HAT0Y)
+			{
+				game->key.w = (event.value == -1);
+				game->key.s = (event.value == 1);
+			}
+			else if (event.code == ABS_RZ)
+				game->key.e = (event.value > 100); // threshold
+}
 
-	if (game->controller_fd < 0)
-		return ;
-	while (read(game->controller_fd, &event, sizeof(event)) > 0)
-	{
-		if (event.type != EV_KEY && event.type != EV_ABS)
-			continue ;
-		if (event.type == EV_KEY)
-		{
+void face_button_handler(t_game *game, struct input_event event)
+{
+
 			if (event.code == BTN_SOUTH) // Xis
 				game->key.down = event.value;
 			else if (event.code == BTN_NORTH) // Triangulo
@@ -99,23 +106,22 @@ void	controller_player(t_game *game)
 				game->key.k = event.value;
 			else if (event.code == BTN_START)
 				game->key.controller_start = event.value;
-		}
+}
+
+void	controller_player(t_game *game)
+{
+	struct input_event	event;
+
+	if (game->controller_fd < 0)
+		return ;
+	while (read(game->controller_fd, &event, sizeof(event)) > 0)
+	{
+		if (event.type != EV_KEY && event.type != EV_ABS)
+			continue ;
+		if (event.type == EV_KEY)
+			face_button_handler(game, event);
 		if (event.type == EV_ABS)
-		{
-			// D-pad → WASD
-			if (event.code == ABS_HAT0X)
-			{
-				game->key.a = (event.value == -1);
-				game->key.d = (event.value == 1);
-			}
-			else if (event.code == ABS_HAT0Y)
-			{
-				game->key.w = (event.value == -1);
-				game->key.s = (event.value == 1);
-			}
-			else if (event.code == ABS_RZ)
-				game->key.e = (event.value > 100); // threshold
-		}
+			d_pad_handler(game,event);
 	}
 }
 

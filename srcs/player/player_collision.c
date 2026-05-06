@@ -44,10 +44,14 @@ void	player_collision(t_game *g)
 	int			row;
 
 	player = &g->player;
-	row = (int)player->pos.tile_pos.y; // converte a posiçao do player para as coordenadas do tile
-	col = (int)(player->pos.tile_pos.x - PLAYER_RADIUS); // converte a posiçao do player para as coordenadas do tile considerando o raio do player para detectar colisões com as paredes
-	if (player_hits_wall(g, row, col)) // se o player colidir com uma parede
-		player->pos.tile_pos.x = col + 1 + PLAYER_RADIUS; // ajusta a posição do player para ficar encostado a parede considerando o raio do player
+	row = (int)player->pos.tile_pos.y;                   
+		// converte a posiçao do player para as coordenadas do tile
+	col = (int)(player->pos.tile_pos.x - PLAYER_RADIUS); 
+		// converte a posiçao do player para as coordenadas do tile considerando o raio do player para detectar colisões com as paredes
+	if (player_hits_wall(g, row, col))                   
+		// se o player colidir com uma parede
+		player->pos.tile_pos.x = col + 1 + PLAYER_RADIUS;
+			// ajusta a posição do player para ficar encostado a parede considerando o raio do player
 	col = (int)(player->pos.tile_pos.x + PLAYER_RADIUS);
 	if (player_hits_wall(g, row, col))
 		player->pos.tile_pos.x = col - PLAYER_RADIUS;

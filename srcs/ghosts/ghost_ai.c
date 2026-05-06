@@ -13,30 +13,32 @@
 #include "../utils/helpers.h"
 #include "ghosts.h"
 
-
-int is_ghost_on_deadend(t_game *game, t_ghost *ghost, int direction[4][2], int ignore_walls)
+int	is_ghost_on_deadend(t_game *game, t_ghost *ghost, int direction[4][2],
+		int ignore_walls)
 {
-	t_point next_tile;
-	int dir = (ghost->invalid_dir + 2) % 4;
-		next_tile.y = (ghost->pos.pixel_pos.y / TILE_SIZE) + direction[dir][0];
-		next_tile.x = (ghost->pos.pixel_pos.x / TILE_SIZE) + direction[dir][1];
-		if (!ignore_walls && in_bounds(&game->map, next_tile)
-			&& (game->map.grid[next_tile.y][next_tile.x] == '1'
-				|| game->map.grid[next_tile.y][next_tile.x] == 'G'))
+	t_point	next_tile;
+	int		dir;
+
+	dir = (ghost->invalid_dir + 2) % 4;
+	next_tile.y = (ghost->pos.pixel_pos.y / TILE_SIZE) + direction[dir][0];
+	next_tile.x = (ghost->pos.pixel_pos.x / TILE_SIZE) + direction[dir][1];
+	if (!ignore_walls // && in_bounds(&game->map, next_tile)
+		&& (game->map.grid[next_tile.y][next_tile.x] == '1'
+			|| game->map.grid[next_tile.y][next_tile.x] == 'G'))
+	{
+		if (passed_center(ghost))
 		{
-			if (passed_center(ghost))
-			{
-				ghost->invalid_dir = dir;
-				dir = (dir + 2) % 4;
-			}
+			ghost->invalid_dir = dir;
+			dir = (dir + 2) % 4;
 		}
-	return dir;
+	}
+	return (dir);
 }
 
 t_double_point	continue_travel(t_game *game, t_ghost *ghost, int ignore_walls)
 {
-	int		dir;
-	int		runnning;
+	int	dir;
+	int	runnning;
 
 	static int direction[4][2] = {
 		{-1, 0}, // 0 = up
@@ -121,13 +123,13 @@ int	rng_machine(void)
 
 int	chose_frightened_dir(t_ghost *ghost, char **map, int direction[4][2])
 {
-	int	best_dir;
-	int	tries;
-	t_point check_dir;
+	int		best_dir;
+	int		tries;
+	t_point	check_dir;
+	t_map	mapped;
 
 	best_dir = rng_machine();
 	tries = 0;
-	t_map mapped;
 	mapped.grid = map;
 	mapped.width = xtile(map);
 	mapped.height = ytile(map);
@@ -137,8 +139,10 @@ int	chose_frightened_dir(t_ghost *ghost, char **map, int direction[4][2])
 			+ direction[best_dir][1];
 		check_dir.y = ghost->pos.pixel_pos.y / TILE_SIZE
 			+ direction[best_dir][0];
-		if (in_bounds(&mapped, check_dir)  && ((map[check_dir.y][check_dir.x] != '1' && map[check_dir.y][check_dir.x] != 'G')
-			&& best_dir != ghost->invalid_dir))
+		if (in_bounds(&mapped, check_dir)
+			&& ((map[check_dir.y][check_dir.x] != '1'
+					&& map[check_dir.y][check_dir.x] != 'G')
+				&& best_dir != ghost->invalid_dir))
 			break ;
 		best_dir = (best_dir + 3) % 4;
 		tries++;
@@ -158,16 +162,19 @@ int	squared_distance(int x1, int y1, int x2, int y2)
 
 bool	is_blocked(t_ghost *ghost, char **map, int direction[4][2], int i)
 {
-	int max_x = xtile(map);
-	int max_y = ytile(map);
-	int y = ghost->pos.pixel_pos.y / TILE_SIZE
-			+ direction[i][0];
-	int x = ghost->pos.pixel_pos.x / TILE_SIZE
-			+ direction[i][1];
-	if(x < 0 || y < 0)
-		return true;
-	if(x > max_x || y > max_y)
-		return true;
+	int	max_x;
+	int	max_y;
+	int	y;
+	int	x;
+
+	max_x = xtile(map);
+	max_y = ytile(map);
+	y = ghost->pos.pixel_pos.y / TILE_SIZE + direction[i][0];
+	x = ghost->pos.pixel_pos.x / TILE_SIZE + direction[i][1];
+	if (x < 0 || y < 0)
+		return (false);
+	if (x > max_x || y > max_y)
+		return (true);
 	return ((map[y][x] != '1' && map[y][x] != 'G'));
 }
 

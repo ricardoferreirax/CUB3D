@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
-#include "initializer.h"
-#include "../utils/helpers.h"
 #include "../base/base.h"
+#include "../utils/helpers.h"
+#include "initializer.h"
 
 void	init_base(t_game *s)
 {
@@ -35,8 +35,9 @@ void	init_base(t_game *s)
 		while (point.x < s->map.width)
 		{
 			tile = which_tile(s->map.grid, &s->map, point, s->debug_mode);
-			if(tile == -1)
-				exit_game(EXIT_MALLOC, s, "init_base(): Something when very wrong in tile selection");
+			if (tile == -1)
+				exit_game(EXIT_MALLOC, s,
+					"init_base(): Something when very wrong in tile selection");
 			put_tile_inbase(s, tile, color, point);
 			point.x++;
 		}

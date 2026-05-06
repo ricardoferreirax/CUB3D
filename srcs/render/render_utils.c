@@ -34,10 +34,10 @@ t_image	*ghost_tex(t_game *g, t_ghost *gh)
 	if (!g || !gh)
 		return (NULL);
 	frame = ghost_anim_frame(gh);
-	if(gh->state == FRIGHTENED)
-		return(&g->tex.other_state_img[0]);
-	if(gh->state == EATEN)
-		return(&g->tex.other_state_img[1]);
+	if (gh->state == FRIGHTENED)
+		return (&g->tex.other_state_img[0]);
+	if (gh->state == EATEN)
+		return (&g->tex.other_state_img[1]);
 	if (gh->name == BLINKY)
 		return (&g->tex.blinky_img[frame]);
 	if (gh->name == PINKY)
@@ -72,10 +72,11 @@ int	clamp_int(int value, int min, int max)
 
 double	fract_pos(double x)
 {
-	int	i; // guarda a parte inteira de x
-
-	i = (int)x;         // converte x para inteiro ao truncar a parte decimal
+	int i; // guarda a parte inteira de x
+	i = (int)x;                   
+		// converte x para inteiro ao truncar a parte decimal
 	if (x < 0.0 && (double)i != x) // se x for negativo e tiver parte decimal
-		i -= 1;       // ajusta a parte inteira para o próximo número inteiro menor
-	return (x - (double)i);  // devolve so a parte fracionaria positiva
+		i -= 1;                   
+			// ajusta a parte inteira para o próximo número inteiro menor
+	return (x - (double)i);        // devolve so a parte fracionaria positiva
 }

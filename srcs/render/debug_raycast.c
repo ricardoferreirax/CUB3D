@@ -238,10 +238,6 @@ static int	cast_debug_ray(t_game *g, int col, t_raycasting *ray)
 	return (1);
 }
 
-// static t_point	debug_player_point(t_game *g)
-// {
-// 	return (debug_world_to_screen(g->player.pos.tile_pos.x, g->player.pos.tile_pos.y));
-// }
 
 static t_point	debug_hit_point(t_game *g, t_raycasting ray)
 {
@@ -272,7 +268,8 @@ void	render_raycast_debug(t_game *g)
 		return ;
 	draw_debug_map(g);
 	// start = debug_player_point(g);
-	start = debug_world_to_screen(g->player.pos.tile_pos.x, g->player.pos.tile_pos.y);
+	start = debug_world_to_screen(g->player.pos.tile_pos.x,
+			g->player.pos.tile_pos.y);
 	col = 0;
 	while (col < g->win.width)
 	{
@@ -280,6 +277,5 @@ void	render_raycast_debug(t_game *g)
 			debug_draw_ray(g, start, ray);
 		col += DEBUG_RAY_STEP;
 	}
-	debug_fill(g, debug_point(start.x - 2, start.y - 2), 5,
-		DEBUG_COLOR_PLAYER);
+	debug_fill(g, debug_point(start.x - 2, start.y - 2), 5, DEBUG_COLOR_PLAYER);
 }

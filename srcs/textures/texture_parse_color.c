@@ -13,7 +13,7 @@
 #include "../../Pac_Struct.h"
 #include "textures3D.h"
 
-int rgb_to_int(int r, int g, int b)
+int	rgb_to_int(int r, int g, int b)
 {
 	return ((r & 0xFF) << 16 | (g & 0xFF) << 8 | (b & 0xFF));
 }
@@ -45,23 +45,27 @@ void	parse_floor_ceiling_color(t_game *g, const char *s, int *dest)
 	int	blue;
 
 	if (*dest != -1)
-		exit_game(EXIT_MAP, g, "parse_floor_ceiling_color() was given an invalid dst");
+		exit_game(EXIT_MAP, g,
+			"parse_floor_ceiling_color() was given an invalid dst");
 	i = 0;
 	while (s[i] == ' ' || s[i] == '\t')
 		i++;
 	red = read_rgb(s, &i, g);
 	if (s[i] != ',')
-		exit_game(EXIT_MAP, g, "parse_floor_ceiling_color() found an invalid red color");
+		exit_game(EXIT_MAP, g,
+			"parse_floor_ceiling_color() found an invalid red color");
 	i++;
 	green = read_rgb(s, &i, g);
 	if (s[i] != ',')
-		exit_game(EXIT_MAP, g, "parse_floor_ceiling_color() found an invalid green color");
+		exit_game(EXIT_MAP, g,
+			"parse_floor_ceiling_color() found an invalid green color");
 	i++;
 	blue = read_rgb(s, &i, g);
 	while (s[i] == ' ' || s[i] == '\t')
 		i++;
 	if (s[i] && s[i] != '\n')
-		exit_game(EXIT_MAP, g, "parse_floor_ceiling_color() found an invalid blue color");
+		exit_game(EXIT_MAP, g,
+			"parse_floor_ceiling_color() found an invalid blue color");
 	*dest = rgb_to_int(red, green, blue);
 }
 
@@ -70,7 +74,8 @@ void	parse_floor_ceiling_line(t_game *g, char id, char *value)
 	value = skip_whitespace(value);
 	strip_newline(value);
 	if (!*value)
-		exit_game(EXIT_MAP, g, "parse_floor_ceiling_line() was given a invlaid value");
+		exit_game(EXIT_MAP, g,
+			"parse_floor_ceiling_line() was given a invlaid value");
 	if (id == 'F')
 	{
 		if (is_xpm_path(value))

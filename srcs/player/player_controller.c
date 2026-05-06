@@ -77,8 +77,6 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
 	player_wrap_position(g);
 	if (!player_collect_pacdots(g) && !player_collect_energizer(g))
 	{
-
-		// ft_printf("dots ledt in maze : %d dots needed for cruiser: one %d ; two: %d\n", g->pacdot_count - g->player.collected_dots, g->ghosts[BLINKY].cruiser.one.dots_left, g->ghosts[BLINKY].cruiser.two.dots_left);
 		g->player.pos.tile_pos.x += dx;
 		g->player.pos.tile_pos.y += dy;
 	}
@@ -99,7 +97,8 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
 			}
 		}
 	}
-	if (g->player.collected_dots >= g->pacdot_count + g->energizer_count && g->player.collected_dots != 0)
+	if (g->player.collected_dots >= g->pacdot_count + g->energizer_count
+		&& g->player.collected_dots != 0)
 		reset_game(g, 0);
 }
 
@@ -140,29 +139,33 @@ static void	player_apply_action(t_game *g, t_player_action act)
 		player_rotate(g, -ROT_SPEED);
 }
 
-static bool safe_is_wall(t_map map, int y, int x)
+static bool	safe_is_wall(t_map map, int y, int x)
 {
-    if (y < 0 || y >= map.height) return true; // treat out of bounds as blocked
-    if (x < 0) return true;
-    if (x >= (int)ft_strlen(map.grid[y])) return true;
-    return map.grid[y][x] == '1';
+	if (y < 0 || y >= map.height)
+		return (true); // treat out of bounds as blocked
+	if (x < 0)
+		return (true);
+	if (x >= (int)ft_strlen(map.grid[y]))
+		return (true);
+	return (map.grid[y][x] == '1');
 }
 
-bool can_move(t_game *game, int dir)
+bool	can_move(t_game *game, int dir)
 {
-    static int direction[4][2] = {
-        {-1, 0}, // up
-        {0, -1}, // left
-        {1, 0},  // down
-        {0, 1}   // right
-    };
+	int	y;
+	int	x;
 
-    int y = (int)game->player.pos.tile_pos.y + direction[dir][0];
-    int x = (int)game->player.pos.tile_pos.x + direction[dir][1];
-
-    if (safe_is_wall(game->map, y, x))
-        return false;
-    return true;
+	static int direction[4][2] = {
+		{-1, 0}, // up
+		{0, -1}, // left
+		{1, 0},  // down
+		{0, 1}   // right
+	};
+	y = (int)game->player.pos.tile_pos.y + direction[dir][0];
+	x = (int)game->player.pos.tile_pos.x + direction[dir][1];
+	if (safe_is_wall(game->map, y, x))
+		return (false);
+	return (true);
 }
 
 void	player_move(t_game *game, int dir)
@@ -243,9 +246,9 @@ void	player_controller(t_game *g)
 		if (g->key.a || g->key.left)
 			player_move(g, 1);
 		update_player_direction(g, 1);
-		apply_player_movement(g, (g->player.target_dir.x * (PLAYER_SPEED
-					+ 0 * (double)g->player.speed_multiplier / 100)),
-			g->player.target_dir.y * (PLAYER_SPEED
-				 + 0 * (double)g->player.speed_multiplier / 100));
+		apply_player_movement(g, (g->player.target_dir.x * (PLAYER_SPEED + 0
+					* (double)g->player.speed_multiplier / 100)),
+			g->player.target_dir.y * (PLAYER_SPEED + 0
+				* (double)g->player.speed_multiplier / 100));
 	}
 }
