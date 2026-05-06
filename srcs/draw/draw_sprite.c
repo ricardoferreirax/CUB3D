@@ -6,12 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 22:13:51 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/05 21:12:34 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/06 15:29:03 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
-#include "render3D.h"
+#include "draw.h"
 
 int	sprite_project(t_game *g, double wx, double wy, t_sprite *sp)
 {
@@ -35,7 +35,7 @@ int	sprite_project(t_game *g, double wx, double wy, t_sprite *sp)
 	return (1);
 }
 
-int	sprite_build(t_game *g, t_sprite *sp, int scale_div)
+int	build_sprite_box(t_game *g, t_sprite *sp, int scale_div)
 {
 	int	offset_y;
 	int	size;
@@ -60,7 +60,7 @@ int	sprite_build(t_game *g, t_sprite *sp, int scale_div)
 		&& sp->draw_start_y < sp->draw_end_y);
 }
 
-void	sprite_draw(t_game *g, t_sprite *sp, t_image *tex)
+void	draw_sprite(t_game *g, t_sprite *sp, t_image *tex)
 {
 	double	*zbuf;
 	int		col;
@@ -74,7 +74,7 @@ void	sprite_draw(t_game *g, t_sprite *sp, t_image *tex)
 	while (col < sp->draw_end_x)
 	{
 		if (sp->dist < zbuf[col])
-			sprite_draw_col(g, sp, col, tex);
+			draw_sprite_column(g, sp, col, tex);
 		col++;
 	}
 }

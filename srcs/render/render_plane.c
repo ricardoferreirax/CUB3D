@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_floor_ceiling.c                             :+:      :+:    :+:   */
+/*   render_plane.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:15:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/06 15:05:44 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/06 17:16:55 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	render_floor_texture(t_game *g)
 		return ;
 	if (!g->tex.floor_img.img_ptr)
 	{
-		fill_floor_color(&g->win.frame_buffer, g->map.floor_color, 0);
+		draw_floor_color(&g->win.frame_buffer, g->map.floor_color, 0);
 		return ;
 	}
 	row = g->win.height / 2 + FLOOR_START_OFFSET;
@@ -63,7 +63,7 @@ void	render_ceiling_texture(t_game *g)
 		return ;
 	if (!g->tex.ceiling_img.img_ptr)
 	{
-		fill_ceiling_color(&g->win.frame_buffer, g->map.ceiling_color, 0);
+		draw_ceiling_color(&g->win.frame_buffer, g->map.ceiling_color, 0);
 		return ;
 	}
 	row = 0;

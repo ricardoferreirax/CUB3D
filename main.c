@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/11 17:20:31 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/06 15:36:34 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "srcs/render/render3D.h"
 #include "srcs/textures/textures3D.h"
 #include "srcs/utils/helpers.h"
+#include "srcs/draw/draw.h"
 
 void	print_2d(char **arr)
 {
@@ -147,7 +148,7 @@ int	gameloop(t_game *game)
 		game->timer.mode_time_start = now;
 	}
 	if (game->state == MENU)
-		return (game->timer.mode_time_start = now, render_menu(game), 0);
+		return (game->timer.mode_time_start = now, draw_menu(game), 0);
 	return (render_frame(game), 0);
 }
 

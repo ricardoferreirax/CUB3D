@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_wall_texture.c                              :+:      :+:    :+:   */
+/*   draw_wall_column.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 18:15:08 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/05 21:07:30 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/06 15:24:59 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 #include "../textures/textures3D.h"
-#include "render3D.h"
+#include "draw.h"
 
 static int	get_wall_tex_x(t_game *g, t_image *tex)
 {
@@ -34,7 +34,7 @@ static int	get_wall_tex_x(t_game *g, t_image *tex)
 	return (tex_x);
 }
 
-void	render_wall_column(t_game *g, int screen_x)
+void	draw_wall_column(t_game *g, int screen_x)
 {
 	t_image			*wall_tex;
 	int				screen_y;

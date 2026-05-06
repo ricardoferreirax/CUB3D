@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:43:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/06 15:11:53 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/06 17:15:30 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_ghost	t_ghost;
 #endif
 
 #include "../../Pac_Struct.h"
+#include "../draw/draw.h"
 
 void	render_frame(t_game *game);
 void	raycast_frame(t_game *g);

@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_menu.c                                      :+:      :+:    :+:   */
+/*   draw_menu.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 11:04:40 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/05 21:04:35 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/06 15:23:33 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
-#include "render3D.h"
+#include "draw.h"
 
-void	render_menu(t_game *g)
+void	draw_menu(t_game *g)
 {
 	int	x;
 	int	y;

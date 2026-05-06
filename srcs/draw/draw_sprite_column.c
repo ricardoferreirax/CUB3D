@@ -6,14 +6,14 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 22:11:20 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/05 21:08:43 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/06 15:27:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
-#include "render3D.h"
+#include "draw.h"
 
-static unsigned int	sprite_tex_px(t_image *tex, int x, int y)
+static unsigned int	get_sprite_tex_pixel(t_image *tex, int x, int y)
 {
 	int	stride;
 
@@ -23,7 +23,7 @@ static unsigned int	sprite_tex_px(t_image *tex, int x, int y)
 	return (((unsigned int *)tex->img_addr)[y * stride + x]);
 }
 
-static int	sprite_tex_coord(int screen_pos, int sprite_start, int tex_size,
+static int	get_sprite_tex_coord(int screen_pos, int sprite_start, int tex_size,
 		int sprite_size)
 {
 	int	tex_pos;
@@ -32,21 +32,21 @@ static int	sprite_tex_coord(int screen_pos, int sprite_start, int tex_size,
 	return (clamp_int(tex_pos, 0, tex_size - 1));
 }
 
-int	sprite_draw_col(t_game *g, t_sprite *sp, int col, t_image *tex)
+int	draw_sprite_column(t_game *g, t_sprite *sp, int col, t_image *tex)
 {
 	int				row;
 	int				tex_x;
 	int				pixel_idx;
 	unsigned int	color;
 
-	tex_x = sprite_tex_coord(col, sp->tex_start_x, tex->width, sp->size);
+	tex_x = get_sprite_tex_coord(col, sp->tex_start_x, tex->width, sp->size);
 	row = sp->draw_start_y;
 	while (++row < sp->draw_end_y)
 	{
 		pixel_idx = row * g->win.width + col;
 		if (sp->dist < g->ray.sprite_z[pixel_idx])
 		{
-			color = sprite_tex_px(tex, tex_x, sprite_tex_coord(row,
+			color = get_sprite_tex_pixel(tex, tex_x, get_sprite_tex_coord(row,
 						sp->tex_start_y, tex->height, sp->size));
 			if ((color & 0x00FFFFFF) != 0)
 			{
