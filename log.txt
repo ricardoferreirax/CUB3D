@@ -1,0 +1,4631 @@
+diff --git a/Makefile b/Makefile
+index 2282a46..7b657a4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -6,7 +6,7 @@
+ #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
+ #                                                 +#+#+#+#+#+   +#+            #
+ #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
+-#    Updated: 2026/04/23 14:40:03 by pfreire-         ###   ########.fr        #
++#    Updated: 2026/05/05 14:58:20 by pfreire-         ###   ########.fr        #
+ #                                                                              #
+ # **************************************************************************** #
+ 
+@@ -15,8 +15,9 @@ NAME    = cub3d
+ CC      = clang-12 -Og
+ CFLAGS  = -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion  -Wformat=2 -Wstrict-aliasing=2 \
+ 		-fno-omit-frame-pointer \
+-		-g -fsanitize=address
+-#-fsanitize=undefined 
++		-g 
++ASAN_FLAGS = -fsanitize=address
++UBSAN_FLAGS = -fsanitize=undefined
+ 		
+ #  MLX_CFLAGS= -Wall -Wextra -Werror
+ 
+@@ -83,6 +84,7 @@ SRC_FILES = main.c \
+ 	srcs/base/base_bitmasking.c \
+ 	srcs/ghosts/ghost_ai.c \
+ 	srcs/ghosts/sprites.c  \
++	srcs/ghosts/helpers.c \
+ 	srcs/clock/time.c
+ 
+ OBJ_DIR   = objs
+@@ -118,4 +120,9 @@ fclean: clean
+ re: fclean all
+ e: all clean
+ 	clear
++a:
++	$(MAKE) CFLAGS="$(CFLAGS) $(ASAN_FLAGS)" e
++
++u:
++	$(MAKE) CFLAGS="$(CFLAGS) $(UBSAN_FLAGS)" e
+ .PHONY: all clean fclean re
+diff --git a/Pac_Struct.h b/Pac_Struct.h
+index 4f3f290..74459c6 100644
+--- a/Pac_Struct.h
++++ b/Pac_Struct.h
+@@ -11,83 +11,83 @@
+ /* ************************************************************************** */
+ 
+ #ifndef PAC_STRUCT_H
+-#define PAC_STRUCT_H
+-
+-#include "minilibx-linux/mlx.h"
+-#include "minilibx-linux/mlx_int.h"
+-#include "stdlib.h"
+-#include "unistd.h"
+-#include "stdio.h"
+-#include "string.h"
+-#include "./libft/libft.h"
+-#include <fcntl.h>
+-#include <math.h>
+-#include <sys/time.h>
+-//Controller support
+-#include <linux/input.h>
+-
+-#define SPRITE_SHEET "./assets/sprites/SpriteSheet.xpm"
+-
+-#include "srcs/map/map3D.h"
+-#include "srcs/player/player3D.h"
+-#include "srcs/hooks/hooks.h"
+-#define TILE_SIZE 8
+-
+-#define TEXTURES "./assets/textures/"
+-
+-#define MAP_PALLETE_X 3
+-#define MAP_PALLETE_Y 1
+-
+-#define UPDATE_F 16666
+-#define MAX_UPDATES 5
+-#define SPEED 75.5757625
+-#define PLAYER 'J'
+-#define WALL '1'
+-#define OPEN_SPACE '0'
++# define PAC_STRUCT_H
++
++# include "./libft/libft.h"
++# include "minilibx-linux/mlx.h"
++# include "minilibx-linux/mlx_int.h"
++# include "stdio.h"
++# include "stdlib.h"
++# include "string.h"
++# include "unistd.h"
++# include <fcntl.h>
++# include <math.h>
++# include <sys/time.h>
++// Controller support
++# include <linux/input.h>
++
++# define SPRITE_SHEET "./assets/sprites/SpriteSheet.xpm"
++
++# include "srcs/hooks/hooks.h"
++# include "srcs/map/map3D.h"
++# include "srcs/player/player3D.h"
++# define TILE_SIZE 8
++
++# define TEXTURES "./assets/textures/"
++
++# define MAP_PALLETE_X 3
++# define MAP_PALLETE_Y 1
++
++# define UPDATE_F 16666
++# define MAX_UPDATES 5
++# define SPEED 75.5757625
++# define PLAYER 'J'
++# define WALL '1'
++# define OPEN_SPACE '0'
+ // #define PACDOT 'D'
+ 
+-#define ENERGIZER 'R'
+-#define WRAP_PORTS 'D'
+-#define BLINKY_T 'b'
+-#define PINKY_T 'p'
+-#define INKY_T 'i'
+-#define CLYDE_T 'c'
+-#define GATE 'G'
+-#define PLAYER 'J'
+-#define WALL '1'
+-#define OPEN_SPACE '0'
+-#define PACDOT '.'
+-#define VOID ' '
++# define ENERGIZER 'R'
++# define WRAP_PORTS 'D'
++# define BLINKY_T 'b'
++# define PINKY_T 'p'
++# define INKY_T 'i'
++# define CLYDE_T 'c'
++# define GATE 'G'
++# define PLAYER 'J'
++# define WALL '1'
++# define OPEN_SPACE '0'
++# define PACDOT '.'
++# define VOID ' '
+ 
+ // exit codes
+-# define EXIT_OK        0
+-# define EXIT_QUIT      1
+-# define EXIT_MALLOC    2
+-# define EXIT_MLX       3
+-# define EXIT_MAP       4
+-# define EXIT_INPUT     5
++# define EXIT_OK 0
++# define EXIT_QUIT 1
++# define EXIT_MALLOC 2
++# define EXIT_MLX 3
++# define EXIT_MAP 4
++# define EXIT_INPUT 5
+ 
+-#define MAP_PACMAN "./maps/Pacman.cub"
+-#define MAP_CUBE   "./maps/cube.cub"
++# define MAP_PACMAN "./maps/Pacman.cub"
++# define MAP_CUBE "./maps/cube.cub"
+ 
+ typedef struct s_point
+ {
+-	int x;
+-	int y;
+-}	t_point;
++	int				x;
++	int				y;
++}					t_point;
+ 
+ typedef struct s_double_point
+ {
+-	double x;
+-	double y;
+-}	t_double_point;
++	double			x;
++	double			y;
++}					t_double_point;
+ 
+ typedef struct s_position
+ {
+-	t_point pixel_pos;
+-	t_double_point tile_pos;
+-}	t_pos;
+-	
++	t_point			pixel_pos;
++	t_double_point	tile_pos;
++}					t_pos;
++
+ typedef struct s_image
+ {
+ 	char			*img_addr;
+@@ -97,55 +97,58 @@ typedef struct s_image
+ 	int				l_len;
+ 	int				endian;
+ 	void			*img_ptr;
+-	unsigned int *data;
+-	int stride;
++	unsigned int	*data;
++	int				stride;
+ }					t_image;
+ 
+ typedef struct s_fc
+ {
+-	double	pos_x;
+-	double	pos_y;
+-	double	step_x;
+-	double	step_y;
+-	double	dist;
+-}	t_fc;
++	double			pos_x;
++	double			pos_y;
++	double			step_x;
++	double			step_y;
++	double			dist;
++}					t_fc;
+ 
+ typedef struct s_sprite
+ {
+-	double	dist; // distancia do sprite ao player
+-	int		screen_x; // posição horizontal do sprite na tela (coluna onde o centro do sprite deve ser desenhado)
+-	int		size; // tamanho do sprite projetado na tela 
+-	int		draw_start_x; // coluna inicial onde o sprite começa a desenhar
+-	int		draw_end_x; // coluna final onde o sprite termina de desenhar
+-	int		draw_start_y; // linha inicial onde o sprite começa a desenhar
+-	int		draw_end_y; // linha final onde o sprite termina de desenhar
+-	int 	tex_start_x; // coordenada x da textura correspondente à coluna draw_start_x do sprite
+-	int 	tex_start_y; // coordenada y da textura correspondente à linha draw_start_y do
+-}	t_sprite;
++	double dist;      // distancia do sprite ao player
++	int screen_x;    
++		// posição horizontal do sprite na tela (coluna onde o centro do sprite deve ser desenhado)
++	int size;         // tamanho do sprite projetado na tela
++	int draw_start_x; // coluna inicial onde o sprite começa a desenhar
++	int draw_end_x;   // coluna final onde o sprite termina de desenhar
++	int draw_start_y; // linha inicial onde o sprite começa a desenhar
++	int draw_end_y;   // linha final onde o sprite termina de desenhar
++	int tex_start_x; 
++		// coordenada x da textura correspondente à coluna draw_start_x do sprite
++	int tex_start_y; 
++		// coordenada y da textura correspondente à linha draw_start_y do
++}					t_sprite;
+ 
+ typedef struct s_raycasting
+ {
+-	double	*z_buffer;
+-	double *sprite_z;
+-	double	camera_x;
+-	double	ray_dir_x;
+-	double	ray_dir_y;
+-	double	side_dist_x;
+-	double	side_dist_y;
+-	double	delta_dist_x;
+-	double	delta_dist_y;
+-	double	perp_wall_dist;
+-	int		hit_side;
+-	char hit_tile;
+-	int		map_x;
+-	int		map_y;
+-	int		step_x;
+-	int		step_y;
+-	int		draw_start;
+-	int		draw_end;
+-	int		hit;
+-	int		line_h;
+-}	t_raycasting;
++	double			*z_buffer;
++	double			*sprite_z;
++	double			camera_x;
++	double			ray_dir_x;
++	double			ray_dir_y;
++	double			side_dist_x;
++	double			side_dist_y;
++	double			delta_dist_x;
++	double			delta_dist_y;
++	double			perp_wall_dist;
++	int				hit_side;
++	char			hit_tile;
++	int				map_x;
++	int				map_y;
++	int				step_x;
++	int				step_y;
++	int				draw_start;
++	int				draw_end;
++	int				hit;
++	int				line_h;
++}					t_raycasting;
+ 
+ typedef struct s_window
+ {
+@@ -159,54 +162,54 @@ typedef struct s_window
+ 
+ typedef struct s_sprite_ref
+ {
+-	t_point coord;
+-	int width;
+-	int height;
+-} t_sprite_ref;
++	t_point			coord;
++	int				width;
++	int				height;
++}					t_sprite_ref;
+ 
+ typedef struct s_anim_cord
+ {
+ 	// Coordinates to find the sprites in the sprite sheet.
+ 	// Each entity has 2 animations per direction, they alternate
+-	t_sprite_ref up[4];
+-	t_sprite_ref left[4];
+-	t_sprite_ref down[4];
+-	t_sprite_ref right[4];
+-	t_sprite_ref scared[2];
+-	//Death animation ofr th eplayer has 12 frames
+-	t_sprite_ref death[12];
++	t_sprite_ref	up[4];
++	t_sprite_ref	left[4];
++	t_sprite_ref	down[4];
++	t_sprite_ref	right[4];
++	t_sprite_ref	scared[2];
++	// Death animation ofr th eplayer has 12 frames
++	t_sprite_ref	death[12];
+ 
+-} t_anim;
++}					t_anim;
+ 
+ typedef struct s_control
+ {
+-	int current_dir;
+-	int input_buffer;
++	int				current_dir;
++	int				input_buffer;
+ 	// int cycle_count;
+-} t_control;
++}					t_control;
+ 
+ typedef struct s_player
+ {
+ 	// vou precisar para a execução 3D
+-	
+-		// vou precisar para a execução 3D
+-	t_double_point dir;
+-	t_double_point target_dir;
+-	t_double_point plane;
+-	t_double_point target_plane;
+-	t_point target_map;
+-	char	target_tile;    // id do tile que o player está a apontar
+-	char	target_wall_dir; // 'N', 'S', 'E', 'W'
+-	double	target_dist;   // distância perpendicular
+-	
++
++	// vou precisar para a execução 3D
++	t_double_point	dir;
++	t_double_point	target_dir;
++	t_double_point	plane;
++	t_double_point	target_plane;
++	t_point			target_map;
++	char target_tile;     // id do tile que o player está a apontar
++	char target_wall_dir; // 'N', 'S', 'E', 'W'
++	double target_dist;   // distância perpendicular
++
+ 	t_pos pos; // para o 2d (tile/pixel)
+-	int lives;
+-	int speed_multiplier;
+-	int collected_dots;
+-	int frightened_speed;
+-	t_anim frames;
+-	t_control controller;
+-}	t_player;
++	int				lives;
++	int				speed_multiplier;
++	int				collected_dots;
++	int				frightened_speed;
++	t_anim			frames;
++	t_control		controller;
++}					t_player;
+ 
+ typedef enum e_ghost
+ {
+@@ -215,7 +218,7 @@ typedef enum e_ghost
+ 	INKY,
+ 	CLYDE,
+ 	DISABLED
+-} e_ghost;
++}					e_ghost;
+ 
+ typedef enum e_state
+ {
+@@ -224,88 +227,86 @@ typedef enum e_state
+ 	FRIGHTENED,
+ 	EATEN,
+ 	SPAWN
+-}	e_state;
++}					e_state;
+ 
+ typedef struct s_elroy_level
+ {
+-	int enabled;
+-	int dots_left;
+-	int speed_multiplier;
+-}	t_elroy_level;
++	int				enabled;
++	int				dots_left;
++	int				speed_multiplier;
++}					t_elroy_level;
+ 
+ typedef struct s_elroy
+ {
+-	//Only Blinky can become Elroy Cruiser
+-	int is_blinky;
+-	//Elroy has two levels, check table for exact values btu Elroy becomes stronger the less dots there are
+-	t_elroy_level one;
+-	t_elroy_level two;
+-}	t_elroy;
++	int				is_blinky;
++	t_elroy_level	one;
++	t_elroy_level	two;
++}					t_elroy;
+ 
+ typedef struct s_ghost
+ {
+-	e_ghost	name;
+-	t_pos	pos;
+-	double speed;
+-	int		dot_counter;
+-	t_point	target_tile;
+-	int		global_dot_counter_call;
+-	int		speed_multiplier;
+-	int		speed_frightened;
+-	int		speed_tunnel;
+-	double	speed_accumulador;
+-	int		is_steping_on_pacdot;
+-	t_anim	anim;
+-	int		invalid_dir;
+-	char	**mental_map;
+-	t_sprite_ref sprite;
+-	t_elroy	cruiser;
+-	e_state	state;
+-	t_anim frames;
+-
+-}	t_ghost;
++	e_ghost			name;
++	t_pos			pos;
++	double			speed;
++	int				dot_counter;
++	t_point			target_tile;
++	int				global_dot_counter_call;
++	int				speed_multiplier;
++	int				speed_frightened;
++	int				speed_tunnel;
++	double			speed_accumulador;
++	int				is_steping_on_pacdot;
++	t_anim			anim;
++	int				invalid_dir;
++	char			**mental_map;
++	t_sprite_ref	sprite;
++	t_elroy			cruiser;
++	e_state			state;
++	t_anim			frames;
++
++}					t_ghost;
+ 
+ typedef struct s_time
+ {
+-	double level_time;
+-	double mode_timer;
+-	double mode_time_start;
+-	//starts when ghosts are in the pen and pac-man refuses to eat dots
+-	double timeout_timer;
+-	int energizer;
+-	double frightened_time;
+-	double frightened_time_start;
+-	//timers related to making sure the game updates at 60Hz
+-	long last_time_up;
+-	long accumulator;
+-	long start_time;
+-	int mode;
+-	int times[8];
+-}	t_timer;
++	double			level_time;
++	double			mode_timer;
++	double			mode_time_start;
++	// starts when ghosts are in the pen and pac-man refuses to eat dots
++	double			timeout_timer;
++	int				energizer;
++	double			frightened_time;
++	double			frightened_time_start;
++	// timers related to making sure the game updates at 60Hz
++	long			last_time_up;
++	long			accumulator;
++	long			start_time;
++	int				mode;
++	int				times[8];
++}					t_timer;
+ 
+ typedef struct s_pacdot
+ {
+-	t_pos pos;
+-	bool active;
+-}	t_pacdot;
++	t_pos			pos;
++	bool			active;
++}					t_pacdot;
+ 
+ typedef struct s_sheet
+ {
+-	t_sprite_ref sprites[256];
+-	t_image sprite_img;
+-}	t_sprite_sheet;
++	t_sprite_ref	sprites[256];
++	t_image			sprite_img;
++}					t_sprite_sheet;
+ 
+ typedef enum e_gstate
+ {
+ 	MENU,
+ 	PLAY
+-}	t_gstate;
++}					t_gstate;
+ 
+ typedef enum e_mode
+ {
+ 	MODE_CUBE = 0,
+ 	MODE_PACMAN = 1
+-}	t_mode;
++}					t_mode;
+ 
+ typedef enum e_player_action
+ {
+@@ -315,127 +316,127 @@ typedef enum e_player_action
+ 	MOVE_RIGHT,
+ 	ROTATE_LEFT,
+ 	ROTATE_RIGHT
+-}	t_player_action;
+-
++}					t_player_action;
+ 
+ typedef struct s_textures
+ {
+-	char	*no;
+-	char	*so;
+-	char	*we;
+-	char	*ea;
+-	char	*floor;
+-	char	*ceiling;
+-	char	*pacdot;
+-	char	*energizer;
+-	char	*blinky[2];
+-	char	*pinky[2];
+-	char	*inky[2];
+-	char	*clyde[2];
+-	char	*gate_close;
+-	char *other_state[2];
+-
+-	t_image	no_img;
+-	t_image	so_img;
+-	t_image	we_img;
+-	t_image	ea_img;
+-	t_image	floor_img;
+-	t_image	ceiling_img;
+-	t_image	pacdot_img;
+-	t_image	energizer_img;
+-	t_image	blinky_img[2];
+-	t_image	pinky_img[2];
+-	t_image	inky_img[2];
+-	t_image	clyde_img[2];
+-	t_image gate_close_img;
+-	t_image	other_state_img[2];
+-}	t_textures;
++	char			*no;
++	char			*so;
++	char			*we;
++	char			*ea;
++	char			*floor;
++	char			*ceiling;
++	char			*pacdot;
++	char			*energizer;
++	char			*blinky[2];
++	char			*pinky[2];
++	char			*inky[2];
++	char			*clyde[2];
++	char			*gate_close;
++	char			*other_state[2];
++
++	t_image			no_img;
++	t_image			so_img;
++	t_image			we_img;
++	t_image			ea_img;
++	t_image			floor_img;
++	t_image			ceiling_img;
++	t_image			pacdot_img;
++	t_image			energizer_img;
++	t_image			blinky_img[2];
++	t_image			pinky_img[2];
++	t_image			inky_img[2];
++	t_image			clyde_img[2];
++	t_image			gate_close_img;
++	t_image			other_state_img[2];
++}					t_textures;
+ 
+ typedef struct s_lvl_config
+ {
+-	t_elroy elroy;
+-	int ghost_speed;
+-	int ghost_frightened_speed;
+-	int ghost_tunnel_speed;
+-	int pacman_speed;
+-	int pacman_frightened_speed;
+-	double frightened_time;
+-	int bonus_fruit_points;
+-	int time[8];
+-} t_lvl_config;
++	t_elroy			elroy;
++	int				ghost_speed;
++	int				ghost_frightened_speed;
++	int				ghost_tunnel_speed;
++	int				pacman_speed;
++	int				pacman_frightened_speed;
++	double			frightened_time;
++	int				bonus_fruit_points;
++	int				time[8];
++}					t_lvl_config;
+ 
+ typedef struct s_interest_points
+ {
+-	t_point ghost_house;
+-	t_point scatter_target[4];
+-	t_point player_spawn;
+-} t_target_points;
++	t_point			ghost_house;
++	t_point			scatter_target[4];
++	t_point			player_spawn;
++}					t_target_points;
+ 
+ typedef struct s_game
+ {
+-	void *mlx_ptr;
+-	t_window win;
+-	t_map   map;
+-	t_raycasting ray;
+-	t_player player;
+-	t_key	key;
+-	t_textures tex;
+-	t_pacdot *pacdots;
+-	t_pacdot	*energizers;
+-	t_ghost		ghosts[4]; 
+-	t_target_points targets;
+-	t_image	render;
+-	t_mode mode;
+-	t_gstate state;
+-	t_image menu_img;
+-	t_image base;
+-	int pacdot_count;
+-	int	energizer_count;
+-	int gate_passable;
+-	
+-	bool debug_mode;
+-	double timeout;
+-	t_timer timer;
+-	int global_dot_counter;
+-	int score;
+-	int level;
+-	int controller_fd;
+-	e_state global_state;
++	void			*mlx_ptr;
++	t_window		win;
++	t_map			map;
++	t_raycasting	ray;
++	t_player		player;
++	t_key			key;
++	t_textures		tex;
++	t_pacdot		*pacdots;
++	t_pacdot		*energizers;
++	t_ghost			ghosts[4];
++	t_target_points	targets;
++	t_image			render;
++	t_mode			mode;
++	t_gstate		state;
++	t_image			menu_img;
++	t_image			base;
++	int				pacdot_count;
++	int				energizer_count;
++	int				gate_passable;
++
++	bool			debug_mode;
++	double			timeout;
++	t_timer			timer;
++	int				global_dot_counter;
++	int				score;
++	int				level;
++	int				controller_fd;
++	e_state			global_state;
+ 	// SpriteShit is 200x186
+-	t_sprite_sheet sprite_sheet;
+-}	t_game;
++	t_sprite_sheet	sprite_sheet;
++}					t_game;
+ 
+ #endif // !DEBUG
+ 
+-int		gameloop(t_game *game);
+-long	get_time_us(void);
+-void	switch_mode_and_parse(t_game *g, t_mode mode, const char *path);
+-void	start_game_mode(t_game *g, t_mode mode);
+-char	**copy_map(char **map);
+-t_point	find_c(char **map, char c);
+-int	ghost_tick_ready(t_game *g, long now);
+-int	ghost_opposite_dir(int dir);
++int					gameloop(t_game *game);
++long				get_time_us(void);
++void				switch_mode_and_parse(t_game *g, t_mode mode,
++						const char *path);
++void				start_game_mode(t_game *g, t_mode mode);
++char				**copy_map(char **map);
++t_point				find_c(char **map, char c);
++int					ghost_tick_ready(t_game *g, long now);
++int					ghost_opposite_dir(int dir);
+ 
+ // =========================
+ // Free & Exit
+ // =========================
+-void	exit_game(int errcode, t_game *g, char *str);
+-void	free_game(t_game *g);
++void				exit_game(int errcode, t_game *g, char *str);
++void				free_game(t_game *g);
+ 
+ // =========================
+ // Ghost / AI / Utils
+ // =========================
+-t_point	find_c(char **map, char c);
++t_point				find_c(char **map, char c);
+ 
+-int		xtile(char **map);
+-int		ytile(char **map);
++int					xtile(char **map);
++int					ytile(char **map);
+ 
+-int	pixel_get(t_image *data, int x, int y);
+-int	pixeL_get_coord(t_sprite_sheet *sheet, int i, int x, int y);
+-void	ft_pixel_put(t_image *s, int x, int y, unsigned int color);
++int					pixel_get(t_image *data, int x, int y);
++int					pixeL_get_coord(t_sprite_sheet *sheet, int i, int x, int y);
++void				ft_pixel_put(t_image *s, int x, int y, unsigned int color);
+ 
+-void print_2d(char **arr);
+-void breakpoint(void);
++void				print_2d(char **arr);
++void				breakpoint(void);
+ 
+-void reset_game(t_game *game, int is_death);
+-void change_pallete(t_point pallet_coord, t_anim *frames);
++void				reset_game(t_game *game, int is_death);
++void				change_pallete(t_point pallet_coord, t_anim *frames);
+diff --git a/cub3d b/cub3d
+index bc7e208..9c51043 100755
+Binary files a/cub3d and b/cub3d differ
+diff --git a/main.c b/main.c
+index 0bb81d6..42c6310 100644
+--- a/main.c
++++ b/main.c
+@@ -74,18 +74,25 @@ void	reset_game(t_game *game, int is_death)
+ 	game->player.collected_dots = 0;
+ }
+ 
+-void	controller_player(t_game *game)
++void d_pad_handler(t_game *game, struct input_event event)
++{
++			if (event.code == ABS_HAT0X)
++			{
++				game->key.a = (event.value == -1);
++				game->key.d = (event.value == 1);
++			}
++			else if (event.code == ABS_HAT0Y)
++			{
++				game->key.w = (event.value == -1);
++				game->key.s = (event.value == 1);
++			}
++			else if (event.code == ABS_RZ)
++				game->key.e = (event.value > 100); // threshold
++}
++
++void face_button_handler(t_game *game, struct input_event event)
+ {
+-	struct input_event	event;
+ 
+-	if (game->controller_fd < 0)
+-		return ;
+-	while (read(game->controller_fd, &event, sizeof(event)) > 0)
+-	{
+-		if (event.type != EV_KEY && event.type != EV_ABS)
+-			continue ;
+-		if (event.type == EV_KEY)
+-		{
+ 			if (event.code == BTN_SOUTH) // Xis
+ 				game->key.down = event.value;
+ 			else if (event.code == BTN_NORTH) // Triangulo
+@@ -99,26 +106,34 @@ void	controller_player(t_game *game)
+ 				game->key.k = event.value;
+ 			else if (event.code == BTN_START)
+ 				game->key.controller_start = event.value;
+-		}
++}
++
++void	controller_player(t_game *game)
++{
++	struct input_event	event;
++
++	if (game->controller_fd < 0)
++		return ;
++	while (read(game->controller_fd, &event, sizeof(event)) > 0)
++	{
++		if (event.type != EV_KEY && event.type != EV_ABS)
++			continue ;
++		if (event.type == EV_KEY)
++			face_button_handler(game, event);
+ 		if (event.type == EV_ABS)
+-		{
+-			// D-pad → WASD
+-			if (event.code == ABS_HAT0X)
+-			{
+-				game->key.a = (event.value == -1);
+-				game->key.d = (event.value == 1);
+-			}
+-			else if (event.code == ABS_HAT0Y)
+-			{
+-				game->key.w = (event.value == -1);
+-				game->key.s = (event.value == 1);
+-			}
+-			else if (event.code == ABS_RZ)
+-				game->key.e = (event.value > 100); // threshold
+-		}
++			d_pad_handler(game,event);
+ 	}
+ }
+ 
++int change_game_mode(t_game *game)
++{
++	if(game->timer.mode >= 7)
++		return CHASE;
++	else if(game->timer.mode % 2 == 0)
++		return SCATTER;
++	return CHASE;
++}
++
+ int	gameloop(t_game *game)
+ {
+ 	long	now;
+@@ -138,13 +153,8 @@ int	gameloop(t_game *game)
+ 		- game->timer.mode_time_start > (long)(game->timer.times[game->timer.mode])
+ 		* 1000000.0)
+ 	{
+-		if (game->debug_mode)
+-			printf("Changing Global State at %ld\n", now);
+ 		game->timer.mode++;
+-		if (game->global_state == SCATTER)
+-			game->global_state = CHASE;
+-		else if (game->global_state == CHASE)
+-			game->global_state = SCATTER;
++		game->global_state = change_game_mode(game);
+ 		game->timer.mode_time_start = now;
+ 	}
+ 	if (game->state == MENU)
+@@ -152,13 +162,24 @@ int	gameloop(t_game *game)
+ 	return (render_frame(game), 0);
+ }
+ 
+-
++int controller_finder(char *argv)
++{
++	int num;
++	num = ft_atoi(argv);
++	if(num <= 0)
++		return (ft_printf("Input a valid positive integer for Controller Event ID\n"), -1);
++	char *path = ft_strjoin("/dev/input/event", argv);
++	ft_printf("Looking for Controller: %s\n", path);
++	if (!path)
++		return (ft_printf("Malloc Failed?"), -1);
++	num = open(path, O_RDONLY | O_NONBLOCK);
++	free(path);
++	return(num);
++}
+ 
+ bool	wrong_args(t_game *game, int ac, char **argv)
+ {
+ 	int		i;
+-	char	*path;
+-	int		num;
+ 
+ 	i = 2;
+ 	game->debug_mode = false;
+@@ -166,21 +187,10 @@ bool	wrong_args(t_game *game, int ac, char **argv)
+ 	while (i < ac)
+ 	{
+ 		if (ft_strcmp(argv[i], "debug_mode=y") == 0)
+-		{
+-			ft_printf("Debug Mode is enabled\n");
+ 			game->debug_mode = true;
+-		}
+ 		else
+ 		{
+-			num = ft_atoi(argv[i]);
+-			if (num <= 0)
+-				return (printf("Input a valid integer for Controller Event ID.\n"), true);
+-			path = ft_strjoin("/dev/input/event", argv[i]);
+-			printf("Looking for Controller: %s\n", path);
+-			if (!path)
+-				return (printf("Malloc Failed?"), true);
+-			game->controller_fd = open(path, O_RDONLY | O_NONBLOCK);
+-			free(path);
++			game->controller_fd = controller_finder(argv[i]);
+ 			if (game->controller_fd < 0)
+ 				return (printf("Provided ID doesn't exist"), true);
+ 		}
+@@ -189,7 +199,6 @@ bool	wrong_args(t_game *game, int ac, char **argv)
+ 	return (false);
+ }
+ 
+-
+ int	main(int ac, char **av)
+ {
+ 	t_game	*game;
+diff --git a/srcs/base/base.h b/srcs/base/base.h
+index 77cfa09..c8b2d77 100644
+--- a/srcs/base/base.h
++++ b/srcs/base/base.h
+@@ -11,17 +11,17 @@
+ /* ************************************************************************** */
+ 
+ #ifndef BASE_H
+-#define BASE_H
++# define BASE_H
+ 
+-#include "../../Pac_Struct.h" 
++# include "../../Pac_Struct.h"
+ 
++int		find_sprite(unsigned int mask);
++int		find_disamb_sprite(unsigned int mask);
++t_point	player_spawn(char **map);
++int		which_wall(char **original_map, t_map map, t_point *coord);
++int		which_tile(char **original_map, t_map *map, t_point coord, bool debug);
+ 
+-int	find_sprite(unsigned int mask);
+-int find_disamb_sprite(unsigned int mask);
+-t_point player_spawn(char **map);
+-int	which_wall(char **original_map, t_map map, t_point *coord);
+-int	which_tile(char **original_map, t_map *map, t_point coord, bool debug);
+-
++int		squared_corners(int final);
+ void	put_tile_inbase(t_game *g, int tile_code, unsigned int color,
+-		t_point point);
++			t_point point);
+ #endif // !BASE_H
+diff --git a/srcs/base/base_bitmasking.c b/srcs/base/base_bitmasking.c
+index d860176..f922724 100644
+--- a/srcs/base/base_bitmasking.c
++++ b/srcs/base/base_bitmasking.c
+@@ -12,18 +12,17 @@
+ 
+ #include "base.h"
+ 
+-static const uint16_t g_bitmask_to_tile[256] =
+-{
+-	[0xFF] = 39, // Filled Tile
+-	[0x31] = 16, // 0011 0001 Top Left
+-	[0x62] = 18, // 0110 0010 Top Right
+-	[0x98] = 60, // 1001 1000 Bottom Left
+-	[0xC4] = 62, // 1100 0100 Bottom Right
++static const uint16_t	g_bitmask_to_tile[256] = {
++	[0xFF] = 39,  // Filled Tile
++	[0x31] = 16,  // 0011 0001 Top Left
++	[0x62] = 18,  // 0110 0010 Top Right
++	[0x98] = 60,  // 1001 1000 Bottom Left
++	[0xC4] = 62,  // 1100 0100 Bottom Right
+ 	[0xFD] = 127, // T Bottom Left
+ 	[0xFE] = 128, // T Bottom Right
+ 	[0xF7] = 106, // T Top Right
+ 	[0xFB] = 105, // T Top Left
+-	[0xB9] = 38, // Vertical Left
++	[0xB9] = 38,  // Vertical Left
+ 	[0xBB] = 38,
+ 	[0xBD] = 38,
+ 	[0xBF] = 38,
+@@ -44,10 +43,10 @@ static const uint16_t g_bitmask_to_tile[256] =
+ 	[0xB8] = 126, // Top Vertical Left, Double Wall
+ 	[0xE4] = 129, // Top Vertical Roght, Double Wall
+ 	[0xE2] = 107, // Bottom Vertical Right, Double Wall
+-	[0x71] = 83, //Top Horizontal Right, Double Wall
+-	[0x72] = 84, //Top Horizontal Left, Double Wall
+-	[0xD8] = 150, //Bottom Horizontal Right, Double Wall
+-	[0xD4] = 151, //Bottom Horizontal Left, Doublw Wall
++	[0x71] = 83,  // Top Horizontal Right, Double Wall
++	[0x72] = 84,  // Top Horizontal Left, Double Wall
++	[0xD8] = 150, // Bottom Horizontal Right, Double Wall
++	[0xD4] = 151, // Bottom Horizontal Left, Doublw Wall
+ 	// [0x90] = 148, // Bottom Left Curve
+ 	// [0x30] = 82, // Bottom Right Curve
+ 	// [0x60] = 85, // Top Right Curve
+@@ -56,54 +55,75 @@ static const uint16_t g_bitmask_to_tile[256] =
+ 	// [0x40] = 101, // Left Doorframe
+ };
+ 
+-static const uint16_t g_bitmask_totile[256] = {
++static const uint16_t	g_bitmask_totile[256] = {
+ 	[0xFF] = 39,
+-	[0x04] = 149, //Bottom Right Curve
+-	[0x08] = 148, //Bottom Left Curve
+-	[0x02] = 85, //Top Right Curve
+-	[0x01] = 82, //top left curve
+-	[0xCE] = 16, // Top LEft corner
+-	[0x67] = 60, //Bottom Left corner
+-	[0x3B] = 62, // Bottom Right Corner
+-	[0x9D] = 18, //Top roght corner
+-	[0x46] = 41, // Vertical Wall RIght
+-	[0x44] = 41,
+-	[0x42] = 41,
+-	[0x40] = 41,
+-	[0x19] = 43, //vertical Wall left
+-	[0x18] = 43,
+-	[0x11] = 43,
+-	[0x10] = 43,
+-	[0x8C] = 20, //Bottom Wall
+-	[0x88] = 20,
+-	[0x84] = 20,
+-	[0x80] = 20,
+-	[0x23] = 64, //Top Wall
+-	[0x22] = 64,
+-	[0x21] = 64,
+-	[0x20] = 64,
+-	[0xCC] = 103, //Right Door Frame
+-	[0x9C] = 101, //LEft Door Frame
++	[0x04] = 149, // Bottom Right Curve
++	[0x08] = 148, // Bottom Left Curve
++	[0x02] = 85,  // Top Right Curve
++	[0x01] = 82,  // top left curve
++	[0xCE] = 16,  // Top LEft corner
++	[0x67] = 60,  // Bottom Left corner
++	[0x3B] = 62,  // Bottom Right Corner
++	[0x9D] = 18,  // Top roght corner
++	[0x46] = 41,  // Vertical Wall RIght
++	[0x44] = 41,  [0x42] = 41, [0x40] = 41,
++	[0x19] = 43, // vertical Wall left
++	[0x18] = 43,  [0x11] = 43, [0x10] = 43,
++	[0x8C] = 20, // Bottom Wall
++	[0x88] = 20,  [0x84] = 20, [0x80] = 20,
++	[0x23] = 64, // Top Wall
++	[0x22] = 64,  [0x21] = 64, [0x20] = 64,
++	[0xCC] = 103, // Right Door Frame
++	[0x9C] = 101, // LEft Door Frame
+ };
+ 
+-
+ int	find_sprite(unsigned int mask)
+ {
++	uint16_t	tile;
+ 
+-	uint16_t tile = g_bitmask_to_tile[mask];
+-	if(tile == 0)
+-		return 0;
+-	return tile;
++	tile = g_bitmask_to_tile[mask];
++	if (tile == 0)
++		return (0);
++	return (tile);
+ }
+ 
+-
+-int find_disamb_sprite(unsigned int mask)
++int	find_disamb_sprite(unsigned int mask)
+ {
++	uint16_t	tile;
++
++	tile = g_bitmask_totile[mask];
++	if (tile == 0)
++		return (0);
++	return (tile);
++}
+ 
+-	uint16_t tile = g_bitmask_totile[mask];
+-	if(tile == 0)
+-		return 0;
+-	return tile;
++int	squared_corners(int final)
++{
++	if (final == 148)
++		return (63);
++	if (final == 82)
++		return (19);
++	if (final == 85)
++		return (21);
++	if (final == 149)
++		return (65);
++	return (final);
+ }
+ 
++t_point	player_spawn(char **map)
++{
++	t_point	pos;
++	char	*str;
++	int		i;
+ 
++	str = "NEWS";
++	i = 0;
++	while (str[i])
++	{
++		pos = find_c(map, str[i]);
++		if (pos.x >= 0 && pos.y >= 0)
++			break ;
++		i++;
++	}
++	return (pos);
++}
+diff --git a/srcs/base/base_constructor.c b/srcs/base/base_constructor.c
+index cbe39c6..44214a4 100644
+--- a/srcs/base/base_constructor.c
++++ b/srcs/base/base_constructor.c
+@@ -12,30 +12,29 @@
+ 
+ #include "base.h"
+ 
+-
+ void	flood_fill(char **map, int x, int y)
+ {
+-	if (x < 0 || x >= xtile(map) || y < 0
+-		|| y >= ytile(map) || map[y][x] == 'F'
++	if (x < 0 || x >= xtile(map) || y < 0 || y >= ytile(map) || map[y][x] == 'F'
+ 		|| map[y][x] == '1' || map[y][x] == 'D')
+ 		return ;
+-	if(map[y][x] == 'G')
++	if (map[y][x] == 'G')
+ 	{
+ 		map[y][x] = 'F';
+-		return;
++		return ;
+ 	}
+-    map[y][x] = 'F';
++	map[y][x] = 'F';
+ 	flood_fill(map, x + 1, y);
+ 	flood_fill(map, x - 1, y);
+ 	flood_fill(map, x, y + 1);
+ 	flood_fill(map, x, y - 1);
+ }
+ 
+-int disambiguation(t_point player_spawn, char **map, t_point coord)
++int	disambiguation(t_point player_spawn, char **map, t_point coord)
+ {
+-	flood_fill(map, player_spawn.x, player_spawn.y);
+ 	unsigned char	mask;
++	int				final;
+ 
++	flood_fill(map, player_spawn.x, player_spawn.y);
+ 	mask = 0;
+ 	if (coord.y != 0 && map[coord.y - 1][coord.x] == 'F')
+ 		mask |= (1 << 7);
+@@ -49,53 +48,25 @@ int disambiguation(t_point player_spawn, char **map, t_point coord)
+ 	{
+ 		if (coord.x != 0 && map[coord.y - 1][coord.x - 1] == 'F')
+ 			mask |= (1 << 2);
+-		if (coord.x != xtile(map) - 1 && map[coord.y - 1][coord.x
+-			+ 1] == 'F')
++		if (coord.x != xtile(map) - 1 && map[coord.y - 1][coord.x + 1] == 'F')
+ 			mask |= (1 << 3);
+ 	}
+ 	if (coord.y != ytile(map) - 1)
+ 	{
+ 		if (coord.x != 0 && map[coord.y + 1][coord.x - 1] == 'F')
+ 			mask |= (1 << 1);
+-		if (coord.x != xtile(map) - 1 && map[coord.y + 1][coord.x
+-			+ 1] == 'F')
++		if (coord.x != xtile(map) - 1 && map[coord.y + 1][coord.x + 1] == 'F')
+ 			mask |= (1 << 0);
+ 	}
+-	int final = find_disamb_sprite(mask);
+-	return final;
+-}
+-
+-int squared_corners(int final)
+-{
+-	if(final == 148)
+-		return(63);
+-	if(final == 82)
+-		return(19);
+-	if(final == 85)
+-		return(21);
+-	if(final == 149)
+-		return(65);
+-	return(final);
+-}
+-
+-t_point player_spawn(char **map)
+-{
+-	t_point pos;
+-	char *str = "NEWS";
+-	int i = 0;
+-	while(str[i])
+-	{
+-		pos = find_c(map, str[i]);
+-		if(pos.x >= 0 && pos.y >= 0)
+-			break;
+-		i++;
+-	}
+-	return pos;
++	final = find_disamb_sprite(mask);
++	return (final);
+ }
+ 
+ int	which_wall(char **original_map, t_map map, t_point *coord)
+ {
+ 	unsigned char	mask;
++	int				final;
++	char			**temp;
+ 
+ 	mask = 0;
+ 	if (coord->y != 0 && map.grid[coord->y - 1][coord->x] == '1')
+@@ -122,36 +93,35 @@ int	which_wall(char **original_map, t_map map, t_point *coord)
+ 			+ 1] == '1')
+ 			mask |= (1 << 0);
+ 	}
+-	int final = find_sprite(mask);
+-	char **temp;
++	final = find_sprite(mask);
+ 	temp = copy_map(map.grid);
+-	if(!temp)
+-		return -1;
+-	if(final == 0)
++	if (!temp)
++		return (-1);
++	if (final == 0)
+ 		final = disambiguation(player_spawn(original_map), temp, *coord);
+-	if(original_map[coord->y][coord->x] == 'M')
++	if (original_map[coord->y][coord->x] == 'M')
+ 		final = squared_corners(final);
+ 	free_2d((void **)temp);
+-	return final;
++	return (final);
+ }
+ 
+ int	which_tile(char **original_map, t_map *map, t_point coord, bool debug)
+ {
+-	int tile;
+-	if(map->grid[coord.y][coord.x] == '\0')
+-		return(10);
++	int	tile;
++
++	if (map->grid[coord.y][coord.x] == '\0')
++		return (10);
+ 	if (map->grid[coord.y][coord.x] == '1')
+ 	{
+-
+ 		tile = (which_wall(original_map, *map, &coord));
+-		if(tile == 0)
+-			return(rand() % 255);
+-		return tile;
++		if (tile == 0)
++			return (rand() % 255);
++		return (tile);
+ 	}
+ 	else
+ 	{
+-		if(debug)
+-			return(59);
++		if (debug)
++			return (59);
+ 		return (170);
+ 	}
+ }
+@@ -159,23 +129,24 @@ int	which_tile(char **original_map, t_map *map, t_point coord, bool debug)
+ void	put_tile_inbase(t_game *g, int tile_code, unsigned int color,
+ 		t_point point)
+ {
+-	int	ty;
+-	int	tx;
+-	t_point pallete;
++	int		ty;
++	int		tx;
++	t_point	pallete;
++	t_point	sprite_randomizer;
++	t_point	pallete_randomizer;
++
+ 	pallete.x = MAP_PALLETE_X;
+ 	pallete.y = MAP_PALLETE_Y;
+ 	ty = 0;
+-	t_point sprite_randomizer;
+ 	sprite_randomizer.x = 0;
+ 	sprite_randomizer.y = 0;
+-	t_point pallete_randomizer;
+ 	pallete_randomizer.x = 1;
+ 	pallete_randomizer.y = 1;
+-	if(tile_code == 0)
++	if (tile_code == 0)
+ 	{
+ 		srand(get_time_us());
+ 		sprite_randomizer.x = rand() % 1000;
+-		sprite_randomizer.y = rand() % 552; 
++		sprite_randomizer.y = rand() % 552;
+ 		pallete_randomizer.x = rand() % 5;
+ 		pallete_randomizer.y = rand() % 3;
+ 	}
+@@ -185,8 +156,12 @@ void	put_tile_inbase(t_game *g, int tile_code, unsigned int color,
+ 		while (tx < g->sprite_sheet.sprites[tile_code].width)
+ 		{
+ 			color = pixel_get(&g->sprite_sheet.sprite_img,
+-					 (g->sprite_sheet.sprites[tile_code].coord.x + sprite_randomizer.x) + pallete.x * (pallete_randomizer.x * 200) + tx,
+-					 (g->sprite_sheet.sprites[tile_code].coord.y + sprite_randomizer.y) + pallete.y * (pallete_randomizer.y * 186) + ty);
++					(g->sprite_sheet.sprites[tile_code].coord.x
++						+ sprite_randomizer.x) + pallete.x
++					* (pallete_randomizer.x * 200) + tx,
++					(g->sprite_sheet.sprites[tile_code].coord.y
++						+ sprite_randomizer.y) + pallete.y
++					* (pallete_randomizer.y * 186) + ty);
+ 			if ((color >> 24) != 0xFF)
+ 				ft_pixel_put(&g->base, point.x * 8 + tx, point.y * 8 + ty,
+ 					color);
+diff --git a/srcs/clock/time.c b/srcs/clock/time.c
+index 7c83bc1..a0ece45 100644
+--- a/srcs/clock/time.c
++++ b/srcs/clock/time.c
+@@ -12,10 +12,10 @@
+ 
+ #include "time.h"
+ 
+-
+-long get_time_us(void)
++long	get_time_us(void)
+ {
+-	struct timeval tv;
++	struct timeval	tv;
++
+ 	gettimeofday(&tv, (void *)0);
+-	return(tv.tv_sec * 1000000L + tv.tv_usec);
++	return (tv.tv_sec * 1000000L + tv.tv_usec);
+ }
+diff --git a/srcs/clock/time.h b/srcs/clock/time.h
+index 6489389..622e134 100644
+--- a/srcs/clock/time.h
++++ b/srcs/clock/time.h
+@@ -11,8 +11,8 @@
+ /* ************************************************************************** */
+ 
+ #ifndef TIME_H
+-#define TIME_H
++# define TIME_H
+ 
+-#include <sys/time.h>
++# include <sys/time.h>
+ 
+ #endif // !TIME_H
+diff --git a/srcs/ghosts/ghost_ai.c b/srcs/ghosts/ghost_ai.c
+index 8d83303..066a905 100644
+--- a/srcs/ghosts/ghost_ai.c
++++ b/srcs/ghosts/ghost_ai.c
+@@ -6,39 +6,39 @@
+ /*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+ /*                                                +#+#+#+#+#+   +#+           */
+ /*   Created: 2026/04/23 11:22:16 by pfreire-          #+#    #+#             */
+-/*   Updated: 2026/04/23 14:52:27 by pfreire-         ###   ########.fr       */
++/*   Updated: 2026/05/05 15:04:08 by pfreire-         ###   ########.fr       */
+ /*                                                                            */
+ /* ************************************************************************** */
+ 
+ #include "../utils/helpers.h"
+ #include "ghosts.h"
+ 
+-int	passed_center(t_ghost *ghost)
++int	is_ghost_on_deadend(t_game *game, t_ghost *ghost, int direction[4][2],
++		int ignore_walls)
+ {
+-	int	center;
+-	int	passed_center;
+-
+-	int cx, cy;
+-	cx = ghost->pos.pixel_pos.x % TILE_SIZE;
+-	cy = ghost->pos.pixel_pos.y % TILE_SIZE;
+-	center = TILE_SIZE / 2;
+-	passed_center = 0;
+-	if (ghost->invalid_dir == 2)
+-		passed_center = (cy < center);
+-	if (ghost->invalid_dir == 3)
+-		passed_center = (cx < center);
+-	if (ghost->invalid_dir == 0)
+-		passed_center = (cy > center);
+-	if (ghost->invalid_dir == 1)
+-		passed_center = (cx > center);
+-	return (passed_center);
++	t_point	next_tile;
++	int		dir;
++
++	dir = (ghost->invalid_dir + 2) % 4;
++	next_tile.y = (ghost->pos.pixel_pos.y / TILE_SIZE) + direction[dir][0];
++	next_tile.x = (ghost->pos.pixel_pos.x / TILE_SIZE) + direction[dir][1];
++	if (!ignore_walls // && in_bounds(&game->map, next_tile)
++		&& (game->map.grid[next_tile.y][next_tile.x] == '1'
++			|| game->map.grid[next_tile.y][next_tile.x] == 'G'))
++	{
++		if (passed_center(ghost))
++		{
++			ghost->invalid_dir = dir;
++			dir = (dir + 2) % 4;
++		}
++	}
++	return (dir);
+ }
+ 
+ t_double_point	continue_travel(t_game *game, t_ghost *ghost, int ignore_walls)
+ {
+-	int		dir;
+-	int		runnning;
+-	t_point	next_tile;
++	int	dir;
++	int	runnning;
+ 
+ 	static int direction[4][2] = {
+ 		{-1, 0}, // 0 = up
+@@ -57,18 +57,7 @@ t_double_point	continue_travel(t_game *game, t_ghost *ghost, int ignore_walls)
+ 	if (ghost->speed_accumulador >= 100)
+ 	{
+ 		ghost->speed_accumulador -= 100;
+-		// tile in front of ghost (in current continue direction)
+-		next_tile.y = (ghost->pos.pixel_pos.y / TILE_SIZE) + direction[dir][0];
+-		next_tile.x = (ghost->pos.pixel_pos.x / TILE_SIZE) + direction[dir][1];
+-		if (!ignore_walls && (game->map.grid[next_tile.y][next_tile.x] == '1'
+-				|| game->map.grid[next_tile.y][next_tile.x] == 'G'))
+-		{
+-			if (passed_center(ghost))
+-			{
+-				ghost->invalid_dir = dir;
+-				dir = (dir + 2) % 4;
+-			}
+-		}
++		dir = is_ghost_on_deadend(game, ghost, direction, ignore_walls);
+ 		return ((t_double_point){.x = ghost->pos.pixel_pos.x
+ 			+ direction[dir][1], .y = ghost->pos.pixel_pos.y
+ 			+ direction[dir][0]});
+@@ -114,15 +103,112 @@ bool	cannot_move_up(t_game *game, t_ghost *ghost)
+ 	return (false);
+ }
+ 
+-int	chose_next_move(t_game *game, t_ghost *ghost, char **map)
++int	rng_machine(void)
++{
++	int	rng_num;
++	int	best_dir;
++
++	best_dir = -1;
++	rng_num = rand() % 8192;
++	if (rng_num < 1338)
++		best_dir = 0;
++	else if (rng_num < 3402)
++		best_dir = 3;
++	else if (rng_num < 5740)
++		best_dir = 2;
++	else if (rng_num < 8192)
++		best_dir = 1;
++	return (best_dir);
++}
++
++int	chose_frightened_dir(t_ghost *ghost, char **map, int direction[4][2])
+ {
+-	int		i;
+-	int		best;
+ 	int		best_dir;
++	int		tries;
++	t_point	check_dir;
++	t_map	mapped;
++
++	best_dir = rng_machine();
++	tries = 0;
++	mapped.grid = map;
++	mapped.width = xtile(map);
++	mapped.height = ytile(map);
++	while (tries < 4)
++	{
++		check_dir.x = ghost->pos.pixel_pos.x / TILE_SIZE
++			+ direction[best_dir][1];
++		check_dir.y = ghost->pos.pixel_pos.y / TILE_SIZE
++			+ direction[best_dir][0];
++		if (in_bounds(&mapped, check_dir)
++			&& ((map[check_dir.y][check_dir.x] != '1'
++					&& map[check_dir.y][check_dir.x] != 'G')
++				&& best_dir != ghost->invalid_dir))
++			break ;
++		best_dir = (best_dir + 3) % 4;
++		tries++;
++	}
++	return (best_dir);
++}
++
++int	squared_distance(int x1, int y1, int x2, int y2)
++{
++	int	dx;
++	int	dy;
++
++	dx = x1 - x2;
++	dy = y1 - y2;
++	return (dx * dx + dy * dy);
++}
++
++bool	is_blocked(t_ghost *ghost, char **map, int direction[4][2], int i)
++{
++	int	max_x;
++	int	max_y;
++	int	y;
++	int	x;
++
++	max_x = xtile(map);
++	max_y = ytile(map);
++	y = ghost->pos.pixel_pos.y / TILE_SIZE + direction[i][0];
++	x = ghost->pos.pixel_pos.x / TILE_SIZE + direction[i][1];
++	if (x < 0 || y < 0)
++		return (false);
++	if (x > max_x || y > max_y)
++		return (true);
++	return ((map[y][x] != '1' && map[y][x] != 'G'));
++}
++
++int	chose_next_dir(t_ghost *ghost, char **map, int direction[4][2])
++{
++	int		i;
+ 	t_point	target;
+ 	int		dist;
+-	int		rng_num;
+-	int		tries;
++	int		best;
++	int		best_dir;
++
++	i = 0;
++	target = ghost->target_tile;
++	while (i < 4)
++	{
++		if (is_blocked(ghost, map, direction, i) && i != ghost->invalid_dir)
++		{
++			dist = squared_distance(ghost->pos.pixel_pos.x / TILE_SIZE
++					+ direction[i][1], ghost->pos.pixel_pos.y / TILE_SIZE
++					+ direction[i][0], target.x, target.y);
++			if (best == -1 || dist < best)
++			{
++				best = dist;
++				best_dir = i;
++			}
++		}
++		i++;
++	}
++	return (best_dir);
++}
++
++int	chose_next_move(t_game *game, t_ghost *ghost, char **map)
++{
++	int	best_dir;
+ 
+ 	int direction[4][2] = {
+ 		{-1, 0}, // up
+@@ -130,65 +216,13 @@ int	chose_next_move(t_game *game, t_ghost *ghost, char **map)
+ 		{1, 0},  // down
+ 		{0, 1}   // right
+ 	};
+-	i = 0;
+-	best = -1;
+ 	best_dir = -1;
+ 	if (!map)
+ 		return (-1);
+-	target = ghost->target_tile;
+ 	if (ghost->state == FRIGHTENED)
+-	{
+-		rng_num = rand() % 8192;
+-		if (rng_num < 1338)
+-			best_dir = 0;
+-		else if (rng_num < 3402)
+-			best_dir = 3;
+-		else if (rng_num < 5740)
+-			best_dir = 2;
+-		else if (rng_num < 8192)
+-			best_dir = 1;
+-		tries = 0;
+-		while (tries < 4)
+-		{
+-			if ((map[ghost->pos.pixel_pos.y / TILE_SIZE
+-					+ direction[best_dir][0]][ghost->pos.pixel_pos.x / TILE_SIZE
+-					+ direction[best_dir][1]] != '1'
+-					&& map[ghost->pos.pixel_pos.y / TILE_SIZE
+-					+ direction[best_dir][0]][ghost->pos.pixel_pos.x / TILE_SIZE
+-					+ direction[best_dir][1]] != 'G')
+-				&& best_dir != ghost->invalid_dir)
+-				break ;
+-			best_dir = (best_dir + 3) % 4;
+-			tries++;
+-		}
+-	}
++		best_dir = chose_frightened_dir(ghost, map, direction);
+ 	else
+-	{
+-		while (i < 4)
+-		{
+-			if ((map[ghost->pos.pixel_pos.y / TILE_SIZE
+-					+ direction[i][0]][ghost->pos.pixel_pos.x / TILE_SIZE
+-					+ direction[i][1]] != '1' && map[ghost->pos.pixel_pos.y
+-					/ TILE_SIZE + direction[i][0]][ghost->pos.pixel_pos.x
+-					/ TILE_SIZE + direction[i][1]] != 'G')
+-				&& i != ghost->invalid_dir)
+-			{
+-				dist = (((ghost->pos.pixel_pos.x / TILE_SIZE) + direction[i][1])
+-						- target.x) * ((((ghost->pos.pixel_pos.x / TILE_SIZE)
+-								+ direction[i][1]) - target.x))
+-					+ ((((ghost->pos.pixel_pos.y / TILE_SIZE) + direction[i][0])
+-							- target.y) * ((((ghost->pos.pixel_pos.y
+-										/ TILE_SIZE) + direction[i][0])
+-								- target.y)));
+-				if (best == -1 || dist < best)
+-				{
+-					best = dist;
+-					best_dir = i;
+-				}
+-			}
+-			i++;
+-		}
+-	}
++		best_dir = chose_next_dir(ghost, map, direction);
+ 	if (best_dir == -1)
+ 		best_dir = (ghost->invalid_dir + 2) % 4;
+ 	if (best_dir == 0 && cannot_move_up(game, ghost))
+@@ -291,10 +325,31 @@ t_point	chase_player(t_game *game, t_ghost *ghost)
+ 	return ((t_point){0, 0});
+ }
+ 
+-void	update_target(t_game *game, t_ghost *ghost, int mode)
++void	update_cruise_elroy(t_game *game, t_ghost *ghost)
+ {
+ 	int	dots_left;
+ 
++	dots_left = ft_abs(game->player.collected_dots - game->pacdot_count);
++	if (!ghost->cruiser.two.enabled
++		&& dots_left <= ghost->cruiser.two.dots_left)
++	{
++		if (game->debug_mode)
++			ft_printf("Blinky is Elroy level 2\n");
++		ghost->speed_multiplier = ghost->cruiser.two.speed_multiplier;
++		ghost->cruiser.two.enabled = true;
++	}
++	else if (!ghost->cruiser.one.enabled
++		&& dots_left <= ghost->cruiser.one.dots_left)
++	{
++		if (game->debug_mode)
++			ft_printf("Blinky is Elroy level 1\n");
++		ghost->speed_multiplier = ghost->cruiser.one.speed_multiplier;
++		ghost->cruiser.one.enabled = true;
++	}
++}
++
++void	update_target(t_game *game, t_ghost *ghost, int mode)
++{
+ 	(void)mode;
+ 	if (ghost->state == EATEN)
+ 		goto_penhouse(game, ghost);
+@@ -305,25 +360,7 @@ void	update_target(t_game *game, t_ghost *ghost, int mode)
+ 			&& (ghost->cruiser.one.enabled || ghost->cruiser.two.enabled)))
+ 		ghost->target_tile = chase_player(game, ghost);
+ 	if (ghost->cruiser.is_blinky)
+-	{
+-		dots_left = ft_abs(game->player.collected_dots - game->pacdot_count);
+-		if (!ghost->cruiser.two.enabled
+-			&& dots_left <= ghost->cruiser.two.dots_left)
+-		{
+-			if (game->debug_mode)
+-				ft_printf("Blinky is Elroy level 2\n");
+-			ghost->speed_multiplier = ghost->cruiser.two.speed_multiplier;
+-			ghost->cruiser.two.enabled = true;
+-		}
+-		else if (!ghost->cruiser.one.enabled
+-			&& dots_left <= ghost->cruiser.one.dots_left)
+-		{
+-			if (game->debug_mode)
+-				ft_printf("Blinky is Elroy level 1\n");
+-			ghost->speed_multiplier = ghost->cruiser.one.speed_multiplier;
+-			ghost->cruiser.one.enabled = true;
+-		}
+-	}
++		update_cruise_elroy(game, ghost);
+ }
+ 
+ int	ghost_in_penhouse(t_ghost *ghost, char **map)
+@@ -430,11 +467,14 @@ bool	ghost_ai(t_game *game, t_ghost *ghost, int i)
+ 	if (ghost->state != game->global_state && ghost->state != FRIGHTENED
+ 		&& ghost->state != EATEN)
+ 	{
+-		if(ghost->cruiser.is_blinky && (ghost->cruiser.one.enabled || ghost->cruiser.two.enabled))
++		if (ghost->cruiser.is_blinky && (ghost->cruiser.one.enabled
++				|| ghost->cruiser.two.enabled))
+ 			ghost->state = CHASE;
+ 		else
+-		{ghost->state = game->global_state;
+-			ghost->invalid_dir = (ghost->invalid_dir + 2) % 4;}
++		{
++			ghost->state = game->global_state;
++			ghost->invalid_dir = (ghost->invalid_dir + 2) % 4;
++		}
+ 	}
+ 	return (false);
+ }
+diff --git a/srcs/ghosts/ghosts.h b/srcs/ghosts/ghosts.h
+index bd377c1..c00a9a2 100644
+--- a/srcs/ghosts/ghosts.h
++++ b/srcs/ghosts/ghosts.h
+@@ -6,38 +6,42 @@
+ /*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+ /*                                                +#+#+#+#+#+   +#+           */
+ /*   Created: 2026/04/23 11:21:48 by pfreire-          #+#    #+#             */
+-/*   Updated: 2026/04/23 14:48:32 by pfreire-         ###   ########.fr       */
++/*   Updated: 2026/05/05 14:47:23 by pfreire-         ###   ########.fr       */
+ /*                                                                            */
+ /* ************************************************************************** */
+ 
+ #ifndef GHOSTS_H
+-#define GHOSTS_H
+-
+-#include "../../Pac_Struct.h"
++# define GHOSTS_H
+ 
++# include "../../Pac_Struct.h"
+ 
+ t_double_point	continue_travel(t_game *game, t_ghost *ghost, int ignore_walls);
+ 
+-void	ghost_move_pixel(t_ghost *gh, int dx, int dy);
+-bool cannot_move_up(t_game *game, t_ghost *ghost);
+-int	chose_next_move(t_game *game, t_ghost *ghost, char **map);
+-void	ghost_set_pixel_pos(t_ghost *gh, double px, double py);
+-int	update_ghost(t_game *game, t_ghost *ghost);
+-bool is_on_penhouse(t_point ghost_pos, t_point gate_pos);
+-int	ghost_penhouse_dance(t_game *game, t_ghost *ghost, t_point gate);
+-bool	can_ghost_exit_penhouse(t_game *game, t_ghost *ghost);
+-int	ghost_in_penhouse(t_ghost *ghost, char **map);
+-void	update_target(t_game *game, t_ghost *ghost, int mode);
+-t_point	chase_player(t_game *game, t_ghost *ghost);
+-t_point ghost_pos_intile(t_point pos);
+-t_point	inky_target(t_game *game);
+-t_point	pinky_target(t_game *game , int n);
+-void	goto_penhouse(t_game *game, t_ghost *ghost);
+-bool ghost_ai(t_game *game, t_ghost *ghost, int i);
+-
+-void ghost_sprites(t_game *game, e_ghost ghost);
+-
+-void ghost_color(t_ghost *ghost);
+-
++void			ghost_move_pixel(t_ghost *gh, int dx, int dy);
++bool			cannot_move_up(t_game *game, t_ghost *ghost);
++int				chose_next_move(t_game *game, t_ghost *ghost, char **map);
++void			ghost_set_pixel_pos(t_ghost *gh, double px, double py);
++int				update_ghost(t_game *game, t_ghost *ghost);
++bool			is_on_penhouse(t_point ghost_pos, t_point gate_pos);
++int				ghost_penhouse_dance(t_game *game, t_ghost *ghost,
++					t_point gate);
++bool			can_ghost_exit_penhouse(t_game *game, t_ghost *ghost);
++int				ghost_in_penhouse(t_ghost *ghost, char **map);
++void			update_target(t_game *game, t_ghost *ghost, int mode);
++t_point			chase_player(t_game *game, t_ghost *ghost);
++t_point			ghost_pos_intile(t_point pos);
++t_point			inky_target(t_game *game);
++t_point			pinky_target(t_game *game, int n);
++void			goto_penhouse(t_game *game, t_ghost *ghost);
++bool			ghost_ai(t_game *game, t_ghost *ghost, int i);
++
++void			ghost_sprites(t_game *game, e_ghost ghost);
++
++void			ghost_color(t_ghost *ghost);
++
++int				passed_center(t_ghost *ghost);
++
++bool			in_bounds(t_map *map, t_point coord);
+ #endif // !GHOSTS_H
++
+ //
+diff --git a/srcs/ghosts/helpers.c b/srcs/ghosts/helpers.c
+new file mode 100644
+index 0000000..aa27a4e
+--- /dev/null
++++ b/srcs/ghosts/helpers.c
+@@ -0,0 +1,43 @@
++/* ************************************************************************** */
++/*                                                                            */
++/*                                                        :::      ::::::::   */
++/*   helpers.c                                          :+:      :+:    :+:   */
++/*                                                    +:+ +:+         +:+     */
++/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
++/*                                                +#+#+#+#+#+   +#+           */
++/*   Created: 2026/05/05 13:39:37 by pfreire-          #+#    #+#             */
++/*   Updated: 2026/05/05 14:47:27 by pfreire-         ###   ########.fr       */
++/*                                                                            */
++/* ************************************************************************** */
++
++#include "ghosts.h"
++
++int	passed_center(t_ghost *ghost)
++{
++	int	center;
++	int	passed_center;
++
++	int cx, cy;
++	cx = ghost->pos.pixel_pos.x % TILE_SIZE;
++	cy = ghost->pos.pixel_pos.y % TILE_SIZE;
++	center = TILE_SIZE / 2;
++	passed_center = 0;
++	if (ghost->invalid_dir == 2)
++		passed_center = (cy < center);
++	if (ghost->invalid_dir == 3)
++		passed_center = (cx < center);
++	if (ghost->invalid_dir == 0)
++		passed_center = (cy > center);
++	if (ghost->invalid_dir == 1)
++		passed_center = (cx > center);
++	return (passed_center);
++}
++
++bool	in_bounds(t_map *map, t_point coord)
++{
++	if (coord.x < 0 || coord.y < 0)
++		return (false);
++	if (coord.x > map->width || coord.y > map->height)
++		return (false);
++	return (true);
++}
+diff --git a/srcs/ghosts/sprites.c b/srcs/ghosts/sprites.c
+index e6087b2..c5e090b 100644
+--- a/srcs/ghosts/sprites.c
++++ b/srcs/ghosts/sprites.c
+@@ -12,7 +12,7 @@
+ 
+ #include "ghosts.h"
+ 
+-void ghost_sprites(t_game *game, e_ghost ghost)
++void	ghost_sprites(t_game *game, e_ghost ghost)
+ {
+ 	game->ghosts[ghost].frames.up[0] = game->sprite_sheet.sprites[202];
+ 	game->ghosts[ghost].frames.up[1] = game->sprite_sheet.sprites[203];
+@@ -28,7 +28,7 @@ void ghost_sprites(t_game *game, e_ghost ghost)
+ 	game->ghosts[ghost].frames.right[2] = game->sprite_sheet.sprites[206];
+ 	game->ghosts[ghost].frames.scared[0] = game->sprite_sheet.sprites[246];
+ 	game->ghosts[ghost].frames.scared[1] = game->sprite_sheet.sprites[247];
+-	if(game->ghosts[ghost].name == BLINKY)
++	if (game->ghosts[ghost].name == BLINKY)
+ 	{
+ 		game->ghosts[ghost].frames.up[3] = game->sprite_sheet.sprites[213];
+ 		game->ghosts[ghost].frames.left[3] = game->sprite_sheet.sprites[212];
+@@ -37,16 +37,18 @@ void ghost_sprites(t_game *game, e_ghost ghost)
+ 	}
+ }
+ 
+-void apply_new_pallete(t_point pallet_coord, t_sprite_ref *sprite)
++void	apply_new_pallete(t_point pallet_coord, t_sprite_ref *sprite)
+ {
+-	if(!sprite)
+-		return;
++	if (!sprite)
++		return ;
+ 	sprite->coord.x += pallet_coord.x * 200;
+ 	sprite->coord.y += pallet_coord.y * 186;
+ }
+ 
+-void change_pallete(t_point pallet_coord, t_anim *frames)
++void	change_pallete(t_point pallet_coord, t_anim *frames)
+ {
++	int	i;
++
+ 	apply_new_pallete(pallet_coord, &frames->left[0]);
+ 	apply_new_pallete(pallet_coord, &frames->left[1]);
+ 	apply_new_pallete(pallet_coord, &frames->left[2]);
+@@ -59,23 +61,22 @@ void change_pallete(t_point pallet_coord, t_anim *frames)
+ 	apply_new_pallete(pallet_coord, &frames->down[0]);
+ 	apply_new_pallete(pallet_coord, &frames->down[1]);
+ 	apply_new_pallete(pallet_coord, &frames->down[2]);
+-	int i = 0;
+-	while(i < 12)
++	i = 0;
++	while (i < 12)
+ 	{
+ 		apply_new_pallete(pallet_coord, &frames->death[i]);
+ 		i++;
+ 	}
+ }
+ 
+-void ghost_color(t_ghost *ghost)
++void	ghost_color(t_ghost *ghost)
+ {
+ 	if (ghost->name == BLINKY)
+-		return;
+-	else if(ghost->name == PINKY)
+-			change_pallete((t_point){.x = 1, .y= 0}, &ghost->frames);
+-	else if(ghost->name == INKY)
+-			change_pallete((t_point){.x = 2, .y= 0}, &ghost->frames);
+-	else if(ghost->name == CLYDE)
+-			change_pallete((t_point){.x = 3, .y= 0}, &ghost->frames);
++		return ;
++	else if (ghost->name == PINKY)
++		change_pallete((t_point){.x = 1, .y = 0}, &ghost->frames);
++	else if (ghost->name == INKY)
++		change_pallete((t_point){.x = 2, .y = 0}, &ghost->frames);
++	else if (ghost->name == CLYDE)
++		change_pallete((t_point){.x = 3, .y = 0}, &ghost->frames);
+ }
+-
+diff --git a/srcs/hooks/handle_mouse.c b/srcs/hooks/handle_mouse.c
+index 7f03a08..db9ca52 100644
+--- a/srcs/hooks/handle_mouse.c
++++ b/srcs/hooks/handle_mouse.c
+@@ -11,15 +11,15 @@
+ /* ************************************************************************** */
+ 
+ #include "../../Pac_Struct.h"
+-#include "hooks.h"
+ #include "../player/player3D.h"
++#include "hooks.h"
+ 
+ void	center_mouse(t_game *g)
+ {
+ 	if (!g || !g->mlx_ptr || !g->win.win_ptr)
+ 		return ;
+-	mlx_mouse_move(g->mlx_ptr, g->win.win_ptr,
+-		g->win.width / 2, g->win.height / 2);
++	mlx_mouse_move(g->mlx_ptr, g->win.win_ptr, g->win.width / 2, g->win.height
++		/ 2);
+ }
+ 
+ int	handle_mouse_move(int x, int y, t_game *g)
+diff --git a/srcs/hooks/hooks.h b/srcs/hooks/hooks.h
+index dc6461e..3aa46fd 100644
+--- a/srcs/hooks/hooks.h
++++ b/srcs/hooks/hooks.h
+@@ -28,34 +28,34 @@
+ // # define KEY_1 49
+ // # define KEY_2 50
+ 
+-#define MOUSE_SENS 0.00035
++# define MOUSE_SENS 0.00035
+ 
+ typedef struct s_game	t_game;
+ 
+ typedef struct s_key
+ {
+-	int	w;
+-	int	a;
+-	int	s;
+-	int	d;
+-	int	left;
+-	int	right;
+-	int up;
+-	int down;
+-	int	esc;
+-	int	e;
+-	int	e_lock;
+-	int	mouse_lock;
+-	int mouse_hidden;
+-	int k;
+-	int controller_start;
+-}	t_key;
++	int					w;
++	int					a;
++	int					s;
++	int					d;
++	int					left;
++	int					right;
++	int					up;
++	int					down;
++	int					esc;
++	int					e;
++	int					e_lock;
++	int					mouse_lock;
++	int					mouse_hidden;
++	int					k;
++	int					controller_start;
++}						t_key;
+ 
+-int		handle_close(t_game *g);
+-int		handle_key_press(int keycode, t_game *g);
+-int		handle_key_release(int keycode, t_game *g);
+-void	handle_gate_toggle(t_game *g);
+-int		handle_mouse_move(int x, int y, t_game *g);
+-void	center_mouse(t_game *g);
++int						handle_close(t_game *g);
++int						handle_key_press(int keycode, t_game *g);
++int						handle_key_release(int keycode, t_game *g);
++void					handle_gate_toggle(t_game *g);
++int						handle_mouse_move(int x, int y, t_game *g);
++void					center_mouse(t_game *g);
+ 
+ #endif
+diff --git a/srcs/init/init.c b/srcs/init/init.c
+index 02c8db2..bac341c 100644
+--- a/srcs/init/init.c
++++ b/srcs/init/init.c
+@@ -26,30 +26,59 @@ t_elroy	set_values(int one_speed, int one_dots, int two_speed, int two_dots)
+ 	return (return_val);
+ }
+ 
+-const t_lvl_config g_lvl_config[21] =
+-{
+-	{{0, {0, 20, 80}, {0, 10, 85}}, 75, 50, 40, 80, 90, 6.0, 100, {7, 20, 7, 20, 5, 20, 5, -1}},
+-	{{0, {0, 30, 90}, {0, 15, 95}}, 85, 55, 45, 90, 95, 5.0, 300, {7, 20, 7, 20, 5, 1033, 0, -1}},
+-	{{0, {0, 40, 90}, {0, 20, 95}}, 85, 55, 45, 90, 95, 4.0, 500, {7, 20, 7, 20, 5, 1033, 0, -1}},
+-	{{0, {0, 40, 90}, {0, 20, 95}}, 85, 55, 45, 90, 95, 3.0, 500, {7, 20, 7, 20, 5, 1033, 0, -1}},
+-	{{0, {0, 40, 100}, {0, 20, 105}}, 95, 60, 50, 100, 100, 2.0, 700, {5, 20, 5, 20, 5, 1003, 0 , -1}},
+-	{{0, {0, 50, 100}, {0, 25, 105}}, 95, 60, 50, 100, 100, 5.0, 700, {5, 20, 5, 20, 5, 1003, 0 , -1}},
+-	{{0, {0, 50, 100}, {0, 25, 105}}, 95, 60, 50, 100, 100, 2.0, 1000, {5, 20, 5, 20, 5, 1003, 0 , -1}},
+-	{{0, {0, 50, 100}, {0, 25, 105}}, 95, 60, 50, 100, 100, 2.0, 1000, {5, 20, 5, 20, 5, 1003, 0 , -1}},
+-	{{0, {0, 60, 100}, {0, 30, 105}}, 95, 60, 50, 100, 100, 1.0, 2000, {5, 20, 5, 20, 5, 1003, 0 , -1}},
+-	{{0, {0, 60, 100}, {0, 30, 105}}, 95, 60, 50, 100, 100, 5.0, 2000, {5, 20, 5, 20, 5, 1003, 0 , -1}},
+-	{{0, {0, 60, 100}, {0, 30, 105}}, 95, 60, 50, 100, 100, 2.0, 3000, {5, 20, 5, 20, 5, 1003, 0 , -1}},
+-	{{0, {0, 80, 100}, {0, 40, 105}}, 95, 60, 50, 100, 100, 1.0, 3000, {5, 20, 5, 20, 5, 1003, 0 , -1}},
+-	{{0, {0, 80, 100}, {0, 40, 105}}, 95, 60, 50, 100, 100, 1.0, 5000, {5, 20, 5, 20, 5, 1003, 0 , -1}},
+-	{{0, {0, 80, 100}, {0, 40, 105}}, 95, 60, 50, 100, 100, 3.0, 5000, {5, 20, 5, 20, 5, 1003, 0 , -1}},
+-	{{0, {0, 100, 100}, {0, 50, 105}}, 95, 60, 50, 100, 100, 1.0, 5000, {5, 20, 5, 20, 5, 1003, 0 , -1}},
+-	{{0, {0, 100, 100}, {0, 50, 105}}, 95, 60, 50, 100, 100, 1.0, 5000, {5, 20, 5, 20, 5, 1003, 0 , -1}},
+-	{{0, {0, 100, 100}, {0, 50, 105}}, 95, 60, 50, 100, 100, 0.0, 5000, {5, 20, 5, 20, 5, 1003, 0 , -1}},
+-	{{0, {0, 100, 100}, {0, 50, 105}}, 95, 60, 50, 100, 100, 1.0, 5000, {5, 20, 5, 20, 5, 1003, 0 , -1}},
+-	{{0, {0, 120, 100}, {0, 60, 105}}, 95, 60, 50, 100, 100, 0.0, 5000, {5, 20, 5, 20, 5, 1003, 0 , -1}},
+-	{{0, {0, 120, 100}, {0, 60, 105}}, 95, 60, 50, 100, 100, 0.0, 5000, {5, 20, 5, 20, 5, 1003, 0 , -1}},
+-	{{0, {0, 120, 100}, {0, 60, 105}}, 95, 60, 50, 90, 100, 0.0, 5000, {5, 20, 5, 20, 5, 1003, 0 , -1}}
+-};
++const t_lvl_config	g_lvl_config[21] = {{{0, {0, 20, 80}, {0, 10, 85}}, 75, 50,
++		40, 80, 90, 6.0, 100, {7, 20, 7, 20, 5, 20, 5, -1}},         {{0, {0,
++		30, 90}, {0, 15, 95}}, 85, 55, 45, 90, 95, 5.0, 300, {7, 20, 7, 20, 5,
++		1033, 0, -1}},       {{0, {0, 40, 90}, {0, 20, 95}}, 85, 55, 45, 90, 95,
++		4.0, 500, {7, 20, 7, 20, 5, 1033, 0, -1}},       {{0, {0, 40, 90}, {0,
++		20, 95}}, 85, 55, 45, 90, 95, 3.0, 500, {7, 20, 7, 20, 5, 1033, 0, -1}},
++		      {{0, {0, 40, 100}, {0, 20, 105}}, 95, 60, 50, 100, 100, 2.0, 700,
++		{5, 20, 5, 20, 5, 1003, 0, -1}},   {{0, {0, 50, 100}, {0, 25, 105}}, 95,
++		60, 50, 100, 100, 5.0, 700, {5, 20, 5, 20, 5, 1003, 0, -1}},   {{0, {0,
++		50, 100}, {0, 25, 105}}, 95, 60, 50, 100, 100, 2.0, 1000, {5, 20, 5, 20,
++		5, 1003, 0, -1}},
++										{{0, {0, 50, 100}, {0, 25, 105}}, 95,
++											60, 50, 100, 100, 2.0, 1000, {5, 20,
++											5, 20, 5, 1003, 0, -1}},  {{0, {0,
++											60, 100}, {0, 30, 105}}, 95, 60, 50,
++											100, 100, 1.0, 2000, {5, 20, 5, 20,
++											5, 1003, 0, -1}},  {{0, {0, 60,
++											100}, {0, 30, 105}}, 95, 60, 50,
++											100, 100, 5.0, 2000, {5, 20, 5, 20,
++											5, 1003, 0, -1}},  {{0, {0, 60,
++											100}, {0, 30, 105}}, 95, 60, 50,
++											100, 100, 2.0, 3000, {5, 20, 5, 20,
++											5, 1003, 0, -1}},  {{0, {0, 80,
++											100}, {0, 40, 105}}, 95, 60, 50,
++											100, 100, 1.0, 3000, {5, 20, 5, 20,
++											5, 1003, 0, -1}},  {{0, {0, 80,
++											100}, {0, 40, 105}}, 95, 60, 50,
++											100, 100, 1.0, 5000, {5, 20, 5, 20,
++											5, 1003, 0, -1}},  {{0, {0, 80,
++											100}, {0, 40, 105}}, 95, 60, 50,
++											100, 100, 3.0, 5000, {5, 20, 5, 20,
++											5, 1003, 0, -1}},
++										{{0, {0, 100, 100}, {0, 50, 105}}, 95,
++											60, 50, 100, 100, 1.0, 5000, {5, 20,
++											5, 20, 5, 1003, 0, -1}}, {{0, {0,
++											100, 100}, {0, 50, 105}}, 95, 60,
++											50, 100, 100, 1.0, 5000, {5, 20, 5,
++											20, 5, 1003, 0, -1}}, {{0, {0, 100,
++											100}, {0, 50, 105}}, 95, 60, 50,
++											100, 100, 0.0, 5000, {5, 20, 5, 20,
++											5, 1003, 0, -1}}, {{0, {0, 100,
++											100}, {0, 50, 105}}, 95, 60, 50,
++											100, 100, 1.0, 5000, {5, 20, 5, 20,
++											5, 1003, 0, -1}}, {{0, {0, 120,
++											100}, {0, 60, 105}}, 95, 60, 50,
++											100, 100, 0.0, 5000, {5, 20, 5, 20,
++											5, 1003, 0, -1}}, {{0, {0, 120,
++											100}, {0, 60, 105}}, 95, 60, 50,
++											100, 100, 0.0, 5000, {5, 20, 5, 20,
++											5, 1003, 0, -1}}, {{0, {0, 120,
++											100}, {0, 60, 105}}, 95, 60, 50, 90,
++											100, 0.0, 5000, {5, 20, 5, 20, 5,
++											1003, 0, -1}}};
+ 
+ void	set_lvl(t_game *game)
+ {
+@@ -66,7 +95,7 @@ void	set_lvl(t_game *game)
+ 	game->player.frightened_speed = g_lvl_config[lvl].pacman_frightened_speed;
+ 	game->timer.mode = 0;
+ 	i = -1;
+-	while(++i <  8)
++	while (++i < 8)
+ 		game->timer.times[i] = g_lvl_config[lvl].time[i];
+ 	i = -1;
+ 	while (++i < 4)
+@@ -131,34 +160,38 @@ void	init_execution(t_game *g)
+ 			"init_execution() has not found necessary pointers");
+ 	g->ray.z_buffer = malloc(sizeof(double) * g->win.width);
+ 	if (!g->ray.z_buffer)
+-		exit_game(EXIT_MALLOC, g, "init_execution() has failed to allocate memory E1");
++		exit_game(EXIT_MALLOC, g,
++			"init_execution() has failed to allocate memory E1");
+ 	g->ray.sprite_z = malloc(sizeof(double) * g->win.width * g->win.height);
+ 	if (!g->ray.sprite_z)
+-		exit_game(EXIT_MALLOC, g,
+-
+-			"init_execution() had failed to allocate memory E2");
++		exit_game(EXIT_MALLOC,
++					g,
++					"init_execution() had failed to allocate memory E2");
+ }
+ 
+-int init_game_grid(t_game *game, char **temp)
++int	init_game_grid(t_game *game, char **temp)
+ {
++	int	i;
++
+ 	game->map.grid = ft_calloc(sizeof(char *), game->map.height + 1);
+-	if(!game->map.grid)
+-		return -1;
+-	int i = 0;
+-	while(temp && temp[i])
++	if (!game->map.grid)
++		return (-1);
++	i = 0;
++	while (temp && temp[i])
+ 	{
+ 		game->map.grid[i] = ft_calloc(sizeof(char), game->map.width + 1);
+-		if(!game->map.grid[i])
+-			return -1;
++		if (!game->map.grid[i])
++			return (-1);
+ 		ft_memcpy(game->map.grid[i], temp[i], ft_strlen(temp[i]));
+ 		i++;
+ 	}
+-	return 0;
++	return (0);
+ }
+ 
+ void	init_map(t_game *g, const char *path)
+ {
+-	char **temp;
++	char	**temp;
++
+ 	parse_texture_path(g, path);
+ 	if (g->map.grid)
+ 		free_2d((void *)g->map.grid);
+@@ -167,13 +200,16 @@ void	init_map(t_game *g, const char *path)
+ 		exit_game(EXIT_MAP, g, "parse() has not found a grid");
+ 	g->map.height = ytile(temp);
+ 	g->map.width = xtile(temp);
+-	if(init_game_grid(g, temp))
++	if (init_game_grid(g, temp))
+ 		exit_game(EXIT_MALLOC, g, "SOmething broke");
++	free_2d((void **)temp);
+ 	map_validate_chars(g);
+ }
+ 
+ void	init(t_game *g, char *path)
+ {
++	int	sprites;
++
+ 	if (!g)
+ 		return ;
+ 	init_defaults(g);
+@@ -181,11 +217,10 @@ void	init(t_game *g, char *path)
+ 	init_map(g, path);
+ 	init_execution(g);
+ 	init_menu(g);
+-	int sprites = init_spritesheet(g);
+-	if(g->debug_mode)
++	sprites = init_spritesheet(g);
++	if (g->debug_mode)
+ 		ft_printf("Loaded %d sprites\n", sprites);
+ 	init_player(g, 0);
+ 	init_base(g);
+-
+ 	set_lvl(g);
+ }
+diff --git a/srcs/init/init_base.c b/srcs/init/init_base.c
+index 5a7a20a..1c1700f 100644
+--- a/srcs/init/init_base.c
++++ b/srcs/init/init_base.c
+@@ -11,9 +11,9 @@
+ /* ************************************************************************** */
+ 
+ #include "../../Pac_Struct.h"
+-#include "initializer.h"
+-#include "../utils/helpers.h"
+ #include "../base/base.h"
++#include "../utils/helpers.h"
++#include "initializer.h"
+ 
+ void	init_base(t_game *s)
+ {
+@@ -35,8 +35,9 @@ void	init_base(t_game *s)
+ 		while (point.x < s->map.width)
+ 		{
+ 			tile = which_tile(s->map.grid, &s->map, point, s->debug_mode);
+-			if(tile == -1)
+-				exit_game(EXIT_MALLOC, s, "init_base(): Something when very wrong in tile selection");
++			if (tile == -1)
++				exit_game(EXIT_MALLOC, s,
++					"init_base(): Something when very wrong in tile selection");
+ 			put_tile_inbase(s, tile, color, point);
+ 			point.x++;
+ 		}
+diff --git a/srcs/init/init_ghosts.c b/srcs/init/init_ghosts.c
+index 412645a..f09de9d 100644
+--- a/srcs/init/init_ghosts.c
++++ b/srcs/init/init_ghosts.c
+@@ -11,9 +11,9 @@
+ /* ************************************************************************** */
+ 
+ #include "../../Pac_Struct.h"
+-#include "initializer.h"
+-#include "../render/render3D.h"
+ #include "../ghosts/ghosts.h"
++#include "../render/render3D.h"
++#include "initializer.h"
+ 
+ static void	ghost_info(int i, int *name, char *spawn)
+ {
+@@ -39,93 +39,98 @@ static void	ghost_info(int i, int *name, char *spawn)
+ 	}
+ }
+ 
+-
+-
+-t_point find_spawn(char **map, char ghost)
++t_point	find_spawn(char **map, char ghost)
+ {
+-	t_point gate_pos;
++	t_point	gate_pos;
++
+ 	gate_pos = find_c(map, GATE);
+-	if(gate_pos.x < 0 || gate_pos.y < 0)
+-		return gate_pos;
+-	if(ghost == BLINKY_T)
++	if (gate_pos.x < 0 || gate_pos.y < 0)
++		return (gate_pos);
++	if (ghost == BLINKY_T)
+ 	{
+ 		gate_pos.y -= 1;
+-		return gate_pos;
++		return (gate_pos);
+ 	}
+ 	gate_pos.y += 1;
+-	if(ghost == PINKY_T)
+-		return gate_pos;
+-	if(ghost == INKY_T)
++	if (ghost == PINKY_T)
++		return (gate_pos);
++	if (ghost == INKY_T)
+ 		gate_pos.x += 1;
+-	if(ghost == CLYDE_T) 
++	if (ghost == CLYDE_T)
+ 		gate_pos.x -= 1;
+-	return gate_pos;
++	return (gate_pos);
+ }
+ 
+-static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char, int is_death)
++static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char,
++		int is_death)
+ {
+ 	t_point	target_point;
+-	t_point spawn_point;
++	t_point	spawn_point;
+ 
+-	if(g->mode == MODE_CUBE)
+-		return -1;
+-	if(!is_death)
++	if (g->mode == MODE_CUBE)
++		return (-1);
++	if (!is_death)
+ 		gh->mental_map = copy_map(g->map.grid);
+ 	if (!gh->mental_map && !is_death)
+ 		exit_game(EXIT_MALLOC, g, "init_one_ghost() was unable to copy map");
+ 	target_point = find_c(g->map.grid, target_char);
+ 	spawn_point = find_spawn(g->map.grid, target_char);
+-	if (target_point.x < 0 || target_point.y < 0 || spawn_point.x < 0 || spawn_point.y < 0)
+-		return -1;
+-	if(gh->name == BLINKY && !is_death)
++	if (target_point.x < 0 || target_point.y < 0 || spawn_point.x < 0
++		|| spawn_point.y < 0)
++		return (-1);
++	if (gh->name == BLINKY && !is_death)
+ 		g->targets.ghost_house = spawn_point;
+ 	g->targets.scatter_target[gh->name] = target_point;
+-	gh->pos.tile_pos.x = (double)spawn_point.x+ 0.5; // posiciona o ghost no centro do spawn tile no eixo x
+-	gh->pos.tile_pos.y = (double)spawn_point.y + 0.5; // posiciona o ghost no centro do spawn tile no eixo y
+-	gh->pos.pixel_pos.x = spawn_point.x * TILE_SIZE + TILE_SIZE / 2; // converte o spawn tile para pixels e centra o fanstasma no tile no eixo x
+-	gh->pos.pixel_pos.y = spawn_point.y * TILE_SIZE + TILE_SIZE / 2; // converte o spawn tile para pixels e centra o fanstasma no tile no eixo y
++	gh->pos.tile_pos.x = (double)spawn_point.x + 0.5;               
++		// posiciona o ghost no centro do spawn tile no eixo x
++	gh->pos.tile_pos.y = (double)spawn_point.y + 0.5;               
++		// posiciona o ghost no centro do spawn tile no eixo y
++	gh->pos.pixel_pos.x = spawn_point.x * TILE_SIZE + TILE_SIZE / 2;
++		// converte o spawn tile para pixels e centra o fanstasma no tile no eixo x
++	gh->pos.pixel_pos.y = spawn_point.y * TILE_SIZE + TILE_SIZE / 2;
++		// converte o spawn tile para pixels e centra o fanstasma no tile no eixo y
+ 	gh->invalid_dir = 3;
+ 	gh->target_tile = target_point;
+ 	gh->state = SCATTER;
+-	if(gh->name == BLINKY)
++	if (gh->name == BLINKY)
+ 	{
+ 		gh->cruiser.is_blinky = 1;
+ 		gh->cruiser.one.enabled = 0;
+ 		gh->cruiser.two.enabled = 0;
+ 	}
+-	else if(gh->name == PINKY)
++	else if (gh->name == PINKY)
+ 	{
+ 		gh->dot_counter = 7;
+ 		gh->cruiser.is_blinky = 0;
+ 	}
+-	else if(gh->name == INKY)
++	else if (gh->name == INKY)
+ 	{
+ 		gh->dot_counter = 17;
+ 		gh->cruiser.is_blinky = 0;
+ 	}
+-	else if(gh->name == CLYDE)
++	else if (gh->name == CLYDE)
+ 	{
+ 		gh->dot_counter = 32;
+ 		gh->cruiser.is_blinky = 0;
+ 	}
+ 	else
+-		return -1;
+-	if(is_death)
+-		return 0;
++		return (-1);
++	if (is_death)
++		return (0);
+ 	ghost_sprites(g, gh->name);
+ 	ghost_color(gh);
+-	return 0;
++	return (0);
+ }
+ 
+-void annouce_disabled(int i)
++void	annouce_disabled(int i)
+ {
+-	if(i == 0)
++	if (i == 0)
+ 		ft_printf("Blinky was disabled\n");
+-	if(i == 1)
++	if (i == 1)
+ 		ft_printf("Pinky was disabled\n");
+-	if(i == 2)
++	if (i == 2)
+ 		ft_printf("Inky was disabled\n");
+-	if(i == 3)
++	if (i == 3)
+ 		ft_printf("ClydE was disabled\n");
+ }
+ void	init_ghosts(t_game *g, int is_death)
+@@ -141,9 +146,10 @@ void	init_ghosts(t_game *g, int is_death)
+ 	{
+ 		ghost_info(i, &name, &spawn);
+ 		g->ghosts[i].name = name;
+-		if(init_one_ghost(g, &g->ghosts[i], spawn, is_death) || g->mode == MODE_CUBE)
++		if (init_one_ghost(g, &g->ghosts[i], spawn, is_death)
++			|| g->mode == MODE_CUBE)
+ 		{
+-			if(g->debug_mode)
++			if (g->debug_mode)
+ 				annouce_disabled(i);
+ 			g->ghosts[i].name = DISABLED;
+ 		}
+diff --git a/srcs/init/init_mlx.c b/srcs/init/init_mlx.c
+index 72e1225..caa18e0 100644
+--- a/srcs/init/init_mlx.c
++++ b/srcs/init/init_mlx.c
+@@ -15,13 +15,17 @@
+ 
+ void	init_framebuffer(t_game *g)
+ {
+-	g->win.frame_buffer.img_ptr = mlx_new_image(g->mlx_ptr, g->win.width, g->win.height);
++	g->win.frame_buffer.img_ptr = mlx_new_image(g->mlx_ptr, g->win.width,
++			g->win.height);
+ 	if (!g->win.frame_buffer.img_ptr)
+-		exit_game(EXIT_MLX, g, "init_framebuffer() was unable to create img_ptr");
+-	g->win.frame_buffer.img_addr = mlx_get_data_addr(g->win.frame_buffer.img_ptr,&g->win.frame_buffer.bpp,
+-		&g->win.frame_buffer.l_len,&g->win.frame_buffer.endian);
++		exit_game(EXIT_MLX, g,
++			"init_framebuffer() was unable to create img_ptr");
++	g->win.frame_buffer.img_addr = mlx_get_data_addr(g->win.frame_buffer.img_ptr,
++			&g->win.frame_buffer.bpp, &g->win.frame_buffer.l_len,
++			&g->win.frame_buffer.endian);
+ 	if (!g->win.frame_buffer.img_addr)
+-		exit_game(EXIT_MLX, g, "init_framebufer() was unable to create img_addr");
++		exit_game(EXIT_MLX, g,
++			"init_framebufer() was unable to create img_addr");
+ 	g->win.frame_buffer.width = g->win.width;
+ 	g->win.frame_buffer.height = g->win.height;
+ }
+@@ -32,7 +36,8 @@ void	init_window(t_game *g)
+ 	g->win.ntilesy = ytile(g->map.grid);
+ 	g->win.width = 1920;
+ 	g->win.height = 1080;
+-	g->win.win_ptr = mlx_new_window(g->mlx_ptr, g->win.width, g->win.height, "Pac-Man");
++	g->win.win_ptr = mlx_new_window(g->mlx_ptr, g->win.width, g->win.height,
++			"Pac-Man");
+ 	if (!g->win.win_ptr)
+ 		exit_game(EXIT_MLX, g, "init_window() was unable to create win_ptr");
+ }
+diff --git a/srcs/init/init_sprites.c b/srcs/init/init_sprites.c
+index 89e6ca3..8fb313c 100644
+--- a/srcs/init/init_sprites.c
++++ b/srcs/init/init_sprites.c
+@@ -78,7 +78,8 @@ static void	init_sprite(t_game *g, char target, t_pacdot **s_arr, int *s_count)
+ 		return ;
+ 	*s_arr = malloc(sizeof(t_pacdot) * total);
+ 	if (!*s_arr)
+-		exit_game(EXIT_MALLOC, g, "init_sprites() was unable to allocate memory E1");
++		exit_game(EXIT_MALLOC, g,
++			"init_sprites() was unable to allocate memory E1");
+ 	fill_from_map(g, *s_arr, target);
+ }
+ 
+@@ -88,16 +89,15 @@ void	init_sprites(t_game *g)
+ 	init_sprite(g, ENERGIZER, &g->energizers, &g->energizer_count);
+ }
+ 
+-
+ void	init_menu(t_game *g)
+ {
+-
+-	g->menu_img.img_ptr = mlx_xpm_file_to_image(g->mlx_ptr, "./assets/sprites/Menu.xpm", &g->menu_img.width, &g->menu_img.height);
+-
++	g->menu_img.img_ptr = mlx_xpm_file_to_image(g->mlx_ptr,
++			"./assets/sprites/Menu.xpm", &g->menu_img.width,
++			&g->menu_img.height);
+ 	if (!g->menu_img.img_ptr)
+ 		exit_game(EXIT_MLX, g, "init_menu() was unable to create img_ptr");
+-	g->menu_img.img_addr = mlx_get_data_addr(g->menu_img.img_ptr, &g->menu_img.bpp,
+-			&g->menu_img.l_len, &g->menu_img.endian);
++	g->menu_img.img_addr = mlx_get_data_addr(g->menu_img.img_ptr,
++			&g->menu_img.bpp, &g->menu_img.l_len, &g->menu_img.endian);
+ 	if (!g->menu_img.img_addr)
+ 	{
+ 		mlx_destroy_image(g->mlx_ptr, g->menu_img.img_ptr);
+@@ -105,4 +105,3 @@ void	init_menu(t_game *g)
+ 		exit_game(EXIT_MLX, g, "init_menu() was unable to create img_addr");
+ 	}
+ }
+-
+diff --git a/srcs/init/init_spritesheet.c b/srcs/init/init_spritesheet.c
+index 073a237..89146f2 100644
+--- a/srcs/init/init_spritesheet.c
++++ b/srcs/init/init_spritesheet.c
+@@ -22,10 +22,11 @@ int	uselesstile(t_point point)
+ 	return (0);
+ }
+ 
+-t_sprite_ref init_sprite(t_point control)
++t_sprite_ref	init_sprite(t_point control)
+ {
+-	t_sprite_ref sprite;
+-	if(control.y <= 74)
++	t_sprite_ref	sprite;
++
++	if (control.y <= 74)
+ 	{
+ 		sprite.coord = control;
+ 		sprite.height = 8;
+@@ -33,16 +34,17 @@ t_sprite_ref init_sprite(t_point control)
+ 	}
+ 	else
+ 	{
+-	sprite.coord = control;
+-	sprite.width = 16;
+-	sprite.height = 16;
++		sprite.coord = control;
++		sprite.width = 16;
++		sprite.height = 16;
+ 	}
+-	return sprite;
++	return (sprite);
+ }
+ 
+-void fill_small_sprites(t_game *game, int *i)
++void	fill_small_sprites(t_game *game, int *i)
+ {
+-	t_point control;
++	t_point	control;
++
+ 	control.y = 1;
+ 	while (control.y <= 74)
+ 	{
+@@ -62,9 +64,10 @@ void fill_small_sprites(t_game *game, int *i)
+ 	}
+ }
+ 
+-void fill_big_sprites(t_game *game, int *i)
++void	fill_big_sprites(t_game *game, int *i)
+ {
+-	t_point control;
++	t_point	control;
++
+ 	control.y = 83;
+ 	while (control.y <= 168)
+ 	{
+@@ -83,10 +86,11 @@ void fill_big_sprites(t_game *game, int *i)
+ 
+ int	init_spritesheet(t_game *game)
+ {
+-	int i = 0;
++	int	i;
++
++	i = 0;
+ 	fill_small_sprites(game, &i);
+ 	fill_big_sprites(game, &i);
+-	
+ 	game->sprite_sheet.sprite_img.img_ptr = mlx_xpm_file_to_image(game->mlx_ptr,
+ 			SPRITE_SHEET, &game->sprite_sheet.sprite_img.width,
+ 			&game->sprite_sheet.sprite_img.height);
+diff --git a/srcs/init/initializer.h b/srcs/init/initializer.h
+index ec4a777..cc2e719 100644
+--- a/srcs/init/initializer.h
++++ b/srcs/init/initializer.h
+@@ -11,8 +11,8 @@
+ /* ************************************************************************** */
+ 
+ #ifndef INITIALIZER_H
+-#define INITIALIZER_H
+-#include "../../Pac_Struct.h"
++# define INITIALIZER_H
++# include "../../Pac_Struct.h"
+ 
+ void	init_minilib(t_game *game);
+ void	init(t_game *g, char *path);
+@@ -24,5 +24,5 @@ void	init_execution(t_game *g);
+ 
+ void	init_menu(t_game *g);
+ void	init_base(t_game *s);
+-int	init_spritesheet(t_game *game);
++int		init_spritesheet(t_game *game);
+ #endif
+diff --git a/srcs/map/map3D.h b/srcs/map/map3D.h
+index 0c17317..42999df 100644
+--- a/srcs/map/map3D.h
++++ b/srcs/map/map3D.h
+@@ -13,57 +13,58 @@
+ #ifndef MAP3D_H
+ # define MAP3D_H
+ 
+-# define TILE_WALL       1
+-# define TILE_VOID       2
+-# define TILE_SOLID      3
+-# define TILE_WALKABLE   4
++# define TILE_WALL 1
++# define TILE_VOID 2
++# define TILE_SOLID 3
++# define TILE_WALKABLE 4
+ 
+ //////// MINIMAP TEST ////////
+ 
+-#define MINI_TILE    8     // tamanho de cada tile em pixels
+-#define MINI_MARGIN  12    // margem do canto
++# define MINI_TILE 8    // tamanho de cada tile em pixels
++# define MINI_MARGIN 12 // margem do canto
+ 
+-#define C_BG         0x00000000
+-#define C_WALL       0x00000088
+-#define C_WALL_SHADE 0x00000055
+-#define C_DOT        0x00FFFFCC
+-#define C_ENERGIZER  0x00FFFFFF
+-#define C_PLAYER     0x00FFFF00
+-#define C_PORT       0x0000CCFF
++# define C_BG 0x00000000
++# define C_WALL 0x00000088
++# define C_WALL_SHADE 0x00000055
++# define C_DOT 0x00FFFFCC
++# define C_ENERGIZER 0x00FFFFFF
++# define C_PLAYER 0x00FFFF00
++# define C_PORT 0x0000CCFF
+ 
+ ////////////////////////////////
+ 
+ typedef struct s_game	t_game;
+-typedef struct s_ghost	t_ghost ;
++typedef struct s_ghost	t_ghost;
+ 
+ typedef struct s_map
+ {
+-	char	**grid;
+-	int		width;
+-	int		height;
+-	int		ceiling_color;
+-	int		floor_color;
+-}	t_map;
++	char				**grid;
++	int					width;
++	int					height;
++	int					ceiling_color;
++	int					floor_color;
++}						t_map;
+ 
+ #endif
+ 
+-char	**load_map_from_cub(t_game *g, const char *path);
+-void	map_validate_chars(t_game *g);
+-void	map_validate_closed(t_game *g);
++char					**load_map_from_cub(t_game *g, const char *path);
++void					map_validate_chars(t_game *g);
++void					map_validate_closed(t_game *g);
+ 
+-int	map_is_map_line(t_game *g, char *line);
+-int	map_is_empty_line(char *s);
+-int	map_row_last_col(t_game *g, int row, int want_wrap);
++int						map_is_map_line(t_game *g, char *line);
++int						map_is_empty_line(char *s);
++int						map_row_last_col(t_game *g, int row, int want_wrap);
+ 
+-char	map_get_tile(t_game *g, int y, int x);
+-int	map_tile_type(char t, int tile_type);
+-char	**map_read_file(const char *path);
++char					map_get_tile(t_game *g, int y, int x);
++int						map_tile_type(char t, int tile_type);
++char					**map_read_file(const char *path);
+ 
+-int	map_is_wrap_tile(t_game *g, int row, int col);
+-int	ray_wrap_x(t_game *g);
+-void	player_wrap_position(t_game *g);
++int						map_is_wrap_tile(t_game *g, int row, int col);
++int						ray_wrap_x(t_game *g);
++void					player_wrap_position(t_game *g);
+ 
+-void	ghost_wrap_position(t_game *g, t_ghost *ghost);
+-double	get_sprite_wrap_offset_x(t_game *g, double sprite_x, double sprite_y);
+-int	is_whitespace(char c);
+-char	**copy_map(char **map_grid);
++void					ghost_wrap_position(t_game *g, t_ghost *ghost);
++double					get_sprite_wrap_offset_x(t_game *g, double sprite_x,
++							double sprite_y);
++int						is_whitespace(char c);
++char					**copy_map(char **map_grid);
+diff --git a/srcs/map/map_parse_lines.c b/srcs/map/map_parse_lines.c
+index fa8bb4d..bca0f42 100644
+--- a/srcs/map/map_parse_lines.c
++++ b/srcs/map/map_parse_lines.c
+@@ -11,8 +11,8 @@
+ /* ************************************************************************** */
+ 
+ #include "../../Pac_Struct.h"
+-#include "map3D.h"
+ #include "../textures/textures3D.h"
++#include "map3D.h"
+ 
+ static int	map_cube_mode_prefix(char *p)
+ {
+@@ -67,24 +67,23 @@ static int	map_is_cub_prefix(char *p)
+ 	return (0);
+ }
+ 
+-bool target_tile(char c)
++bool	target_tile(char c)
+ {
+-	if(c == 'L' || c == 'V' || c == 'K' || c == 'Y')
+-		return true;
+-	return false;
++	if (c == 'L' || c == 'V' || c == 'K' || c == 'Y')
++		return (true);
++	return (false);
+ }
+ 
+ static int	map_is_valid_char_in_line(char c, t_mode mode)
+ {
+-	if (c == '\n' || c == ' ' || c == '\t'
+-		|| c == WALL || c == OPEN_SPACE
++	if (c == '\n' || c == ' ' || c == '\t' || c == WALL || c == OPEN_SPACE
+ 		|| c == 'N' || c == 'S' || c == 'E' || c == 'W')
+ 		return (1);
+ 	if (mode == MODE_PACMAN)
+ 	{
+-		if (c == PACDOT || c == WRAP_PORTS || c == ENERGIZER
+-			|| c == BLINKY_T || c == PINKY_T || c == INKY_T || c == CLYDE_T
+-			|| c == GATE || c == PLAYER || c == 'M')
++		if (c == PACDOT || c == WRAP_PORTS || c == ENERGIZER || c == BLINKY_T
++			|| c == PINKY_T || c == INKY_T || c == CLYDE_T || c == GATE
++			|| c == PLAYER || c == 'M')
+ 			return (1);
+ 	}
+ 	return (0);
+diff --git a/srcs/map/map_utils.c b/srcs/map/map_utils.c
+index 9d035c4..6f35e2d 100644
+--- a/srcs/map/map_utils.c
++++ b/srcs/map/map_utils.c
+@@ -29,8 +29,7 @@ int	map_tile_type(char t, int tile_type)
+ 	if (tile_type == TILE_WALKABLE)
+ 	{
+ 		return (t == OPEN_SPACE || t == PACDOT || t == ENERGIZER
+-			|| t == WRAP_PORTS
+-			|| t == 'N' || t == 'S' || t == 'E' || t == 'W');
++			|| t == WRAP_PORTS || t == 'N' || t == 'S' || t == 'E' || t == 'W');
+ 	}
+ 	return (0);
+ }
+@@ -43,12 +42,14 @@ int	map_row_last_col(t_game *g, int row, int want_wrap)
+ 	if (!g || !g->map.grid || row < 0 || row >= g->map.height)
+ 		return (-1);
+ 	s = g->map.grid[row];
+-	last = (int)ft_strlen(s) - 1; // começa no último índice da string (antes do '\0')
++	last = (int)ft_strlen(s) - 1;         
++		// começa no último índice da string (antes do '\0')
+ 	while (last >= 0 && (s[last] == '\n')) // ignora as '\n' no final da row
+ 		last--;
+-	if (!want_wrap) // se não queremos uma row com wrap 
++	if (!want_wrap) // se não queremos uma row com wrap
+ 		return (last);
+-	if (last < 1 || s[0] != WRAP_PORTS || s[last] != WRAP_PORTS) // se as extremidades da row não forem wrap ou se a row não tiver pelo menos 2 colunas
++	if (last < 1 || s[0] != WRAP_PORTS || s[last] != WRAP_PORTS)
++		// se as extremidades da row não forem wrap ou se a row não tiver pelo menos 2 colunas
+ 		return (-1);
+ 	return (last); // devolve o índice da última coluna (antes do '\n')
+ }
+@@ -67,9 +68,11 @@ char	map_get_tile(t_game *game, int row, int col)
+ 		else if (col > last_col)
+ 			col = 0;
+ 	}
+-	else // se a row no tem wrap verifica se a coluna esta dentro dos limites e se o tile nessa posição e válido
++	else
++		// se a row no tem wrap verifica se a coluna esta dentro dos limites e se o tile nessa posição e válido
+ 		last_col = map_row_last_col(game, row, 0);
+-	if (col < 0 || col > last_col || game->map.grid[row][col] <= ' ') // se a coluna esta fora dos limites ou se o tile é um espaço
++	if (col < 0 || col > last_col || game->map.grid[row][col] <= ' ')
++		// se a coluna esta fora dos limites ou se o tile é um espaço
+ 		return (VOID);
+ 	return (game->map.grid[row][col]); // devolve o tile na posição (row, col)
+ }
+diff --git a/srcs/map/map_validate_grid.c b/srcs/map/map_validate_grid.c
+index bf5900f..9652e5f 100644
+--- a/srcs/map/map_validate_grid.c
++++ b/srcs/map/map_validate_grid.c
+@@ -14,7 +14,7 @@
+ 
+ static int	map_is_valid_tile(t_game *g, char c)
+ {
+-	return 1;
++	return (1);
+ 	if (c == '\0')
+ 		return (0);
+ 	if (c == '\n')
+@@ -25,9 +25,9 @@ static int	map_is_valid_tile(t_game *g, char c)
+ 		return (1);
+ 	if (g->mode == MODE_PACMAN)
+ 	{
+-		if (c == PACDOT || c == ENERGIZER || c == WRAP_PORTS
+-			|| c == BLINKY_T || c == PINKY_T || c == INKY_T || c == CLYDE_T
+-			|| c == GATE || c == PLAYER)
++		if (c == PACDOT || c == ENERGIZER || c == WRAP_PORTS || c == BLINKY_T
++			|| c == PINKY_T || c == INKY_T || c == CLYDE_T || c == GATE
++			|| c == PLAYER)
+ 			return (1);
+ 	}
+ 	return (0);
+@@ -71,14 +71,15 @@ void	map_validate_closed(t_game *g)
+ 		while (++col < g->map.width)
+ 		{
+ 			tile = map_get_tile(g, row, col);
+-			if (!map_tile_type(tile, TILE_WALKABLE)
+-				|| (tile == WRAP_PORTS && map_is_wrap_tile(g, row, col)))
++			if (!map_tile_type(tile, TILE_WALKABLE) || (tile == WRAP_PORTS
++					&& map_is_wrap_tile(g, row, col)))
+ 				continue ;
+ 			if (map_tile_type(map_get_tile(g, row, col + 1), TILE_VOID)
+ 				|| map_tile_type(map_get_tile(g, row, col - 1), TILE_VOID)
+ 				|| map_tile_type(map_get_tile(g, row + 1, col), TILE_VOID)
+ 				|| map_tile_type(map_get_tile(g, row - 1, col), TILE_VOID))
+-				exit_game(EXIT_MAP, g, "map_validate_closed: map is not closed");
++				exit_game(EXIT_MAP, g,
++					"map_validate_closed: map is not closed");
+ 		}
+ 	}
+ }
+diff --git a/srcs/map/map_wrap.c b/srcs/map/map_wrap.c
+index e59b918..3ba3adf 100644
+--- a/srcs/map/map_wrap.c
++++ b/srcs/map/map_wrap.c
+@@ -30,7 +30,8 @@ int	map_is_wrap_tile(t_game *g, int row, int col)
+ 		return (0);
+ 	if (col == 0 && !map_tile_type(map_get_tile(g, row, 1), TILE_WALKABLE))
+ 		return (0);
+-	if (col == last && !map_tile_type(map_get_tile(g, row, last - 1), TILE_WALKABLE))
++	if (col == last && !map_tile_type(map_get_tile(g, row, last - 1),
++			TILE_WALKABLE))
+ 		return (0);
+ 	return (1);
+ }
+@@ -44,16 +45,16 @@ double	get_sprite_wrap_offset_x(t_game *g, double sprite_x, double sprite_y)
+ 
+ 	if (!g)
+ 		return (0.0);
+-	offset_x = sprite_x - g->player.pos.tile_pos.x; // calcula o offset horizontal do sprite em relaçao ao player
+-	player_row = (int)g->player.pos.tile_pos.y; // determina a row do mapa onde o player esta
+-	if ((int)sprite_y != player_row) // se o sprite não estiver na mesma row do player, não faz wrap e devolve o offset normal
++	offset_x = sprite_x - g->player.pos.tile_pos.x;
++	player_row = (int)g->player.pos.tile_pos.y;    
++	if ((int)sprite_y != player_row)               
+ 		return (offset_x);
+-	last = map_row_last_col(g, player_row, 1); // obtém o índice da última coluna da row do player
+-	if (last < 0) // se a row do player não tiver wrap devolve o offset normal
++	last = map_row_last_col(g, player_row, 1);
++	if (last < 0)                             
+ 		return (offset_x);
+-	map_width = last + 1; // calcula a largura do mapa (nr de colunas) na row do player. +1 pois começa no 0
+-	if (offset_x > map_width / 2.0) // se o offset horizontal do sprite for maior que metade da largura do mapa, significa que o sprite está mais próximo do player
+-		offset_x -= map_width; // ajusta o offset para considerar o wrap
++	map_width = last + 1;          
++	if (offset_x > map_width / 2.0)
++		offset_x -= map_width;      // ajusta o offset para considerar o wrap
+ 	else if (offset_x < -map_width / 2.0)
+ 		offset_x += map_width;
+ 	return (offset_x);
+@@ -65,8 +66,8 @@ int	ray_wrap_x(t_game *g)
+ 
+ 	if (!g)
+ 		return (0);
+-	last = map_row_last_col(g, g->ray.map_y, 1); // obtém o índice da última coluna da row onde o ray está a apontar
+-	if (last < 0) 
++	last = map_row_last_col(g, g->ray.map_y, 1);
++	if (last < 0)
+ 		return (0);
+ 	if (g->ray.map_x < 0)
+ 		g->ray.map_x = last;
+@@ -75,25 +76,6 @@ int	ray_wrap_x(t_game *g)
+ 	return (1);
+ }
+ 
+-// void	ghost_wrap_position(t_game *g, t_ghost *ghost)
+-// {
+-// 	int		row;
+-// 	int		last;
+-// 	double	width;
+-//
+-// 	if (!g)
+-// 		return ;
+-// 	row = (int)ghost->pos.tile_pos.y; // determina a row do mapa onde o player esta
+-// 	last = 8 * map_row_last_col(g, row, 1); // obtém o índice da última coluna da row do player
+-// 	if (last < 0) // se a row do player não tiver wrap
+-// 		return ;
+-// 	width = (double)(last + 1); // calcula a largura do mapa (nr de colunas) na row do player. +1 pois começa no 0
+-// 	while (ghost->pos.tile_pos.x < 0.0) // se a posição x do player for menor que 0 significa que ele ultrapassou o limite esquerdo do mapa
+-// 		ghost->pos.tile_pos.x += width; // ajusta a posiçao do player para o lado direito do mapa considerando que ha wrap
+-// 	while (ghost->pos.tile_pos.x >= width) // se a posição x do player for maior ou igual a largura do mapa, significa que ele ultrapassou o limite direito do mapa
+-// 		ghost->pos.tile_pos.x -= width; // ajusta a posiçao do player para o lado esquerdo do mapa considerando que ha wrap
+-// }
+-
+ 
+ void	ghost_wrap_position(t_game *g, t_ghost *ghost)
+ {
+@@ -123,13 +105,13 @@ void	player_wrap_position(t_game *g)
+ 
+ 	if (!g)
+ 		return ;
+-	row = (int)g->player.pos.tile_pos.y; // determina a row do mapa onde o player esta
+-	last = map_row_last_col(g, row, 1); // obtém o índice da última coluna da row do player
+-	if (last < 0) // se a row do player não tiver wrap
++	row = (int)g->player.pos.tile_pos.y;
++	last = map_row_last_col(g, row, 1); 
++	if (last < 0)
+ 		return ;
+-	width = (double)(last + 1); // calcula a largura do mapa (nr de colunas) na row do player. +1 pois começa no 0
+-	while (g->player.pos.tile_pos.x < 0.0) // se a posição x do player for menor que 0 significa que ele ultrapassou o limite esquerdo do mapa
+-		g->player.pos.tile_pos.x += width; // ajusta a posiçao do player para o lado direito do mapa considerando que ha wrap
+-	while (g->player.pos.tile_pos.x >= width) // se a posição x do player for maior ou igual a largura do mapa, significa que ele ultrapassou o limite direito do mapa
+-		g->player.pos.tile_pos.x -= width; // ajusta a posiçao do player para o lado esquerdo do mapa considerando que ha wrap
++	width = (double)(last + 1);              
++	while (g->player.pos.tile_pos.x < 0.0)   
++		g->player.pos.tile_pos.x += width;   
++	while (g->player.pos.tile_pos.x >= width)
++		g->player.pos.tile_pos.x -= width;   
+ }
+diff --git a/srcs/player/player3D.h b/srcs/player/player3D.h
+index 526e579..16450e3 100644
+--- a/srcs/player/player3D.h
++++ b/srcs/player/player3D.h
+@@ -27,12 +27,12 @@ bool					player_collect_pacdots(t_game *g);
+ int						player_hits_wall(t_game *g, int row, int col);
+ int						ghost_hits_wall(t_game *g, int row, int col);
+ void					init_player(t_game *g, int is_death);
+-int					player_touched_ghost(t_game *g);
+-void	player_controller(t_game *g);
+-void	player_collision(t_game *g);
+-int	player_hits_wall(t_game *g, int row, int col);
+-int	ghost_hits_wall(t_game *g, int row, int col);
+-void	player_rotate(t_game *g, double angle);
++int						player_touched_ghost(t_game *g);
++void					player_controller(t_game *g);
++void					player_collision(t_game *g);
++int						player_hits_wall(t_game *g, int row, int col);
++int						ghost_hits_wall(t_game *g, int row, int col);
++void					player_rotate(t_game *g, double angle);
+ 
+-bool		player_collect_energizer(t_game *g);
++bool					player_collect_energizer(t_game *g);
+ #endif
+diff --git a/srcs/player/player_collect_pacdots.c b/srcs/player/player_collect_pacdots.c
+index a379af9..da84016 100644
+--- a/srcs/player/player_collect_pacdots.c
++++ b/srcs/player/player_collect_pacdots.c
+@@ -23,21 +23,21 @@ static int	pacdot_near_player(t_game *g, t_pacdot *p, double r)
+ 	return ((dx * dx + dy * dy) <= (r * r));
+ }
+ 
+-bool		player_collect_energizer(t_game *g)
++bool	player_collect_energizer(t_game *g)
+ {
+ 	int		i;
+ 	double	pickup_radius;
+-	bool collected;
+-	collected = false;
+-
++	bool	collected;
+ 
++	collected = false;
+ 	if (!g || !g->energizers || g->energizer_count <= 0)
+-		return false;
++		return (false);
+ 	pickup_radius = 0.50;
+ 	i = 0;
+ 	while (i < g->energizer_count)
+ 	{
+-		if (g->energizers[i].active && pacdot_near_player(g, &g->energizers[i], pickup_radius))
++		if (g->energizers[i].active && pacdot_near_player(g, &g->energizers[i],
++				pickup_radius))
+ 		{
+ 			g->energizers[i].active = 0;
+ 			collected = true;
+@@ -45,12 +45,12 @@ bool		player_collect_energizer(t_game *g)
+ 		}
+ 		i++;
+ 	}
+-	if(collected)
++	if (collected)
+ 	{
+ 		i = 0;
+-		while(i < 4)
++		while (i < 4)
+ 		{
+-			if(g->ghosts[i].state != EATEN)
++			if (g->ghosts[i].state != EATEN)
+ 			{
+ 				g->ghosts[i].state = FRIGHTENED;
+ 				g->ghosts[i].invalid_dir = (g->ghosts[i].invalid_dir + 2) % 4;
+@@ -59,24 +59,24 @@ bool		player_collect_energizer(t_game *g)
+ 		}
+ 		g->timer.frightened_time_start = get_time_us();
+ 	}
+-	return collected;
++	return (collected);
+ }
+ 
+-bool		player_collect_pacdots(t_game *g)
++bool	player_collect_pacdots(t_game *g)
+ {
+ 	int		i;
+ 	double	pickup_radius;
+-	bool collected;
+-	collected = false;
+-
++	bool	collected;
+ 
++	collected = false;
+ 	if (!g || !g->pacdots || g->pacdot_count <= 0)
+-		return false;
++		return (false);
+ 	pickup_radius = 0.50;
+ 	i = 0;
+ 	while (i < g->pacdot_count)
+ 	{
+-		if (g->pacdots[i].active && pacdot_near_player(g, &g->pacdots[i], pickup_radius))
++		if (g->pacdots[i].active && pacdot_near_player(g, &g->pacdots[i],
++				pickup_radius))
+ 		{
+ 			g->pacdots[i].active = 0;
+ 			collected = true;
+@@ -84,7 +84,7 @@ bool		player_collect_pacdots(t_game *g)
+ 		}
+ 		i++;
+ 	}
+-	return collected;
++	return (collected);
+ }
+ 
+ static int	player_touching_ghost(t_game *g, t_ghost *p, double r)
+@@ -97,29 +97,29 @@ static int	player_touching_ghost(t_game *g, t_ghost *p, double r)
+ 	return ((dx * dx + dy * dy) <= (r * r));
+ }
+ 
+-int		player_touched_ghost(t_game *g)
++int	player_touched_ghost(t_game *g)
+ {
+ 	int		i;
+ 	double	hit_radius;
+-	bool hit;
+-	hit = false;
+-	int slayer;
+-
++	bool	hit;
++	int		slayer;
+ 
++	hit = false;
+ 	if (!g || !g->pacdots || g->pacdot_count <= 0)
+-		return false;
++		return (false);
+ 	hit_radius = 1;
+ 	i = 0;
+ 	while (i < 4)
+ 	{
+-		if (g->ghosts[i].name != DISABLED && g->ghosts[i].state != EATEN && player_touching_ghost(g, &g->ghosts[i], hit_radius))
++		if (g->ghosts[i].name != DISABLED && g->ghosts[i].state != EATEN
++			&& player_touching_ghost(g, &g->ghosts[i], hit_radius))
+ 		{
+ 			hit = true;
+ 			slayer = i;
+ 		}
+ 		i++;
+ 	}
+-	if(!hit)
+-		return 0;
+-	return slayer + 1;
++	if (!hit)
++		return (0);
++	return (slayer + 1);
+ }
+diff --git a/srcs/player/player_collision.c b/srcs/player/player_collision.c
+index 654b189..0e064e1 100644
+--- a/srcs/player/player_collision.c
++++ b/srcs/player/player_collision.c
+@@ -44,10 +44,14 @@ void	player_collision(t_game *g)
+ 	int			row;
+ 
+ 	player = &g->player;
+-	row = (int)player->pos.tile_pos.y; // converte a posiçao do player para as coordenadas do tile
+-	col = (int)(player->pos.tile_pos.x - PLAYER_RADIUS); // converte a posiçao do player para as coordenadas do tile considerando o raio do player para detectar colisões com as paredes
+-	if (player_hits_wall(g, row, col)) // se o player colidir com uma parede
+-		player->pos.tile_pos.x = col + 1 + PLAYER_RADIUS; // ajusta a posição do player para ficar encostado a parede considerando o raio do player
++	row = (int)player->pos.tile_pos.y;                   
++		// converte a posiçao do player para as coordenadas do tile
++	col = (int)(player->pos.tile_pos.x - PLAYER_RADIUS); 
++		// converte a posiçao do player para as coordenadas do tile considerando o raio do player para detectar colisões com as paredes
++	if (player_hits_wall(g, row, col))                   
++		// se o player colidir com uma parede
++		player->pos.tile_pos.x = col + 1 + PLAYER_RADIUS;
++			// ajusta a posição do player para ficar encostado a parede considerando o raio do player
+ 	col = (int)(player->pos.tile_pos.x + PLAYER_RADIUS);
+ 	if (player_hits_wall(g, row, col))
+ 		player->pos.tile_pos.x = col - PLAYER_RADIUS;
+diff --git a/srcs/player/player_controller.c b/srcs/player/player_controller.c
+index f2d404f..3e2f77a 100644
+--- a/srcs/player/player_controller.c
++++ b/srcs/player/player_controller.c
+@@ -77,22 +77,15 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
+ 	player_wrap_position(g);
+ 	if (!player_collect_pacdots(g) && !player_collect_energizer(g))
+ 	{
+-
+-		// ft_printf("dots ledt in maze : %d dots needed for cruiser: one %d ; two: %d\n", g->pacdot_count - g->player.collected_dots, g->ghosts[BLINKY].cruiser.one.dots_left, g->ghosts[BLINKY].cruiser.two.dots_left);
+ 		g->player.pos.tile_pos.x += dx;
+ 		g->player.pos.tile_pos.y += dy;
+ 	}
+ 	if ((slayer = player_touched_ghost(g)))
+ 	{
+ 		if (g->ghosts[slayer - 1].state == FRIGHTENED)
+-		{
+-			// usleep(2 * 1e5);
+ 			g->ghosts[slayer - 1].state = EATEN;
+-		}
+ 		else
+ 		{
+-			// ft_printf("You got touhced");
+-			usleep(10000);
+ 			if (!g->debug_mode)
+ 			{
+ 				g->player.lives--;
+@@ -102,13 +95,11 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
+ 					.y = g->player.pos.pixel_pos.y});
+ 				reset_game(g, 1);
+ 			}
+-			// if(g->debug_mode)
+-		} // 	change_pallete((t_point){.x = -2, .y = -1}, &g->player.frames);
++		}
+ 	}
+-	if (g->player.collected_dots >= g->pacdot_count + g->energizer_count)
++	if (g->player.collected_dots >= g->pacdot_count + g->energizer_count
++		&& g->player.collected_dots != 0)
+ 		reset_game(g, 0);
+-	// else if(g->player.frames.left->coord.x != )
+-	// 	change_pallete((t_point){.x = 2, .y = 1}, &g->player.frames);
+ }
+ 
+ void	player_rotate(t_game *g, double angle)
+@@ -148,29 +139,33 @@ static void	player_apply_action(t_game *g, t_player_action act)
+ 		player_rotate(g, -ROT_SPEED);
+ }
+ 
+-static bool safe_is_wall(t_map map, int y, int x)
++static bool	safe_is_wall(t_map map, int y, int x)
+ {
+-    if (y < 0 || y >= map.height) return true; // treat out of bounds as blocked
+-    if (x < 0) return true;
+-    if (x >= (int)ft_strlen(map.grid[y])) return true;
+-    return map.grid[y][x] == '1';
++	if (y < 0 || y >= map.height)
++		return (true); // treat out of bounds as blocked
++	if (x < 0)
++		return (true);
++	if (x >= (int)ft_strlen(map.grid[y]))
++		return (true);
++	return (map.grid[y][x] == '1');
+ }
+ 
+-bool can_move(t_game *game, int dir)
++bool	can_move(t_game *game, int dir)
+ {
+-    static int direction[4][2] = {
+-        {-1, 0}, // up
+-        {0, -1}, // left
+-        {1, 0},  // down
+-        {0, 1}   // right
+-    };
+-
+-    int y = (int)game->player.pos.tile_pos.y + direction[dir][0];
+-    int x = (int)game->player.pos.tile_pos.x + direction[dir][1];
+-
+-    if (safe_is_wall(game->map, y, x))
+-        return false;
+-    return true;
++	int	y;
++	int	x;
++
++	static int direction[4][2] = {
++		{-1, 0}, // up
++		{0, -1}, // left
++		{1, 0},  // down
++		{0, 1}   // right
++	};
++	y = (int)game->player.pos.tile_pos.y + direction[dir][0];
++	x = (int)game->player.pos.tile_pos.x + direction[dir][1];
++	if (safe_is_wall(game->map, y, x))
++		return (false);
++	return (true);
+ }
+ 
+ void	player_move(t_game *game, int dir)
+@@ -251,9 +246,9 @@ void	player_controller(t_game *g)
+ 		if (g->key.a || g->key.left)
+ 			player_move(g, 1);
+ 		update_player_direction(g, 1);
+-		apply_player_movement(g, (g->player.target_dir.x * (PLAYER_SPEED
+-					+ 0 * (double)g->player.speed_multiplier / 100)),
+-			g->player.target_dir.y * (PLAYER_SPEED
+-				 + 0 * (double)g->player.speed_multiplier / 100));
++		apply_player_movement(g, (g->player.target_dir.x * (PLAYER_SPEED + 0
++					* (double)g->player.speed_multiplier / 100)),
++			g->player.target_dir.y * (PLAYER_SPEED + 0
++				* (double)g->player.speed_multiplier / 100));
+ 	}
+ }
+diff --git a/srcs/player/player_spawn.c b/srcs/player/player_spawn.c
+index 39c5678..50e6b95 100644
+--- a/srcs/player/player_spawn.c
++++ b/srcs/player/player_spawn.c
+@@ -54,9 +54,8 @@ static void	set_player_spawn(t_game *game, int col, int row, char dir)
+ 	if (game->map.grid[row][col] == VOID)
+ 		exit_game(EXIT_MAP, game,
+ 			"set_player_spawn() found player in VOID tile");
+-	if (map_get_tile(game, row, col + 1) == VOID
+-		|| map_get_tile(game, row, col - 1) == VOID
+-		|| map_get_tile(game, row + 1, col) == VOID
++	if (map_get_tile(game, row, col + 1) == VOID || map_get_tile(game, row, col
++			- 1) == VOID || map_get_tile(game, row + 1, col) == VOID
+ 		|| map_get_tile(game, row - 1, col) == VOID)
+ 		exit_game(EXIT_MAP, game,
+ 			"set_player_spawn() player next to VOID tile");
+@@ -77,21 +76,21 @@ static t_point	find_player_spawn(t_game *game)
+ 	int		x;
+ 	bool	spawn_count;
+ 	char	tile;
+-	t_point spawn;
++	t_point	spawn;
+ 
+ 	spawn_count = false;
+ 	y = -1;
+ 	while (++y < game->map.height)
+-	{  
++	{
+ 		x = -1;
+ 		while (++x < game->map.width)
+ 		{
+ 			tile = game->map.grid[y][x];
+-			if (tile == 'N' || tile == 'S'
+-				|| tile == 'E' || tile == 'W')
++			if (tile == 'N' || tile == 'S' || tile == 'E' || tile == 'W')
+ 			{
+-				if(spawn_count)
+-					exit_game(EXIT_MAP, game, "find_player_spawn() has found more than one player");
++				if (spawn_count)
++					exit_game(EXIT_MAP, game,
++						"find_player_spawn() has found more than one player");
+ 				spawn_count = true;
+ 				spawn.x = x;
+ 				spawn.y = y;
+@@ -99,14 +98,17 @@ static t_point	find_player_spawn(t_game *game)
+ 			}
+ 		}
+ 	}
+-	if(!spawn_count)
++	if (!spawn_count)
+ 		exit_game(EXIT_MAP, game, "find_player_spawn() has not found a player");
+ 	return (spawn);
+ }
+ 
+-void player_sprites(t_game *game)
++void	player_sprites(t_game *game)
+ {
+-	int death_frames[12] = {226, 227, 228, 229, 230 , 231, 236, 237, 238, 239, 240, 241};
++	int	death_frames[12] = {226, 227, 228, 229, 230, 231, 236, 237, 238, 239,
++			240, 241};
++	int	i;
++
+ 	game->player.frames.up[0] = game->sprite_sheet.sprites[213];
+ 	game->player.frames.up[1] = game->sprite_sheet.sprites[212];
+ 	game->player.frames.up[2] = game->sprite_sheet.sprites[252];
+@@ -119,28 +121,26 @@ void player_sprites(t_game *game)
+ 	game->player.frames.left[0] = game->sprite_sheet.sprites[211];
+ 	game->player.frames.left[1] = game->sprite_sheet.sprites[210];
+ 	game->player.frames.left[2] = game->sprite_sheet.sprites[252];
+-	int i = 0;
+-	while(i < 12)
++	i = 0;
++	while (i < 12)
+ 	{
+-		// ft_printf("Searchin Frame Number: %d with index %d\n", death_frames[i], i);
+ 		game->player.frames.death[i] = game->sprite_sheet.sprites[death_frames[i]];
+ 		i++;
+ 	}
+ }
+- 
++
+ void	init_player(t_game *game, int is_death)
+ {
+ 	t_point	spawn_coord;
+ 
+ 	if (!game || !game->map.grid)
+-		exit_game(EXIT_MAP, game,
+-			"init_player() invalid map pointers");
++		exit_game(EXIT_MAP, game, "init_player() invalid map pointers");
+ 	spawn_coord = find_player_spawn(game);
+-	set_player_spawn(game, spawn_coord.x, spawn_coord.y, game->map.grid[spawn_coord.y][spawn_coord.x]);
++	set_player_spawn(game, spawn_coord.x, spawn_coord.y,
++		game->map.grid[spawn_coord.y][spawn_coord.x]);
+ 	game->targets.player_spawn = spawn_coord;
+-	if(is_death)
+-		return;
+-	// set_player_spawn(game, spawn_coord.y, spawn_coord.x, game->map.grid[spawn_coord.y][spawn_coord.x]);
++	if (is_death)
++		return ;
+ 	player_sprites(game);
+ 	change_pallete((t_point){.x = 2, .y = 1}, &game->player.frames);
+ 	game->player.lives = 3;
+diff --git a/srcs/render/debug_raycast.c b/srcs/render/debug_raycast.c
+index 7def726..c1bc6d6 100644
+--- a/srcs/render/debug_raycast.c
++++ b/srcs/render/debug_raycast.c
+@@ -238,10 +238,6 @@ static int	cast_debug_ray(t_game *g, int col, t_raycasting *ray)
+ 	return (1);
+ }
+ 
+-// static t_point	debug_player_point(t_game *g)
+-// {
+-// 	return (debug_world_to_screen(g->player.pos.tile_pos.x, g->player.pos.tile_pos.y));
+-// }
+ 
+ static t_point	debug_hit_point(t_game *g, t_raycasting ray)
+ {
+@@ -272,7 +268,8 @@ void	render_raycast_debug(t_game *g)
+ 		return ;
+ 	draw_debug_map(g);
+ 	// start = debug_player_point(g);
+-	start = debug_world_to_screen(g->player.pos.tile_pos.x, g->player.pos.tile_pos.y);
++	start = debug_world_to_screen(g->player.pos.tile_pos.x,
++			g->player.pos.tile_pos.y);
+ 	col = 0;
+ 	while (col < g->win.width)
+ 	{
+@@ -280,6 +277,5 @@ void	render_raycast_debug(t_game *g)
+ 			debug_draw_ray(g, start, ray);
+ 		col += DEBUG_RAY_STEP;
+ 	}
+-	debug_fill(g, debug_point(start.x - 2, start.y - 2), 5,
+-		DEBUG_COLOR_PLAYER);
++	debug_fill(g, debug_point(start.x - 2, start.y - 2), 5, DEBUG_COLOR_PLAYER);
+ }
+diff --git a/srcs/render/raycast_dda.c b/srcs/render/raycast_dda.c
+index a1eac68..f60cbf1 100644
+--- a/srcs/render/raycast_dda.c
++++ b/srcs/render/raycast_dda.c
+@@ -66,8 +66,8 @@ int	raycast_dda(t_game *g)
+ 		if (!ray_validate_wrap_x(g))
+ 			break ;
+ 		tile = map_get_tile(g, g->ray.map_y, g->ray.map_x);
+-		if ((tile == GATE && g->gate_passable == 0) 
+-			|| (tile != GATE && map_tile_type(tile, TILE_SOLID)))
++		if ((tile == GATE && g->gate_passable == 0) || (tile != GATE
++				&& map_tile_type(tile, TILE_SOLID)))
+ 		{
+ 			g->ray.hit_tile = tile;
+ 			hit = 1;
+diff --git a/srcs/render/raycast_frame.c b/srcs/render/raycast_frame.c
+index 3d7f75c..db37825 100644
+--- a/srcs/render/raycast_frame.c
++++ b/srcs/render/raycast_frame.c
+@@ -29,14 +29,14 @@ void	ray_draw_range(t_game *g)
+ 		g->ray.draw_end = g->win.height - 1;
+ }
+ 
+-void ray_perp_wall_distance(t_game *g) 
+-{ 
+-	if (g->ray.hit_side == 0) 
+-		g->ray.perp_wall_dist = g->ray.side_dist_x - g->ray.delta_dist_x; 
+-	else 
+-		g->ray.perp_wall_dist = g->ray.side_dist_y - g->ray.delta_dist_y; 
+-	if (g->ray.perp_wall_dist < 1e-6) 
+- 		g->ray.perp_wall_dist = 1e-6; 
++void	ray_perp_wall_distance(t_game *g)
++{
++	if (g->ray.hit_side == 0)
++		g->ray.perp_wall_dist = g->ray.side_dist_x - g->ray.delta_dist_x;
++	else
++		g->ray.perp_wall_dist = g->ray.side_dist_y - g->ray.delta_dist_y;
++	if (g->ray.perp_wall_dist < 1e-6)
++		g->ray.perp_wall_dist = 1e-6;
+ }
+ 
+ void	ray_init_steps(t_game *g)
+@@ -50,8 +50,8 @@ void	ray_init_steps(t_game *g)
+ 	else
+ 	{
+ 		g->ray.step_x = 1;
+-		g->ray.side_dist_x = (g->ray.map_x + TILE_SIZE_3D - g->player.pos.tile_pos.x)
+-			* g->ray.delta_dist_x;
++		g->ray.side_dist_x = (g->ray.map_x + TILE_SIZE_3D
++				- g->player.pos.tile_pos.x) * g->ray.delta_dist_x;
+ 	}
+ 	if (g->ray.ray_dir_y < 0)
+ 	{
+@@ -62,8 +62,8 @@ void	ray_init_steps(t_game *g)
+ 	else
+ 	{
+ 		g->ray.step_y = 1;
+-		g->ray.side_dist_y = (g->ray.map_y + TILE_SIZE_3D - g->player.pos.tile_pos.y)
+-			* g->ray.delta_dist_y;
++		g->ray.side_dist_y = (g->ray.map_y + TILE_SIZE_3D
++				- g->player.pos.tile_pos.y) * g->ray.delta_dist_y;
+ 	}
+ }
+ 
+@@ -71,20 +71,30 @@ void	ray_init(t_game *g, int col)
+ {
+ 	double	cam_x;
+ 
+-
+-	cam_x = 2.0 * col / (double)g->win.width - 1.0; // 
+-	g->ray.camera_x = cam_x; // 
+-	g->ray.ray_dir_x = g->player.dir.x + g->player.plane.x * cam_x; // direção do raio no eixo x
+-	g->ray.ray_dir_y = g->player.dir.y + g->player.plane.y * cam_x; // direção do raio no eixo y
+-	g->ray.map_x = (int)g->player.pos.tile_pos.x; // coordenada do mapa (tile) onde o player está no eixo x
+-	g->ray.map_y = (int)g->player.pos.tile_pos.y; // coordenada do mapa (tile) onde o player está no eixo y
+-	g->ray.hit = 0; // flag que indica se o raio bateu numa parede. Começa em 0 e fica 1 quando bate numa parede
+-	g->ray.hit_side = 0; // lado da parede que foi atingido 0 para x 1 para y
+-	g->ray.hit_tile = VOID; // o tile atingido é void se for diferente de VOID o raio atingiu um tile sólido e guardo o id do tile atingido
+-	if (g->ray.ray_dir_x == 0.0) // se a direção do raio no eixo x for 0
+-		g->ray.delta_dist_x = 1e30; // a distância para o próximo grid no eixo x é infinita. Evita a divisao por zero e garante que o raio só vai cruzar grids no eixo y
+-	else // se a direção do raio no eixo x for diferente de 0
+-		g->ray.delta_dist_x = fabs(1.0 / g->ray.ray_dir_x); // É calculada a hipotenusa do triângulo formado pelo step no eixo x (1) e o step no eixo y (delta_dist_y) multiplicada pela direção do raio no eixo x. O resultado é a distância que o raio percorre para cruzar uma grid no eixo x.
++	cam_x = 2.0 * col / (double)g->win.width - 1.0;                 //
++	g->ray.camera_x = cam_x;                                        //
++	g->ray.ray_dir_x = g->player.dir.x + g->player.plane.x * cam_x;
++		// direção do raio no eixo x
++	g->ray.ray_dir_y = g->player.dir.y + g->player.plane.y * cam_x;
++		// direção do raio no eixo y
++	g->ray.map_x = (int)g->player.pos.tile_pos.x;                  
++		// coordenada do mapa (tile) onde o player está no eixo x
++	g->ray.map_y = (int)g->player.pos.tile_pos.y;                  
++		// coordenada do mapa (tile) onde o player está no eixo y
++	g->ray.hit = 0;                                                
++		// flag que indica se o raio bateu numa parede. Começa em 0 e fica 1 quando bate numa parede
++	g->ray.hit_side = 0;                                           
++		// lado da parede que foi atingido 0 para x 1 para y
++	g->ray.hit_tile = VOID;                                        
++		// o tile atingido é void se for diferente de VOID o raio atingiu um tile sólido e guardo o id do tile atingido
++	if (g->ray.ray_dir_x == 0.0)                                   
++		// se a direção do raio no eixo x for 0
++		g->ray.delta_dist_x = 1e30;                                
++			// a distância para o próximo grid no eixo x é infinita. Evita a divisao por zero e garante que o raio só vai cruzar grids no eixo y
++	else                                                           
++		// se a direção do raio no eixo x for diferente de 0
++		g->ray.delta_dist_x = fabs(1.0 / g->ray.ray_dir_x);        
++			// É calculada a hipotenusa do triângulo formado pelo step no eixo x (1) e o step no eixo y (delta_dist_y) multiplicada pela direção do raio no eixo x. O resultado é a distância que o raio percorre para cruzar uma grid no eixo x.
+ 	if (g->ray.ray_dir_y == 0.0)
+ 		g->ray.delta_dist_y = 1e30;
+ 	else
+@@ -99,15 +109,20 @@ void	raycast_frame(t_game *g)
+ 	if (!g)
+ 		return ;
+ 	col = -1;
+-	center_hit = 0; // flag que regista se o hit do centro da tela já foi registado para evitar múltiplos registros numa mesma parede
++	center_hit = 0;
++		// flag que regista se o hit do centro da tela já foi registado para evitar múltiplos registros numa mesma parede
+ 	while (++col < g->win.width)
+ 	{
+-		ray_init(g, col); // inicializa os valores do ray para a coluna atual
+-		ray_init_steps(g); // calcula os steps e as distâncias iniciais para o DDA
+-		if (raycast_dda(g)) // se bateu numa parede renderiza a coluna caso contrario passa para a próxima
++		ray_init(g, col);   // inicializa os valores do ray para a coluna atual
++		ray_init_steps(g); 
++			// calcula os steps e as distâncias iniciais para o DDA
++		if (raycast_dda(g))
++			// se bateu numa parede renderiza a coluna caso contrario passa para a próxima
+ 		{
+-			ray_perp_wall_distance(g); // calcula a distância perpendicular da parede
+-			ray_draw_range(g); // calcula o range de pixels a desenhar para a parede
++			ray_perp_wall_distance(g); 
++				// calcula a distância perpendicular da parede
++			ray_draw_range(g);         
++				// calcula o range de pixels a desenhar para a parede
+ 			render_wall_column(g, col); // renderiza a coluna da parede
+ 			g->ray.z_buffer[col] = g->ray.perp_wall_dist;
+ 			center_hit = register_center_hit(g, col, center_hit);
+diff --git a/srcs/render/render3D.h b/srcs/render/render3D.h
+index 5fe8373..4abbe93 100644
+--- a/srcs/render/render3D.h
++++ b/srcs/render/render3D.h
+@@ -17,61 +17,67 @@ typedef struct s_game	t_game;
+ typedef struct s_image	t_image;
+ typedef struct s_ghost	t_ghost;
+ 
+-#define TILE_SIZE_3D 1
+-#define SPR_PACDOT     1
+-#define SPR_ENERGIZER  2
+-#define SPR_GHOST      3
++# define TILE_SIZE_3D 1
++# define SPR_PACDOT 1
++# define SPR_ENERGIZER 2
++# define SPR_GHOST 3
+ 
+-#define CEILING_DIST 2.8
+-#define CEILING_HORIZON 40.0
+-#define CEILING_MIN_SCREEN_DIST 6.0
+-#define CEILING_CENTER_MARGIN 2
++# define CEILING_DIST 2.8
++# define CEILING_HORIZON 40.0
++# define CEILING_MIN_SCREEN_DIST 6.0
++# define CEILING_CENTER_MARGIN 2
+ 
+-#define FLOOR_START_OFFSET 2
+-#define FLOOR_MIN_DIST 4.0
++# define FLOOR_START_OFFSET 2
++# define FLOOR_MIN_DIST 4.0
+ 
+-#define X_POS 1920 / 2 - 100 
+-#define Y_POS 1080 / 2 + 100
++# define X_POS 1920 / 2 - 100
++# define Y_POS 1080 / 2 + 100
+ 
+-// #define X_POS 1920 / 2 - 100 
++// #define X_POS 1920 / 2 - 100
+ // #define Y_POS 0
+ 
+ #endif
+ 
+ #include "../../Pac_Struct.h"
+ 
+-void	render_frame(t_game *game);
+-void	raycast_frame(t_game *g);
+-int	raycast_dda(t_game *g);
+-int		register_center_hit(t_game *g, int screen_x, int hit_found);
+-void	put_pixel_fast(t_image *img, int x, int y, int color);
+-void	render_wall_column(t_game *g, int screen_x);
+-void	render_floor_texture(t_game *g);
+-void	render_ceiling_texture(t_game *g);
+-void	render_menu(t_game *g);
+-double	fract_pos(double x);
+-void	ray_init_steps(t_game *g);
+-void	ray_init(t_game *g, int col);
+-void ray_perp_wall_distance(t_game *g);
+-void	ray_draw_range(t_game *g);
++void					render_frame(t_game *game);
++void					raycast_frame(t_game *g);
++int						raycast_dda(t_game *g);
++int						register_center_hit(t_game *g, int screen_x,
++							int hit_found);
++void					put_pixel_fast(t_image *img, int x, int y, int color);
++void					render_wall_column(t_game *g, int screen_x);
++void					render_floor_texture(t_game *g);
++void					render_ceiling_texture(t_game *g);
++void					render_menu(t_game *g);
++double					fract_pos(double x);
++void					ray_init_steps(t_game *g);
++void					ray_init(t_game *g, int col);
++void					ray_perp_wall_distance(t_game *g);
++void					ray_draw_range(t_game *g);
+ 
+-unsigned int	tex_pixel(t_image *tex, int x, int y);
+-void	parse_floor_ceiling_color(t_game *g, const char *s, int *dst);
+-void	parse_floor_ceiling_line(t_game *g, char id, char *value);
+-void	fill_floor_color(t_image *img, int color, int horizon);
+-void	fill_ceiling_color(t_image *img, int color, int horizon);
+-void	sprite_draw(t_game *g, t_sprite *b, t_image *tex);
+-int	sprite_project(t_game *g, double x, double y, t_sprite *b);
+-int	sprite_build(t_game *g, t_sprite *b, int size_div);
+-void	render_all_sprites(t_game *g);
+-int	sprite_draw_col(t_game *g, t_sprite *b, int x, t_image *tex);
+-int	clamp_int(int value, int min, int max);
+-int	clamp_tex_coord(int value, int max);
+-void	render_raycast_debug(t_game *g);
+-int	ghost_anim_frame(t_ghost *gh);
+-t_image	*ghost_tex(t_game *g, t_ghost *gh);
+-void	render_sprite_into_framebuffer(t_game *game, t_point coord,
+-		t_sprite_ref *sprite);
++unsigned int			tex_pixel(t_image *tex, int x, int y);
++void					parse_floor_ceiling_color(t_game *g, const char *s,
++							int *dst);
++void					parse_floor_ceiling_line(t_game *g, char id,
++							char *value);
++void					fill_floor_color(t_image *img, int color, int horizon);
++void					fill_ceiling_color(t_image *img, int color,
++							int horizon);
++void					sprite_draw(t_game *g, t_sprite *b, t_image *tex);
++int						sprite_project(t_game *g, double x, double y,
++							t_sprite *b);
++int						sprite_build(t_game *g, t_sprite *b, int size_div);
++void					render_all_sprites(t_game *g);
++int						sprite_draw_col(t_game *g, t_sprite *b, int x,
++							t_image *tex);
++int						clamp_int(int value, int min, int max);
++int						clamp_tex_coord(int value, int max);
++void					render_raycast_debug(t_game *g);
++int						ghost_anim_frame(t_ghost *gh);
++t_image					*ghost_tex(t_game *g, t_ghost *gh);
++void					render_sprite_into_framebuffer(t_game *game,
++							t_point coord, t_sprite_ref *sprite);
+ 
+-void render_debug_symbols(t_game *game);
+-void	render_into_framebuffer(t_game *game);
++void					render_debug_symbols(t_game *game);
++void					render_into_framebuffer(t_game *game);
+diff --git a/srcs/render/render_debug_symbols.c b/srcs/render/render_debug_symbols.c
+index 1471c91..95a6c43 100644
+--- a/srcs/render/render_debug_symbols.c
++++ b/srcs/render/render_debug_symbols.c
+@@ -10,33 +10,34 @@
+ /*                                                                            */
+ /* ************************************************************************** */
+ 
+-#include "render3D.h"
+ #include "../ghosts/ghosts.h"
++#include "render3D.h"
+ 
+-void render_targets(t_game *game)
++void	render_targets(t_game *game)
+ {
+-	t_point coord;
++	t_point			coord;
++	t_point			pivot_coord;
++	t_sprite_ref	target_tile;
++	int				i;
+ 
+-	t_point pivot_coord;
+-	t_sprite_ref target_tile;
+ 	target_tile = game->sprite_sheet.sprites[253];
+-	int i = 0;
++	i = 0;
+ 	pivot_coord = pinky_target(game, 2);
+ 	pivot_coord.x = (pivot_coord.x * 8) + X_POS;
+ 	pivot_coord.y = (pivot_coord.y * 8) + Y_POS;
+-	render_sprite_into_framebuffer(game, pivot_coord, &game->sprite_sheet.sprites[81]);
+-	while(i < 4)
++	render_sprite_into_framebuffer(game, pivot_coord,
++		&game->sprite_sheet.sprites[81]);
++	while (i < 4)
+ 	{
+ 		coord.x = ((game->ghosts[i].target_tile.x * 8) + X_POS) % 1920;
+ 		coord.y = ((game->ghosts[i].target_tile.y * 8) + Y_POS) % 1080;
+-
+ 		render_sprite_into_framebuffer(game, coord, &target_tile);
+ 		target_tile.coord.x += 200;
+ 		i++;
+ 	}
+ }
+ 
+-void render_debug_symbols(t_game *game)
++void	render_debug_symbols(t_game *game)
+ {
+ 	render_raycast_debug(game);
+ 	render_targets(game);
+diff --git a/srcs/render/render_floor_ceiling.c b/srcs/render/render_floor_ceiling.c
+index f4383f1..58f3470 100644
+--- a/srcs/render/render_floor_ceiling.c
++++ b/srcs/render/render_floor_ceiling.c
+@@ -15,41 +15,35 @@
+ 
+ static void	set_plane(t_game *g, t_fc *plane, double dist)
+ {
+-	double left_x;
+-		// componente x do vetor direção do raio que passa pelo canto esquerdo da tela
+-	double left_y;
+-		// componente y do vetor direção do raio que passa pelo canto esquerdo da tela
+-	left_x = g->player.dir.x - g->player.plane.x;                   
+-		// direção do raio para o canto esquerdo da tela no eixo x
+-	left_y = g->player.dir.y - g->player.plane.y;                   
+-		// direção do raio para o canto esquerdo da tela no eixo y
++	double	left_x;
++	double	left_y;
++
++	// componente x do vetor direção do raio que passa pelo canto esquerdo da tela
++	// componente y do vetor direção do raio que passa pelo canto esquerdo da tela
++	left_x = g->player.dir.x - g->player.plane.x;
++	// direção do raio para o canto esquerdo da tela no eixo x
++	left_y = g->player.dir.y - g->player.plane.y;
++	// direção do raio para o canto esquerdo da tela no eixo y
+ 	plane->step_x = dist * (2.0 * g->player.plane.x) / g->win.width;
+-		// avanço no eixo x no mundo para cada pixel da linha
++	// avanço no eixo x no mundo para cada pixel da linha
+ 	plane->step_y = dist * (2.0 * g->player.plane.y) / g->win.width;
+-		// avanço no eixo y no mundopara cada pixel da linha
+-	plane->pos_x = g->player.pos.tile_pos.x + dist * left_x;        
+-	plane->pos_y = g->player.pos.tile_pos.y + dist * left_y;        
++	// avanço no eixo y no mundopara cada pixel da linha
++	plane->pos_x = g->player.pos.tile_pos.x + dist * left_x;
++	plane->pos_y = g->player.pos.tile_pos.y + dist * left_y;
+ }
+ 
+ static void	draw_plane_row(t_game *g, t_fc *plane, t_image *tex, int row)
+ {
+-	unsigned int *pixels;
+-	int col;
+-	int tex_x;
+-	int tex_y;
++	unsigned int	*pixels;
++	int				col;
++	int				tex_x;
++	int				tex_y;
++	int				stride;
++
+ 	pixels = (unsigned int *)(g->win.frame_buffer.img_addr + row
+ 			* g->win.frame_buffer.l_len);
+ 	col = 0;
+-	// while (col < g->win.width) // percorre todas as colunas da linha atual
+-	// {
+-	// 	tex_x = ((int)(plane->pos_x * tex->width) % tex->width + tex->width) % tex->width;
+-	// 	tex_y = ((int)(plane->pos_y * tex->height) % tex->height + tex->height) % tex->height;
+-	// 	pixels[col] = tex_pixel(tex, tex_x, tex_y);
+-	// 	plane->pos_x += plane->step_x;
+-	// 	plane->pos_y += plane->step_y;
+-	// 	col++; // passa para a próxima coluna da linha
+-	// }
+-	int stride = tex->l_len / 4;
++	stride = tex->l_len / 4;
+ 	if (!tex->img_addr)
+ 	{
+ 		while (col < g->win.width)
+@@ -63,12 +57,14 @@ static void	draw_plane_row(t_game *g, t_fc *plane, t_image *tex, int row)
+ 		tex->data = (unsigned int *)tex->img_addr;
+ 		while (col < g->win.width)
+ 		{
+-			tex_x = ((int)(plane->pos_x * tex->width) % tex->width + tex->width) % tex->width;
+-			tex_y = ((int)(plane->pos_y * tex->height) % tex->height + tex->height) % tex->height;
+-			if(!tex->data)
++			tex_x = ((int)(plane->pos_x * tex->width) % tex->width + tex->width)
++				% tex->width;
++			tex_y = ((int)(plane->pos_y * tex->height) % tex->height
++					+ tex->height) % tex->height;
++			if (!tex->data)
+ 				pixels[col] = 128;
+ 			else
+-			pixels[col] = tex->data[tex_y * stride + tex_x];
++				pixels[col] = tex->data[tex_y * stride + tex_x];
+ 			plane->pos_x += plane->step_x;
+ 			plane->pos_y += plane->step_y;
+ 			col++;
+@@ -78,13 +74,14 @@ static void	draw_plane_row(t_game *g, t_fc *plane, t_image *tex, int row)
+ 
+ void	render_floor_texture(t_game *g)
+ {
+-	t_fc plane;         // guarda os dados da linha atual do floor
+-	int row;           
+-		// linha atual do frame buffer no ecrã onde os pixels do chão vão ser desenhados
+-	double dist;       
+-		// distância perpendicular do player ao plano do chão para a linha atual do chão a ser desenhada
+-	double screen_dist;
+-		// distância vertical da linha atual do chão ao centro da tela
++	int		row;
++	double	dist;
++	double	screen_dist;
++
++	t_fc plane; // guarda os dados da linha atual do floor
++	// linha atual do frame buffer no ecrã onde os pixels do chão vão ser desenhados
++	// distância perpendicular do player ao plano do chão para a linha atual do chão a ser desenhada
++	// distância vertical da linha atual do chão ao centro da tela
+ 	if (!g || !g->win.frame_buffer.img_addr)
+ 		return ;
+ 	if (!g->tex.floor_img.img_ptr)
+@@ -93,23 +90,23 @@ void	render_floor_texture(t_game *g)
+ 		return ;
+ 	}
+ 	row = g->win.height / 2 + FLOOR_START_OFFSET;
+-		// começa a desenhar o floor a partir do centro da tela
+-	while (row < g->win.height)                  
+-		// percorre todas as linhas do floor até ao final/fundo da tela
++	// começa a desenhar o floor a partir do centro da tela
++	while (row < g->win.height)
++	// percorre todas as linhas do floor até ao final/fundo da tela
+ 	{
+ 		screen_dist = row - g->win.height * 0.5;
+-			// calcula a distância vertical da linha atual do chão ao centro da tela
+-		if (screen_dist < FLOOR_MIN_DIST)       
++		// calcula a distância vertical da linha atual do chão ao centro da tela
++		if (screen_dist < FLOOR_MIN_DIST)
+ 			// evita valores demasiado pequenos
+ 			screen_dist = FLOOR_MIN_DIST;
+-		dist = (g->win.height * 0.5) / screen_dist;       
+-			// converte a distância na tela para a distancia perpendicular no mundo
+-		set_plane(g, &plane, dist);                       
+-			// prepara a posição inicial e os steps da linha atual do chão a ser desenhada
++		dist = (g->win.height * 0.5) / screen_dist;
++		// converte a distância na tela para a distancia perpendicular no mundo
++		set_plane(g, &plane, dist);
++		// prepara a posição inicial e os steps da linha atual do chão a ser desenhada
+ 		draw_plane_row(g, &plane, &g->tex.floor_img, row);
+-			// desenha a linha atual do chão com a textura do chão
+-		row++;                                            
+-			// passa para a próxima linha do chão a ser desenhada
++		// desenha a linha atual do chão com a textura do chão
++		row++;
++		// passa para a próxima linha do chão a ser desenhada
+ 	}
+ }
+ 
+diff --git a/srcs/render/render_frame.c b/srcs/render/render_frame.c
+index fad808c..8fab3ab 100644
+--- a/srcs/render/render_frame.c
++++ b/srcs/render/render_frame.c
+@@ -11,8 +11,8 @@
+ /* ************************************************************************** */
+ 
+ #include "../../Pac_Struct.h"
+-#include "render3D.h"
+ #include "../ghosts/ghosts.h"
++#include "render3D.h"
+ 
+ void	clear_sprite_z(t_game *g)
+ {
+@@ -44,7 +44,6 @@ void	render_frame(t_game *game)
+ 	clear_sprite_z(game);
+ 	render_all_sprites(game);
+ 	render_into_framebuffer(game);
+-	// printf("Pacdots eaten: %d -- Pacdots Left %d -- Total %d\n", game->player.collected_dots, game->pacdot_count - game->player.collected_dots, game->pacdot_count);
+ 	mlx_put_image_to_window(game->mlx_ptr, game->win.win_ptr,
+ 		game->win.frame_buffer.img_ptr, 0, 0);
+ }
+diff --git a/srcs/render/render_into_framebuffer.c b/srcs/render/render_into_framebuffer.c
+index 8a1f338..b963cf3 100644
+--- a/srcs/render/render_into_framebuffer.c
++++ b/srcs/render/render_into_framebuffer.c
+@@ -27,7 +27,8 @@ void	render_base_into_framebuffer(t_game *s)
+ 		{
+ 			color = pixel_get(&s->base, x, y);
+ 			if ((color >> 24) != 0xFF)
+-				ft_pixel_put(&s->win.frame_buffer, (x + X_POS) % s->win.width, (y + Y_POS) % s->win.height, color);
++				ft_pixel_put(&s->win.frame_buffer, (x + X_POS) % s->win.width,
++					(y + Y_POS) % s->win.height, color);
+ 			x++;
+ 		}
+ 		y++;
+@@ -49,8 +50,9 @@ void	render_sprite_into_framebuffer(t_game *game, t_point coord,
+ 			color = pixel_get(&game->sprite_sheet.sprite_img, point.x
+ 					+ sprite->coord.x, point.y + sprite->coord.y);
+ 			if ((color >> 24) != 0xFF)
+-				ft_pixel_put(&game->win.frame_buffer, (point.x + coord.x) % game->win.frame_buffer.width, (point.y
+-				 + coord.y) % game->win.frame_buffer.height, color);
++				ft_pixel_put(&game->win.frame_buffer, (point.x + coord.x)
++					% game->win.frame_buffer.width, (point.y + coord.y)
++					% game->win.frame_buffer.height, color);
+ 			point.x++;
+ 		}
+ 		point.y++;
+@@ -110,7 +112,8 @@ void	render_ghost_into_framebuffer(t_game *game, t_point coord,
+ 					+ ghost->pos.pixel_pos.y) % 2)]);
+ 	else
+ 	{
+-		if (game->debug_mode && (ghost->cruiser.is_blinky && (ghost->cruiser.one.enabled || ghost->cruiser.two.enabled)))
++		if (game->debug_mode && (ghost->cruiser.is_blinky
++				&& (ghost->cruiser.one.enabled || ghost->cruiser.two.enabled)))
+ 			render_elroy_cruiser(game, coord, ghost);
+ 		else if (ghost->state != EATEN)
+ 			render_normal_ghost(game, coord, ghost);
+diff --git a/srcs/render/render_menu.c b/srcs/render/render_menu.c
+index 96d37d7..d954135 100644
+--- a/srcs/render/render_menu.c
++++ b/srcs/render/render_menu.c
+@@ -29,6 +29,6 @@ void	render_menu(t_game *g)
+ 		x = 0;
+ 	if (y < 0)
+ 		y = 0;
+-	mlx_put_image_to_window(g->mlx_ptr, g->win.win_ptr,
+-		g->menu_img.img_ptr, x, y);
++	mlx_put_image_to_window(g->mlx_ptr, g->win.win_ptr, g->menu_img.img_ptr, x,
++		y);
+ }
+diff --git a/srcs/render/render_sprites.c b/srcs/render/render_sprites.c
+index 3022a9f..1b6e55e 100644
+--- a/srcs/render/render_sprites.c
++++ b/srcs/render/render_sprites.c
+@@ -25,7 +25,8 @@ static void	draw_pacdots(t_game *g)
+ 	{
+ 		if (g->pacdots[i].active)
+ 		{
+-			if (sprite_project(g, g->pacdots[i].pos.tile_pos.x, g->pacdots[i].pos.tile_pos.y, &box))
++			if (sprite_project(g, g->pacdots[i].pos.tile_pos.x,
++					g->pacdots[i].pos.tile_pos.y, &box))
+ 			{
+ 				if (sprite_build(g, &box, 6))
+ 					sprite_draw(g, &box, &g->tex.pacdot_img);
+@@ -47,7 +48,8 @@ static void	draw_energizers(t_game *g)
+ 	{
+ 		if (g->energizers[i].active)
+ 		{
+-			if (sprite_project(g, g->energizers[i].pos.tile_pos.x, g->energizers[i].pos.tile_pos.y, &box))
++			if (sprite_project(g, g->energizers[i].pos.tile_pos.x,
++					g->energizers[i].pos.tile_pos.y, &box))
+ 			{
+ 				if (sprite_build(g, &box, 3))
+ 					sprite_draw(g, &box, &g->tex.energizer_img);
+diff --git a/srcs/render/render_utils.c b/srcs/render/render_utils.c
+index 41f96af..9743da0 100644
+--- a/srcs/render/render_utils.c
++++ b/srcs/render/render_utils.c
+@@ -34,10 +34,10 @@ t_image	*ghost_tex(t_game *g, t_ghost *gh)
+ 	if (!g || !gh)
+ 		return (NULL);
+ 	frame = ghost_anim_frame(gh);
+-	if(gh->state == FRIGHTENED)
+-		return(&g->tex.other_state_img[0]);
+-	if(gh->state == EATEN)
+-		return(&g->tex.other_state_img[1]);
++	if (gh->state == FRIGHTENED)
++		return (&g->tex.other_state_img[0]);
++	if (gh->state == EATEN)
++		return (&g->tex.other_state_img[1]);
+ 	if (gh->name == BLINKY)
+ 		return (&g->tex.blinky_img[frame]);
+ 	if (gh->name == PINKY)
+@@ -72,10 +72,11 @@ int	clamp_int(int value, int min, int max)
+ 
+ double	fract_pos(double x)
+ {
+-	int	i; // guarda a parte inteira de x
+-
+-	i = (int)x;         // converte x para inteiro ao truncar a parte decimal
++	int i; // guarda a parte inteira de x
++	i = (int)x;                   
++		// converte x para inteiro ao truncar a parte decimal
+ 	if (x < 0.0 && (double)i != x) // se x for negativo e tiver parte decimal
+-		i -= 1;       // ajusta a parte inteira para o próximo número inteiro menor
+-	return (x - (double)i);  // devolve so a parte fracionaria positiva
++		i -= 1;                   
++			// ajusta a parte inteira para o próximo número inteiro menor
++	return (x - (double)i);        // devolve so a parte fracionaria positiva
+ }
+diff --git a/srcs/render/render_wall_texture.c b/srcs/render/render_wall_texture.c
+index 0f087c9..87807eb 100644
+--- a/srcs/render/render_wall_texture.c
++++ b/srcs/render/render_wall_texture.c
+@@ -11,74 +11,53 @@
+ /* ************************************************************************** */
+ 
+ #include "../Pac_Struct.h"
+-#include "render3D.h"    
+ #include "../textures/textures3D.h"
++#include "render3D.h"
+ 
+ static int	get_wall_tex_x(t_game *g, t_image *tex)
+ {
+-	double	wall_offset;  // posição fracionária do hit na parede
+-	int		tex_x;  // coluna da textura que vai ser utilizada
+-
+-	if (g->ray.hit_side == 0)  // se a parede atingida for vertical (lado X)
+-		wall_offset = g->player.pos.tile_pos.y + g->ray.perp_wall_dist * g->ray.ray_dir_y;
+-	else                                // se a parede atingida for horizontal (lado Y)
+-		wall_offset = g->player.pos.tile_pos.x + g->ray.perp_wall_dist * g->ray.ray_dir_x;
+-	wall_offset = fract_pos(wall_offset); // fica só com a parte decimal entre 0 e 1
+-	tex_x = (int)(wall_offset * (double)tex->width);    // converte esse offset para a coluna correspondente da textura
+-	tex_x = clamp_int(tex_x, 0, tex->width - 1);         // garante que tex_x fica dentro dos limites da textura
+-	if ((g->ray.hit_side == 0 && g->ray.ray_dir_x < 0)   // se bateu no lado oeste
++	double wall_offset; // posição fracionária do hit na parede
++	int tex_x;          // coluna da textura que vai ser utilizada
++	if (g->ray.hit_side == 0) // se a parede atingida for vertical (lado X)
++		wall_offset = g->player.pos.tile_pos.y + g->ray.perp_wall_dist
++			* g->ray.ray_dir_y;
++	else // se a parede atingida for horizontal (lado Y)
++		wall_offset = g->player.pos.tile_pos.x + g->ray.perp_wall_dist
++			* g->ray.ray_dir_x;
++	wall_offset = fract_pos(wall_offset);                 
++		// fica só com a parte decimal entre 0 e 1
++	tex_x = (int)(wall_offset * (double)tex->width);      
++		// converte esse offset para a coluna correspondente da textura
++	tex_x = clamp_int(tex_x, 0, tex->width - 1);          
++		// garante que tex_x fica dentro dos limites da textura
++	if ((g->ray.hit_side == 0 && g->ray.ray_dir_x < 0)    
++		// se bateu no lado oeste
+ 		|| (g->ray.hit_side == 1 && g->ray.ray_dir_y > 0)) // ou no lado sul
+-		tex_x = tex->width - tex_x - 1;                   // inverte a textura horizontalmente
+-	return (tex_x);                    // devolve a coluna da textura a usar
++		tex_x = tex->width - tex_x - 1;                   
++			// inverte a textura horizontalmente
++	return (tex_x);                                       
++		// devolve a coluna da textura a usar
+ }
+ 
+-// void	render_wall_column(t_game *g, int screen_x)
+-// {
+-// 	t_image	*wall_tex;     // textura da parede do lado atingido
+-// 	int		screen_y;      // linha atual do ecrã onde vai ser desenhado o pixel
+-// 	int		tex_x;         // coluna da textura da parede atingida
+-// 	double	tex_y_pos;     // posição vertical atual dentro da textura
+-//
+-// 	if (g->ray.line_h <= 0)    // se a altura da parede for inválida, não desenha nada
+-// 		return ;
+-// 	wall_tex = texture_pick_wall(g);   // escolhe a textura correta conforme o lado/tile atingido
+-// 	tex_x = get_wall_tex_x(g, wall_tex); // calcula a coluna horizontal da textura para esta parede
+-// 	tex_y_pos = (g->ray.draw_start - g->win.height / 2.0
+-// 			+ g->ray.line_h / 2.0)
+-// 		* ((double)wall_tex->height / g->ray.line_h); // calcula a posição inicial vertical na textura
+-// 	screen_y = g->ray.draw_start;      // começa a desenhar na primeira linha visível da parede
+-// 	while (screen_y <= g->ray.draw_end) // percorre todas as linhas da coluna da parede no ecrã
+-// 	{
+-// 		put_pixel_fast(&g->win.frame_buffer, screen_x, screen_y,
+-// 			(int)tex_pixel(wall_tex, tex_x,
+-// 			clamp_int((int)tex_y_pos, 0, wall_tex->height - 1))); // escreve no frame buffer o pixel correspondente da textura
+-// 		tex_y_pos += (double)wall_tex->height / g->ray.line_h;   // avança na textura para a próxima linha do ecrã
+-// 		screen_y++;                                              // passa para a próxima linha do ecrã
+-// 	}
+-// }
+-
+ void	render_wall_column(t_game *g, int screen_x)
+ {
+-	t_image	*wall_tex;
+-	int		screen_y;
+-	int		tex_x;
+-	double	tex_y_pos;
+-	int		tex_y;
+-	double	step;
++	t_image			*wall_tex;
++	int				screen_y;
++	int				tex_x;
++	double			tex_y_pos;
++	int				tex_y;
++	double			step;
++	unsigned int	*data;
++	int				stride;
+ 
+ 	if (g->ray.line_h <= 0)
+-		return;
+-
++		return ;
+ 	wall_tex = texture_pick_wall(g);
+ 	tex_x = get_wall_tex_x(g, wall_tex);
+-
+-	tex_y_pos = (g->ray.draw_start - g->win.height / 2.0
+-			+ g->ray.line_h / 2.0)
++	tex_y_pos = (g->ray.draw_start - g->win.height / 2.0 + g->ray.line_h / 2.0)
+ 		* ((double)wall_tex->height / g->ray.line_h);
+-
+ 	screen_y = g->ray.draw_start;
+ 	step = (double)wall_tex->height / g->ray.line_h;
+-
+ 	if (!wall_tex->img_addr)
+ 	{
+ 		while (screen_y <= g->ray.draw_end)
+@@ -86,25 +65,20 @@ void	render_wall_column(t_game *g, int screen_x)
+ 			put_pixel_fast(&g->win.frame_buffer, screen_x, screen_y, 128);
+ 			screen_y++;
+ 		}
+-		return;
++		return ;
+ 	}
+-
+-	unsigned int *data = (unsigned int *)wall_tex->img_addr;
+-	int stride = wall_tex->l_len >> 2;
+-
++	data = (unsigned int *)wall_tex->img_addr;
++	stride = wall_tex->l_len >> 2;
+ 	while (screen_y <= g->ray.draw_end)
+ 	{
+ 		tex_y = (int)tex_y_pos;
+-
+ 		// clamp (can also be optimized later)
+ 		if (tex_y < 0)
+ 			tex_y = 0;
+ 		else if (tex_y >= wall_tex->height)
+ 			tex_y = wall_tex->height - 1;
+-
+-		put_pixel_fast(&g->win.frame_buffer, screen_x, screen_y,
+-			data[tex_y * stride + tex_x]);
+-
++		put_pixel_fast(&g->win.frame_buffer, screen_x, screen_y, data[tex_y
++			* stride + tex_x]);
+ 		tex_y_pos += step;
+ 		screen_y++;
+ 	}
+diff --git a/srcs/render/sprite_draw.c b/srcs/render/sprite_draw.c
+index eb38d9a..9b0f779 100644
+--- a/srcs/render/sprite_draw.c
++++ b/srcs/render/sprite_draw.c
+@@ -15,67 +15,75 @@
+ 
+ int	sprite_project(t_game *g, double wx, double wy, t_sprite *sp)
+ {
+-	double	dx; // deslocamento do sprite no eixo x em relação ao player
+-	double	dy; // deslocamento do sprite no eixo y em relação ao player
+-	double	cam_inv_det; // inverso do determinante da matriz para converter as coordenadas do mundo para coordenadas da tela
+-	double	depth; // distancia do sprite à camera do player (distancia perpendicular ao plano da camera)
++	double	cam_inv_det;
++	double	depth;
+ 
++	double dx; // deslocamento do sprite no eixo x em relação ao player
++	double dy; // deslocamento do sprite no eixo y em relação ao player
++	// inverso do determinante da matriz para converter as coordenadas do mundo para coordenadas da tela
++	// distancia do sprite à camera do player (distancia perpendicular ao plano da camera)
+ 	if (!g || !sp)
+ 		return (0);
+-	dx = get_sprite_wrap_offset_x(g, wx, wy); // calcula o deslocamento do sprite no eixo x considerando o wrap do mapa
+-	dy = wy - g->player.pos.tile_pos.y; // calcula o deslocamento do sprite no eixo y em relação ao player
+-	cam_inv_det = 1.0 / (g->player.plane.x * g->player.dir.y - g->player.dir.x 
+-		* g->player.plane.y);
+-	depth = cam_inv_det * (-g->player.plane.y * dx + g->player.plane.x * dy); // calcula a distancia perpendicular do sprite à camera do player 
+-	if (depth <= 0.01) // se o sprite estiver muito perto ou atrás do player, não projeta
++	dx = get_sprite_wrap_offset_x(g, wx, wy);
++	// calcula o deslocamento do sprite no eixo x considerando o wrap do mapa
++	dy = wy - g->player.pos.tile_pos.y;
++	// calcula o deslocamento do sprite no eixo y em relação ao player
++	cam_inv_det = 1.0 / (g->player.plane.x * g->player.dir.y - g->player.dir.x
++			* g->player.plane.y);
++	depth = cam_inv_det * (-g->player.plane.y * dx + g->player.plane.x * dy);
++	// calcula a distancia perpendicular do sprite à camera do player
++	if (depth <= 0.01)
++		// se o sprite estiver muito perto ou atrás do player, não projeta
+ 		return (0);
+-	sp->dist = depth; // guarda a distancia do sprite 
+-	sp->screen_x = (int)(g->win.width * 0.5
+-			* (1.0 + (cam_inv_det * (g->player.dir.y * dx
+-						- g->player.dir.x * dy)) / depth)); // calcula a posição horizontal do sprite na tela (coluna onde o centro do sprite deve ser desenhado)
+-	return (1); // projeção bem sucedida
++	sp->dist = depth;
++	// guarda a distancia do sprite
++	sp->screen_x = (int)(g->win.width * 0.5 * (1.0 + (cam_inv_det
++					* (g->player.dir.y * dx - g->player.dir.x * dy)) / depth));
++	// calcula a posição horizontal do sprite na tela (coluna onde o centro do sprite deve ser desenhado)
++	return (1);
++	// projeção bem sucedida
+ }
+ 
+ int	sprite_build(t_game *g, t_sprite *sp, int scale_div)
+ {
+-	int	size; // tamanho do sprite projetado na tela
+-	int	center_y; // centro vertical da tela para o sprite
+-	int	offset_y; // deslocamento vertical do sprite para ajustar a posição do sprite na tela (quanto maior o offset_y, mais baixo o sprite é desenhado)
++	int	offset_y;
+ 
+-	size = (int)((double)g->win.height / sp->dist); // calcula o tamanho do sprite com base na distancia do sprite ao player (objetos mais distantes aparecem menores)
++	int size;     // tamanho do sprite projetado na tela
++	int center_y; // centro vertical da tela para o sprite
++	size = (int)((double)g->win.height / sp->dist);
+ 	if (size < 0)
+-		size = -size; // garante que o tamanho é positivo mesmo que a distancia seja negativa
+-	size /= scale_div; // divide o tamanho para ajustar a escala do sprite (quanto maior o scale_div, menor o sprite projetado)
++		size = -size;
++	size /= scale_div;
+ 	if (size < 2)
+ 		return (0);
+ 	center_y = g->win.height / 2;
+ 	offset_y = (int)(0.10 * g->win.height / sp->dist);
+ 	sp->size = size;
+-	sp->tex_start_x = sp->screen_x - size / 2; // posição inicial x da textura do sprite 
+-	sp->tex_start_y = center_y - size / 2 + offset_y; // posição inicial y da textura do sprite (ajustada para que o sprite seja desenhado um pouco mais baixo na tela)
+-	sp->draw_start_x = clamp_int(sp->tex_start_x, 0, g->win.width - 1); // coluna inicial onde o sprite começa a desenhar, garantindo que fica dentro dos limites da tela
+-	sp->draw_end_x = clamp_int(sp->tex_start_x + size, 0, g->win.width - 1); // coluna final onde o sprite termina de desenhar
+-	sp->draw_start_y = clamp_int(sp->tex_start_y, 0, g->win.height - 1); // linha inicial onde o sprite começa a desenhar
+-	sp->draw_end_y = clamp_int(sp->tex_start_y + size, 0, g->win.height - 1); // linha final onde o sprite termina de desenhar
++	sp->tex_start_x = sp->screen_x - size / 2;
++	sp->tex_start_y = center_y - size / 2 + offset_y;
++	sp->draw_start_x = clamp_int(sp->tex_start_x, 0, g->win.width - 1);
++	sp->draw_end_x = clamp_int(sp->tex_start_x + size, 0, g->win.width - 1); 
++	sp->draw_start_y = clamp_int(sp->tex_start_y, 0, g->win.height - 1);     
++	sp->draw_end_y = clamp_int(sp->tex_start_y + size, 0, g->win.height - 1);
+ 	return (sp->draw_start_x < sp->draw_end_x
+-		&& sp->draw_start_y < sp->draw_end_y); // retorna 1 se o sprite tiver na area válida para desenhar na tela
++		&& sp->draw_start_y < sp->draw_end_y);
+ }
+ 
+ void	sprite_draw(t_game *g, t_sprite *sp, t_image *tex)
+ {
+-	int		col; // coluna atual da tela onde o sprite está a ser desenhado
+-	double	*zbuf; // z-buffer do raycasting para comparar a distancia do sprite com a distancia das paredes para garantir que o sprite é desenhado na frente ou atrás das paredes corretamente
++	double	*zbuf;
+ 
++	int col; // coluna atual da tela onde o sprite está a ser desenhado
+ 	if (!g || !sp || !tex || !tex->img_addr)
+ 		return ;
+ 	if (!g->ray.z_buffer || !g->ray.sprite_z)
+ 		return ;
+ 	zbuf = g->ray.z_buffer;
+-	col = sp->draw_start_x; // começa a desenhar o sprite a partir da primeira coluna calculada na função sprite_build
+-	while (col < sp->draw_end_x) // percorre todas as colunas do sprite 
++	col = sp->draw_start_x;
++	while (col < sp->draw_end_x) // percorre todas as colunas do sprite
+ 	{
+-		if (sp->dist < zbuf[col]) // verifica se o sprite está mais próximo do player do que a parede nessa coluna
+-			sprite_draw_col(g, sp, col, tex); // desenha a coluna do sprite 
++		if (sp->dist < zbuf[col])
++			sprite_draw_col(g, sp, col, tex); // desenha a coluna do sprite
+ 		col++;
+ 	}
+ }
+diff --git a/srcs/render/sprite_draw_col.c b/srcs/render/sprite_draw_col.c
+index 4c2fba1..0b14035 100644
+--- a/srcs/render/sprite_draw_col.c
++++ b/srcs/render/sprite_draw_col.c
+@@ -23,8 +23,8 @@ static unsigned int	sprite_tex_px(t_image *tex, int x, int y)
+ 	return (((unsigned int *)tex->img_addr)[y * stride + x]);
+ }
+ 
+-static int	sprite_tex_coord(int screen_pos, int sprite_start,
+-			int tex_size, int sprite_size)
++static int	sprite_tex_coord(int screen_pos, int sprite_start, int tex_size,
++		int sprite_size)
+ {
+ 	int	tex_pos;
+ 
+@@ -46,13 +46,12 @@ int	sprite_draw_col(t_game *g, t_sprite *sp, int col, t_image *tex)
+ 		pixel_idx = row * g->win.width + col;
+ 		if (sp->dist < g->ray.sprite_z[pixel_idx])
+ 		{
+-			color = sprite_tex_px(tex, tex_x,
+-					sprite_tex_coord(row, sp->tex_start_y,
+-						tex->height, sp->size));
++			color = sprite_tex_px(tex, tex_x, sprite_tex_coord(row,
++						sp->tex_start_y, tex->height, sp->size));
+ 			if ((color & 0x00FFFFFF) != 0)
+ 			{
+-				((unsigned int *)g->win.frame_buffer.img_addr)
+-					[row * (g->win.frame_buffer.l_len >> 2) + col] = color;
++				((unsigned int *)g->win.frame_buffer.img_addr)[row
++					* (g->win.frame_buffer.l_len >> 2) + col] = color;
+ 				g->ray.sprite_z[pixel_idx] = sp->dist;
+ 			}
+ 		}
+diff --git a/srcs/textures/texture_load.c b/srcs/textures/texture_load.c
+index be955e8..b1750f7 100644
+--- a/srcs/textures/texture_load.c
++++ b/srcs/textures/texture_load.c
+@@ -20,14 +20,16 @@ void	texture_load_xpm(t_game *g, t_image *img, const char *path)
+ 
+ 	img->img_ptr = mlx_xpm_file_to_image(g->mlx_ptr, (char *)path, &w, &h);
+ 	if (!img->img_ptr)
+-		exit_game(EXIT_MLX, g, "texture_load_xpm() was unable to create am img_ptr");
+-	img->img_addr = mlx_get_data_addr(img->img_ptr, &img->bpp,
+-			&img->l_len, &img->endian);
++		exit_game(EXIT_MLX, g,
++			"texture_load_xpm() was unable to create am img_ptr");
++	img->img_addr = mlx_get_data_addr(img->img_ptr, &img->bpp, &img->l_len,
++			&img->endian);
+ 	if (!img->img_addr)
+ 	{
+ 		mlx_destroy_image(g->mlx_ptr, img->img_ptr);
+ 		img->img_ptr = NULL;
+-		exit_game(EXIT_MLX, g, "texture_load_xpm() was unable to create a img_addr");
++		exit_game(EXIT_MLX, g,
++			"texture_load_xpm() was unable to create a img_addr");
+ 	}
+ 	img->width = w;
+ 	img->height = h;
+@@ -36,9 +38,11 @@ void	texture_load_xpm(t_game *g, t_image *img, const char *path)
+ void	texture_load_cube(t_game *g)
+ {
+ 	if (!g || !g->mlx_ptr)
+-		exit_game(EXIT_MLX, g, "texture_load_cube() was given invalid pointers");
++		exit_game(EXIT_MLX, g,
++			"texture_load_cube() was given invalid pointers");
+ 	if (!g->tex.no || !g->tex.so || !g->tex.we || !g->tex.ea)
+-		exit_game(EXIT_MAP, g, "texture_load_cube() was given invalid textures");
++		exit_game(EXIT_MAP, g,
++			"texture_load_cube() was given invalid textures");
+ 	texture_load_xpm(g, &g->tex.no_img, g->tex.no);
+ 	texture_load_xpm(g, &g->tex.so_img, g->tex.so);
+ 	texture_load_xpm(g, &g->tex.we_img, g->tex.we);
+@@ -48,7 +52,7 @@ void	texture_load_cube(t_game *g)
+ 	if (g->tex.ceiling)
+ 		texture_load_xpm(g, &g->tex.ceiling_img, g->tex.ceiling);
+ }
+-	
++
+ void	texture_load_sprites(t_game *g)
+ {
+ 	if (!g || !g->mlx_ptr)
+@@ -56,11 +60,10 @@ void	texture_load_sprites(t_game *g)
+ 			"texture_load_sprites() was given invalid pointers");
+ 	if (g->mode != MODE_PACMAN)
+ 		return ;
+-	if (!g->tex.pacdot || !g->tex.energizer
+-		|| !g->tex.blinky[0] || !g->tex.blinky[1]
+-		|| !g->tex.pinky[0] || !g->tex.pinky[1]
+-		|| !g->tex.inky[0] || !g->tex.inky[1]
+-		|| !g->tex.clyde[0] || !g->tex.clyde[1])
++	if (!g->tex.pacdot || !g->tex.energizer || !g->tex.blinky[0]
++		|| !g->tex.blinky[1] || !g->tex.pinky[0] || !g->tex.pinky[1]
++		|| !g->tex.inky[0] || !g->tex.inky[1] || !g->tex.clyde[0]
++		|| !g->tex.clyde[1])
+ 		exit_game(EXIT_MAP, g,
+ 			"texture_load_sprites() was unable to find textures");
+ 	texture_load_xpm(g, &g->tex.pacdot_img, g->tex.pacdot);
+diff --git a/srcs/textures/texture_parse_color.c b/srcs/textures/texture_parse_color.c
+index 5f32c57..5d3a62a 100644
+--- a/srcs/textures/texture_parse_color.c
++++ b/srcs/textures/texture_parse_color.c
+@@ -13,7 +13,7 @@
+ #include "../../Pac_Struct.h"
+ #include "textures3D.h"
+ 
+-int rgb_to_int(int r, int g, int b)
++int	rgb_to_int(int r, int g, int b)
+ {
+ 	return ((r & 0xFF) << 16 | (g & 0xFF) << 8 | (b & 0xFF));
+ }
+@@ -45,23 +45,27 @@ void	parse_floor_ceiling_color(t_game *g, const char *s, int *dest)
+ 	int	blue;
+ 
+ 	if (*dest != -1)
+-		exit_game(EXIT_MAP, g, "parse_floor_ceiling_color() was given an invalid dst");
++		exit_game(EXIT_MAP, g,
++			"parse_floor_ceiling_color() was given an invalid dst");
+ 	i = 0;
+ 	while (s[i] == ' ' || s[i] == '\t')
+ 		i++;
+ 	red = read_rgb(s, &i, g);
+ 	if (s[i] != ',')
+-		exit_game(EXIT_MAP, g, "parse_floor_ceiling_color() found an invalid red color");
++		exit_game(EXIT_MAP, g,
++			"parse_floor_ceiling_color() found an invalid red color");
+ 	i++;
+ 	green = read_rgb(s, &i, g);
+ 	if (s[i] != ',')
+-		exit_game(EXIT_MAP, g, "parse_floor_ceiling_color() found an invalid green color");
++		exit_game(EXIT_MAP, g,
++			"parse_floor_ceiling_color() found an invalid green color");
+ 	i++;
+ 	blue = read_rgb(s, &i, g);
+ 	while (s[i] == ' ' || s[i] == '\t')
+ 		i++;
+ 	if (s[i] && s[i] != '\n')
+-		exit_game(EXIT_MAP, g, "parse_floor_ceiling_color() found an invalid blue color");
++		exit_game(EXIT_MAP, g,
++			"parse_floor_ceiling_color() found an invalid blue color");
+ 	*dest = rgb_to_int(red, green, blue);
+ }
+ 
+@@ -70,7 +74,8 @@ void	parse_floor_ceiling_line(t_game *g, char id, char *value)
+ 	value = skip_whitespace(value);
+ 	strip_newline(value);
+ 	if (!*value)
+-		exit_game(EXIT_MAP, g, "parse_floor_ceiling_line() was given a invlaid value");
++		exit_game(EXIT_MAP, g,
++			"parse_floor_ceiling_line() was given a invlaid value");
+ 	if (id == 'F')
+ 	{
+ 		if (is_xpm_path(value))
+diff --git a/srcs/textures/texture_parse_path.c b/srcs/textures/texture_parse_path.c
+index 9baa727..d1ba0f9 100644
+--- a/srcs/textures/texture_parse_path.c
++++ b/srcs/textures/texture_parse_path.c
+@@ -11,9 +11,8 @@
+ /* ************************************************************************** */
+ 
+ #include "../Pac_Struct.h"
+-#include "textures3D.h"
+ #include "../render/render3D.h"
+-
++#include "textures3D.h"
+ 
+ static int	parse_cube_texture_line(t_game *g, char *p)
+ {
+@@ -61,8 +60,6 @@ static int	parse_pacman_texture_line(t_game *g, char *p)
+ 	if (!ft_strncmp(p, "ET", 2) && (p[2] == ' ' || p[2] == '\t'))
+ 		return (set_texture_path(&g->tex.other_state[1], p + 2, g), 1);
+ 	return (0);
+-
+-
+ }
+ 
+ static void	parse_texture_line(t_game *g, char *line)
+@@ -86,7 +83,7 @@ void	parse_texture_path(t_game *g, const char *path)
+ 	int		fd;
+ 	char	*line;
+ 
+-	if(g->debug_mode)
++	if (g->debug_mode)
+ 		ft_printf("Opening file: %s\n", path);
+ 	fd = open(path, O_RDONLY);
+ 	if (fd < 0)
+@@ -103,9 +100,12 @@ void	parse_texture_path(t_game *g, const char *path)
+ 	}
+ 	close(fd);
+ 	if (!g->tex.no || !g->tex.so || !g->tex.we || !g->tex.ea)
+-		exit_game(EXIT_MAP, g, "parse_texture_path() was unable to find all textures E1");
+-	if (!g->tex.pacdot || !g->tex.energizer || !g->tex.blinky[0] || !g->tex.blinky[1]
+-	|| !g->tex.pinky[0] || !g->tex.pinky[1] || !g->tex.inky[0] || !g->tex.inky[1]
+-	|| !g->tex.clyde[0] || !g->tex.clyde[1])
+-		exit_game(EXIT_MAP, g, "parse_texture_path() was unable to find all textures E2");
++		exit_game(EXIT_MAP, g,
++			"parse_texture_path() was unable to find all textures E1");
++	if (!g->tex.pacdot || !g->tex.energizer || !g->tex.blinky[0]
++		|| !g->tex.blinky[1] || !g->tex.pinky[0] || !g->tex.pinky[1]
++		|| !g->tex.inky[0] || !g->tex.inky[1] || !g->tex.clyde[0]
++		|| !g->tex.clyde[1])
++		exit_game(EXIT_MAP, g,
++			"parse_texture_path() was unable to find all textures E2");
+ }
+diff --git a/srcs/textures/texture_pick_wall.c b/srcs/textures/texture_pick_wall.c
+index 334361b..a76b3b6 100644
+--- a/srcs/textures/texture_pick_wall.c
++++ b/srcs/textures/texture_pick_wall.c
+@@ -16,14 +16,13 @@
+ unsigned int	tex_pixel(t_image *tex, int x, int y)
+ {
+ 	int				stride;
+-	unsigned int *data;
++	unsigned int	*data;
+ 
+-	stride = tex->l_len / 4; // o nr de pixels por linha (l_len é o nr de bytes por linha, dividindo por 4 obtemos o número de pixels)
+-
+-	if(!tex->img_addr)
+-		return 128;
++	stride = tex->l_len / 4;
++	if (!tex->img_addr)
++		return (128);
+ 	data = (unsigned int *)tex->img_addr;
+-	return (data[y * stride + x]); // devolve a cor do pixel na posição (x, y) da textura calculando o índice como y * stride + x
++	return (data[y * stride + x]);
+ }
+ 
+ t_image	*texture_pick_wall(t_game *g)
+diff --git a/srcs/textures/texture_utils.c b/srcs/textures/texture_utils.c
+index 6fe6300..fce2858 100644
+--- a/srcs/textures/texture_utils.c
++++ b/srcs/textures/texture_utils.c
+@@ -47,7 +47,8 @@ void	set_texture_path(char **dest, char *value, t_game *g)
+ 		exit_game(EXIT_MAP, g, "set_texture_path() has found an invalid dst");
+ 	*dest = ft_strdup(value);
+ 	if (!*dest)
+-		exit_game(EXIT_MALLOC, g, "set_texture_path was unable to create a valid dst");
++		exit_game(EXIT_MALLOC, g,
++			"set_texture_path was unable to create a valid dst");
+ }
+ 
+ int	is_xpm_path(const char *s)
+@@ -61,11 +62,11 @@ int	is_xpm_path(const char *s)
+ 	while (s[i] == ' ' || s[i] == '\t')
+ 		i++;
+ 	len = 0;
+-	while (s[i + len] && s[i + len] != '\n' && s[i + len] != '\r'
+-		&& s[i + len] != ' ' && s[i + len] != '\t')
++	while (s[i + len] && s[i + len] != '\n' && s[i + len] != '\r' && s[i
++		+ len] != ' ' && s[i + len] != '\t')
+ 		len++;
+ 	if (len < 4)
+ 		return (0);
+-	return (s[i + len - 4] == '.' && s[i + len - 3] == 'x'
+-		&& s[i + len - 2] == 'p' && s[i + len - 1] == 'm');
++	return (s[i + len - 4] == '.' && s[i + len - 3] == 'x' && s[i + len
++		- 2] == 'p' && s[i + len - 1] == 'm');
+ }
+diff --git a/srcs/textures/textures3D.h b/srcs/textures/textures3D.h
+index 66e135d..cef1583 100644
+--- a/srcs/textures/textures3D.h
++++ b/srcs/textures/textures3D.h
+@@ -15,21 +15,22 @@
+ 
+ typedef struct s_ghost	t_ghost;
+ 
+-#include "../../Pac_Struct.h"
++# include "../../Pac_Struct.h"
+ 
+-void	parse_texture_path(t_game *g, const char *path);
+-void			texture_load_xpm(t_game *g, t_image *img, const char *path);
+-void	texture_load_cube(t_game *g);
+-void	texture_load_sprites(t_game *g);
+-void	set_texture_path(char **dst, char *value, t_game *g);
+-unsigned int	tex_pixel(t_image *tex, int x, int y);
+-t_image			*texture_pick_wall(t_game *g);
+-int	is_map_start_line(t_game *g, char *line);
++void					parse_texture_path(t_game *g, const char *path);
++void					texture_load_xpm(t_game *g, t_image *img,
++							const char *path);
++void					texture_load_cube(t_game *g);
++void					texture_load_sprites(t_game *g);
++void					set_texture_path(char **dst, char *value, t_game *g);
++unsigned int			tex_pixel(t_image *tex, int x, int y);
++t_image					*texture_pick_wall(t_game *g);
++int						is_map_start_line(t_game *g, char *line);
+ 
+-int	read_rgb(const char *s, int *i, t_game *g);
+-int rgb_to_int(int r, int g, int b);
+-int	is_xpm_path(const char *s);
+-void	strip_newline(char *s);
+-char	*skip_whitespace(char *s);
++int						read_rgb(const char *s, int *i, t_game *g);
++int						rgb_to_int(int r, int g, int b);
++int						is_xpm_path(const char *s);
++void					strip_newline(char *s);
++char					*skip_whitespace(char *s);
+ 
+ #endif
+diff --git a/srcs/utils/free.c b/srcs/utils/free.c
+index e436117..93eb65d 100644
+--- a/srcs/utils/free.c
++++ b/srcs/utils/free.c
+@@ -14,7 +14,7 @@
+ 
+ void	exit_game(int errcode, t_game *g, char *str)
+ {
+-	if(str)
++	if (str)
+ 		ft_dprintf(2, "\n%s\n", str);
+ 	if (errcode == EXIT_QUIT)
+ 		ft_dprintf(2, "\nQuitting Pac-Man...\n");
+@@ -132,14 +132,15 @@ static void	free_pacman_arrays(t_game *g)
+ 	}
+ }
+ 
+-void free_ghost(t_ghost *ghost)
++void	free_ghost(t_ghost *ghost)
+ {
+ 	free_2d((void **)ghost->mental_map);
+ }
+ 
+-
+ void	free_game(t_game *g)
+ {
++	int	i;
++
+ 	if (!g)
+ 		return ;
+ 	if (g->ray.z_buffer)
+@@ -163,11 +164,10 @@ void	free_game(t_game *g)
+ 		free(g->mlx_ptr);
+ 		g->mlx_ptr = NULL;
+ 	}
+-	int i = -1;
+-	while(++i < 4)
++	i = -1;
++	while (++i < 4)
+ 		free_ghost(&g->ghosts[i]);
+-	if(g->controller_fd != -1)
++	if (g->controller_fd != -1)
+ 		close(g->controller_fd);
+ 	free(g);
+ }
+-
+diff --git a/srcs/utils/helpers.c b/srcs/utils/helpers.c
+index 91c0da3..4138f14 100644
+--- a/srcs/utils/helpers.c
++++ b/srcs/utils/helpers.c
+@@ -12,29 +12,32 @@
+ 
+ #include "helpers.h"
+ 
+-
+-int xtile(char **map)
++int	xtile(char **map)
+ {
+-	int i = 0;
+-	int total = 0;
+-	while(map && map[i])
++	int	i;
++	int	total;
++
++	i = 0;
++	total = 0;
++	while (map && map[i])
+ 	{
+-		if(total < (int)ft_strlen(map[i]))
++		if (total < (int)ft_strlen(map[i]))
+ 			total = ft_strlen(map[i]);
+ 		i++;
+ 	}
+-	return total;
++	return (total);
+ }
+ 
+-int ytile(char **map)
++int	ytile(char **map)
+ {
+-	int i = 0;
+-	while(map && map[i])
++	int	i;
++
++	i = 0;
++	while (map && map[i])
+ 		i++;
+-	return i;
++	return (i);
+ }
+ 
+-
+ int	ft_abs(int n)
+ {
+ 	if (n < 0)
+@@ -63,20 +66,23 @@ int	ft_abs(int n)
+ // 		i++;
+ // 	}
+ // 	copy[i] = NULL;
+-// 	return copy;
++// 	return (copy);
+ // }
+ 
+-char *parse_chars(char *str)
++char	*parse_chars(char *str)
+ {
+-	char *dup;
++	char	*dup;
++	int		i;
++	int		j;
++
+ 	dup = ft_calloc(ft_strlen(str), sizeof(char));
+-	int i = 0;
+-	int j = 0;
+-	while(str[i])
++	i = 0;
++	j = 0;
++	while (str[i])
+ 	{
+-		if(str[i] != '\n')
++		if (str[i] != '\n')
+ 		{
+-			if(str[i] == 'M')
++			if (str[i] == 'M')
+ 				dup[j] = '1';
+ 			else
+ 				dup[j] = str[i];
+@@ -84,20 +90,23 @@ char *parse_chars(char *str)
+ 		}
+ 		i++;
+ 	}
+-	return dup;
++	return (dup);
+ }
+ 
+-char **remove_char(char **array)
++char	**remove_char(char **array)
+ {
+-	int i = 0;
+-	char **final = ft_calloc(ytile(array) + 1, sizeof(char *));
+-	while(array[i] != NULL)
++	int		i;
++	char	**final;
++
++	i = 0;
++	final = ft_calloc(ytile(array) + 1, sizeof(char *));
++	while (array[i] != NULL)
+ 	{
+ 		final[i] = parse_chars(array[i]);
+ 		i++;
+ 	}
+ 	final[i] = NULL;
+-	return final;
++	return (final);
+ }
+ 
+ int	distance_to_target(t_ghost *ghost, int dy, int dx)
+@@ -112,12 +121,14 @@ int	distance_to_target(t_ghost *ghost, int dy, int dx)
+ 
+ int	distance_squared(t_double_point a, t_double_point b)
+ {
+-	int dx = a.x - b.x;
+-	int dy = a.y - b.y;
++	int	dx;
++	int	dy;
++
++	dx = a.x - b.x;
++	dy = a.y - b.y;
+ 	return (dx * dx + dy * dy);
+ }
+ 
+-
+ bool	print_usage(void)
+ {
+ 	ft_printf("Unkown arguments found\n");
+@@ -131,4 +142,3 @@ bool	print_usage(void)
+ 	ft_printf("\t./cub3d map.cub debug_mode=y\n");
+ 	return (true);
+ }
+-
+diff --git a/srcs/utils/helpers.h b/srcs/utils/helpers.h
+index dae86de..b9f02fb 100644
+--- a/srcs/utils/helpers.h
++++ b/srcs/utils/helpers.h
+@@ -10,21 +10,21 @@
+ /*                                                                            */
+ /* ************************************************************************** */
+ 
+-#ifndef  HELPERS_H
+-#define HELPERS_H
+-#include "../../Pac_Struct.h"
++#ifndef HELPERS_H
++# define HELPERS_H
++# include "../../Pac_Struct.h"
+ 
+ void	exit_game(int errcode, t_game *g, char *str);
+-int xtile(char **map);
+-int ytile(char **map);
+-int	ft_abs(int n);
++int		xtile(char **map);
++int		ytile(char **map);
++int		ft_abs(int n);
+ 
+ void	ft_pixel_put(t_image *s, int x, int y, unsigned int color);
+ void	free_game(t_game *g);
+-int	pixeL_get_coord(t_sprite_sheet *sheet, int i, int x, int y);
+-int	pixel_get(t_image *data, int x, int y);
+-char **remove_char(char **array);
+-int	distance_to_target(t_ghost *ghost, int dy, int dx);
+-int	distance_squared(t_double_point a, t_double_point b);
++int		pixeL_get_coord(t_sprite_sheet *sheet, int i, int x, int y);
++int		pixel_get(t_image *data, int x, int y);
++char	**remove_char(char **array);
++int		distance_to_target(t_ghost *ghost, int dy, int dx);
++int		distance_squared(t_double_point a, t_double_point b);
+ bool	print_usage(void);
+ #endif //  HELPERS_H
