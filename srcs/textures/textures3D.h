@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:20:35 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/25 11:06:29 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/07 05:53:47 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ int rgb_to_int(int r, int g, int b);
 int	is_xpm_path(const char *s);
 void	strip_newline(char *s);
 char	*skip_whitespace(char *s);
+void	parse_floor_ceiling_line(t_game *g, char id, char *value);
 
 #endif

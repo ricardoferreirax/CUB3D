@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/05/07 05:25:05 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/05/07 05:46:37 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,6 @@ SRC_FILES = main.c \
 	srcs/player/player_controller.c \
 	srcs/player/player_spawn.c \
 	srcs/render/raycast_frame.c \
-	srcs/render/render_center_hit.c \
 	srcs/render/raycast_dda.c \
 	srcs/render/render_plane.c \
 	srcs/render/render_debug_symbols.c \

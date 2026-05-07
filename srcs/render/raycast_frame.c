@@ -6,12 +6,38 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/06 17:51:32 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/07 05:38:21 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 #include "render3D.h"
+
+static int	register_center_hit(t_game *g, int col, int found)
+{
+	char	tile;
+
+	if (!g || found)
+		return (found);
+	if (col != (g->win.width - 1) / 2 && col != g->win.width / 2)
+		return (found);
+	tile = map_get_tile(g, g->ray.map_y, g->ray.map_x);
+	if (tile == OPEN_SPACE || tile == VOID)
+		return (found);
+	g->player.target_map.x = g->ray.map_x;
+	g->player.target_map.y = g->ray.map_y;
+	g->player.target_tile = tile;
+	if (g->ray.hit_side == 0 && g->ray.ray_dir_x < 0)
+		g->player.target_wall_dir = 'W';
+	else if (g->ray.hit_side == 0)
+		g->player.target_wall_dir = 'E';
+	else if (g->ray.ray_dir_y < 0)
+		g->player.target_wall_dir = 'N';
+	else
+		g->player.target_wall_dir = 'S';
+	g->player.target_dist = g->ray.perp_wall_dist;
+	return (1);
+}
 
 // Calculates which vertical part of the screen must be filled by the wall.
 // Raycasting renders the 3D one vertical column at a time. After the DDA
@@ -40,31 +66,6 @@ void	ray_draw_range(t_game *g)
 		g->ray.draw_start = 0;
 	if (g->ray.draw_end >= g->win.height)
 		g->ray.draw_end = g->win.height - 1;
-}
-
-// Computes the perpendicular distance from the player to the wall hit.
-// During the DDA loop, side_dist_x and side_dist_y are increased before the
-// tile collision is checked, 'cause of that, when a wall is found, the side
-// distance has already moved one delta too far.
-// To recover the real hit distance: we subtract delta_dist_x if the last step
-// was on the X axis; or subtract delta_dist_y if the last step was on the Y 
-// axis.
-// This distance is called "perpendicular" 'cause it represents the distance
-// from the player to the camera plane.
-// Using perpendicular distance is essential to avoid the fish-eye effect.
-// Without it, rays cast near the sides of the screen would appear longer than
-// center rays, causing straight walls to look curved.
-// The minimum value protects the projection formula from division by zero.
-// Without this guard, a wall extremely close to the player could produce an
-// invalid or infinitely tall wall column.
-void	ray_perp_wall_distance(t_game *g)
-{
-	if (g->ray.hit_side == 0)
-		g->ray.perp_wall_dist = g->ray.side_dist_x - g->ray.delta_dist_x;
-	else
-		g->ray.perp_wall_dist = g->ray.side_dist_y - g->ray.delta_dist_y;
-	if (g->ray.perp_wall_dist < 1e-6)
-		g->ray.perp_wall_dist = 1e-6;
 }
 
 // Initializes the DDA stepping direction and the first grid distances.

@@ -6,12 +6,37 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 21:39:40 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/05 20:50:54 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/07 05:38:34 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 #include "render3D.h"
+
+// Computes the perpendicular distance from the player to the wall hit.
+// During the DDA loop, side_dist_x and side_dist_y are increased before the
+// tile collision is checked, 'cause of that, when a wall is found, the side
+// distance has already moved one delta too far.
+// To recover the real hit distance: we subtract delta_dist_x if the last step
+// was on the X axis; or subtract delta_dist_y if the last step was on the Y 
+// axis.
+// This distance is called "perpendicular" 'cause it represents the distance
+// from the player to the camera plane.
+// Using perpendicular distance is essential to avoid the fish-eye effect.
+// Without it, rays cast near the sides of the screen would appear longer than
+// center rays, causing straight walls to look curved.
+// The minimum value protects the projection formula from division by zero.
+// Without this guard, a wall extremely close to the player could produce an
+// invalid or infinitely tall wall column.
+void	ray_perp_wall_distance(t_game *g)
+{
+	if (g->ray.hit_side == 0)
+		g->ray.perp_wall_dist = g->ray.side_dist_x - g->ray.delta_dist_x;
+	else
+		g->ray.perp_wall_dist = g->ray.side_dist_y - g->ray.delta_dist_y;
+	if (g->ray.perp_wall_dist < 1e-6)
+		g->ray.perp_wall_dist = 1e-6;
+}
 
 // Advances the ray to the next map cell using one step of the DDA algorithm.
 // side_dist_x stores the distance from the player to the next vertical grid
