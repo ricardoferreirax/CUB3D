@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:19:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/05 21:20:26 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/07 15:17:12 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static int	parse_cube_texture_line(t_game *g, char *p)
 	if (!ft_strncmp(p, "EA", 2) && (p[2] == ' ' || p[2] == '\t'))
 		return (set_texture_path(&g->tex.ea, p + 2, g), 1);
 	if (*p == 'F' && (p[1] == ' ' || p[1] == '\t'))
-		return (parse_floor_ceiling_line(g, 'F', p + 1), 1);
+		return (parse_floor_ceiling_line(g, 'F', p + 1));
 	if (*p == 'C' && (p[1] == ' ' || p[1] == '\t'))
-		return (parse_floor_ceiling_line(g, 'C', p + 1), 1);
+		return (parse_floor_ceiling_line(g, 'C', p + 1));
 	return (0);
 }
 
@@ -62,20 +62,21 @@ static int	parse_pacman_texture_line(t_game *g, char *p)
 	return (0);
 }
 
-static void	parse_texture_line(t_game *g, char *line)
+static int	parse_texture_line(t_game *g, char *line)
 {
 	char	*p;
 
 	p = skip_whitespace(line);
 	if (!*p || *p == '\n')
-		return ;
+		return (1);
 	if (parse_cube_texture_line(g, p))
-		return ;
+		return (1);
 	if (g->mode == MODE_PACMAN)
 	{
 		if (parse_pacman_texture_line(g, p))
-			return ;
+			return (1);
 	}
+	return (0);
 }
 
 void	parse_texture_path(t_game *g, const char *path)
@@ -95,7 +96,12 @@ void	parse_texture_path(t_game *g, const char *path)
 			free(line);
 			break ;
 		}
-		parse_texture_line(g, line);
+		if (!parse_texture_line(g, line))
+		{
+			free(line);
+			close(fd);
+			exit_game(EXIT_MAP, g, "parse_texture_path() invalid config");
+		}
 		free(line);
 	}
 	close(fd);
@@ -107,3 +113,4 @@ void	parse_texture_path(t_game *g, const char *path)
 		|| !g->tex.clyde[1])
 		exit_game(EXIT_MAP, g, "parse_texture_path() unable find textures E2");
 }
+

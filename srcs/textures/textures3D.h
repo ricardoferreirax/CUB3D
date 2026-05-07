@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:20:35 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/07 05:53:47 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/07 15:19:27 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ unsigned int	tex_pixel(t_image *tex, int x, int y);
 t_image			*texture_pick_wall(t_game *g);
 int	is_map_start_line(t_game *g, char *line);
 
-int	read_rgb(const char *s, int *i, t_game *g);
+int	read_rgb(const char *s, int *i, int *out);
 int rgb_to_int(int r, int g, int b);
 int	is_xpm_path(const char *s);
 void	strip_newline(char *s);
 char	*skip_whitespace(char *s);
-void	parse_floor_ceiling_line(t_game *g, char id, char *value);
+int	parse_floor_ceiling_line(t_game *g, char id, char *value);
+int	parse_floor_ceiling_color(const char *s, int *dest);
 
 #endif

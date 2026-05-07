@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 11:01:19 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/04/23 14:53:56 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/07 15:00:11 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,24 @@ int	ft_abs(int n)
 // 	return copy;
 // }
 
-char *parse_chars(char *str)
+char	*parse_chars(char *str)
 {
-	char *dup;
-	dup = ft_calloc(ft_strlen(str), sizeof(char));
-	int i = 0;
-	int j = 0;
-	while(str[i])
+	char	*dup;
+	int		i;
+	int		j;
+
+	if (!str)
+		return (NULL);
+	dup = ft_calloc(ft_strlen(str) + 1, sizeof(char));
+	if (!dup)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (str[i])
 	{
-		if(str[i] != '\n')
+		if (str[i] != '\n')
 		{
-			if(str[i] == 'M')
+			if (str[i] == 'M')
 				dup[j] = '1';
 			else
 				dup[j] = str[i];
@@ -84,7 +91,8 @@ char *parse_chars(char *str)
 		}
 		i++;
 	}
-	return dup;
+	dup[j] = '\0';
+	return (dup);
 }
 
 char **remove_char(char **array)
