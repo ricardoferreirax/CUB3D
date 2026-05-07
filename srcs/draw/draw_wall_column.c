@@ -6,11 +6,11 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 18:15:08 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/07 15:49:03 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/07 16:29:10 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Pac_Struct.h"
+#include "../Pac_Struct.h"
 #include "../textures/textures3D.h"
 #include "draw.h"
 
@@ -20,13 +20,12 @@ static int	get_wall_tex_x(t_game *g, t_image *tex)
 	int		tex_x;
 
 	if (g->ray.hit_side == 0)
-		wall_x = g->player.pos.tile_pos.y + g->ray.perp_wall_dist 
-			* g->ray.ray_dir_y;
+		wall_x = g->player.pos.tile_pos.y
+			+ g->ray.perp_wall_dist * g->ray.ray_dir_y;
 	else
-		wall_x = g->player.pos.tile_pos.x + g->ray.perp_wall_dist 
-			* g->ray.ray_dir_x;
-	wall_x = fract_pos(wall_x);
-	tex_x = (int)(wall_x * tex->width);
+		wall_x = g->player.pos.tile_pos.x
+			+ g->ray.perp_wall_dist * g->ray.ray_dir_x;
+	tex_x = (int)(fract_pos(wall_x) * tex->width);
 	tex_x = clamp_int(tex_x, 0, tex->width - 1);
 	if ((g->ray.hit_side == 0 && g->ray.ray_dir_x < 0)
 		|| (g->ray.hit_side == 1 && g->ray.ray_dir_y > 0))
@@ -34,24 +33,25 @@ static int	get_wall_tex_x(t_game *g, t_image *tex)
 	return (tex_x);
 }
 
-static void	draw_wall_texture(t_game *g, t_image *tex, int x, int tex_x)
+static void	draw_wall_texture(t_game *g, t_image *tex, int x)
 {
 	unsigned int	*data;
 	double			tex_pos;
 	double			step;
 	int				y;
-	int				tex_y;
+	int				tex_x;
 
 	data = (unsigned int *)tex->img_addr;
+	tex_x = get_wall_tex_x(g, tex);
 	step = (double)tex->height / g->ray.line_h;
 	tex_pos = (g->ray.draw_start - g->win.height / 2.0
 			+ g->ray.line_h / 2.0) * step;
 	y = g->ray.draw_start;
 	while (y <= g->ray.draw_end)
 	{
-		tex_y = clamp_int((int)tex_pos, 0, tex->height - 1);
 		put_pixel_fast(&g->win.frame_buffer, x, y,
-			data[tex_y * (tex->l_len >> 2) + tex_x]);
+			data[clamp_int((int)tex_pos, 0, tex->height - 1)
+				* (tex->l_len / 4) + tex_x]);
 		tex_pos += step;
 		y++;
 	}
@@ -71,8 +71,11 @@ void	draw_wall_column(t_game *g, int x)
 	{
 		y = g->ray.draw_start;
 		while (y <= g->ray.draw_end)
-			put_pixel_fast(&g->win.frame_buffer, x, y++, 128);
+		{
+			put_pixel_fast(&g->win.frame_buffer, x, y, 128);
+			y++;
+		}
 		return ;
 	}
-	draw_wall_texture(g, tex, x, get_wall_tex_x(g, tex));
+	draw_wall_texture(g, tex, x);
 }

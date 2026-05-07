@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/06 17:14:50 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/07 16:28:03 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ typedef struct s_fc
 typedef struct s_sprite
 {
 	double dist;      // distancia do sprite ao player
+	double cam_x;    // posição do sprite no espaço da câmera (x)
+	double cam_y;    // posição do sprite no espaço da câmera (y)
 	int screen_x;    
 		// posição horizontal do sprite na tela (coluna onde o centro do sprite deve ser desenhado)
 	int size;         // tamanho do sprite projetado na tela
