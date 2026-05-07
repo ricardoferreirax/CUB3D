@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/05/06 18:17:36 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/05/07 05:25:05 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,17 +59,17 @@ SRC_FILES = main.c \
 	srcs/render/raycast_frame.c \
 	srcs/render/render_center_hit.c \
 	srcs/render/raycast_dda.c \
-	srcs/render/render_utils.c \
 	srcs/render/render_plane.c \
 	srcs/render/render_debug_symbols.c \
 	srcs/render/render_frame.c \
 	srcs/render/render_into_framebuffer.c \
-	srcs/render/render_sprites.c \
 	srcs/draw/draw_plane.c \
 	srcs/draw/draw_background.c \
 	srcs/draw/draw_wall_column.c \
 	srcs/draw/draw_menu.c \
-	srcs/draw/draw_sprite.c \
+	srcs/draw/build_sprite_box.c \
+	srcs/draw/draw_pacman_sprites.c \
+	srcs/draw/draw_utils.c \
 	srcs/draw/draw_sprite_column.c \
 	srcs/textures/texture_parse_color.c \
 	srcs/textures/texture_utils.c \

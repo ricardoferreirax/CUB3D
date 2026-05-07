@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprite_draw.c                                      :+:      :+:    :+:   */
+/*   draw_sprite.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 22:13:51 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/06 15:29:03 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/07 05:22:48 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,23 +58,4 @@ int	build_sprite_box(t_game *g, t_sprite *sp, int scale_div)
 	sp->draw_end_y = clamp_int(sp->tex_start_y + size, 0, g->win.height - 1);
 	return (sp->draw_start_x < sp->draw_end_x
 		&& sp->draw_start_y < sp->draw_end_y);
-}
-
-void	draw_sprite(t_game *g, t_sprite *sp, t_image *tex)
-{
-	double	*zbuf;
-	int		col;
-
-	if (!g || !sp || !tex || !tex->img_addr)
-		return ;
-	if (!g->ray.z_buffer || !g->ray.sprite_z)
-		return ;
-	zbuf = g->ray.z_buffer;
-	col = sp->draw_start_x;
-	while (col < sp->draw_end_x)
-	{
-		if (sp->dist < zbuf[col])
-			draw_sprite_column(g, sp, col, tex);
-		col++;
-	}
 }

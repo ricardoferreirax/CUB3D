@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 19:44:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/06 17:54:23 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/07 05:18:45 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,15 @@ void	clear_sprite_z(t_game *g)
 		g->ray.sprite_z[i] = 1e30;
 		i++;
 	}
+}
+
+void	render_all_sprites(t_game *g)
+{
+	if (!g || !g->ray.z_buffer || !g->ray.sprite_z)
+		return ;
+	draw_pacdots(g);
+	draw_energizers(g);
+	draw_ghosts(g);
 }
 
 void	render_frame(t_game *game)

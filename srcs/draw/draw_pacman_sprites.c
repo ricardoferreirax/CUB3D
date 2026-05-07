@@ -1,19 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_sprites.c                                   :+:      :+:    :+:   */
+/*   draw_pacman_sprites.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 22:09:52 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/06 17:19:52 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/07 05:27:39 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
-#include "render3D.h"
+#include "draw.h"
 
-static void	draw_pacdots(t_game *g)
+static void	draw_sprite(t_game *g, t_sprite *sp, t_image *tex)
+{
+	double	*zbuf;
+	int		col;
+
+	if (!g || !sp || !tex || !tex->img_addr)
+		return ;
+	if (!g->ray.z_buffer || !g->ray.sprite_z)
+		return ;
+	zbuf = g->ray.z_buffer;
+	col = sp->draw_start_x;
+	while (col < sp->draw_end_x)
+	{
+		if (sp->dist < zbuf[col])
+			draw_sprite_column(g, sp, col, tex);
+		col++;
+	}
+}
+
+void	draw_pacdots(t_game *g)
 {
 	t_sprite	box;
 	int			i;
@@ -36,7 +55,7 @@ static void	draw_pacdots(t_game *g)
 	}
 }
 
-static void	draw_energizers(t_game *g)
+void	draw_energizers(t_game *g)
 {
 	t_sprite	box;
 	int			i;
@@ -59,7 +78,7 @@ static void	draw_energizers(t_game *g)
 	}
 }
 
-static void	draw_ghosts(t_game *g)
+void	draw_ghosts(t_game *g)
 {
 	t_sprite	box;
 	t_image		*tex;
@@ -85,13 +104,4 @@ static void	draw_ghosts(t_game *g)
 		}
 		i++;
 	}
-}
-
-void	render_all_sprites(t_game *g)
-{
-	if (!g || !g->ray.z_buffer || !g->ray.sprite_z)
-		return ;
-	draw_pacdots(g);
-	draw_energizers(g);
-	draw_ghosts(g);
 }
