@@ -6,14 +6,14 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:15:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/09 16:13:01 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/07 15:52:29 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "render3D.h"
 
-static void	set_plane(t_game *g, t_fc *plane, double dist)
+void	set_plane(t_game *g, t_fc *plane, double dist)
 {
 	double	left_x;
 	double	left_y;

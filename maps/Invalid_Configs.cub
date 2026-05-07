@@ -4,7 +4,7 @@ WE ./assets/textures/text1.xpm
 EA ./assets/textures/text1.xpm
 
 F 255,255,0
-C 255,128,128
+C 255,128,128,
 
 PD ./assets/textures/pacdot.xpm
 EN ./assets/textures/energizer.xpm

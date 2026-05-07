@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 11:01:19 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/04/23 14:53:56 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/07 15:00:11 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,29 +45,6 @@ int	ft_abs(int n)
 	return (n);
 }
 
-// char **copy_map(char **map)
-// {
-// 	char **copy;
-// 	copy = ft_calloc(sizeof(char *), ytile(map) + 1);
-// 	int i = 0;
-// 	while(map && map[i])
-// 	{
-// 		int j = 0;
-// 		copy[i] = ft_calloc(sizeof(char) , ft_strlen(map[i]) + 1);
-// 		while(map[i][j] != '\0')
-// 		{
-// 			if(map[i][j] == 'M')
-// 				copy[i][j] = '1';
-// 			else
-// 				copy[i][j] = map[i][j];
-// 			j++;
-// 		}
-// 		copy[i][j] = '\0';
-// 		i++;
-// 	}
-// 	copy[i] = NULL;
-// 	return (copy);
-// }
 
 char	*parse_chars(char *str)
 {
@@ -75,7 +52,11 @@ char	*parse_chars(char *str)
 	int		i;
 	int		j;
 
-	dup = ft_calloc(ft_strlen(str), sizeof(char));
+	if (!str)
+		return (NULL);
+	dup = ft_calloc(ft_strlen(str) + 1, sizeof(char));
+	if (!dup)
+		return (NULL);
 	i = 0;
 	j = 0;
 	while (str[i])
@@ -90,6 +71,7 @@ char	*parse_chars(char *str)
 		}
 		i++;
 	}
+	dup[j] = '\0';
 	return (dup);
 }
 

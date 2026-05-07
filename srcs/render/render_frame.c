@@ -6,13 +6,14 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 19:44:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/04/23 14:42:00 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/07 15:53:52 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "../ghosts/ghosts.h"
 #include "render3D.h"
+#include "../draw/draw.h"
 
 void	clear_sprite_z(t_game *g)
 {
@@ -30,6 +31,15 @@ void	clear_sprite_z(t_game *g)
 	}
 }
 
+void	render_all_sprites(t_game *g)
+{
+	if (!g || !g->ray.z_buffer || !g->ray.sprite_z)
+		return ;
+	draw_pacdots(g);
+	draw_energizers(g);
+	draw_ghosts(g);
+}
+
 void	render_frame(t_game *game)
 {
 	if (!game)
@@ -37,6 +47,7 @@ void	render_frame(t_game *game)
 	if (game->key.esc)
 		exit_game(EXIT_QUIT, game, NULL);
 	player_controller(game);
+	player_wrap_position(game);
 	render_ceiling_texture(game);
 	render_floor_texture(game);
 	raycast_frame(game);

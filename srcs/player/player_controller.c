@@ -86,7 +86,7 @@ static void	apply_player_movement(t_game *g, double dx, double dy)
 			g->ghosts[slayer - 1].state = EATEN;
 		else
 		{
-			if (!g->debug_mode && 0)
+			if (!g->debug_mode)
 			{
 				g->player.lives--;
 				if (g->player.lives <= 0)

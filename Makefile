@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/05/05 14:58:20 by pfreire-         ###   ########.fr        #
+#    Updated: 2026/05/07 15:47:25 by pfreire-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,26 +57,27 @@ SRC_FILES = main.c \
 	srcs/player/player_collect_pacdots.c \
 	srcs/player/player_controller.c \
 	srcs/player/player_spawn.c \
-	srcs/render/render_menu.c \
 	srcs/render/raycast_frame.c \
-	srcs/render/render_center_hit.c \
-	srcs/render/render_fill_color.c \
-	srcs/render/render_sprites.c \
-	srcs/render/sprite_draw.c \
-	srcs/render/sprite_draw_col.c \
-	srcs/render/raycast_dda.c \
-	srcs/render/render_utils.c \
-	srcs/render/render_wall_texture.c \
-	srcs/render/render_floor_ceiling.c \
+	srcs/render/raycast_find_wall.c \
+	srcs/render/render_plane.c \
 	srcs/render/render_debug_symbols.c \
 	srcs/render/render_frame.c \
 	srcs/render/render_into_framebuffer.c \
-	srcs/render/debug_raycast.c \
+	srcs/draw/draw_plane.c \
+	srcs/draw/draw_background.c \
+	srcs/draw/draw_wall_column.c \
+	srcs/draw/draw_menu.c \
+	srcs/draw/build_sprite_box.c \
+	srcs/draw/draw_pacman_sprites.c \
+	srcs/draw/draw_utils.c \
+	srcs/draw/draw_sprite_column.c \
 	srcs/textures/texture_parse_color.c \
 	srcs/textures/texture_utils.c \
 	srcs/textures/texture_load.c \
 	srcs/textures/texture_parse_path.c \
 	srcs/textures/texture_pick_wall.c \
+	srcs/debug/ray_debug_cast.c \
+	srcs/debug/ray_debug_draw.c \
 	srcs/utils/helpers.c \
 	srcs/utils/free.c \
 	srcs/utils/render_utils.c \

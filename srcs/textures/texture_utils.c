@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:17:53 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/02/24 21:28:16 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/05 21:23:01 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ void	set_texture_path(char **dest, char *value, t_game *g)
 		exit_game(EXIT_MAP, g, "set_texture_path() has found an invalid dst");
 	*dest = ft_strdup(value);
 	if (!*dest)
-		exit_game(EXIT_MALLOC, g,
-			"set_texture_path was unable to create a valid dst");
+		exit_game(EXIT_MALLOC, g, "set_texture_path unable create a valid dst");
 }
 
 int	is_xpm_path(const char *s)

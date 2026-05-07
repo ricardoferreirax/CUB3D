@@ -1,19 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_sprites.c                                   :+:      :+:    :+:   */
+/*   draw_pacman_sprites.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 22:09:52 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/13 09:53:29 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/07 05:27:39 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
-#include "render3D.h"
+#include "draw.h"
 
-static void	draw_pacdots(t_game *g)
+static void	draw_sprite(t_game *g, t_sprite *sp, t_image *tex)
+{
+	double	*zbuf;
+	int		col;
+
+	if (!g || !sp || !tex || !tex->img_addr)
+		return ;
+	if (!g->ray.z_buffer || !g->ray.sprite_z)
+		return ;
+	zbuf = g->ray.z_buffer;
+	col = sp->draw_start_x;
+	while (col < sp->draw_end_x)
+	{
+		if (sp->dist < zbuf[col])
+			draw_sprite_column(g, sp, col, tex);
+		col++;
+	}
+}
+
+void	draw_pacdots(t_game *g)
 {
 	t_sprite	box;
 	int			i;
@@ -28,15 +47,15 @@ static void	draw_pacdots(t_game *g)
 			if (sprite_project(g, g->pacdots[i].pos.tile_pos.x,
 					g->pacdots[i].pos.tile_pos.y, &box))
 			{
-				if (sprite_build(g, &box, 6))
-					sprite_draw(g, &box, &g->tex.pacdot_img);
+				if (build_sprite_box(g, &box, 6))
+					draw_sprite(g, &box, &g->tex.pacdot_img);
 			}
 		}
 		i++;
 	}
 }
 
-static void	draw_energizers(t_game *g)
+void	draw_energizers(t_game *g)
 {
 	t_sprite	box;
 	int			i;
@@ -51,15 +70,15 @@ static void	draw_energizers(t_game *g)
 			if (sprite_project(g, g->energizers[i].pos.tile_pos.x,
 					g->energizers[i].pos.tile_pos.y, &box))
 			{
-				if (sprite_build(g, &box, 3))
-					sprite_draw(g, &box, &g->tex.energizer_img);
+				if (build_sprite_box(g, &box, 3))
+					draw_sprite(g, &box, &g->tex.energizer_img);
 			}
 		}
 		i++;
 	}
 }
 
-static void	draw_ghosts(t_game *g)
+void	draw_ghosts(t_game *g)
 {
 	t_sprite	box;
 	t_image		*tex;
@@ -79,19 +98,10 @@ static void	draw_ghosts(t_game *g)
 			wy = g->ghosts[i].pos.tile_pos.y;
 			if (sprite_project(g, wx, wy, &box))
 			{
-				if (sprite_build(g, &box, 2))
-					sprite_draw(g, &box, tex);
+				if (build_sprite_box(g, &box, 2))
+					draw_sprite(g, &box, tex);
 			}
 		}
 		i++;
 	}
-}
-
-void	render_all_sprites(t_game *g)
-{
-	if (!g || !g->ray.z_buffer || !g->ray.sprite_z)
-		return ;
-	draw_pacdots(g);
-	draw_energizers(g);
-	draw_ghosts(g);
 }

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Pac_Struct.h"
+#include "../../Pac_Struct.h"
 #include "render3D.h"
 
 #define DEBUG_CELL 12
@@ -229,7 +229,7 @@ static int	cast_debug_ray(t_game *g, int col, t_raycasting *ray)
 	saved = g->ray;
 	ray_init(g, col);
 	ray_init_steps(g);
-	if (!raycast_dda(g))
+	if (!raycast_find_wall(g))
 		return (g->ray = saved, 0);
 	ray_perp_wall_distance(g);
 	ray_draw_range(g);

@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_fill_color.c                                :+:      :+:    :+:   */
+/*   draw_background.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 19:40:03 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/07 22:38:33 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/07 15:48:50 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
-#include "render3D.h"
+#include "draw.h"
+#include "../render/render3D.h"
 
-static void	fill_rows(t_image *img, int start, int end, int color)
+static void	draw_color_rows(t_image *img, int start, int end, int color)
 {
 	unsigned int	*pixels;
 	int				row;
@@ -37,22 +38,22 @@ static void	fill_rows(t_image *img, int start, int end, int color)
 	}
 }
 
-void	fill_ceiling_color(t_image *img, int color, int horizon)
+void	draw_ceiling_color(t_image *img, int color, int horizon)
 {
 	int	end;
 
 	if (!img || !img->img_addr)
 		return ;
 	end = img->height / 2 - horizon;
-	fill_rows(img, 0, end, color);
+	draw_color_rows(img, 0, end, color);
 }
 
-void	fill_floor_color(t_image *img, int color, int horizon)
+void	draw_floor_color(t_image *img, int color, int horizon)
 {
 	int	start;
 
 	if (!img || !img->img_addr)
 		return ;
 	start = img->height / 2 - horizon;
-	fill_rows(img, start, img->height, color);
+	draw_color_rows(img, start, img->height, color);
 }

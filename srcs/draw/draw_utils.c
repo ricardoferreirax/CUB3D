@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_utils.c                                     :+:      :+:    :+:   */
+/*   draw_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/15 21:18:28 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/13 12:51:57 by rmedeiro         ###   ########.fr       */
+/*   Created: 2026/05/07 05:14:21 by rmedeiro          #+#    #+#             */
+/*   Updated: 2026/05/07 05:21:49 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
-#include "render3D.h"
+#include "draw.h"
 
 void	put_pixel_fast(t_image *img, int x, int y, int color)
 {
@@ -72,11 +72,10 @@ int	clamp_int(int value, int min, int max)
 
 double	fract_pos(double x)
 {
-	int i; // guarda a parte inteira de x
-	i = (int)x;                   
-		// converte x para inteiro ao truncar a parte decimal
-	if (x < 0.0 && (double)i != x) // se x for negativo e tiver parte decimal
-		i -= 1;                   
-			// ajusta a parte inteira para o próximo número inteiro menor
-	return (x - (double)i);        // devolve so a parte fracionaria positiva
+	int	i;
+
+	i = (int)x;
+	if (x < 0.0 && (double)i != x)
+		i -= 1;
+	return (x - (double)i);
 }
