@@ -22,7 +22,7 @@ int	is_ghost_on_deadend(t_game *game, t_ghost *ghost, int direction[4][2],
 	dir = (ghost->invalid_dir + 2) % 4;
 	next_tile.y = (ghost->pos.pixel_pos.y / TILE_SIZE) + direction[dir][0];
 	next_tile.x = (ghost->pos.pixel_pos.x / TILE_SIZE) + direction[dir][1];
-	if (!ignore_walls && in_bounds(&game->map, next_tile)
+	if (!ignore_walls // && in_bounds(&game->map, next_tile)
 		&& (game->map.grid[next_tile.y][next_tile.x] == '1'
 			|| game->map.grid[next_tile.y][next_tile.x] == 'G'))
 	{
@@ -151,33 +151,8 @@ int	chose_frightened_dir(t_ghost *ghost, char **map, int direction[4][2])
 	return (best_dir);
 }
 
-int	squared_distance(int x1, int y1, int x2, int y2)
-{
-	int	dx;
-	int	dy;
 
-	dx = x1 - x2;
-	dy = y1 - y2;
-	return (dx * dx + dy * dy);
-}
 
-bool	is_blocked(t_ghost *ghost, char **map, int direction[4][2], int i)
-{
-	// int	max_x;
-	// int	max_y;
-	int	y;
-	int	x;
-	//
-	// max_x = xtile(map);
-	// max_y = ytile(map);
-	y = ghost->pos.pixel_pos.y / TILE_SIZE + direction[i][0];
-	x = ghost->pos.pixel_pos.x / TILE_SIZE + direction[i][1];
-	// if (x < 0 || y < 0)
-	// 	return (false);
-	// if (x > max_x || y > max_y)
-	// 	return (false);
-	return ((map[y][x] != '1' && map[y][x] != 'G'));
-}
 
 //TODO: Somehow fix the bellow mess with the function is_blocked.
 
@@ -193,11 +168,20 @@ int	chose_next_dir(t_ghost *ghost, char **map, int direction[4][2])
 	target = ghost->target_tile;
 	while (i < 4)
 	{
-		if (is_blocked(ghost, map, direction, i) && i != ghost->invalid_dir)
+		if ((map[ghost->pos.pixel_pos.y / TILE_SIZE
+					+ direction[i][0]][ghost->pos.pixel_pos.x / TILE_SIZE
+					+ direction[i][1]] != '1' && map[ghost->pos.pixel_pos.y
+					/ TILE_SIZE + direction[i][0]][ghost->pos.pixel_pos.x
+					/ TILE_SIZE + direction[i][1]] != 'G')
+				&& i != ghost->invalid_dir)
 		{
-			dist = squared_distance(ghost->pos.pixel_pos.x / TILE_SIZE
-					+ direction[i][1], ghost->pos.pixel_pos.y / TILE_SIZE
-					+ direction[i][0], target.x, target.y);
+			dist = (((ghost->pos.pixel_pos.x / TILE_SIZE) + direction[i][1])
+					- target.x) * ((((ghost->pos.pixel_pos.x / TILE_SIZE)
+							+ direction[i][1]) - target.x))
+				+ ((((ghost->pos.pixel_pos.y / TILE_SIZE) + direction[i][0])
+						- target.y) * ((((ghost->pos.pixel_pos.y
+									/ TILE_SIZE) + direction[i][0])
+							- target.y)));
 			if (best == -1 || dist < best)
 			{
 				best = dist;
