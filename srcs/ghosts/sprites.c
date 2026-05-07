@@ -12,7 +12,7 @@
 
 #include "ghosts.h"
 
-void ghost_sprites(t_game *game, e_ghost ghost)
+void	ghost_sprites(t_game *game, e_ghost ghost)
 {
 	game->ghosts[ghost].frames.up[0] = game->sprite_sheet.sprites[202];
 	game->ghosts[ghost].frames.up[1] = game->sprite_sheet.sprites[203];
@@ -28,7 +28,7 @@ void ghost_sprites(t_game *game, e_ghost ghost)
 	game->ghosts[ghost].frames.right[2] = game->sprite_sheet.sprites[206];
 	game->ghosts[ghost].frames.scared[0] = game->sprite_sheet.sprites[246];
 	game->ghosts[ghost].frames.scared[1] = game->sprite_sheet.sprites[247];
-	if(game->ghosts[ghost].name == BLINKY)
+	if (game->ghosts[ghost].name == BLINKY)
 	{
 		game->ghosts[ghost].frames.up[3] = game->sprite_sheet.sprites[213];
 		game->ghosts[ghost].frames.left[3] = game->sprite_sheet.sprites[212];
@@ -37,16 +37,18 @@ void ghost_sprites(t_game *game, e_ghost ghost)
 	}
 }
 
-void apply_new_pallete(t_point pallet_coord, t_sprite_ref *sprite)
+void	apply_new_pallete(t_point pallet_coord, t_sprite_ref *sprite)
 {
-	if(!sprite)
-		return;
+	if (!sprite)
+		return ;
 	sprite->coord.x += pallet_coord.x * 200;
 	sprite->coord.y += pallet_coord.y * 186;
 }
 
-void change_pallete(t_point pallet_coord, t_anim *frames)
+void	change_pallete(t_point pallet_coord, t_anim *frames)
 {
+	int	i;
+
 	apply_new_pallete(pallet_coord, &frames->left[0]);
 	apply_new_pallete(pallet_coord, &frames->left[1]);
 	apply_new_pallete(pallet_coord, &frames->left[2]);
@@ -59,23 +61,22 @@ void change_pallete(t_point pallet_coord, t_anim *frames)
 	apply_new_pallete(pallet_coord, &frames->down[0]);
 	apply_new_pallete(pallet_coord, &frames->down[1]);
 	apply_new_pallete(pallet_coord, &frames->down[2]);
-	int i = 0;
-	while(i < 12)
+	i = 0;
+	while (i < 12)
 	{
 		apply_new_pallete(pallet_coord, &frames->death[i]);
 		i++;
 	}
 }
 
-void ghost_color(t_ghost *ghost)
+void	ghost_color(t_ghost *ghost)
 {
 	if (ghost->name == BLINKY)
-		return;
-	else if(ghost->name == PINKY)
-			change_pallete((t_point){.x = 1, .y= 0}, &ghost->frames);
-	else if(ghost->name == INKY)
-			change_pallete((t_point){.x = 2, .y= 0}, &ghost->frames);
-	else if(ghost->name == CLYDE)
-			change_pallete((t_point){.x = 3, .y= 0}, &ghost->frames);
+		return ;
+	else if (ghost->name == PINKY)
+		change_pallete((t_point){.x = 1, .y = 0}, &ghost->frames);
+	else if (ghost->name == INKY)
+		change_pallete((t_point){.x = 2, .y = 0}, &ghost->frames);
+	else if (ghost->name == CLYDE)
+		change_pallete((t_point){.x = 3, .y = 0}, &ghost->frames);
 }
-

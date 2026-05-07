@@ -23,8 +23,8 @@ static unsigned int	sprite_tex_px(t_image *tex, int x, int y)
 	return (((unsigned int *)tex->img_addr)[y * stride + x]);
 }
 
-static int	sprite_tex_coord(int screen_pos, int sprite_start,
-			int tex_size, int sprite_size)
+static int	sprite_tex_coord(int screen_pos, int sprite_start, int tex_size,
+		int sprite_size)
 {
 	int	tex_pos;
 
@@ -46,13 +46,12 @@ int	sprite_draw_col(t_game *g, t_sprite *sp, int col, t_image *tex)
 		pixel_idx = row * g->win.width + col;
 		if (sp->dist < g->ray.sprite_z[pixel_idx])
 		{
-			color = sprite_tex_px(tex, tex_x,
-					sprite_tex_coord(row, sp->tex_start_y,
-						tex->height, sp->size));
+			color = sprite_tex_px(tex, tex_x, sprite_tex_coord(row,
+						sp->tex_start_y, tex->height, sp->size));
 			if ((color & 0x00FFFFFF) != 0)
 			{
-				((unsigned int *)g->win.frame_buffer.img_addr)
-					[row * (g->win.frame_buffer.l_len >> 2) + col] = color;
+				((unsigned int *)g->win.frame_buffer.img_addr)[row
+					* (g->win.frame_buffer.l_len >> 2) + col] = color;
 				g->ray.sprite_z[pixel_idx] = sp->dist;
 			}
 		}

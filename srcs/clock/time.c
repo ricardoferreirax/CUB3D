@@ -12,10 +12,10 @@
 
 #include "time.h"
 
-
-long get_time_us(void)
+long	get_time_us(void)
 {
-	struct timeval tv;
+	struct timeval	tv;
+
 	gettimeofday(&tv, (void *)0);
-	return(tv.tv_sec * 1000000L + tv.tv_usec);
+	return (tv.tv_sec * 1000000L + tv.tv_usec);
 }

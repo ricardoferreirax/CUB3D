@@ -1242,6 +1242,31 @@
       "-Ilibft",
       "-c",
       "-o",
+      "objs/srcs/ghosts/helpers.o",
+      "srcs/ghosts/helpers.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/ghosts/helpers.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/ghosts/helpers.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-Og",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
       "objs/srcs/clock/time.o",
       "srcs/clock/time.c"
     ],

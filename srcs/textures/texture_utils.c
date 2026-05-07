@@ -47,7 +47,8 @@ void	set_texture_path(char **dest, char *value, t_game *g)
 		exit_game(EXIT_MAP, g, "set_texture_path() has found an invalid dst");
 	*dest = ft_strdup(value);
 	if (!*dest)
-		exit_game(EXIT_MALLOC, g, "set_texture_path was unable to create a valid dst");
+		exit_game(EXIT_MALLOC, g,
+			"set_texture_path was unable to create a valid dst");
 }
 
 int	is_xpm_path(const char *s)
@@ -61,11 +62,11 @@ int	is_xpm_path(const char *s)
 	while (s[i] == ' ' || s[i] == '\t')
 		i++;
 	len = 0;
-	while (s[i + len] && s[i + len] != '\n' && s[i + len] != '\r'
-		&& s[i + len] != ' ' && s[i + len] != '\t')
+	while (s[i + len] && s[i + len] != '\n' && s[i + len] != '\r' && s[i
+		+ len] != ' ' && s[i + len] != '\t')
 		len++;
 	if (len < 4)
 		return (0);
-	return (s[i + len - 4] == '.' && s[i + len - 3] == 'x'
-		&& s[i + len - 2] == 'p' && s[i + len - 1] == 'm');
+	return (s[i + len - 4] == '.' && s[i + len - 3] == 'x' && s[i + len
+		- 2] == 'p' && s[i + len - 1] == 'm');
 }

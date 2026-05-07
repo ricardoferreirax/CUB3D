@@ -14,16 +14,7 @@
 #include "srcs/map/map3D.h"
 #include "srcs/render/render3D.h"
 #include "srcs/textures/textures3D.h"
-
-void	breakpoint(void)
-{
-	int	i;
-
-	i = 0;
-	i++;
-	(void)i;
-	// do nothing
-}
+#include "srcs/utils/helpers.h"
 
 void	print_2d(char **arr)
 {
@@ -62,6 +53,7 @@ void	reset_game(t_game *game, int is_death)
 {
 	int	i;
 
+	sleep(2);
 	if (game->mode == MODE_CUBE)
 		return ;
 	if (is_death)
@@ -82,18 +74,25 @@ void	reset_game(t_game *game, int is_death)
 	game->player.collected_dots = 0;
 }
 
-void	controller_player(t_game *game)
+void d_pad_handler(t_game *game, struct input_event event)
 {
-	struct input_event	event;
+			if (event.code == ABS_HAT0X)
+			{
+				game->key.a = (event.value == -1);
+				game->key.d = (event.value == 1);
+			}
+			else if (event.code == ABS_HAT0Y)
+			{
+				game->key.w = (event.value == -1);
+				game->key.s = (event.value == 1);
+			}
+			else if (event.code == ABS_RZ)
+				game->key.e = (event.value > 100); // threshold
+}
 
-	if (game->controller_fd < 0)
-		return ;
-	while (read(game->controller_fd, &event, sizeof(event)) > 0)
-	{
-		if (event.type != EV_KEY && event.type != EV_ABS)
-			continue ;
-		if (event.type == EV_KEY)
-		{
+void face_button_handler(t_game *game, struct input_event event)
+{
+
 			if (event.code == BTN_SOUTH) // Xis
 				game->key.down = event.value;
 			else if (event.code == BTN_NORTH) // Triangulo
@@ -107,24 +106,32 @@ void	controller_player(t_game *game)
 				game->key.k = event.value;
 			else if (event.code == BTN_START)
 				game->key.controller_start = event.value;
-		}
+}
+
+void	controller_player(t_game *game)
+{
+	struct input_event	event;
+
+	if (game->controller_fd < 0)
+		return ;
+	while (read(game->controller_fd, &event, sizeof(event)) > 0)
+	{
+		if (event.type != EV_KEY && event.type != EV_ABS)
+			continue ;
+		if (event.type == EV_KEY)
+			face_button_handler(game, event);
 		if (event.type == EV_ABS)
-		{
-			// D-pad → WASD
-			if (event.code == ABS_HAT0X)
-			{
-				game->key.a = (event.value == -1);
-				game->key.d = (event.value == 1);
-			}
-			else if (event.code == ABS_HAT0Y)
-			{
-				game->key.w = (event.value == -1);
-				game->key.s = (event.value == 1);
-			}
-			else if (event.code == ABS_RZ)
-				game->key.e = (event.value > 100); // threshold
-		}
+			d_pad_handler(game,event);
 	}
+}
+
+int change_game_mode(t_game *game)
+{
+	if(game->timer.mode >= 7)
+		return CHASE;
+	else if(game->timer.mode % 2 == 0)
+		return SCATTER;
+	return CHASE;
 }
 
 int	gameloop(t_game *game)
@@ -146,13 +153,8 @@ int	gameloop(t_game *game)
 		- game->timer.mode_time_start > (long)(game->timer.times[game->timer.mode])
 		* 1000000.0)
 	{
-		if (game->debug_mode)
-			printf("Changing Global State at %ld\n", now);
 		game->timer.mode++;
-		if (game->global_state == SCATTER)
-			game->global_state = CHASE;
-		else if (game->global_state == CHASE)
-			game->global_state = SCATTER;
+		game->global_state = change_game_mode(game);
 		game->timer.mode_time_start = now;
 	}
 	if (game->state == MENU)
@@ -160,11 +162,24 @@ int	gameloop(t_game *game)
 	return (render_frame(game), 0);
 }
 
+int controller_finder(char *argv)
+{
+	int num;
+	num = ft_atoi(argv);
+	if(num <= 0)
+		return (ft_printf("Input a valid positive integer for Controller Event ID\n"), -1);
+	char *path = ft_strjoin("/dev/input/event", argv);
+	ft_printf("Looking for Controller: %s\n", path);
+	if (!path)
+		return (ft_printf("Malloc Failed?"), -1);
+	num = open(path, O_RDONLY | O_NONBLOCK);
+	free(path);
+	return(num);
+}
+
 bool	wrong_args(t_game *game, int ac, char **argv)
 {
 	int		i;
-	char	*path;
-	int		num;
 
 	i = 2;
 	game->debug_mode = false;
@@ -172,41 +187,16 @@ bool	wrong_args(t_game *game, int ac, char **argv)
 	while (i < ac)
 	{
 		if (ft_strcmp(argv[i], "debug_mode=y") == 0)
-		{
-			ft_printf("Debug Mode is enabled\n");
 			game->debug_mode = true;
-		}
 		else
 		{
-			num = ft_atoi(argv[i]);
-			if (num <= 0)
-				return (printf("Input a Number for Controller Event ID.\nController Event ID cannot be \"0\".\n"),
-					true);
-			path = ft_strjoin("/dev/input/event", argv[i]);
-			printf("Looking for Controller: %s\n", path);
-			if (!path)
-				return (printf("Malloc Failed?"), true);
-			game->controller_fd = open(path, O_RDONLY | O_NONBLOCK);
-			free(path);
+			game->controller_fd = controller_finder(argv[i]);
 			if (game->controller_fd < 0)
 				return (printf("Provided ID doesn't exist"), true);
 		}
 		i++;
 	}
 	return (false);
-}
-
-bool	print_usage(void)
-{
-	ft_printf("Unkown arguments found\n");
-	ft_printf("Usage: ./cub3d [FILE]... [OPTIONS]...\n");
-	ft_printf("Runs Pac-Man 3D using X11\n");
-	ft_printf("\n\n\tdebug_mode=y\tRuns the game in Debug Mode\n");
-	ft_printf("\t[XX]\t\tSpecify a number for the controller event file. (see README.md for more details)\n");
-	ft_printf("\n\n\tExamples:\n\t./cub3d map.cub 12 debug_mode=y\n");
-	ft_printf("\t./cub3d ./path/to/file.cub\n");
-	ft_printf("\t./cub3d map.cub debug_mode=y\n");
-	return (true);
 }
 
 int	main(int ac, char **av)

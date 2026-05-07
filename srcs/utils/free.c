@@ -14,14 +14,14 @@
 
 void	exit_game(int errcode, t_game *g, char *str)
 {
-	if(str)
+	if (str)
 		ft_dprintf(2, "\n%s\n", str);
 	if (errcode == EXIT_QUIT)
 		ft_dprintf(2, "\nQuitting Pac-Man...\n");
 	else if (errcode == EXIT_MALLOC)
 		ft_dprintf(2, "\nError: malloc failed\n");
 	else if (errcode == EXIT_MLX)
-		ft_dprintf(2, "\n%s\nError: MLX failed\n");
+		ft_dprintf(2, "\nError: MLX failed\n");
 	else if (errcode == EXIT_MAP)
 		ft_dprintf(2, "\nError: map parsing failed\n");
 	else if (errcode == EXIT_INPUT)
@@ -71,6 +71,8 @@ static void	free_texture_paths(t_game *g)
 	free_str(&g->tex.clyde[0]);
 	free_str(&g->tex.clyde[1]);
 	free_str(&g->tex.gate_close);
+	free_str(&g->tex.other_state[0]);
+	free_str(&g->tex.other_state[1]);
 }
 
 static void	destroy_all_images(t_game *g)
@@ -96,6 +98,10 @@ static void	destroy_all_images(t_game *g)
 	destroy_img(g, &g->tex.inky_img[1]);
 	destroy_img(g, &g->tex.clyde_img[0]);
 	destroy_img(g, &g->tex.clyde_img[1]);
+	destroy_img(g, &g->tex.other_state_img[0]);
+	destroy_img(g, &g->tex.other_state_img[1]);
+	destroy_img(g, &g->base);
+	destroy_img(g, &g->sprite_sheet.sprite_img);
 }
 
 static void	free_pacman_arrays(t_game *g)
@@ -126,8 +132,15 @@ static void	free_pacman_arrays(t_game *g)
 	}
 }
 
+void	free_ghost(t_ghost *ghost)
+{
+	free_2d((void **)ghost->mental_map);
+}
+
 void	free_game(t_game *g)
 {
+	int	i;
+
 	if (!g)
 		return ;
 	if (g->ray.z_buffer)
@@ -151,8 +164,10 @@ void	free_game(t_game *g)
 		free(g->mlx_ptr);
 		g->mlx_ptr = NULL;
 	}
-	if(g->controller_fd != -1)
+	i = -1;
+	while (++i < 4)
+		free_ghost(&g->ghosts[i]);
+	if (g->controller_fd != -1)
 		close(g->controller_fd);
 	free(g);
 }
-

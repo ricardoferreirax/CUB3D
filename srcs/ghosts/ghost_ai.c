@@ -6,39 +6,39 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 11:22:16 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/04/23 14:52:27 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/05 15:04:08 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../utils/helpers.h"
 #include "ghosts.h"
 
-int	passed_center(t_ghost *ghost)
+int	is_ghost_on_deadend(t_game *game, t_ghost *ghost, int direction[4][2],
+		int ignore_walls)
 {
-	int	center;
-	int	passed_center;
+	t_point	next_tile;
+	int		dir;
 
-	int cx, cy;
-	cx = ghost->pos.pixel_pos.x % TILE_SIZE;
-	cy = ghost->pos.pixel_pos.y % TILE_SIZE;
-	center = TILE_SIZE / 2;
-	passed_center = 0;
-	if (ghost->invalid_dir == 2)
-		passed_center = (cy < center);
-	if (ghost->invalid_dir == 3)
-		passed_center = (cx < center);
-	if (ghost->invalid_dir == 0)
-		passed_center = (cy > center);
-	if (ghost->invalid_dir == 1)
-		passed_center = (cx > center);
-	return (passed_center);
+	dir = (ghost->invalid_dir + 2) % 4;
+	next_tile.y = (ghost->pos.pixel_pos.y / TILE_SIZE) + direction[dir][0];
+	next_tile.x = (ghost->pos.pixel_pos.x / TILE_SIZE) + direction[dir][1];
+	if (!ignore_walls // && in_bounds(&game->map, next_tile)
+		&& (game->map.grid[next_tile.y][next_tile.x] == '1'
+			|| game->map.grid[next_tile.y][next_tile.x] == 'G'))
+	{
+		if (passed_center(ghost))
+		{
+			ghost->invalid_dir = dir;
+			dir = (dir + 2) % 4;
+		}
+	}
+	return (dir);
 }
 
 t_double_point	continue_travel(t_game *game, t_ghost *ghost, int ignore_walls)
 {
-	int		dir;
-	int		runnning;
-	t_point	next_tile;
+	int	dir;
+	int	runnning;
 
 	static int direction[4][2] = {
 		{-1, 0}, // 0 = up
@@ -57,18 +57,7 @@ t_double_point	continue_travel(t_game *game, t_ghost *ghost, int ignore_walls)
 	if (ghost->speed_accumulador >= 100)
 	{
 		ghost->speed_accumulador -= 100;
-		// tile in front of ghost (in current continue direction)
-		next_tile.y = (ghost->pos.pixel_pos.y / TILE_SIZE) + direction[dir][0];
-		next_tile.x = (ghost->pos.pixel_pos.x / TILE_SIZE) + direction[dir][1];
-		if (!ignore_walls && (game->map.grid[next_tile.y][next_tile.x] == '1'
-				|| game->map.grid[next_tile.y][next_tile.x] == 'G'))
-		{
-			if (passed_center(ghost))
-			{
-				ghost->invalid_dir = dir;
-				dir = (dir + 2) % 4;
-			}
-		}
+		dir = is_ghost_on_deadend(game, ghost, direction, ignore_walls);
 		return ((t_double_point){.x = ghost->pos.pixel_pos.x
 			+ direction[dir][1], .y = ghost->pos.pixel_pos.y
 			+ direction[dir][0]});
@@ -114,15 +103,105 @@ bool	cannot_move_up(t_game *game, t_ghost *ghost)
 	return (false);
 }
 
-int	chose_next_move(t_game *game, t_ghost *ghost, char **map)
+int	rng_machine(void)
+{
+	int	rng_num;
+	int	best_dir;
+
+	best_dir = -1;
+	rng_num = rand() % 8192;
+	if (rng_num < 1338)
+		best_dir = 0;
+	else if (rng_num < 3402)
+		best_dir = 3;
+	else if (rng_num < 5740)
+		best_dir = 2;
+	else if (rng_num < 8192)
+		best_dir = 1;
+	return (best_dir);
+}
+
+int	chose_frightened_dir(t_ghost *ghost, char **map, int direction[4][2])
+{
+	int		best_dir;
+	int		tries;
+	t_point	check_dir;
+	t_map	mapped;
+
+	best_dir = rng_machine();
+	tries = 0;
+	mapped.grid = map;
+	mapped.width = xtile(map);
+	mapped.height = ytile(map);
+	while (tries < 4)
+	{
+		check_dir.x = ghost->pos.pixel_pos.x / TILE_SIZE
+			+ direction[best_dir][1];
+		check_dir.y = ghost->pos.pixel_pos.y / TILE_SIZE
+			+ direction[best_dir][0];
+		if (in_bounds(&mapped, check_dir)
+			&& ((map[check_dir.y][check_dir.x] != '1'
+					&& map[check_dir.y][check_dir.x] != 'G')
+				&& best_dir != ghost->invalid_dir))
+			break ;
+		best_dir = (best_dir + 3) % 4;
+		tries++;
+	}
+	return (best_dir);
+}
+
+bool	is_not_blocked(t_ghost *ghost, char **map, int direction[4][2], int i)
+{
+	int	y;
+	int	x;
+
+	y = ghost->pos.pixel_pos.y / TILE_SIZE + direction[i][0];
+	x = ghost->pos.pixel_pos.x / TILE_SIZE + direction[i][1];
+	return (map[y][x] != '1' && map[y][x] != 'G' && i != ghost->invalid_dir);
+}
+
+int	squared_distance(int x1, int y1, int x2, int y2)
+{
+	int	dx;
+	int	dy;
+
+	dx = x1 - x2;
+	dy = y1 - y2;
+	return (dx * dx + dy * dy);
+}
+
+int	chose_next_dir(t_ghost *ghost, char **map, int direction[4][2])
 {
 	int		i;
-	int		best;
-	int		best_dir;
 	t_point	target;
 	int		dist;
-	int		rng_num;
-	int		tries;
+	int		best;
+	int		best_dir;
+
+	i = -1;
+	best = -1;
+	best_dir = -1;
+	target = ghost->target_tile;
+	while (++i < 4)
+	{
+		if (is_not_blocked(ghost, map, direction, i))
+		{
+			dist = squared_distance(ghost->pos.pixel_pos.x / TILE_SIZE
+					+ direction[i][1], ghost->pos.pixel_pos.y / TILE_SIZE
+					+ direction[i][0], target.x, target.y);
+			if (best == -1 || dist < best)
+			{
+				best = dist;
+				best_dir = i;
+			}
+		}
+	}
+	return (best_dir);
+}
+
+int	chose_next_move(t_game *game, t_ghost *ghost, char **map)
+{
+	int	best_dir;
 
 	int direction[4][2] = {
 		{-1, 0}, // up
@@ -130,65 +209,13 @@ int	chose_next_move(t_game *game, t_ghost *ghost, char **map)
 		{1, 0},  // down
 		{0, 1}   // right
 	};
-	i = 0;
-	best = -1;
 	best_dir = -1;
 	if (!map)
 		return (-1);
-	target = ghost->target_tile;
 	if (ghost->state == FRIGHTENED)
-	{
-		rng_num = rand() % 8192;
-		if (rng_num < 1338)
-			best_dir = 0;
-		else if (rng_num < 3402)
-			best_dir = 3;
-		else if (rng_num < 5740)
-			best_dir = 2;
-		else if (rng_num < 8192)
-			best_dir = 1;
-		tries = 0;
-		while (tries < 4)
-		{
-			if ((map[ghost->pos.pixel_pos.y / TILE_SIZE
-					+ direction[best_dir][0]][ghost->pos.pixel_pos.x / TILE_SIZE
-					+ direction[best_dir][1]] != '1'
-					&& map[ghost->pos.pixel_pos.y / TILE_SIZE
-					+ direction[best_dir][0]][ghost->pos.pixel_pos.x / TILE_SIZE
-					+ direction[best_dir][1]] != 'G')
-				&& best_dir != ghost->invalid_dir)
-				break ;
-			best_dir = (best_dir + 3) % 4;
-			tries++;
-		}
-	}
+		best_dir = chose_frightened_dir(ghost, map, direction);
 	else
-	{
-		while (i < 4)
-		{
-			if ((map[ghost->pos.pixel_pos.y / TILE_SIZE
-					+ direction[i][0]][ghost->pos.pixel_pos.x / TILE_SIZE
-					+ direction[i][1]] != '1' && map[ghost->pos.pixel_pos.y
-					/ TILE_SIZE + direction[i][0]][ghost->pos.pixel_pos.x
-					/ TILE_SIZE + direction[i][1]] != 'G')
-				&& i != ghost->invalid_dir)
-			{
-				dist = (((ghost->pos.pixel_pos.x / TILE_SIZE) + direction[i][1])
-						- target.x) * ((((ghost->pos.pixel_pos.x / TILE_SIZE)
-								+ direction[i][1]) - target.x))
-					+ ((((ghost->pos.pixel_pos.y / TILE_SIZE) + direction[i][0])
-							- target.y) * ((((ghost->pos.pixel_pos.y
-										/ TILE_SIZE) + direction[i][0])
-								- target.y)));
-				if (best == -1 || dist < best)
-				{
-					best = dist;
-					best_dir = i;
-				}
-			}
-			i++;
-		}
-	}
+		best_dir = chose_next_dir(ghost, map, direction);
 	if (best_dir == -1)
 		best_dir = (ghost->invalid_dir + 2) % 4;
 	if (best_dir == 0 && cannot_move_up(game, ghost))
@@ -291,10 +318,31 @@ t_point	chase_player(t_game *game, t_ghost *ghost)
 	return ((t_point){0, 0});
 }
 
-void	update_target(t_game *game, t_ghost *ghost, int mode)
+void	update_cruise_elroy(t_game *game, t_ghost *ghost)
 {
 	int	dots_left;
 
+	dots_left = ft_abs(game->player.collected_dots - game->pacdot_count);
+	if (!ghost->cruiser.two.enabled
+		&& dots_left <= ghost->cruiser.two.dots_left)
+	{
+		if (game->debug_mode)
+			ft_printf("Blinky is Elroy level 2\n");
+		ghost->speed_multiplier = ghost->cruiser.two.speed_multiplier;
+		ghost->cruiser.two.enabled = true;
+	}
+	else if (!ghost->cruiser.one.enabled
+		&& dots_left <= ghost->cruiser.one.dots_left)
+	{
+		if (game->debug_mode)
+			ft_printf("Blinky is Elroy level 1\n");
+		ghost->speed_multiplier = ghost->cruiser.one.speed_multiplier;
+		ghost->cruiser.one.enabled = true;
+	}
+}
+
+void	update_target(t_game *game, t_ghost *ghost, int mode)
+{
 	(void)mode;
 	if (ghost->state == EATEN)
 		goto_penhouse(game, ghost);
@@ -305,25 +353,7 @@ void	update_target(t_game *game, t_ghost *ghost, int mode)
 			&& (ghost->cruiser.one.enabled || ghost->cruiser.two.enabled)))
 		ghost->target_tile = chase_player(game, ghost);
 	if (ghost->cruiser.is_blinky)
-	{
-		dots_left = ft_abs(game->player.collected_dots - game->pacdot_count);
-		if (!ghost->cruiser.two.enabled
-			&& dots_left <= ghost->cruiser.two.dots_left)
-		{
-			if (game->debug_mode)
-				ft_printf("Blinky is Elroy level 2\n");
-			ghost->speed_multiplier = ghost->cruiser.two.speed_multiplier;
-			ghost->cruiser.two.enabled = true;
-		}
-		else if (!ghost->cruiser.one.enabled
-			&& dots_left <= ghost->cruiser.one.dots_left)
-		{
-			if (game->debug_mode)
-				ft_printf("Blinky is Elroy level 1\n");
-			ghost->speed_multiplier = ghost->cruiser.one.speed_multiplier;
-			ghost->cruiser.one.enabled = true;
-		}
-	}
+		update_cruise_elroy(game, ghost);
 }
 
 int	ghost_in_penhouse(t_ghost *ghost, char **map)
@@ -430,11 +460,14 @@ bool	ghost_ai(t_game *game, t_ghost *ghost, int i)
 	if (ghost->state != game->global_state && ghost->state != FRIGHTENED
 		&& ghost->state != EATEN)
 	{
-		if(ghost->cruiser.is_blinky && (ghost->cruiser.one.enabled || ghost->cruiser.two.enabled))
+		if (ghost->cruiser.is_blinky && (ghost->cruiser.one.enabled
+				|| ghost->cruiser.two.enabled))
 			ghost->state = CHASE;
 		else
-		{ghost->state = game->global_state;
-			ghost->invalid_dir = (ghost->invalid_dir + 2) % 4;}
+		{
+			ghost->state = game->global_state;
+			ghost->invalid_dir = (ghost->invalid_dir + 2) % 4;
+		}
 	}
 	return (false);
 }

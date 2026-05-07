@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #ifndef INITIALIZER_H
-#define INITIALIZER_H
-#include "../../Pac_Struct.h"
+# define INITIALIZER_H
+# include "../../Pac_Struct.h"
 
 void	init_minilib(t_game *game);
 void	init(t_game *g, char *path);
@@ -24,5 +24,5 @@ void	init_execution(t_game *g);
 
 void	init_menu(t_game *g);
 void	init_base(t_game *s);
-int	init_spritesheet(t_game *game);
+int		init_spritesheet(t_game *game);
 #endif

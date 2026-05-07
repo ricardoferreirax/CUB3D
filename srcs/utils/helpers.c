@@ -12,28 +12,31 @@
 
 #include "helpers.h"
 
-
-int xtile(char **map)
+int	xtile(char **map)
 {
-	int i = 0;
-	int total = 0;
-	while(map && map[i])
+	int	i;
+	int	total;
+
+	i = 0;
+	total = 0;
+	while (map && map[i])
 	{
-		if(total < (int)ft_strlen(map[i]))
+		if (total < (int)ft_strlen(map[i]))
 			total = ft_strlen(map[i]);
 		i++;
 	}
-	return total;
+	return (total);
 }
 
-int ytile(char **map)
+int	ytile(char **map)
 {
-	int i = 0;
-	while(map && map[i])
-		i++;
-	return i;
-}
+	int	i;
 
+	i = 0;
+	while (map && map[i])
+		i++;
+	return (i);
+}
 
 int	ft_abs(int n)
 {
@@ -63,20 +66,23 @@ int	ft_abs(int n)
 // 		i++;
 // 	}
 // 	copy[i] = NULL;
-// 	return copy;
+// 	return (copy);
 // }
 
-char *parse_chars(char *str)
+char	*parse_chars(char *str)
 {
-	char *dup;
+	char	*dup;
+	int		i;
+	int		j;
+
 	dup = ft_calloc(ft_strlen(str), sizeof(char));
-	int i = 0;
-	int j = 0;
-	while(str[i])
+	i = 0;
+	j = 0;
+	while (str[i])
 	{
-		if(str[i] != '\n')
+		if (str[i] != '\n')
 		{
-			if(str[i] == 'M')
+			if (str[i] == 'M')
 				dup[j] = '1';
 			else
 				dup[j] = str[i];
@@ -84,20 +90,23 @@ char *parse_chars(char *str)
 		}
 		i++;
 	}
-	return dup;
+	return (dup);
 }
 
-char **remove_char(char **array)
+char	**remove_char(char **array)
 {
-	int i = 0;
-	char **final = ft_calloc(ytile(array) + 1, sizeof(char *));
-	while(array[i] != NULL)
+	int		i;
+	char	**final;
+
+	i = 0;
+	final = ft_calloc(ytile(array) + 1, sizeof(char *));
+	while (array[i] != NULL)
 	{
 		final[i] = parse_chars(array[i]);
 		i++;
 	}
 	final[i] = NULL;
-	return final;
+	return (final);
 }
 
 int	distance_to_target(t_ghost *ghost, int dy, int dx)
@@ -112,7 +121,24 @@ int	distance_to_target(t_ghost *ghost, int dy, int dx)
 
 int	distance_squared(t_double_point a, t_double_point b)
 {
-	int dx = a.x - b.x;
-	int dy = a.y - b.y;
+	int	dx;
+	int	dy;
+
+	dx = a.x - b.x;
+	dy = a.y - b.y;
 	return (dx * dx + dy * dy);
+}
+
+bool	print_usage(void)
+{
+	ft_printf("Unkown arguments found\n");
+	ft_printf("Usage: ./cub3d [FILE]... [OPTIONS]...\n");
+	ft_printf("Runs Pac-Man 3D using X11\n");
+	ft_printf("\n\n\tdebug_mode=y\tRuns the game in Debug Mode\n");
+	ft_printf("\t[XX]\t\tSpecify a number for the controller event file.");
+	ft_printf(" (see README.md for more details)\n");
+	ft_printf("\n\n\tExamples:\n\t./cub3d map.cub 12 debug_mode=y\n");
+	ft_printf("\t./cub3d ./path/to/file.cub\n");
+	ft_printf("\t./cub3d map.cub debug_mode=y\n");
+	return (true);
 }

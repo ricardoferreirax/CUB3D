@@ -66,8 +66,8 @@ int	raycast_dda(t_game *g)
 		if (!ray_validate_wrap_x(g))
 			break ;
 		tile = map_get_tile(g, g->ray.map_y, g->ray.map_x);
-		if ((tile == GATE && g->gate_passable == 0) 
-			|| (tile != GATE && map_tile_type(tile, TILE_SOLID)))
+		if ((tile == GATE && g->gate_passable == 0) || (tile != GATE
+				&& map_tile_type(tile, TILE_SOLID)))
 		{
 			g->ray.hit_tile = tile;
 			hit = 1;

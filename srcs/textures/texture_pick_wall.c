@@ -16,14 +16,13 @@
 unsigned int	tex_pixel(t_image *tex, int x, int y)
 {
 	int				stride;
-	unsigned int *data;
+	unsigned int	*data;
 
-	stride = tex->l_len / 4; // o nr de pixels por linha (l_len é o nr de bytes por linha, dividindo por 4 obtemos o número de pixels)
-
-	if(!tex->img_addr)
-		return 128;
+	stride = tex->l_len / 4;
+	if (!tex->img_addr)
+		return (128);
 	data = (unsigned int *)tex->img_addr;
-	return (data[y * stride + x]); // devolve a cor do pixel na posição (x, y) da textura calculando o índice como y * stride + x
+	return (data[y * stride + x]);
 }
 
 t_image	*texture_pick_wall(t_game *g)

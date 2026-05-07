@@ -22,13 +22,29 @@ int	uselesstile(t_point point)
 	return (0);
 }
 
-int	init_spritesheet(t_game *game)
+t_sprite_ref	init_sprite(t_point control)
+{
+	t_sprite_ref	sprite;
+
+	if (control.y <= 74)
+	{
+		sprite.coord = control;
+		sprite.height = 8;
+		sprite.width = 8;
+	}
+	else
+	{
+		sprite.coord = control;
+		sprite.width = 16;
+		sprite.height = 16;
+	}
+	return (sprite);
+}
+
+void	fill_small_sprites(t_game *game, int *i)
 {
 	t_point	control;
-	int		i;
 
-	game->sprite_sheet.sprites = malloc(sizeof(t_sprite_ref) * 256);
-	i = 0;
 	control.y = 1;
 	while (control.y <= 74)
 	{
@@ -37,29 +53,44 @@ int	init_spritesheet(t_game *game)
 		{
 			if (!uselesstile(control))
 			{
-				game->sprite_sheet.sprites[i].coord = control;
-				game->sprite_sheet.sprites[i].width = 8;
-				game->sprite_sheet.sprites[i].height = 8;
-				i++;
+				game->sprite_sheet.sprites[*i].coord = control;
+				game->sprite_sheet.sprites[*i].width = 8;
+				game->sprite_sheet.sprites[*i].height = 8;
+				(*i)++;
 			}
 			control.x += 9;
 		}
 		control.y += 9;
 	}
+}
+
+void	fill_big_sprites(t_game *game, int *i)
+{
+	t_point	control;
+
 	control.y = 83;
 	while (control.y <= 168)
 	{
 		control.x = 1;
 		while (control.x < 170)
 		{
-			game->sprite_sheet.sprites[i].coord = control;
-			game->sprite_sheet.sprites[i].width = 16;
-			game->sprite_sheet.sprites[i].height = 16;
-			i++;
+			game->sprite_sheet.sprites[*i].coord = control;
+			game->sprite_sheet.sprites[*i].width = 16;
+			game->sprite_sheet.sprites[*i].height = 16;
+			(*i)++;
 			control.x += 17;
 		}
 		control.y += 17;
 	}
+}
+
+int	init_spritesheet(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	fill_small_sprites(game, &i);
+	fill_big_sprites(game, &i);
 	game->sprite_sheet.sprite_img.img_ptr = mlx_xpm_file_to_image(game->mlx_ptr,
 			SPRITE_SHEET, &game->sprite_sheet.sprite_img.width,
 			&game->sprite_sheet.sprite_img.height);

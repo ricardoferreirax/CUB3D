@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/04/23 14:40:03 by pfreire-         ###   ########.fr        #
+#    Updated: 2026/05/05 14:58:20 by pfreire-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ CC      = clang-12 -Og
 CFLAGS  = -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion  -Wformat=2 -Wstrict-aliasing=2 \
 		-fno-omit-frame-pointer \
 		-g 
-#-fsanitize=undefined 
+ASAN_FLAGS = -fsanitize=address
+UBSAN_FLAGS = -fsanitize=undefined
 		
 #  MLX_CFLAGS= -Wall -Wextra -Werror
 
@@ -83,6 +84,7 @@ SRC_FILES = main.c \
 	srcs/base/base_bitmasking.c \
 	srcs/ghosts/ghost_ai.c \
 	srcs/ghosts/sprites.c  \
+	srcs/ghosts/helpers.c \
 	srcs/clock/time.c
 
 OBJ_DIR   = objs
@@ -118,4 +120,9 @@ fclean: clean
 re: fclean all
 e: all clean
 	clear
+a:
+	$(MAKE) CFLAGS="$(CFLAGS) $(ASAN_FLAGS)" e
+
+u:
+	$(MAKE) CFLAGS="$(CFLAGS) $(UBSAN_FLAGS)" e
 .PHONY: all clean fclean re

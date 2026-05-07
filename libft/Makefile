@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = libft.a
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 SRCSFILES = $(shell find . -name srcs.txt)
 SRCS = $(foreach f,$(SRCSFILES),$(shell awk 'NR==1{path=$$0; next} {print path"/"$$0}' $(f)))
 OBJS = $(SRCS:.c=.o)

@@ -25,7 +25,8 @@ static void	draw_pacdots(t_game *g)
 	{
 		if (g->pacdots[i].active)
 		{
-			if (sprite_project(g, g->pacdots[i].pos.tile_pos.x, g->pacdots[i].pos.tile_pos.y, &box))
+			if (sprite_project(g, g->pacdots[i].pos.tile_pos.x,
+					g->pacdots[i].pos.tile_pos.y, &box))
 			{
 				if (sprite_build(g, &box, 6))
 					sprite_draw(g, &box, &g->tex.pacdot_img);
@@ -47,7 +48,8 @@ static void	draw_energizers(t_game *g)
 	{
 		if (g->energizers[i].active)
 		{
-			if (sprite_project(g, g->energizers[i].pos.tile_pos.x, g->energizers[i].pos.tile_pos.y, &box))
+			if (sprite_project(g, g->energizers[i].pos.tile_pos.x,
+					g->energizers[i].pos.tile_pos.y, &box))
 			{
 				if (sprite_build(g, &box, 3))
 					sprite_draw(g, &box, &g->tex.energizer_img);

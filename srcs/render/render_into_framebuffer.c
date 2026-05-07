@@ -27,7 +27,8 @@ void	render_base_into_framebuffer(t_game *s)
 		{
 			color = pixel_get(&s->base, x, y);
 			if ((color >> 24) != 0xFF)
-				ft_pixel_put(&s->win.frame_buffer, x + X_POS, y + Y_POS, color);
+				ft_pixel_put(&s->win.frame_buffer, (x + X_POS) % s->win.width,
+					(y + Y_POS) % s->win.height, color);
 			x++;
 		}
 		y++;
@@ -49,8 +50,9 @@ void	render_sprite_into_framebuffer(t_game *game, t_point coord,
 			color = pixel_get(&game->sprite_sheet.sprite_img, point.x
 					+ sprite->coord.x, point.y + sprite->coord.y);
 			if ((color >> 24) != 0xFF)
-				ft_pixel_put(&game->win.frame_buffer, point.x + coord.x, point.y
-					+ coord.y, color);
+				ft_pixel_put(&game->win.frame_buffer, (point.x + coord.x)
+					% game->win.frame_buffer.width, (point.y + coord.y)
+					% game->win.frame_buffer.height, color);
 			point.x++;
 		}
 		point.y++;
@@ -110,7 +112,8 @@ void	render_ghost_into_framebuffer(t_game *game, t_point coord,
 					+ ghost->pos.pixel_pos.y) % 2)]);
 	else
 	{
-		if (game->debug_mode && (ghost->cruiser.is_blinky && (ghost->cruiser.one.enabled || ghost->cruiser.two.enabled)))
+		if (game->debug_mode && (ghost->cruiser.is_blinky
+				&& (ghost->cruiser.one.enabled || ghost->cruiser.two.enabled)))
 			render_elroy_cruiser(game, coord, ghost);
 		else if (ghost->state != EATEN)
 			render_normal_ghost(game, coord, ghost);
