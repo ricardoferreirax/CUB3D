@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/08 17:24:25 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/08 17:32:36 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/08 18:37:38 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,7 @@ static bool	safe_is_wall(t_map map, int y, int x)
 
 bool	can_move(t_game *game, int dir)
 {
-	static int	direction[4][2] = {
-		{-1, 0},
-		{0, -1},
-		{1, 0},
-		{0, 1}
-	};
+	static int	direction[4][2] = {{-1, 0}, {0, -1}, {1, 0}, {0, 1}};
 	int			y;
 	int			x;
 
@@ -68,12 +63,12 @@ void	update_player_direction(t_game *game, double dt)
 	double	speed;
 
 	speed = 0.5 * dt;
-	game->player.dir.x += (game->player.target_dir.x
-			- game->player.dir.x) * speed;
-	game->player.dir.y += (game->player.target_dir.y
-			- game->player.dir.y) * speed;
-	game->player.plane.x += (game->player.target_plane.x
-			- game->player.plane.x) * speed;
-	game->player.plane.y += (game->player.target_plane.y
-			- game->player.plane.y) * speed;
+	game->player.dir.x += (game->player.target_dir.x - game->player.dir.x)
+		* speed;
+	game->player.dir.y += (game->player.target_dir.y - game->player.dir.y)
+		* speed;
+	game->player.plane.x += (game->player.target_plane.x - game->player.plane.x)
+		* speed;
+	game->player.plane.y += (game->player.target_plane.y - game->player.plane.y)
+		* speed;
 }

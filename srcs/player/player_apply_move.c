@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/08 17:25:56 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/08 17:33:24 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/08 18:39:15 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,14 @@ static void	player_snap_for_move(t_game *g, double dx, double dy)
 	if (ay < 0.0)
 		ay = -ay;
 	if (ax > ay)
-		player_snap_axis(&g->player.pos.tile_pos.y,
-			PLAYER_SPEED * 0.50, 0.03);
+		player_snap_axis(&g->player.pos.tile_pos.y, PLAYER_SPEED * 0.50, 0.03);
 	else
-		player_snap_axis(&g->player.pos.tile_pos.x,
-			PLAYER_SPEED * 0.50, 0.03);
+		player_snap_axis(&g->player.pos.tile_pos.x, PLAYER_SPEED * 0.50, 0.03);
 }
 
 static void	move_player_position(t_game *g, double dx, double dy)
 {
-	if (!player_collect_pacdots(g)
-		&& !player_collect_energizer(g))
+	if (!player_collect_pacdots(g) && !player_collect_energizer(g))
 	{
 		g->player.pos.tile_pos.x += dx;
 		g->player.pos.tile_pos.y += dy;
@@ -68,8 +65,7 @@ void	apply_player_movement(t_game *g, double dx, double dy)
 	player_wrap_position(g);
 	move_player_position(g, dx, dy);
 	handle_ghost_touch(g);
-	if (g->player.collected_dots >= g->pacdot_count
-		+ g->energizer_count
+	if (g->player.collected_dots >= g->pacdot_count + g->energizer_count
 		&& g->player.collected_dots)
 		reset_game(g, 0);
 }

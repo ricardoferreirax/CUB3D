@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/08 15:42:48 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/08 18:00:37 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/08 18:41:55 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ static void	handle_player_death(t_game *g)
 	g->player.lives--;
 	if (g->player.lives <= 0)
 		exit_game(EXIT_FAILURE, g, "You are dead");
-	play_death(g,
-		(t_point){g->player.pos.pixel_pos.x,
+	play_death(g, (t_point){g->player.pos.pixel_pos.x,
 		g->player.pos.pixel_pos.y});
 	reset_game(g, 1);
 }

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 22:42:10 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/08 15:35:52 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/08 18:36:42 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	player_collision(t_game *g)
 	int			row;
 
 	player = &g->player;
-	row = (int)player->pos.tile_pos.y;                   
-	col = (int)(player->pos.tile_pos.x - PLAYER_RADIUS); 
-	if (player_hits_wall(g, row, col))                   
+	row = (int)player->pos.tile_pos.y;
+	col = (int)(player->pos.tile_pos.x - PLAYER_RADIUS);
+	if (player_hits_wall(g, row, col))
 		player->pos.tile_pos.x = col + 1 + PLAYER_RADIUS;
 	col = (int)(player->pos.tile_pos.x + PLAYER_RADIUS);
 	if (player_hits_wall(g, row, col))

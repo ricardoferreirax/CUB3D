@@ -1,12 +1,12 @@
-/* ************************************************************************* */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   player_controller.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/26 22:56:32 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/11 17:20:54 by rmedeiro         ###   ########.fr       */
+/*   Created: 2026/05/08 18:37:15 by rmedeiro          #+#    #+#             */
+/*   Updated: 2026/05/08 18:37:20 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ static void	player_pacman_controller(t_game *g)
 	if (g->key.a || g->key.left)
 		player_move(g, 1);
 	update_player_direction(g, 1);
-	apply_player_movement(g,
-		g->player.target_dir.x * PLAYER_SPEED,
+	apply_player_movement(g, g->player.target_dir.x * PLAYER_SPEED,
 		g->player.target_dir.y * PLAYER_SPEED);
 }
 
