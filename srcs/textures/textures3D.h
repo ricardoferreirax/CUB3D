@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:20:35 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/07 15:49:03 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/08 15:24:39 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	parse_floor_ceiling_line(t_game *g, char id, char *value);
 int	parse_floor_ceiling_color(const char *s, int *dest);
 
 void	draw_wall_column(t_game *g, int x);
-
+int	parse_pacman_texture_line(t_game *g, char *p);
 void	parse_texture_path(t_game *g, const char *path);
+
 #endif

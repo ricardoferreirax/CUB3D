@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 21:15:30 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/07 15:14:30 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/08 15:31:44 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,32 +41,26 @@ int	read_rgb(const char *s, int *i, int *out)
 int	parse_floor_ceiling_color(const char *s, int *dest)
 {
 	int	i;
-	int	red;
-	int	green;
-	int	blue;
+	int	r;
+	int	g;
+	int	b;
 
 	if (*dest != -1)
 		return (0);
 	i = 0;
 	while (s[i] == ' ' || s[i] == '\t')
 		i++;
-	if (!read_rgb(s, &i, &red))
+	if (!read_rgb(s, &i, &r) || s[i] != ',')
 		return (0);
-	if (s[i] != ',')
+	if (!read_rgb(s, ++i, &g) || s[i] != ',')
 		return (0);
-	i++;
-	if (!read_rgb(s, &i, &green))
-		return (0);
-	if (s[i] != ',')
-		return (0);
-	i++;
-	if (!read_rgb(s, &i, &blue))
+	if (!read_rgb(s, ++i, &b))
 		return (0);
 	while (s[i] == ' ' || s[i] == '\t')
 		i++;
 	if (s[i] && s[i] != '\n')
 		return (0);
-	*dest = rgb_to_int(red, green, blue);
+	*dest = rgb_to_int(r, g, b);
 	return (1);
 }
 

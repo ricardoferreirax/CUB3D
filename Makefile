@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/05/07 16:29:33 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/05/08 15:25:01 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ SRC_FILES = main.c \
 	srcs/textures/texture_parse_color.c \
 	srcs/textures/texture_utils.c \
 	srcs/textures/texture_load.c \
+	srcs/textures/texture_parse_pacman.c \
 	srcs/textures/texture_parse_path.c \
 	srcs/textures/texture_pick_wall.c \
 	srcs/debug/ray_debug_cast.c \
