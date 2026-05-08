@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/07 16:28:03 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/08 17:46:25 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,16 +309,6 @@ typedef enum e_mode
 	MODE_CUBE = 0,
 	MODE_PACMAN = 1
 }					t_mode;
-
-typedef enum e_player_action
-{
-	MOVE_FORWARD,
-	MOVE_BACKWARD,
-	MOVE_LEFT,
-	MOVE_RIGHT,
-	ROTATE_LEFT,
-	ROTATE_RIGHT
-}					t_player_action;
 
 typedef struct s_textures
 {
