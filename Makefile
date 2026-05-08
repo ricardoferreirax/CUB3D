@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/05/08 15:43:36 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/05/08 16:52:33 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ SRC_FILES = main.c \
 	srcs/player/player_collect_pacdots.c \
 	srcs/player/player_controller.c \
 	srcs/player/player_touch_ghost.c \
+	srcs/init/init_player.c \
 	srcs/player/player_spawn.c \
 	srcs/render/raycast_frame.c \
 	srcs/render/raycast_find_wall.c \

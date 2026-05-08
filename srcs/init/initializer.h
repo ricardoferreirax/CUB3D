@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:25:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/02 09:53:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/08 16:04:56 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,7 @@ void	init_execution(t_game *g);
 void	init_menu(t_game *g);
 void	init_base(t_game *s);
 int		init_spritesheet(t_game *game);
+void	init_player(t_game *game, int is_death);
+void	player_sprites(t_game *game);
+
 #endif
