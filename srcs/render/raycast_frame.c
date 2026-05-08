@@ -6,13 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/07 15:47:03 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/08 18:28:22 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
-#include "render3D.h"
 #include "../textures/textures3D.h"
+#include "render3D.h"
 
 static int	register_center_hit(t_game *g, int col, int found)
 {
