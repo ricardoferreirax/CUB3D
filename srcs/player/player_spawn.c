@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 21:11:27 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/17 14:37:37 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/08 15:37:13 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ static void	set_player_spawn(t_game *game, int col, int row, char dir)
 	set_player_orientation_ew(game, dir);
 	game->player.target_dir = game->player.dir;
 	game->player.target_plane = game->player.plane;
-	// game->map.grid[row][col] = OPEN_SPACE;
 }
 
 static t_point	find_player_spawn(t_game *game)
@@ -89,8 +88,7 @@ static t_point	find_player_spawn(t_game *game)
 			if (tile == 'N' || tile == 'S' || tile == 'E' || tile == 'W')
 			{
 				if (spawn_count)
-					exit_game(EXIT_MAP, game,
-						"find_player_spawn() has found more than one player");
+					exit_game(EXIT_MAP, game, "find_player_spawn() more than one player");
 				spawn_count = true;
 				spawn.x = x;
 				spawn.y = y;

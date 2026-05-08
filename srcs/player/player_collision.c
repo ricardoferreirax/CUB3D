@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 22:42:10 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/05 18:14:47 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/08 15:35:52 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,9 @@ void	player_collision(t_game *g)
 
 	player = &g->player;
 	row = (int)player->pos.tile_pos.y;                   
-		// converte a posiçao do player para as coordenadas do tile
 	col = (int)(player->pos.tile_pos.x - PLAYER_RADIUS); 
-		// converte a posiçao do player para as coordenadas do tile considerando o raio do player para detectar colisões com as paredes
 	if (player_hits_wall(g, row, col))                   
-		// se o player colidir com uma parede
 		player->pos.tile_pos.x = col + 1 + PLAYER_RADIUS;
-			// ajusta a posição do player para ficar encostado a parede considerando o raio do player
 	col = (int)(player->pos.tile_pos.x + PLAYER_RADIUS);
 	if (player_hits_wall(g, row, col))
 		player->pos.tile_pos.x = col - PLAYER_RADIUS;

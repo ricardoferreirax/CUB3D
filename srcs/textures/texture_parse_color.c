@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 21:15:30 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/08 15:31:44 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/08 15:51:35 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,49 +38,38 @@ int	read_rgb(const char *s, int *i, int *out)
 	return (1);
 }
 
+static int	parse_rgb_color(const char *s, int *i, int *color)
+{
+	if (!read_rgb(s, i, color))
+		return (0);
+	if (s[*i] != ',')
+		return (0);
+	(*i)++;
+	return (1);
+}
+
 int	parse_floor_ceiling_color(const char *s, int *dest)
 {
 	int	i;
-	int	r;
-	int	g;
-	int	b;
+	int	red;
+	int	green;
+	int	blue;
 
 	if (*dest != -1)
 		return (0);
 	i = 0;
 	while (s[i] == ' ' || s[i] == '\t')
 		i++;
-	if (!read_rgb(s, &i, &r) || s[i] != ',')
+	if (!parse_rgb_color(s, &i, &red))
 		return (0);
-	if (!read_rgb(s, ++i, &g) || s[i] != ',')
+	if (!parse_rgb_color(s, &i, &green))
 		return (0);
-	if (!read_rgb(s, ++i, &b))
+	if (!read_rgb(s, &i, &blue))
 		return (0);
 	while (s[i] == ' ' || s[i] == '\t')
 		i++;
 	if (s[i] && s[i] != '\n')
 		return (0);
-	*dest = rgb_to_int(r, g, b);
+	*dest = rgb_to_int(red, green, blue);
 	return (1);
-}
-
-int	parse_floor_ceiling_line(t_game *g, char id, char *value)
-{
-	value = skip_whitespace(value);
-	strip_newline(value);
-	if (!*value)
-		return (0);
-	if (id == 'F')
-	{
-		if (is_xpm_path(value))
-			return (set_texture_path(&g->tex.floor, value, g), 1);
-		return (parse_floor_ceiling_color(value, &g->map.floor_color));
-	}
-	else if (id == 'C')
-	{
-		if (is_xpm_path(value))
-			return (set_texture_path(&g->tex.ceiling, value, g), 1);
-		return (parse_floor_ceiling_color(value, &g->map.ceiling_color));
-	}
-	return (0);
 }

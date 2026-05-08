@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:17:53 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/05 21:23:01 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/08 15:52:36 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ int	is_xpm_path(const char *s)
 	while (s[i] == ' ' || s[i] == '\t')
 		i++;
 	len = 0;
-	while (s[i + len] && s[i + len] != '\n' && s[i + len] != '\r' && s[i
-		+ len] != ' ' && s[i + len] != '\t')
+	while (s[i + len] && s[i + len] != '\n' && s[i + len] != '\r' 
+		&& s[i + len] != ' ' && s[i + len] != '\t')
 		len++;
 	if (len < 4)
 		return (0);
-	return (s[i + len - 4] == '.' && s[i + len - 3] == 'x' && s[i + len
-		- 2] == 'p' && s[i + len - 1] == 'm');
+	return (s[i + len - 4] == '.' && s[i + len - 3] == 'x' 
+		&& s[i + len - 2] == 'p' && s[i + len - 1] == 'm');
 }
