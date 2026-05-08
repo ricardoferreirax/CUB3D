@@ -19,7 +19,7 @@ t_double_point	continue_travel(t_game *game, t_ghost *ghost, int ignore_walls);
 
 void			ghost_move_pixel(t_ghost *gh, int dx, int dy);
 bool			cannot_move_up(t_game *game, t_ghost *ghost);
-int				chose_next_move(t_game *game, t_ghost *ghost, char **map);
+int				chose_next_move(t_game *game, t_ghost *ghost, t_map *map);
 void			ghost_set_pixel_pos(t_ghost *gh, double px, double py);
 int				update_ghost(t_game *game, t_ghost *ghost);
 bool			is_on_penhouse(t_point ghost_pos, t_point gate_pos);

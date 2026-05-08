@@ -22,7 +22,7 @@ int	is_ghost_on_deadend(t_game *game, t_ghost *ghost, int direction[4][2],
 	dir = (ghost->invalid_dir + 2) % 4;
 	next_tile.y = (ghost->pos.pixel_pos.y / TILE_SIZE) + direction[dir][0];
 	next_tile.x = (ghost->pos.pixel_pos.x / TILE_SIZE) + direction[dir][1];
-	if (!ignore_walls // && in_bounds(&game->map, next_tile)
+	if (!ignore_walls && in_bounds(&game->map, next_tile)
 		&& (game->map.grid[next_tile.y][next_tile.x] == '1'
 			|| game->map.grid[next_tile.y][next_tile.x] == 'G'))
 	{
@@ -121,27 +121,23 @@ int	rng_machine(void)
 	return (best_dir);
 }
 
-int	chose_frightened_dir(t_ghost *ghost, char **map, int direction[4][2])
+int	chose_frightened_dir(t_ghost *ghost, t_map *map, int direction[4][2])
 {
 	int		best_dir;
 	int		tries;
 	t_point	check_dir;
-	t_map	mapped;
 
 	best_dir = rng_machine();
 	tries = 0;
-	mapped.grid = map;
-	mapped.width = xtile(map);
-	mapped.height = ytile(map);
 	while (tries < 4)
 	{
 		check_dir.x = ghost->pos.pixel_pos.x / TILE_SIZE
 			+ direction[best_dir][1];
 		check_dir.y = ghost->pos.pixel_pos.y / TILE_SIZE
 			+ direction[best_dir][0];
-		if (in_bounds(&mapped, check_dir)
-			&& ((map[check_dir.y][check_dir.x] != '1'
-					&& map[check_dir.y][check_dir.x] != 'G')
+		if (in_bounds(map, check_dir)
+			&& ((map->grid[check_dir.y][check_dir.x] != '1'
+					&& map->grid[check_dir.y][check_dir.x] != 'G')
 				&& best_dir != ghost->invalid_dir))
 			break ;
 		best_dir = (best_dir + 3) % 4;
@@ -150,14 +146,16 @@ int	chose_frightened_dir(t_ghost *ghost, char **map, int direction[4][2])
 	return (best_dir);
 }
 
-bool	is_not_blocked(t_ghost *ghost, char **map, int direction[4][2], int i)
+bool	is_not_blocked(t_ghost *ghost, t_map *map, int direction[4][2], int i)
 {
 	int	y;
 	int	x;
 
 	y = ghost->pos.pixel_pos.y / TILE_SIZE + direction[i][0];
 	x = ghost->pos.pixel_pos.x / TILE_SIZE + direction[i][1];
-	return (map[y][x] != '1' && map[y][x] != 'G' && i != ghost->invalid_dir);
+	if(!in_bounds(map, (t_point){.x = x, .y = y}))
+		return false;
+	return (map->grid[y][x] != '1' && map->grid[y][x] != 'G' && i != ghost->invalid_dir);
 }
 
 int	squared_distance(int x1, int y1, int x2, int y2)
@@ -170,7 +168,7 @@ int	squared_distance(int x1, int y1, int x2, int y2)
 	return (dx * dx + dy * dy);
 }
 
-int	chose_next_dir(t_ghost *ghost, char **map, int direction[4][2])
+int	chose_next_dir(t_ghost *ghost, t_map *map, int direction[4][2])
 {
 	int		i;
 	t_point	target;
@@ -199,7 +197,7 @@ int	chose_next_dir(t_ghost *ghost, char **map, int direction[4][2])
 	return (best_dir);
 }
 
-int	chose_next_move(t_game *game, t_ghost *ghost, char **map)
+int	chose_next_move(t_game *game, t_ghost *ghost, t_map *map)
 {
 	int	best_dir;
 
@@ -419,8 +417,8 @@ int	update_ghost(t_game *game, t_ghost *ghost)
 		return (-1);
 	if (ghost->name == DISABLED || game->mode == MODE_CUBE)
 		return (0);
-	if (ghost_in_penhouse(ghost, ghost->mental_map))
-		return (ghost_penhouse_dance(game, ghost, find_c(ghost->mental_map,
+	if (ghost_in_penhouse(ghost, ghost->mental_map.grid))
+		return (ghost_penhouse_dance(game, ghost, find_c(ghost->mental_map.grid,
 					'G')));
 	if (ghost->state == FRIGHTENED && get_time_us()
 		- game->timer.frightened_time_start > (long)(game->timer.frightened_time
@@ -444,7 +442,7 @@ int	update_ghost(t_game *game, t_ghost *ghost)
 		return (0);
 		// continua o movimento atual do ghost
 	}
-	ghost->invalid_dir = chose_next_move(game, ghost, ghost->mental_map);
+	ghost->invalid_dir = chose_next_move(game, ghost, &ghost->mental_map);
 	if (ghost->invalid_dir == -1)
 		return (-1);
 	return (0);

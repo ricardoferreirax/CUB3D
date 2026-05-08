@@ -70,8 +70,12 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char,
 	if (g->mode == MODE_CUBE)
 		return (-1);
 	if (!is_death)
-		gh->mental_map = copy_map(g->map.grid);
-	if (!gh->mental_map && !is_death)
+	{
+		gh->mental_map.grid = copy_map(g->map.grid);
+		gh->mental_map.height = ytile(gh->mental_map.grid);
+		gh->mental_map.width = xtile(gh->mental_map.grid);
+	}
+	if (!gh->mental_map.grid && !is_death)
 		exit_game(EXIT_MALLOC, g, "init_one_ghost() was unable to copy map");
 	target_point = find_c(g->map.grid, target_char);
 	spawn_point = find_spawn(g->map.grid, target_char);
@@ -82,13 +86,9 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char,
 		g->targets.ghost_house = spawn_point;
 	g->targets.scatter_target[gh->name] = target_point;
 	gh->pos.tile_pos.x = (double)spawn_point.x + 0.5;               
-		// posiciona o ghost no centro do spawn tile no eixo x
 	gh->pos.tile_pos.y = (double)spawn_point.y + 0.5;               
-		// posiciona o ghost no centro do spawn tile no eixo y
 	gh->pos.pixel_pos.x = spawn_point.x * TILE_SIZE + TILE_SIZE / 2;
-		// converte o spawn tile para pixels e centra o fanstasma no tile no eixo x
 	gh->pos.pixel_pos.y = spawn_point.y * TILE_SIZE + TILE_SIZE / 2;
-		// converte o spawn tile para pixels e centra o fanstasma no tile no eixo y
 	gh->invalid_dir = 3;
 	gh->target_tile = target_point;
 	gh->state = SCATTER;

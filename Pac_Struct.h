@@ -244,6 +244,7 @@ typedef struct s_elroy
 }					t_elroy;
 
 typedef struct s_ghost
+
 {
 	e_ghost			name;
 	t_pos			pos;
@@ -258,7 +259,7 @@ typedef struct s_ghost
 	int				is_steping_on_pacdot;
 	t_anim			anim;
 	int				invalid_dir;
-	char			**mental_map;
+	t_map			mental_map;
 	t_sprite_ref	sprite;
 	t_elroy			cruiser;
 	e_state			state;

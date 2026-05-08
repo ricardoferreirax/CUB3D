@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/05/07 15:47:25 by pfreire-         ###   ########.fr        #
+#    Updated: 2026/05/08 10:44:48 by pfreire-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -119,6 +119,7 @@ fclean: clean
 	$(MAKE) -C libft fclean
 
 re: fclean all
+
 e: all clean
 	clear
 a:

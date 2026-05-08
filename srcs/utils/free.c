@@ -123,10 +123,10 @@ static void	free_pacman_arrays(t_game *g)
 	i = 0;
 	while (i < 4)
 	{
-		if (g->ghosts[i].mental_map)
+		if (g->ghosts[i].mental_map.grid)
 		{
-			free_2d((void *)g->ghosts[i].mental_map);
-			g->ghosts[i].mental_map = NULL;
+			free_2d((void *)g->ghosts[i].mental_map.grid);
+			g->ghosts[i].mental_map.grid = NULL;
 		}
 		i++;
 	}
@@ -134,7 +134,7 @@ static void	free_pacman_arrays(t_game *g)
 
 void	free_ghost(t_ghost *ghost)
 {
-	free_2d((void **)ghost->mental_map);
+	free_2d((void **)ghost->mental_map.grid);
 }
 
 void	free_game(t_game *g)
