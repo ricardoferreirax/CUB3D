@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:53:00 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/10 21:07:49 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/12 17:54:37 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int	map_is_valid_tile(t_game *g, char c)
 {
-	return (1);
 	if (c == '\0')
 		return (0);
 	if (c == '\n')
@@ -78,8 +77,7 @@ void	map_validate_closed(t_game *g)
 				|| map_tile_type(map_get_tile(g, row, col - 1), TILE_VOID)
 				|| map_tile_type(map_get_tile(g, row + 1, col), TILE_VOID)
 				|| map_tile_type(map_get_tile(g, row - 1, col), TILE_VOID))
-				exit_game(EXIT_MAP, g,
-					"map_validate_closed: map is not closed");
+				exit_game(EXIT_MAP, g, "map_validate_closed: map not closed");
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 23:18:06 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/11 19:47:41 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/12 17:50:14 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_key
 	int					e_lock;
 	int					mouse_lock;
 	int					mouse_hidden;
+	int					mouse_captured;
 	int					k;
 	int					controller_start;
 }						t_key;
@@ -57,5 +58,6 @@ int						handle_key_release(int keycode, t_game *g);
 void					handle_gate_toggle(t_game *g);
 int						handle_mouse_move(int x, int y, t_game *g);
 void					center_mouse(t_game *g);
+void					toggle_mouse_capture(t_game *g);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:41:18 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/05 10:30:02 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/12 17:54:43 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,13 @@ int	map_row_last_col(t_game *g, int row, int want_wrap)
 		return (-1);
 	s = g->map.grid[row];
 	last = (int)ft_strlen(s) - 1;         
-		// começa no último índice da string (antes do '\0')
-	while (last >= 0 && (s[last] == '\n')) // ignora as '\n' no final da row
+	while (last >= 0 && (s[last] == '\n'))
 		last--;
-	if (!want_wrap) // se não queremos uma row com wrap
+	if (!want_wrap)
 		return (last);
 	if (last < 1 || s[0] != WRAP_PORTS || s[last] != WRAP_PORTS)
-		// se as extremidades da row não forem wrap ou se a row não tiver pelo menos 2 colunas
 		return (-1);
-	return (last); // devolve o índice da última coluna (antes do '\n')
+	return (last);
 }
 
 char	map_get_tile(t_game *game, int row, int col)
@@ -61,7 +59,7 @@ char	map_get_tile(t_game *game, int row, int col)
 	if (!game || !game->map.grid || row < 0 || row >= game->map.height)
 		return (VOID);
 	last_col = map_row_last_col(game, row, 1);
-	if (last_col >= 0) // se a row tem wrap ajusta a coluna para permitir o wrap
+	if (last_col >= 0)
 	{
 		if (col < 0)
 			col = last_col;
@@ -69,12 +67,10 @@ char	map_get_tile(t_game *game, int row, int col)
 			col = 0;
 	}
 	else
-		// se a row no tem wrap verifica se a coluna esta dentro dos limites e se o tile nessa posição e válido
 		last_col = map_row_last_col(game, row, 0);
 	if (col < 0 || col > last_col || game->map.grid[row][col] <= ' ')
-		// se a coluna esta fora dos limites ou se o tile é um espaço
 		return (VOID);
-	return (game->map.grid[row][col]); // devolve o tile na posição (row, col)
+	return (game->map.grid[row][col]);
 }
 
 int	map_is_empty_line(char *s)
