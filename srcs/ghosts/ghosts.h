@@ -27,13 +27,13 @@ int				ghost_penhouse_dance(t_game *game, t_ghost *ghost,
 					t_point gate);
 bool			can_ghost_exit_penhouse(t_game *game, t_ghost *ghost);
 int				ghost_in_penhouse(t_ghost *ghost, char **map);
-void			update_target(t_game *game, t_ghost *ghost, int mode);
+void			update_target(t_game *game, t_ghost *ghost);
 t_point			chase_player(t_game *game, t_ghost *ghost);
 t_point			ghost_pos_intile(t_point pos);
 t_point			inky_target(t_game *game);
 t_point			pinky_target(t_game *game, int n);
 void			goto_penhouse(t_game *game, t_ghost *ghost);
-bool			ghost_ai(t_game *game, t_ghost *ghost, int i);
+bool			ghost_ai(t_game *game, t_ghost *ghost);
 
 void			ghost_sprites(t_game *game, e_ghost ghost);
 

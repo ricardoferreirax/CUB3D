@@ -339,9 +339,8 @@ void	update_cruise_elroy(t_game *game, t_ghost *ghost)
 	}
 }
 
-void	update_target(t_game *game, t_ghost *ghost, int mode)
+void	update_target(t_game *game, t_ghost *ghost)
 {
-	(void)mode;
 	if (ghost->state == EATEN)
 		goto_penhouse(game, ghost);
 	if (ghost->state == SCATTER && (!ghost->cruiser.is_blinky
@@ -436,11 +435,10 @@ int	update_ghost(t_game *game, t_ghost *ghost)
 	if (ghost->pos.pixel_pos.x % TILE_SIZE != TILE_SIZE / 2
 		|| ghost->pos.pixel_pos.y % TILE_SIZE != TILE_SIZE / 2)
 	{
-		update_target(game, ghost, 0);
+		update_target(game, ghost);
 		next = continue_travel(game, ghost, 0);
 		ghost_set_pixel_pos(ghost, next.x, next.y);
 		return (0);
-		// continua o movimento atual do ghost
 	}
 	ghost->invalid_dir = chose_next_move(game, ghost, &ghost->mental_map);
 	if (ghost->invalid_dir == -1)
@@ -448,11 +446,10 @@ int	update_ghost(t_game *game, t_ghost *ghost)
 	return (0);
 }
 
-bool	ghost_ai(t_game *game, t_ghost *ghost, int i)
+bool	ghost_ai(t_game *game, t_ghost *ghost)
 {
 	if (ghost->name == DISABLED)
 		return (true);
-	(void)i;
 	ghost_wrap_position(game, ghost);
 	update_ghost(game, ghost);
 	if (ghost->state != game->global_state && ghost->state != FRIGHTENED

@@ -22,25 +22,23 @@ void	init_base(t_game *s)
 	unsigned int	color;
 
 	color = 0;
-	point.x = 0;
-	point.y = 0;
+	point.x = -1;
+	point.y = -1;
 	s->base.img_ptr = mlx_new_image(s->mlx_ptr, s->win.width, s->win.height);
 	s->base.img_addr = mlx_get_data_addr(s->base.img_ptr, &s->base.bpp,
 			&s->base.l_len, &s->base.endian);
 	s->base.width = s->map.width * TILE_SIZE;
 	s->base.height = s->map.height * TILE_SIZE;
-	while (point.y < s->map.height)
+	while (++point.y < s->map.height)
 	{
-		point.x = 0;
-		while (point.x < s->map.width)
+		point.x = -1;
+		while (++point.x < s->map.width)
 		{
 			tile = which_tile(s->map.grid, &s->map, point, s->debug_mode);
 			if (tile == -1)
 				exit_game(EXIT_MALLOC, s,
 					"init_base(): Something when very wrong in tile selection");
 			put_tile_inbase(s, tile, color, point);
-			point.x++;
 		}
-		point.y++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:25:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/02 09:53:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/08 14:11:14 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,7 @@ void	init_execution(t_game *g);
 void	init_menu(t_game *g);
 void	init_base(t_game *s);
 int		init_spritesheet(t_game *game);
+
+int	controller_finder(char *argv);
+bool	wrong_args(t_game *game, int ac, char **argv);
 #endif

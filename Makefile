@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/05/08 10:44:48 by pfreire-         ###   ########.fr        #
+#    Updated: 2026/05/12 11:20:02 by pfreire-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,12 +40,14 @@ SRC_FILES = main.c \
 	srcs/hooks/handle_gate_toggle.c \
 	srcs/hooks/handle_keys.c \
 	srcs/hooks/handle_mouse.c \
+	srcs/hooks/controller_player.c \
 	srcs/init/init_mlx.c \
 	srcs/init/init_spritesheet.c \
 	srcs/init/init_sprites.c \
 	srcs/init/init.c \
 	srcs/init/init_base.c \
 	srcs/init/init_ghosts.c \
+	srcs/init/parse.c \
 	srcs/map/map_read.c \
 	srcs/map/map_utils.c \
 	srcs/map/map_load.c \
@@ -81,8 +83,10 @@ SRC_FILES = main.c \
 	srcs/utils/helpers.c \
 	srcs/utils/free.c \
 	srcs/utils/render_utils.c \
-	srcs/base/base_constructor.c \
-	srcs/base/base_bitmasking.c \
+	srcs/base/constructor.c \
+	srcs/base/bitmasking.c \
+	srcs/base/helpers.c \
+	srcs/base/disambiguation.c \
 	srcs/ghosts/ghost_ai.c \
 	srcs/ghosts/sprites.c  \
 	srcs/ghosts/helpers.c \

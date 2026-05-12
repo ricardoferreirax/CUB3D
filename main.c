@@ -6,49 +6,16 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 21:34:25 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/06 15:36:34 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/08 14:16:08 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "srcs/draw/draw.h"
 #include "srcs/init/initializer.h"
 #include "srcs/map/map3D.h"
 #include "srcs/render/render3D.h"
 #include "srcs/textures/textures3D.h"
 #include "srcs/utils/helpers.h"
-#include "srcs/draw/draw.h"
-
-void	print_2d(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr && arr[i])
-	{
-		ft_printf("%s\n", arr[i]);
-		i++;
-	}
-}
-
-void	segfault_func(t_game *game)
-{
-	char	*arr;
-	int		i;
-
-	if (game->level <= 255)
-		return ;
-	free_game(game);
-	arr = NULL;
-	i = 0;
-	sleep(2);
-	ft_printf("You acctually managed to reach level 256?\n");
-	sleep(2);
-	ft_printf("You probably cheated to get here, no one would play this for that long\n");
-	sleep(2);
-	ft_printf("Anyways, I hope you know that this is the kill screen so here's your award\n");
-	sleep(5);
-	while (1 || i++)
-		arr[i] = arr[i + i];
-}
 
 void	reset_game(t_game *game, int is_death)
 {
@@ -75,66 +42,6 @@ void	reset_game(t_game *game, int is_death)
 	game->player.collected_dots = 0;
 }
 
-void d_pad_handler(t_game *game, struct input_event event)
-{
-			if (event.code == ABS_HAT0X)
-			{
-				game->key.a = (event.value == -1);
-				game->key.d = (event.value == 1);
-			}
-			else if (event.code == ABS_HAT0Y)
-			{
-				game->key.w = (event.value == -1);
-				game->key.s = (event.value == 1);
-			}
-			else if (event.code == ABS_RZ)
-				game->key.e = (event.value > 100); // threshold
-}
-
-void face_button_handler(t_game *game, struct input_event event)
-{
-
-			if (event.code == BTN_SOUTH) // Xis
-				game->key.down = event.value;
-			else if (event.code == BTN_NORTH) // Triangulo
-				game->key.up = event.value;
-			else if (event.code == BTN_WEST) // Quadrado
-				game->key.left = event.value;
-			else if (event.code == BTN_EAST) // Bolinha
-				game->key.right = event.value;
-			// R1 → M
-			else if (event.code == BTN_TR)
-				game->key.k = event.value;
-			else if (event.code == BTN_START)
-				game->key.controller_start = event.value;
-}
-
-void	controller_player(t_game *game)
-{
-	struct input_event	event;
-
-	if (game->controller_fd < 0)
-		return ;
-	while (read(game->controller_fd, &event, sizeof(event)) > 0)
-	{
-		if (event.type != EV_KEY && event.type != EV_ABS)
-			continue ;
-		if (event.type == EV_KEY)
-			face_button_handler(game, event);
-		if (event.type == EV_ABS)
-			d_pad_handler(game,event);
-	}
-}
-
-int change_game_mode(t_game *game)
-{
-	if(game->timer.mode >= 7)
-		return CHASE;
-	else if(game->timer.mode % 2 == 0)
-		return SCATTER;
-	return CHASE;
-}
-
 int	gameloop(t_game *game)
 {
 	long	now;
@@ -149,10 +56,7 @@ int	gameloop(t_game *game)
 	if (now - game->timer.last_time_up < UPDATE_F)
 		return (0);
 	game->timer.last_time_up = now;
-	if (game->timer.mode < 8 && game->state == PLAY
-		&& game->timer.times[game->timer.mode] >= 0 && now
-		- game->timer.mode_time_start > (long)(game->timer.times[game->timer.mode])
-		* 1000000.0)
+	if (is_time_up(game, now))
 	{
 		game->timer.mode++;
 		game->global_state = change_game_mode(game);
@@ -161,43 +65,6 @@ int	gameloop(t_game *game)
 	if (game->state == MENU)
 		return (game->timer.mode_time_start = now, draw_menu(game), 0);
 	return (render_frame(game), 0);
-}
-
-int controller_finder(char *argv)
-{
-	int num;
-	num = ft_atoi(argv);
-	if(num <= 0)
-		return (ft_printf("Input a valid positive integer for Controller Event ID\n"), -1);
-	char *path = ft_strjoin("/dev/input/event", argv);
-	ft_printf("Looking for Controller: %s\n", path);
-	if (!path)
-		return (ft_printf("Malloc Failed?"), -1);
-	num = open(path, O_RDONLY | O_NONBLOCK);
-	free(path);
-	return(num);
-}
-
-bool	wrong_args(t_game *game, int ac, char **argv)
-{
-	int		i;
-
-	i = 2;
-	game->debug_mode = false;
-	game->controller_fd = -1;
-	while (i < ac)
-	{
-		if (ft_strcmp(argv[i], "debug_mode=y") == 0)
-			game->debug_mode = true;
-		else
-		{
-			game->controller_fd = controller_finder(argv[i]);
-			if (game->controller_fd < 0)
-				return (printf("Provided ID doesn't exist"), true);
-		}
-		i++;
-	}
-	return (false);
 }
 
 int	main(int ac, char **av)

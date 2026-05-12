@@ -137,18 +137,26 @@ void	free_ghost(t_ghost *ghost)
 	free_2d((void **)ghost->mental_map.grid);
 }
 
-void	free_game(t_game *g)
+void free_raycast(t_game *g)
 {
-	int	i;
 
-	if (!g)
-		return ;
 	if (g->ray.z_buffer)
 		free(g->ray.z_buffer);
 	g->ray.z_buffer = NULL;
 	if (g->ray.sprite_z)
 		free(g->ray.sprite_z);
 	g->ray.sprite_z = NULL;
+	if (g->controller_fd != -1)
+		close(g->controller_fd);
+}
+
+void	free_game(t_game *g)
+{
+	int	i;
+
+	if (!g)
+		return ;
+	free_raycast(g);
 	free_pacman_arrays(g);
 	if (g->map.grid)
 		free_2d((void *)g->map.grid);
@@ -167,7 +175,5 @@ void	free_game(t_game *g)
 	i = -1;
 	while (++i < 4)
 		free_ghost(&g->ghosts[i]);
-	if (g->controller_fd != -1)
-		close(g->controller_fd);
 	free(g);
 }

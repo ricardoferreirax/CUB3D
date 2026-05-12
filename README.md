@@ -87,3 +87,108 @@ The map must contain only expected characters and those are:
 'c' - Clyde's Scatter Target  
 (Ghosts with missing Scatter Targets will be considered Disabled and will not appear during gameplay)
 
+
+# Other Info
+## BitMask Catalog
+### BitMask to Tile Catalog
+There are two globals that serve as a reference table for creating the bitmask.
+Simply a SpriteSheet is used, on it every sprite is marked witha unique decimal index, ranging from 0 to 255.
+The game then checks the 8 nearest neiborgh of a tile to determinate what it should be. It does this by making each tile with a 1 or a 0
+Accept the example below
+|1|1|0|
+|1|X|0|
+|0|0|0|
+Accept X as the tile we need to find an apropriate sprite for, we kno wthat X is a Wall, so a 1.
+We build a unique binary number that represents this tile by flipping bits from the grateast to the smallest following this order:
+Up, Left, Down, Right, Top Right Corner, Top Left Corner, Bottom Left Corner, Bottom Right Corner.
+In the example we would build the following Binary number: 
+1100 0100
+The first 4 Bits represent the imediate Cardinal neighbors while the 4 last bits represent the diagonals.
+From this number we use the below reference table to find the apropriate index in the SpriteSheet, in this case it would be 62, a bottom right simgle line corner
+
+| Binary Mask | Hexadeciaml Value | SpriteSheet Index | Description |
+|---|---|---:|---|
+| 1111 1111 | 0xFF | 39  | Full Tile |
+| 0011 0001 | 0x31 | 16  | Top Left Corner|
+| 0110 0010 | 0x62 | 18  | Top Right Corner |
+| 1001 1000 | 0x98 | 60  | Bottom Left Corner |
+| 1100 0100 | 0xC4 | 62  | Bottom Right Corner |
+| 1111 1101 | 0xFD | 127 | Reverse Top Right Corner |
+| 1111 1110 | 0xFE | 128 | Reverse Top Left Corner |
+| 1111 0111 | 0xF7 | 106 | Reverse Bottom Left Corner |
+| 1111 1011 | 0xFB | 105 | Reverse Bottom Right Corner |
+| 1011 1001 | 0xB9 | 38  | Vertical Left Wall |
+| 1011 1011 | 0xBB | 38 | Vertical Left Wall |
+| 1011 1101 | 0xBD | 38 | Vertical Left Wall |
+| 1011 1111 | 0xBF | 38 | Vertical Left Wall |
+| 1110 0110 | 0xE6 | 40 | Vertical Right Wall |
+| 1110 1110 | 0xEE | 40 | Vertical Right Wall |
+| 1110 0111 | 0xE7 | 40 | Vertical Right Wall |
+| 1110 1111 | 0xEF | 40 | Vertical Right Wall |
+| 0111 0011 | 0x73 | 17  | Horizontal Top Wall |
+| 0111 0111 | 0x77 | 17 | Horizontal Top Wall |
+| 0111 1011 | 0x7B | 17 | Horizontal Top Wall |
+| 0111 1111 | 0x7F | 17 | Horizontal Top Wall |
+| 1101 1100 | 0xDC | 61 | Horizontal Bottom Wall |
+| 1101 1110 | 0xDE | 61 | Horizontal Bottom Wall |
+| 1101 1101 | 0xDD | 61 | Horizontal Bottom Wall |
+| 1101 1111 | 0xDF | 61 | Horizontal Bottom Wall |
+| 1110 0010 | 0xE2 | 107 | Reverse Bottom Right Vertical Corner Wall |
+| 1011 0001 | 0xB1 | 104 | Reverse Bottom Left Vertical Corner Wall |
+| 1011 1000 | 0xB8 | 126 | Reverse Top Left Vertical Corner Wall |
+| 1110 0100 | 0xE4 | 129 | Reverse Top RIght Vertical Corner Wall |
+| 0111 0001 | 0x71 | 83  | Reverse Top Right Horizontal Corner Wall |
+| 0111 0010 | 0x72 | 84  | Reverse Top Left Horizontal Corner Wall |
+| 1101 1000 | 0xD8 | 150 | Reverse Bottom Right Horizontal Corner Wall  |
+| 1101 0100 | 0xD4 | 151 | Reverse Bottom Left Horizontal Corner Wall |
+
+In some cases the Walls aren't enough to make find a unique sprite, for this purpose the same principle is aplied again but in this case checking for void tiles
+Void tiles are the one that live outside the map and are inaccecible ot the player.
+admit the following example
+|0|1|0|
+|0|X|0|
+|0|1|0|
+Again X in this case is a Wall or a 1.
+By walls alone we know this is a vertical wall, but we don't know if it is a Left Vertical Wall or Right Vertical Wall
+Thus by lookin at the Void Mask, where V is a tile unnacecible ot the player and F is a tile of which the player has acess.
+|V|V|F|
+|V|X|F|
+|V|V|F|
+We  can see that the player can walk on the rght of the wall, so we must chose the sprite that leaves the right open, that being the Left Vertical Wall
+we can again contruct the number follwing the sam erules bu this time a 1 for F and a 0 for V, we get 0001 1001 and we can check the table below to get it's array index
+
+
+| Binary Mask | Hexadeciaml Value | SpriteSheet Index | Description |
+|---|---|---:|---|
+| 1111 1111 | 0xFF | 39 | Full Tile|
+| 0000 0100 | 0x04 | 149 | Bottom Right Curved Border |
+| 0000 1000 | 0x08 | 148 | Bottom Left Curved Border |
+| 0000 0010 | 0x02 | 85 | Top Right Curved Border |
+| 0000 0001 | 0x01 | 82 | Top Left Curved Border |
+| 1100 1110 | 0xCE | 16 | Top Left Corner |
+| 0110 0111 | 0x67 | 60 | Bottom Left Corner |
+| 0011 1011 | 0x3B | 62 | Bottom Right Corner |
+| 1001 1101 | 0x9D | 18 | Top Left Corner |
+| 0100 0110 | 0x46 | 41 | Vertical Wall Right |
+| 0100 0100 | 0x44 | 41 | Vertical Wall Right |
+| 0100 0001 | 0x41 | 41 | Vertical Wall Right |
+| 0100 0000 | 0x40 | 41 | Vertical Wall Right |
+| 0001 1001 | 0x19 | 43 | Vertical Wall Left |
+| 0001 1000 | 0x18 | 43 | Vertical Wall Left |
+| 0001 0001 | 0x11 | 43 | Vertical Wall Left |
+| 0001 0000 | 0x10 | 43 | Vertical Wall Left |
+| 1000 1100 | 0x8C | 20 | Horizontal Wall Top |
+| 1000 1000 | 0x88 | 20 | Horizontal Wall Top |
+| 1000 0100 | 0x84 | 20 | Horizontal Wall Top |
+| 1000 0000 | 0x80 | 20 | Horizontal Wall Top |
+| 0010 0011 | 0x23 | 64 | Horizontal Wall Bottom |
+| 0010 0010 | 0x22 | 64 | Horizontal Wall Bottom |
+| 0010 0001 | 0x21 | 64 | Horizontal Wall Bottom |
+| 0010 0000 | 0x20 | 64 | Horizontal Wall Bottom |
+| 1100 1100 | 0xCC | 103 | Left Gate Frame |
+| 1001 1100 | 0x9C | 101 | Right Gate Frame |
+
+Bellow is the Anotated SpriteSheet.
+For each sprite you can look at the 8 top left corner sprites, by counting them up as binary their Decinmal Value represents their index in the struct  
+Since the SpriteSheet is standardized, it is only needed ot encode the first table and multply by a fixed the coordinates by a multiple of a 200x186 vector to get a new color.  
+![alt text](<assets/sprites/Anotated Sprite Sheet.png>)

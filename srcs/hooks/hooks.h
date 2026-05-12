@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 23:18:06 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/11 19:47:41 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/08 14:13:55 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,5 @@ void					handle_gate_toggle(t_game *g);
 int						handle_mouse_move(int x, int y, t_game *g);
 void					center_mouse(t_game *g);
 
+void	controller_player(t_game *game);
 #endif
