@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:48:48 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/12 18:12:52 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/12 18:36:34 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,3 +69,4 @@ double					get_sprite_wrap_offset_x(t_game *g, double sprite_x,
 int						is_whitespace(char c);
 char					**copy_map(char **map_grid);
 char	map_get_tile_raw(t_game *game, int row, int col);
+void	map_validate_inside_spaces(t_game *g);

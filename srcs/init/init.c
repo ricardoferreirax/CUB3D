@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/12 18:17:20 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/12 18:36:49 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,7 @@ void	init_map(t_game *g, const char *path)
 		exit_game(EXIT_MALLOC, g, "Something broke");
 	free_2d((void **)temp);
 	map_validate_chars(g);
+	map_validate_inside_spaces(g);
 	map_validate_closed(g);
 }
 
