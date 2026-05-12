@@ -6,28 +6,18 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/05/08 17:49:35 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/05/12 11:38:34 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    = cub3d
 
-CC      = gcc -Og
-CFLAGS  = -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion  -Wformat=2 -Wstrict-aliasing=2 \
-		-fno-omit-frame-pointer \
-		-g 
+CC      = clang-12
+CFLAGS  = -O3 -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion  \
+		  -Wformat=2 -Wstrict-aliasing=2 -fno-omit-frame-pointer -g
+		   
 ASAN_FLAGS = -fsanitize=address
 UBSAN_FLAGS = -fsanitize=undefined
-		
-#  MLX_CFLAGS= -Wall -Wextra -Werror
-
-MLX_CFLAGS = -Wall -Wextra -Werror \
-	-Wno-return-type \
-	-Wno-sign-compare \
-	-Wno-unused-parameter \
-	-Wno-parentheses\
-	-Wno-unused-variable \
-	-Wno-unused-but-set-variable
 
 INCS    = -Iinclude -Ilibft
 
@@ -102,7 +92,6 @@ all: $(NAME)
 $(NAME): $(OBJ_FILES) $(LIBFT) $(MLX)
 	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) $(MLX) -lXext -lX11 -lm -g -o $(NAME)
 
-
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
@@ -110,11 +99,12 @@ $(OBJ_DIR)/%.o: %.c
 $(LIBFT):
 	$(MAKE) -C libft
 
-# $(MLX):
-# 	make -C $(MLX_PATH) CFLAGS="$(MLX_CFLAGS)"
-
 $(MLX):
 	$(MAKE) -C $(MLX_PATH)
+
+val: all
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions=mlx.supp -s \
+		./$(NAME) maps/Pacman.cub
 
 clean:
 	rm -rf $(OBJ_DIR)
@@ -125,6 +115,7 @@ fclean: clean
 	$(MAKE) -C libft fclean
 
 re: fclean all
+
 e: all clean
 	clear
 a:
@@ -132,4 +123,5 @@ a:
 
 u:
 	$(MAKE) CFLAGS="$(CFLAGS) $(UBSAN_FLAGS)" e
-.PHONY: all clean fclean re
+	
+.PHONY: all clean fclean re val
