@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:41:18 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/12 17:54:43 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/12 18:12:18 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,20 @@ char	map_get_tile(t_game *game, int row, int col)
 	else
 		last_col = map_row_last_col(game, row, 0);
 	if (col < 0 || col > last_col || game->map.grid[row][col] <= ' ')
+		return (VOID);
+	return (game->map.grid[row][col]);
+}
+
+char	map_get_tile_raw(t_game *game, int row, int col)
+{
+	int	last_col;
+
+	if (!game || !game->map.grid || row < 0 || row >= game->map.height)
+		return (VOID);
+	last_col = map_row_last_col(game, row, 0);
+	if (col < 0 || col > last_col)
+		return (VOID);
+	if (game->map.grid[row][col] <= ' ')
 		return (VOID);
 	return (game->map.grid[row][col]);
 }

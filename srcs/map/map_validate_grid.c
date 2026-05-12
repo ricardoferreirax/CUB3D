@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:53:00 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/12 17:54:37 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/12 18:14:23 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,15 @@ void	map_validate_closed(t_game *g)
 		col = -1;
 		while (++col < g->map.width)
 		{
-			tile = map_get_tile(g, row, col);
-			if (!map_tile_type(tile, TILE_WALKABLE) || (tile == WRAP_PORTS
-					&& map_is_wrap_tile(g, row, col)))
+			tile = map_get_tile_raw(g, row, col);
+			if (!map_tile_type(tile, TILE_WALKABLE))
 				continue ;
-			if (map_tile_type(map_get_tile(g, row, col + 1), TILE_VOID)
-				|| map_tile_type(map_get_tile(g, row, col - 1), TILE_VOID)
-				|| map_tile_type(map_get_tile(g, row + 1, col), TILE_VOID)
-				|| map_tile_type(map_get_tile(g, row - 1, col), TILE_VOID))
+			if (tile == WRAP_PORTS && map_is_wrap_tile(g, row, col))
+				continue ;
+			if (map_tile_type(map_get_tile_raw(g, row, col + 1), TILE_VOID)
+				|| map_tile_type(map_get_tile_raw(g, row, col - 1), TILE_VOID)
+				|| map_tile_type(map_get_tile_raw(g, row + 1, col), TILE_VOID)
+				|| map_tile_type(map_get_tile_raw(g, row - 1, col), TILE_VOID))
 				exit_game(EXIT_MAP, g, "map_validate_closed: map not closed");
 		}
 	}

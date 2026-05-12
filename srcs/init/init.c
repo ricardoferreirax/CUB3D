@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/12 17:53:26 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/12 18:17:20 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ static void	init_defaults(t_game *g)
 	if (!g)
 		return ;
 	g->state = MENU;
-	g->mode = MODE_PACMAN;
+	g->mode = MODE_CUBE;
 	g->ray.hit_side = -1;
 	g->player.target_map.x = -1;
 	g->player.target_map.y = -1;
@@ -169,9 +169,7 @@ void	init_execution(t_game *g)
 			"init_execution() has failed to allocate memory E1");
 	g->ray.sprite_z = malloc(sizeof(double) * g->win.width * g->win.height);
 	if (!g->ray.sprite_z)
-		exit_game(EXIT_MALLOC,
-					g,
-					"init_execution() had failed to allocate memory E2");
+		exit_game(EXIT_MALLOC, g, "init_execution() failed allocate memory E2");
 }
 
 int	init_game_grid(t_game *game, char **temp)
@@ -206,9 +204,10 @@ void	init_map(t_game *g, const char *path)
 	g->map.height = ytile(temp);
 	g->map.width = xtile(temp);
 	if (init_game_grid(g, temp))
-		exit_game(EXIT_MALLOC, g, "SOmething broke");
+		exit_game(EXIT_MALLOC, g, "Something broke");
 	free_2d((void **)temp);
 	map_validate_chars(g);
+	map_validate_closed(g);
 }
 
 void	init(t_game *g, char *path)
