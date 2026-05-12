@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 21:11:27 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/08 18:41:34 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/12 19:17:47 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ static void	set_player_orientation_ew(t_game *g, char c)
 void	set_player_spawn(t_game *game, int col, int row, char dir)
 {
 	if (game->map.grid[row][col] == VOID)
-		exit_game(EXIT_MAP, game, "set_player_spawn() player in VOID tile");
+		exit_game(EXIT_MAP, game, "set_player_spawn(): player in VOID tile");
 	if (map_get_tile(game, row, col + 1) == VOID || map_get_tile(game, row, col
 			- 1) == VOID || map_get_tile(game, row + 1, col) == VOID
 		|| map_get_tile(game, row - 1, col) == VOID)
-		exit_game(EXIT_MAP, game, "set_player_spawn() player next VOID tile");
+		exit_game(EXIT_MAP, game, "set_player_spawn(): player next VOID tile");
 	game->player.pos.tile_pos.x = (double)col + 0.5;
 	game->player.pos.tile_pos.y = (double)row + 0.5;
 	game->player.pos.pixel_pos.x = col * TILE_SIZE;
@@ -97,6 +97,6 @@ t_point	find_player_spawn(t_game *game)
 		}
 	}
 	if (!found)
-		exit_game(EXIT_MAP, game, "find_player_spawn() has not found a player");
+		exit_game(EXIT_MAP, game, "find_player_spawn(): has not found a player");
 	return (spawn);
 }
