@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 22:38:39 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/12 18:32:49 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/12 18:49:55 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,27 @@ static int	map_pacman_mode_prefix(char *p)
 		return (1);
 	if (!ft_strncmp(p, "EN", 2) && is_whitespace(p[2]))
 		return (1);
-	if (!ft_strncmp(p, "BL", 2) && is_whitespace(p[2]))
-		return (1);
-	if (!ft_strncmp(p, "PI", 2) && is_whitespace(p[2]))
-		return (1);
-	if (!ft_strncmp(p, "IN", 2) && is_whitespace(p[2]))
-		return (1);
-	if (!ft_strncmp(p, "CL", 2) && is_whitespace(p[2]))
-		return (1);
 	if (!ft_strncmp(p, "GC", 2) && is_whitespace(p[2]))
 		return (1);
 	if (!ft_strncmp(p, "SC", 2) && is_whitespace(p[2]))
 		return (1);
 	if (!ft_strncmp(p, "ET", 2) && is_whitespace(p[2]))
+		return (1);
+	if (!ft_strncmp(p, "BL0", 3) && is_whitespace(p[3]))
+		return (1);
+	if (!ft_strncmp(p, "BL1", 3) && is_whitespace(p[3]))
+		return (1);
+	if (!ft_strncmp(p, "PI0", 3) && is_whitespace(p[3]))
+		return (1);
+	if (!ft_strncmp(p, "PI1", 3) && is_whitespace(p[3]))
+		return (1);
+	if (!ft_strncmp(p, "IN0", 3) && is_whitespace(p[3]))
+		return (1);
+	if (!ft_strncmp(p, "IN1", 3) && is_whitespace(p[3]))
+		return (1);
+	if (!ft_strncmp(p, "CL0", 3) && is_whitespace(p[3]))
+		return (1);
+	if (!ft_strncmp(p, "CL1", 3) && is_whitespace(p[3]))
 		return (1);
 	return (0);
 }
