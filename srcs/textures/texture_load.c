@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 17:59:33 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/05 21:15:27 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/13 11:37:57 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,24 @@
 
 void	texture_load_xpm(t_game *g, t_image *img, const char *path)
 {
+	int	fd;
 	int	w;
 	int	h;
 
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		exit_game(EXIT_MAP, g, "texture_load_xpm: texture path not found");
+	close(fd);
 	img->img_ptr = mlx_xpm_file_to_image(g->mlx_ptr, (char *)path, &w, &h);
 	if (!img->img_ptr)
-		exit_game(EXIT_MLX, g, "text_load_xpm() gives error");
-	img->img_addr = mlx_get_data_addr(img->img_ptr, &img->bpp, &img->l_len,
-			&img->endian);
+		exit_game(EXIT_MLX, g, "texture_load_xpm: invalid xpm texture");
+	img->img_addr = mlx_get_data_addr(img->img_ptr, &img->bpp, &img->l_len, 
+					&img->endian);
 	if (!img->img_addr)
 	{
 		mlx_destroy_image(g->mlx_ptr, img->img_ptr);
 		img->img_ptr = NULL;
-		exit_game(EXIT_MLX, g, "texture_load_xpm() gives error");
+		exit_game(EXIT_MLX, g, "texture_load_xpm: failed get texture data");
 	}
 	img->width = w;
 	img->height = h;
