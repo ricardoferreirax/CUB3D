@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:17:53 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/08 15:52:36 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/13 11:08:40 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ void	set_texture_path(char **dest, char *value, t_game *g)
 	value = skip_whitespace(value);
 	strip_newline(value);
 	if (!*value)
-		exit_game(EXIT_MAP, g, "set_texture_path() has found an invalid value");
+		exit_game(EXIT_MAP, g, "set_texture_path: missing texture path");
 	if (*dest)
-		exit_game(EXIT_MAP, g, "set_texture_path() has found an invalid dst");
+		exit_game(EXIT_MAP, g, "set_texture_path: repeated texture");
 	*dest = ft_strdup(value);
 	if (!*dest)
-		exit_game(EXIT_MALLOC, g, "set_texture_path unable create a valid dst");
+		exit_game(EXIT_MALLOC, g, "set_texture_path: failed allocate texture path");
 }
 
 int	is_xpm_path(const char *s)

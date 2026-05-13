@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 22:38:39 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/12 18:49:55 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/13 11:15:43 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ static int	map_cube_mode_prefix(char *p)
 {
 	if (!p)
 		return (0);
-	if (!ft_strncmp(p, "NO", 2) && is_whitespace(p[2]))
+	if (!ft_strncmp(p, "NO", 2) && is_token_end(p[2]))
 		return (1);
-	if (!ft_strncmp(p, "SO", 2) && is_whitespace(p[2]))
+	if (!ft_strncmp(p, "SO", 2) && is_token_end(p[2]))
 		return (1);
-	if (!ft_strncmp(p, "WE", 2) && is_whitespace(p[2]))
+	if (!ft_strncmp(p, "WE", 2) && is_token_end(p[2]))
 		return (1);
-	if (!ft_strncmp(p, "EA", 2) && is_whitespace(p[2]))
+	if (!ft_strncmp(p, "EA", 2) && is_token_end(p[2]))
 		return (1);
-	if (*p == 'F' && is_whitespace(p[1]))
+	if (*p == 'F' && is_token_end(p[1]))
 		return (1);
-	if (*p == 'C' && is_whitespace(p[1]))
+	if (*p == 'C' && is_token_end(p[1]))
 		return (1);
 	return (0);
 }
@@ -37,31 +37,31 @@ static int	map_pacman_mode_prefix(char *p)
 {
 	if (!p)
 		return (0);
-	if (!ft_strncmp(p, "PD", 2) && is_whitespace(p[2]))
+	if (!ft_strncmp(p, "PD", 2) && is_token_end(p[2]))
 		return (1);
-	if (!ft_strncmp(p, "EN", 2) && is_whitespace(p[2]))
+	if (!ft_strncmp(p, "EN", 2) && is_token_end(p[2]))
 		return (1);
-	if (!ft_strncmp(p, "GC", 2) && is_whitespace(p[2]))
+	if (!ft_strncmp(p, "GC", 2) && is_token_end(p[2]))
 		return (1);
-	if (!ft_strncmp(p, "SC", 2) && is_whitespace(p[2]))
+	if (!ft_strncmp(p, "SC", 2) && is_token_end(p[2]))
 		return (1);
-	if (!ft_strncmp(p, "ET", 2) && is_whitespace(p[2]))
+	if (!ft_strncmp(p, "ET", 2) && is_token_end(p[2]))
 		return (1);
-	if (!ft_strncmp(p, "BL0", 3) && is_whitespace(p[3]))
+	if (!ft_strncmp(p, "BL0", 3) && is_token_end(p[3]))
 		return (1);
-	if (!ft_strncmp(p, "BL1", 3) && is_whitespace(p[3]))
+	if (!ft_strncmp(p, "BL1", 3) && is_token_end(p[3]))
 		return (1);
-	if (!ft_strncmp(p, "PI0", 3) && is_whitespace(p[3]))
+	if (!ft_strncmp(p, "PI0", 3) && is_token_end(p[3]))
 		return (1);
-	if (!ft_strncmp(p, "PI1", 3) && is_whitespace(p[3]))
+	if (!ft_strncmp(p, "PI1", 3) && is_token_end(p[3]))
 		return (1);
-	if (!ft_strncmp(p, "IN0", 3) && is_whitespace(p[3]))
+	if (!ft_strncmp(p, "IN0", 3) && is_token_end(p[3]))
 		return (1);
-	if (!ft_strncmp(p, "IN1", 3) && is_whitespace(p[3]))
+	if (!ft_strncmp(p, "IN1", 3) && is_token_end(p[3]))
 		return (1);
-	if (!ft_strncmp(p, "CL0", 3) && is_whitespace(p[3]))
+	if (!ft_strncmp(p, "CL0", 3) && is_token_end(p[3]))
 		return (1);
-	if (!ft_strncmp(p, "CL1", 3) && is_whitespace(p[3]))
+	if (!ft_strncmp(p, "CL1", 3) && is_token_end(p[3]))
 		return (1);
 	return (0);
 }

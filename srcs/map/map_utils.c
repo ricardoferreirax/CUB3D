@@ -6,12 +6,17 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:41:18 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/12 18:43:48 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/13 11:15:06 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "map3D.h"
+
+int	is_token_end(char c)
+{
+	return (c == '\0' || c == '\n' || c == ' ' || c == '\t');
+}
 
 int	is_whitespace(char c)
 {
