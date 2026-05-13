@@ -6,13 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 19:40:03 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/07 15:48:50 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/07 16:28:19 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "draw.h"
-#include "../render/render3D.h"
 
 static void	draw_color_rows(t_image *img, int start, int end, int color)
 {

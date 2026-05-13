@@ -6,28 +6,18 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/05/13 11:16:00 by pfreire-         ###   ########.fr        #
+#    Updated: 2026/05/13 14:55:37 by pfreire-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    = cub3d
 
-CC      = clang-12 -Og
-CFLAGS  = -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion  -Wformat=2 -Wstrict-aliasing=2 \
-		-fno-omit-frame-pointer \
-		-g 
+CC      = clang-12
+CFLAGS  = -O3 -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion  \
+		  -Wformat=2 -Wstrict-aliasing=2 -fno-omit-frame-pointer -g
+		   
 ASAN_FLAGS = -fsanitize=address
 UBSAN_FLAGS = -fsanitize=undefined
-		
-#  MLX_CFLAGS= -Wall -Wextra -Werror
-
-MLX_CFLAGS = -Wall -Wextra -Werror \
-	-Wno-return-type \
-	-Wno-sign-compare \
-	-Wno-unused-parameter \
-	-Wno-parentheses\
-	-Wno-unused-variable \
-	-Wno-unused-but-set-variable
 
 INCS    = -Iinclude -Ilibft
 
@@ -55,9 +45,15 @@ SRC_FILES = main.c \
 	srcs/map/map_ghost.c \
 	srcs/map/map_validate_grid.c \
 	srcs/map/map_parse_lines.c \
+	srcs/map/map_grid.c \
 	srcs/player/player_collision.c \
 	srcs/player/player_collect_pacdots.c \
 	srcs/player/player_controller.c \
+	srcs/player/player_touch_ghost.c \
+	srcs/player/player_actions.c \
+	srcs/player/player_apply_move.c \
+	srcs/player/player_move.c \
+	srcs/init/init_player.c \
 	srcs/player/player_spawn.c \
 	srcs/render/raycast_frame.c \
 	srcs/render/raycast_find_wall.c \
@@ -76,6 +72,7 @@ SRC_FILES = main.c \
 	srcs/textures/texture_parse_color.c \
 	srcs/textures/texture_utils.c \
 	srcs/textures/texture_load.c \
+	srcs/textures/texture_parse_pacman.c \
 	srcs/textures/texture_parse_path.c \
 	srcs/textures/texture_pick_wall.c \
 	srcs/debug/ray_debug_cast.c \
@@ -105,7 +102,6 @@ all: $(NAME)
 $(NAME): $(OBJ_FILES) $(LIBFT) $(MLX)
 	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) $(MLX) -lXext -lX11 -lm -g -o $(NAME)
 
-
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(INCS) -c $< -o $@
@@ -113,11 +109,12 @@ $(OBJ_DIR)/%.o: %.c
 $(LIBFT):
 	$(MAKE) -C libft
 
-# $(MLX):
-# 	make -C $(MLX_PATH) CFLAGS="$(MLX_CFLAGS)"
-
 $(MLX):
 	$(MAKE) -C $(MLX_PATH)
+
+val: all
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions=mlx.supp -s \
+		./$(NAME) maps/Pacman.cub
 
 clean:
 	rm -rf $(OBJ_DIR)
@@ -136,4 +133,5 @@ a:
 
 u:
 	$(MAKE) CFLAGS="$(CFLAGS) $(UBSAN_FLAGS)" e
-.PHONY: all clean fclean re
+	
+.PHONY: all clean fclean re val

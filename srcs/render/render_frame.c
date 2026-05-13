@@ -6,14 +6,14 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/27 19:44:16 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/07 15:53:52 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/08 18:28:57 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
+#include "../draw/draw.h"
 #include "../ghosts/ghosts.h"
 #include "render3D.h"
-#include "../draw/draw.h"
 
 void	clear_sprite_z(t_game *g)
 {

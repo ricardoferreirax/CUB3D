@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:40:08 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/03 21:42:01 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/12 17:54:52 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ static char	**extract_map(char **file_lines, int start, int end, t_game *g)
 	line_count = end - start + 1;
 	map = ft_calloc((size_t)line_count + 1, sizeof(char *));
 	if (!map)
-		exit_game(EXIT_MALLOC, g,
-			"extract_map() was unable to allocte memory E1");
+		exit_game(EXIT_MALLOC, g, "extract_map() unable allocate memory E1");
 	i = start - 1;
 	j = -1;
 	while (++i <= end)
@@ -68,8 +67,7 @@ static char	**extract_map(char **file_lines, int start, int end, t_game *g)
 		{
 			map[j] = NULL;
 			free_2d((void *)map);
-			exit_game(EXIT_MALLOC, g,
-				"extract_map() was unable to allocte memory E2");
+			exit_game(EXIT_MALLOC, g, "extract_map() unable allocate memory E2");
 		}
 	}
 	map[j + 1] = NULL;
@@ -100,7 +98,6 @@ char	**load_map_from_cub(t_game *g, const char *path)
 	map = extract_map(file_lines, start, end, g);
 	free_2d((void *)file_lines);
 	if (!map)
-		exit_game(EXIT_MAP, g,
-			"load_map_from_cub() was unable to allocte memory");
+		exit_game(EXIT_MAP, g, "load_map_from_cub() unable allocte memory");
 	return (map);
 }

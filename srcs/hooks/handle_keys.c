@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 14:59:32 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/11 19:44:56 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/12 17:51:13 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,7 @@ int	handle_key_press(int keycode, t_game *g)
 	else if (keycode == 101 && g->mode == MODE_CUBE)
 		g->key.e = 1;
 	else if (keycode == 109)
-	{
-		if (g->key.mouse_hidden)
-		{
-			mlx_mouse_show(g->mlx_ptr, g->win.win_ptr);
-			g->key.mouse_hidden = 0;
-		}
-		else
-		{
-			mlx_mouse_hide(g->mlx_ptr, g->win.win_ptr);
-			g->key.mouse_hidden = 1;
-			g->key.mouse_lock = 1;
-			center_mouse(g);
-		}
-	}
+		toggle_mouse_capture(g);
 	return (0);
 }
 

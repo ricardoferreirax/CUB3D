@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/04/24 15:48:25 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/13 14:56:37 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,8 @@ void	start_game_mode(t_game *g, t_mode mode)
 	g->state = PLAY;
 	g->key.mouse_hidden = 1;
 	g->key.mouse_lock = 1;
+	g->key.mouse_captured = 1;
+	mlx_mouse_hide(g->mlx_ptr, g->win.win_ptr);
 	g->timer.start_time = get_time_us();
 	center_mouse(g);
 }
@@ -164,6 +166,9 @@ static void	init_defaults(t_game *g)
 	g->level = 1;
 	g->timer.mode_timer = 0;
 	g->global_state = SCATTER;
+	g->key.mouse_hidden = 0;
+	g->key.mouse_lock = 0;
+	g->key.mouse_captured = 0;
 }
 
 void	init_execution(t_game *g)
@@ -213,9 +218,11 @@ void	init_map(t_game *g, const char *path)
 	g->map.height = ytile(temp);
 	g->map.width = xtile(temp);
 	if (init_game_grid(g, temp))
-		exit_game(EXIT_MALLOC, g, "SOmething broke");
+		exit_game(EXIT_MALLOC, g, "Something broke");
 	free_2d((void **)temp);
 	map_validate_chars(g);
+	map_validate_inside_spaces(g);
+	map_validate_closed(g);
 }
 
 void	init(t_game *g, char *path)

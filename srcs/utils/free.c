@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 11:43:18 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/04/23 11:46:07 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/12 11:34:56 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ void	exit_game(int errcode, t_game *g, char *str)
 	else if (errcode == EXIT_INPUT)
 		ft_dprintf(2, "\nError: invalid input\n");
 	free_game(g);
-	exit(errcode);
+	if (errcode == EXIT_QUIT)
+		exit(EXIT_SUCCESS);
+	exit(EXIT_FAILURE);
 }
 
 static void	free_str(char **s)

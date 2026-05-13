@@ -6,13 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 21:15:38 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/07 15:53:12 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/08 18:29:21 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
-#include "render3D.h"
 #include "../draw/draw.h"
+#include "render3D.h"
 
 static double	get_floor_dist(t_game *g, int row)
 {

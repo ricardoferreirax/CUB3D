@@ -1,60 +1,54 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sprite_draw_col.c                                  :+:      :+:    :+:   */
+/*   draw_sprite_column.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 22:11:20 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/06 15:27:28 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/07 16:28:48 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "draw.h"
 
-static unsigned int	get_sprite_tex_pixel(t_image *tex, int x, int y)
+static unsigned int	get_sprite_color(t_sprite *sp, t_image *tex, int col, int row)
 {
-	int	stride;
+	unsigned int	*data;
+	int			tex_x;
+	int			tex_y;
 
-	if (!tex || !tex->img_addr)
-		return (0);
-	stride = tex->l_len >> 2;
-	return (((unsigned int *)tex->img_addr)[y * stride + x]);
-}
-
-static int	get_sprite_tex_coord(int screen_pos, int sprite_start, int tex_size,
-		int sprite_size)
-{
-	int	tex_pos;
-
-	tex_pos = (screen_pos - sprite_start) * tex_size / sprite_size;
-	return (clamp_int(tex_pos, 0, tex_size - 1));
+	data = (unsigned int *)tex->img_addr;
+	tex_x = (col - sp->tex_start_x) * tex->width / sp->size;
+	tex_y = (row - sp->tex_start_y) * tex->height / sp->size;
+	tex_x = clamp_int(tex_x, 0, tex->width - 1);
+	tex_y = clamp_int(tex_y, 0, tex->height - 1);
+	return (data[tex_y * (tex->l_len / 4) + tex_x]);
 }
 
 int	draw_sprite_column(t_game *g, t_sprite *sp, int col, t_image *tex)
 {
-	int				row;
-	int				tex_x;
-	int				pixel_idx;
 	unsigned int	color;
+	int				row;
+	int				idx;
 
-	tex_x = get_sprite_tex_coord(col, sp->tex_start_x, tex->width, sp->size);
+	if (!g || !sp || !tex || !tex->img_addr)
+		return (0);
 	row = sp->draw_start_y;
-	while (++row < sp->draw_end_y)
+	while (row < sp->draw_end_y)
 	{
-		pixel_idx = row * g->win.width + col;
-		if (sp->dist < g->ray.sprite_z[pixel_idx])
+		idx = row * g->win.width + col;
+		if (sp->dist < g->ray.sprite_z[idx])
 		{
-			color = get_sprite_tex_pixel(tex, tex_x, get_sprite_tex_coord(row,
-						sp->tex_start_y, tex->height, sp->size));
+			color = get_sprite_color(sp, tex, col, row);
 			if ((color & 0x00FFFFFF) != 0)
 			{
-				((unsigned int *)g->win.frame_buffer.img_addr)[row
-					* (g->win.frame_buffer.l_len >> 2) + col] = color;
-				g->ray.sprite_z[pixel_idx] = sp->dist;
+				put_pixel_fast(&g->win.frame_buffer, col, row, color);
+				g->ray.sprite_z[idx] = sp->dist;
 			}
 		}
+		row++;
 	}
 	return (1);
 }

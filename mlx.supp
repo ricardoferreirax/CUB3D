@@ -26,3 +26,14 @@
    ...
    obj:/usr/lib*/libxcb.so*
 }
+{
+   x11_xcb_writev_uninitialised
+   Memcheck:Param
+   writev(vector[0])
+   ...
+   fun:writev
+   ...
+   fun:xcb_writev
+   ...
+   fun:mlx_new_window
+}
