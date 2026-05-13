@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/05/13 14:55:37 by pfreire-         ###   ########.fr        #
+#    Updated: 2026/05/13 16:26:28 by pfreire-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,43 +38,44 @@ SRC_FILES = main.c \
 	srcs/init/init_base.c \
 	srcs/init/init_ghosts.c \
 	srcs/init/parse.c \
-	srcs/map/map_read.c \
-	srcs/map/map_utils.c \
-	srcs/map/map_load.c \
-	srcs/map/map_wrap.c \
-	srcs/map/map_ghost.c \
-	srcs/map/map_validate_grid.c \
-	srcs/map/map_parse_lines.c \
-	srcs/map/map_grid.c \
-	srcs/player/player_collision.c \
-	srcs/player/player_collect_pacdots.c \
-	srcs/player/player_controller.c \
-	srcs/player/player_touch_ghost.c \
-	srcs/player/player_actions.c \
-	srcs/player/player_apply_move.c \
-	srcs/player/player_move.c \
+	srcs/map/read.c \
+	srcs/map/utils.c \
+	srcs/map/load.c \
+	srcs/map/wrap.c \
+	srcs/map/ghost.c \
+	srcs/map/validate_grid.c \
+	srcs/map/parse_lines.c \
+	srcs/map/grid.c \
+	srcs/map/flood_fill.c \
+	srcs/player/collision.c \
+	srcs/player/collect_pacdots.c \
+	srcs/player/controller.c \
+	srcs/player/touch_ghost.c \
+	srcs/player/actions.c \
+	srcs/player/apply_move.c \
+	srcs/player/move.c \
 	srcs/init/init_player.c \
-	srcs/player/player_spawn.c \
+	srcs/player/spawn.c \
 	srcs/render/raycast_frame.c \
 	srcs/render/raycast_find_wall.c \
 	srcs/render/render_plane.c \
 	srcs/render/render_debug_symbols.c \
 	srcs/render/render_frame.c \
 	srcs/render/render_into_framebuffer.c \
-	srcs/draw/draw_plane.c \
-	srcs/draw/draw_background.c \
-	srcs/draw/draw_wall_column.c \
-	srcs/draw/draw_menu.c \
+	srcs/draw/plane.c \
+	srcs/draw/background.c \
+	srcs/draw/wall_column.c \
+	srcs/draw/menu.c \
 	srcs/draw/build_sprite_box.c \
-	srcs/draw/draw_pacman_sprites.c \
-	srcs/draw/draw_utils.c \
-	srcs/draw/draw_sprite_column.c \
-	srcs/textures/texture_parse_color.c \
-	srcs/textures/texture_utils.c \
-	srcs/textures/texture_load.c \
-	srcs/textures/texture_parse_pacman.c \
-	srcs/textures/texture_parse_path.c \
-	srcs/textures/texture_pick_wall.c \
+	srcs/draw/pacman_sprites.c \
+	srcs/draw/utils.c \
+	srcs/draw/sprite_column.c \
+	srcs/textures/parse_color.c \
+	srcs/textures/utils.c \
+	srcs/textures/load.c \
+	srcs/textures/parse_pacman.c \
+	srcs/textures/parse_path.c \
+	srcs/textures/pick_wall.c \
 	srcs/debug/ray_debug_cast.c \
 	srcs/debug/ray_debug_draw.c \
 	srcs/utils/helpers.c \

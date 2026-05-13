@@ -17,6 +17,231 @@
       "-Ilibft",
       "-c",
       "-o",
+      "objs/main.o",
+      "main.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/main.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/main.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/srcs/hooks/handle_close.o",
+      "srcs/hooks/handle_close.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/hooks/handle_close.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/hooks/handle_close.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/srcs/hooks/handle_gate_toggle.o",
+      "srcs/hooks/handle_gate_toggle.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/hooks/handle_gate_toggle.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/hooks/handle_gate_toggle.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/srcs/hooks/handle_keys.o",
+      "srcs/hooks/handle_keys.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/hooks/handle_keys.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/hooks/handle_keys.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/srcs/hooks/handle_mouse.o",
+      "srcs/hooks/handle_mouse.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/hooks/handle_mouse.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/hooks/handle_mouse.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/srcs/hooks/controller_player.o",
+      "srcs/hooks/controller_player.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/hooks/controller_player.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/hooks/controller_player.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/srcs/init/init_mlx.o",
+      "srcs/init/init_mlx.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/init/init_mlx.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/init/init_mlx.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/srcs/init/init_spritesheet.o",
+      "srcs/init/init_spritesheet.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/init/init_spritesheet.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/init/init_spritesheet.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/srcs/init/init_sprites.o",
+      "srcs/init/init_sprites.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/init/init_sprites.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/init/init_sprites.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
       "objs/srcs/init/init.o",
       "srcs/init/init.c"
     ],
@@ -117,12 +342,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/map/map_read.o",
-      "srcs/map/map_read.c"
+      "objs/srcs/map/read.o",
+      "srcs/map/read.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/map_read.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/map_read.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/read.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/read.o"
   },
   {
     "arguments": [
@@ -142,12 +367,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/map/map_utils.o",
-      "srcs/map/map_utils.c"
+      "objs/srcs/map/utils.o",
+      "srcs/map/utils.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/map_utils.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/map_utils.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/utils.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/utils.o"
   },
   {
     "arguments": [
@@ -167,12 +392,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/map/map_load.o",
-      "srcs/map/map_load.c"
+      "objs/srcs/map/load.o",
+      "srcs/map/load.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/map_load.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/map_load.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/load.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/load.o"
   },
   {
     "arguments": [
@@ -192,12 +417,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/map/map_wrap.o",
-      "srcs/map/map_wrap.c"
+      "objs/srcs/map/wrap.o",
+      "srcs/map/wrap.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/map_wrap.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/map_wrap.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/wrap.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/wrap.o"
   },
   {
     "arguments": [
@@ -217,12 +442,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/map/map_ghost.o",
-      "srcs/map/map_ghost.c"
+      "objs/srcs/map/ghost.o",
+      "srcs/map/ghost.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/map_ghost.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/map_ghost.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/ghost.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/ghost.o"
   },
   {
     "arguments": [
@@ -242,12 +467,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/map/map_validate_grid.o",
-      "srcs/map/map_validate_grid.c"
+      "objs/srcs/map/validate_grid.o",
+      "srcs/map/validate_grid.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/map_validate_grid.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/map_validate_grid.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/validate_grid.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/validate_grid.o"
   },
   {
     "arguments": [
@@ -267,12 +492,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/map/map_parse_lines.o",
-      "srcs/map/map_parse_lines.c"
+      "objs/srcs/map/parse_lines.o",
+      "srcs/map/parse_lines.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/map_parse_lines.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/map_parse_lines.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/parse_lines.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/parse_lines.o"
   },
   {
     "arguments": [
@@ -292,12 +517,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/map/map_grid.o",
-      "srcs/map/map_grid.c"
+      "objs/srcs/map/grid.o",
+      "srcs/map/grid.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/map_grid.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/map_grid.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/grid.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/grid.o"
   },
   {
     "arguments": [
@@ -317,12 +542,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/player/player_collision.o",
-      "srcs/player/player_collision.c"
+      "objs/srcs/map/flood_fill.o",
+      "srcs/map/flood_fill.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/player_collision.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/player_collision.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/map/flood_fill.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/map/flood_fill.o"
   },
   {
     "arguments": [
@@ -342,12 +567,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/player/player_collect_pacdots.o",
-      "srcs/player/player_collect_pacdots.c"
+      "objs/srcs/player/collision.o",
+      "srcs/player/collision.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/player_collect_pacdots.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/player_collect_pacdots.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/collision.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/collision.o"
   },
   {
     "arguments": [
@@ -367,12 +592,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/player/player_controller.o",
-      "srcs/player/player_controller.c"
+      "objs/srcs/player/collect_pacdots.o",
+      "srcs/player/collect_pacdots.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/player_controller.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/player_controller.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/collect_pacdots.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/collect_pacdots.o"
   },
   {
     "arguments": [
@@ -392,12 +617,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/player/player_touch_ghost.o",
-      "srcs/player/player_touch_ghost.c"
+      "objs/srcs/player/controller.o",
+      "srcs/player/controller.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/player_touch_ghost.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/player_touch_ghost.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/controller.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/controller.o"
   },
   {
     "arguments": [
@@ -417,12 +642,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/player/player_actions.o",
-      "srcs/player/player_actions.c"
+      "objs/srcs/player/touch_ghost.o",
+      "srcs/player/touch_ghost.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/player_actions.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/player_actions.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/touch_ghost.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/touch_ghost.o"
   },
   {
     "arguments": [
@@ -442,12 +667,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/player/player_apply_move.o",
-      "srcs/player/player_apply_move.c"
+      "objs/srcs/player/actions.o",
+      "srcs/player/actions.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/player_apply_move.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/player_apply_move.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/actions.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/actions.o"
   },
   {
     "arguments": [
@@ -467,12 +692,37 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/player/player_move.o",
-      "srcs/player/player_move.c"
+      "objs/srcs/player/apply_move.o",
+      "srcs/player/apply_move.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/player_move.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/player_move.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/apply_move.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/apply_move.o"
+  },
+  {
+    "arguments": [
+      "/home/pedro/.local/bin/clang-12",
+      "-O3",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wpedantic",
+      "-Wshadow",
+      "-Wdouble-promotion",
+      "-Wformat=2",
+      "-Wstrict-aliasing=2",
+      "-fno-omit-frame-pointer",
+      "-g",
+      "-Iinclude",
+      "-Ilibft",
+      "-c",
+      "-o",
+      "objs/srcs/player/move.o",
+      "srcs/player/move.c"
+    ],
+    "directory": "/var/home/pedro/Code/42/CUB3D",
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/move.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/move.o"
   },
   {
     "arguments": [
@@ -517,12 +767,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/player/player_spawn.o",
-      "srcs/player/player_spawn.c"
+      "objs/srcs/player/spawn.o",
+      "srcs/player/spawn.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/player_spawn.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/player_spawn.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/player/spawn.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/player/spawn.o"
   },
   {
     "arguments": [
@@ -692,12 +942,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/draw/draw_plane.o",
-      "srcs/draw/draw_plane.c"
+      "objs/srcs/draw/plane.o",
+      "srcs/draw/plane.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/draw/draw_plane.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/draw/draw_plane.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/draw/plane.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/draw/plane.o"
   },
   {
     "arguments": [
@@ -717,12 +967,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/draw/draw_background.o",
-      "srcs/draw/draw_background.c"
+      "objs/srcs/draw/background.o",
+      "srcs/draw/background.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/draw/draw_background.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/draw/draw_background.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/draw/background.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/draw/background.o"
   },
   {
     "arguments": [
@@ -742,12 +992,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/draw/draw_wall_column.o",
-      "srcs/draw/draw_wall_column.c"
+      "objs/srcs/draw/wall_column.o",
+      "srcs/draw/wall_column.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/draw/draw_wall_column.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/draw/draw_wall_column.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/draw/wall_column.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/draw/wall_column.o"
   },
   {
     "arguments": [
@@ -767,12 +1017,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/draw/draw_menu.o",
-      "srcs/draw/draw_menu.c"
+      "objs/srcs/draw/menu.o",
+      "srcs/draw/menu.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/draw/draw_menu.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/draw/draw_menu.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/draw/menu.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/draw/menu.o"
   },
   {
     "arguments": [
@@ -817,12 +1067,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/draw/draw_pacman_sprites.o",
-      "srcs/draw/draw_pacman_sprites.c"
+      "objs/srcs/draw/pacman_sprites.o",
+      "srcs/draw/pacman_sprites.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/draw/draw_pacman_sprites.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/draw/draw_pacman_sprites.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/draw/pacman_sprites.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/draw/pacman_sprites.o"
   },
   {
     "arguments": [
@@ -842,12 +1092,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/draw/draw_utils.o",
-      "srcs/draw/draw_utils.c"
+      "objs/srcs/draw/utils.o",
+      "srcs/draw/utils.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/draw/draw_utils.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/draw/draw_utils.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/draw/utils.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/draw/utils.o"
   },
   {
     "arguments": [
@@ -867,12 +1117,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/draw/draw_sprite_column.o",
-      "srcs/draw/draw_sprite_column.c"
+      "objs/srcs/draw/sprite_column.o",
+      "srcs/draw/sprite_column.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/draw/draw_sprite_column.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/draw/draw_sprite_column.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/draw/sprite_column.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/draw/sprite_column.o"
   },
   {
     "arguments": [
@@ -892,12 +1142,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/textures/texture_parse_color.o",
-      "srcs/textures/texture_parse_color.c"
+      "objs/srcs/textures/parse_color.o",
+      "srcs/textures/parse_color.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/textures/texture_parse_color.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/textures/texture_parse_color.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/textures/parse_color.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/textures/parse_color.o"
   },
   {
     "arguments": [
@@ -917,12 +1167,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/textures/texture_utils.o",
-      "srcs/textures/texture_utils.c"
+      "objs/srcs/textures/utils.o",
+      "srcs/textures/utils.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/textures/texture_utils.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/textures/texture_utils.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/textures/utils.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/textures/utils.o"
   },
   {
     "arguments": [
@@ -942,12 +1192,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/textures/texture_load.o",
-      "srcs/textures/texture_load.c"
+      "objs/srcs/textures/load.o",
+      "srcs/textures/load.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/textures/texture_load.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/textures/texture_load.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/textures/load.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/textures/load.o"
   },
   {
     "arguments": [
@@ -967,12 +1217,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/textures/texture_parse_pacman.o",
-      "srcs/textures/texture_parse_pacman.c"
+      "objs/srcs/textures/parse_pacman.o",
+      "srcs/textures/parse_pacman.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/textures/texture_parse_pacman.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/textures/texture_parse_pacman.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/textures/parse_pacman.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/textures/parse_pacman.o"
   },
   {
     "arguments": [
@@ -992,12 +1242,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/textures/texture_parse_path.o",
-      "srcs/textures/texture_parse_path.c"
+      "objs/srcs/textures/parse_path.o",
+      "srcs/textures/parse_path.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/textures/texture_parse_path.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/textures/texture_parse_path.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/textures/parse_path.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/textures/parse_path.o"
   },
   {
     "arguments": [
@@ -1017,12 +1267,12 @@
       "-Ilibft",
       "-c",
       "-o",
-      "objs/srcs/textures/texture_pick_wall.o",
-      "srcs/textures/texture_pick_wall.c"
+      "objs/srcs/textures/pick_wall.o",
+      "srcs/textures/pick_wall.c"
     ],
     "directory": "/var/home/pedro/Code/42/CUB3D",
-    "file": "/var/home/pedro/Code/42/CUB3D/srcs/textures/texture_pick_wall.c",
-    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/textures/texture_pick_wall.o"
+    "file": "/var/home/pedro/Code/42/CUB3D/srcs/textures/pick_wall.c",
+    "output": "/var/home/pedro/Code/42/CUB3D/objs/srcs/textures/pick_wall.o"
   },
   {
     "arguments": [

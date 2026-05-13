@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/13 14:56:37 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/13 16:12:56 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,6 +220,9 @@ void	init_map(t_game *g, const char *path)
 	if (init_game_grid(g, temp))
 		exit_game(EXIT_MALLOC, g, "Something broke");
 	free_2d((void **)temp);
+	if(g->debug_mode)
+		return;
+	map_flood_fill(g);
 	map_validate_chars(g);
 	map_validate_inside_spaces(g);
 	map_validate_closed(g);
