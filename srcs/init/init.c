@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/12 19:09:30 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/13 11:00:09 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ static void	init_defaults(t_game *g)
 	if (!g)
 		return ;
 	g->state = MENU;
-	g->mode = MODE_CUBE;
+	g->mode = MODE_PACMAN;
 	g->ray.hit_side = -1;
 	g->player.target_map.x = -1;
 	g->player.target_map.y = -1;

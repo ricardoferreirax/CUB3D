@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 18:40:00 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/12 18:40:21 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/13 10:59:56 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,23 +70,21 @@ void	map_validate_inside_spaces(t_game *g)
 {
 	int	row;
 	int	col;
+	int	last;
 
 	if (!g || !g->map.grid)
 		exit_game(EXIT_MAP, g, "map_validate_spaces: missing grid");
 	row = -1;
 	while (++row < g->map.height)
 	{
-		col = -1;
-		while (++col < map_row_last_col(g, row, 0))
+		last = map_row_last_col(g, row, 0);
+		col = 0;
+		while (++col < last)
 		{
 			if (g->map.grid[row][col] == ' '
-				&& col > 0
-				&& col < map_row_last_col(g, row, 0)
 				&& g->map.grid[row][col - 1] != ' '
 				&& g->map.grid[row][col + 1] != ' ')
-			{
 				exit_game(EXIT_MAP, g, "map_validate_spaces: space on map");
-			}
 		}
 	}
 }
