@@ -20,10 +20,10 @@ static int	get_wall_tex_x(t_game *g, t_image *tex)
 	int		tex_x;
 
 	if (g->ray.hit_side == 0)
-		wall_x = g->player.pos.tile_pos.y + g->ray.perp_wall_dist 
+		wall_x = g->player.pos.tile_pos.y + g->ray.perp_wall_dist
 			* g->ray.ray_dir_y;
 	else
-		wall_x = g->player.pos.tile_pos.x + g->ray.perp_wall_dist 
+		wall_x = g->player.pos.tile_pos.x + g->ray.perp_wall_dist
 			* g->ray.ray_dir_x;
 	wall_x = fract_pos(wall_x);
 	tex_x = (int)(wall_x * tex->width);

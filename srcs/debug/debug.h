@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEBUG_RAYCAST_H
-# define DEBUG_RAYCAST_H
+#ifndef DEBUG_H
+# define DEBUG_H
 
 # include "../Pac_Struct.h"
 # include "../render/render3D.h"

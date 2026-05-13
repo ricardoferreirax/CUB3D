@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/05/12 11:20:02 by pfreire-         ###   ########.fr        #
+#    Updated: 2026/05/13 11:16:00 by pfreire-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,7 +87,12 @@ SRC_FILES = main.c \
 	srcs/base/bitmasking.c \
 	srcs/base/helpers.c \
 	srcs/base/disambiguation.c \
+	srcs/ghosts/chose_next_dir.c \
+	srcs/ghosts/math.c \
+	srcs/ghosts/penhouse.c \
+	srcs/ghosts/targetting.c \
 	srcs/ghosts/ghost_ai.c \
+	srcs/ghosts/update.c \
 	srcs/ghosts/sprites.c  \
 	srcs/ghosts/helpers.c \
 	srcs/clock/time.c

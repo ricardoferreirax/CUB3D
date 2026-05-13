@@ -30,8 +30,8 @@ void	draw_wall_column(t_game *g, int screen_x);
 void	draw_plane_row(t_game *g, t_fc *plane, t_image *tex, int row);
 void	set_plane(t_game *g, t_fc *plane, double dist);
 void	put_pixel_fast(t_image *img, int x, int y, int color);
-int	ghost_anim_frame(t_ghost *gh);
-int	clamp_int(int value, int min, int max);
+int		ghost_anim_frame(t_ghost *gh);
+int		clamp_int(int value, int min, int max);
 double	fract_pos(double x);
 
 #endif
