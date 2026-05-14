@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:19:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/14 14:10:18 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 14:48:54 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,23 +56,26 @@ static void	parse_texture_file(t_game *g, int fd)
 {
 	char	*line;
 	int		has_content;
+	int		map_started;
 
 	has_content = 0;
+	map_started = 0;
 	while ((line = get_next_line(fd)))
 	{
 		if (!map_is_empty_line(line))
 			has_content = 1;
 		if (map_is_map_line(g, line))
-		{
-			free(line);
-			return ;
-		}
-		if (!parse_texture_line(g, line))
-			texture_parse_error(g, fd, line, "parse_texture_path(): invalid");
+			map_started = 1;
+		else if (map_started && map_is_config_line(g, line))
+			texture_parse_error(g, fd, line,
+				"parse_texture_path: map must be last in .cub");
+		if (!map_started && !parse_texture_line(g, line))
+			texture_parse_error(g, fd, line,
+				"parse_texture_path: invalid config");
 		free(line);
 	}
 	if (!has_content)
-		texture_parse_error(g, fd, NULL, "parse_texture_path(): empty file");
+		texture_parse_error(g, fd, NULL, "parse_texture_path: empty file");
 }
 
 static void	validate_required_textures(t_game *g)

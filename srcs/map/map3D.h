@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:48:48 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/13 15:58:26 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/14 14:50:00 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,5 @@ char					**copy_map(char **map_grid);
 char	map_get_tile_raw(t_game *game, int row, int col);
 void	map_validate_inside_spaces(t_game *g);
 int	is_token_end(char c);
-
+int	map_is_config_line(t_game *g, char *line);
 void map_flood_fill(t_game *game);

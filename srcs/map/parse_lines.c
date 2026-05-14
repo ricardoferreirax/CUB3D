@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_parse_lines.c                                  :+:      :+:    :+:   */
+/*   parse_lines.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 22:38:39 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/13 11:15:43 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 14:49:48 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,4 +119,14 @@ int	map_is_map_line(t_game *g, char *line)
 		p++;
 	}
 	return (has_tile);
+}
+
+int	map_is_config_line(t_game *g, char *line)
+{
+	char	*p;
+
+	if (!line || !g)
+		return (0);
+	p = skip_whitespace(line);
+	return (map_is_cub_prefix(p));
 }
