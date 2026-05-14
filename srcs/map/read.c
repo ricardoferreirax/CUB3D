@@ -1,17 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_read.c                                         :+:      :+:    :+:   */
+/*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:33:47 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/03/05 15:30:16 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 18:52:15 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 #include "map3D.h"
+
+int	is_cub_file(const char *path)
+{
+	int	len;
+
+	if (!path)
+		return (0);
+	len = ft_strlen(path);
+	if (len < 5)
+		return (0);
+	if (path[len - 4] != '.')
+		return (0);
+	if (path[len - 3] != 'c')
+		return (0);
+	if (path[len - 2] != 'u')
+		return (0);
+	if (path[len - 1] != 'b')
+		return (0);
+	return (1);
+}
 
 static void	free_lines(char **lines, int size)
 {

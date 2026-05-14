@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/14 17:56:45 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 18:52:46 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,6 +255,8 @@ void	init_map(t_game *g, const char *path)
 {
 	char	**temp;
 
+	if (!is_cub_file(path))
+		exit_game(EXIT_MAP, g, "Invalid file extension: expected .cub");
 	parse_texture_path(g, path);
 	if (g->map.grid)
 		free_2d((void *)g->map.grid);
@@ -267,8 +269,8 @@ void	init_map(t_game *g, const char *path)
 	if (init_game_grid(g, temp))
 		exit_game(EXIT_MALLOC, g, "Something broke");
 	free_2d((void **)temp);
-	if(g->debug_mode)
-		return;
+	if (g->debug_mode)
+		return ;
 	map_validate_chars(g);
 	map_validate_wrap_portals(g);
 	map_validate_closed(g);

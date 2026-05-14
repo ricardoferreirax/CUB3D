@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:48:48 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/14 16:50:01 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 18:52:31 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,3 +75,4 @@ void	map_validate_inside_spaces(t_game *g);
 int	is_token_end(char c);
 int	map_is_config_line(t_game *g, char *line);
 void map_flood_fill(t_game *game);
+int	is_cub_file(const char *path);
