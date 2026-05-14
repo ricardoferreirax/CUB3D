@@ -6,14 +6,14 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/05/13 16:26:28 by pfreire-         ###   ########.fr        #
+#    Updated: 2026/05/14 13:37:40 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    = cub3d
 
-CC      = clang-12
-CFLAGS  = -O3 -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion  \
+CC      = gcc
+CFLAGS  = -O3 -Wall -Wextra -Werror -Wshadow -Wdouble-promotion  \
 		  -Wformat=2 -Wstrict-aliasing=2 -fno-omit-frame-pointer -g
 		   
 ASAN_FLAGS = -fsanitize=address

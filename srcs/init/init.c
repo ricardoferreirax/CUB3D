@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/13 16:12:56 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/14 13:41:19 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,7 @@ void	init_map(t_game *g, const char *path)
 		return;
 	map_flood_fill(g);
 	map_validate_chars(g);
-	map_validate_inside_spaces(g);
+	//map_validate_inside_spaces(g);
 	map_validate_closed(g);
 }
 
