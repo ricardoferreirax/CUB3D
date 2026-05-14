@@ -18,6 +18,8 @@
 void map_flood_fill(t_game *game)
 {
 	char **temp = copy_map(game->map.grid);
+	if(!temp)
+		exit_game(EXIT_MALLOC, game, "Buy More RAM (if you can afford it, brokie :P)");
 	t_point spawn = find_player_spawn(game);
 	flood_fill(temp, spawn.x, spawn.y);
 	t_point point;
@@ -36,4 +38,5 @@ void map_flood_fill(t_game *game)
 		}
 		point.y++;
 	}
+	free_2d((void **)temp);
 }
