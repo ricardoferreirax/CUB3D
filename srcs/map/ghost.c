@@ -37,8 +37,8 @@ static void	copy_map_row(char *row_dst, const char *row_src)
 	{
 		if (row_src[col] == 'M')
 			row_dst[col] = WALL;
-		else if (row_src[col] == 'D')
-			row_dst[col] = '0';
+		// else if (row_src[col] == 'D')
+		// 	row_dst[col] = '0';
 		else if (row_src[col] == '\n')
 			row_dst[col] = '\0';
 		else

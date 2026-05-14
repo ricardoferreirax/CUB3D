@@ -15,12 +15,20 @@
 void	flood_fill(char **map, int x, int y)
 {
 	if (x < 0 || x >= xtile(map) || y < 0 || y >= ytile(map) || map[y][x] == 'F'
-		|| map[y][x] == '1' || map[y][x] == 'D')
+		|| map[y][x] == '1')
 		return ;
 	if (map[y][x] == 'G')
 	{
 		map[y][x] = 'F';
 		return ;
+	}
+	if(map[y][x] == 'D')
+	{
+		map[y][x] = 'F';
+		if(x == 0 && map[y][xtile(map) - 1] == 'D')
+			flood_fill(map, xtile(map) - 1, y);
+		else if (x == xtile(map) - 1 && map[y][0] == 'D')
+			flood_fill(map, 0, y);
 	}
 	map[y][x] = 'F';
 	flood_fill(map, x + 1, y);

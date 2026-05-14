@@ -84,7 +84,8 @@ void	map_validate_inside_spaces(t_game *g)
 			if (g->map.grid[row][col] == ' '
 				&& g->map.grid[row][col - 1] != ' '
 				&& g->map.grid[row][col + 1] != ' ')
-				exit_game(EXIT_MAP, g, "map_validate_spaces: space on map");
+				printf("");
+				// exit_game(EXIT_MAP, g, "map_validate_spaces: space on map");
 		}
 	}
 }

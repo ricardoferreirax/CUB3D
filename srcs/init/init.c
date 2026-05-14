@@ -205,6 +205,50 @@ int	init_game_grid(t_game *game, char **temp)
 	return (0);
 }
 
+void map_validate_wrap_portals(t_game *game)
+{
+	t_point coord;
+	coord.y = 0;
+	while(coord.y < game->map.height)
+	{
+		coord.x = 0;
+		while(coord.x < game->map.width)
+		{
+			if(game->map.grid[coord.y][coord.x] == 'D')
+			{
+				
+				if(coord.x != 0 && coord.x != game->map.width - 1)
+				{
+					printf("%s\n", game->map.grid[coord.y]);
+					while(coord.x--)
+						printf(" ");
+					printf("^\n");
+					exit_game(EXIT_MAP, game, "Wrap Portals  must be at the start or end of the line");
+				}
+			}
+			coord.x++;
+		}
+		coord.y++;
+	}
+}
+
+void san(char **temp)
+{
+	int i = 0;
+	int j = 0;
+	while(temp[j])
+	{
+		i = 0;
+		while(temp[j][i])
+		{
+			if(temp[j][i] == '\n' && !temp[j][i + 1])
+				temp[j][i] = '\0';
+			i++;
+		}
+		j++;
+	}
+}
+
 void	init_map(t_game *g, const char *path)
 {
 	char	**temp;
@@ -213,6 +257,7 @@ void	init_map(t_game *g, const char *path)
 	if (g->map.grid)
 		free_2d((void *)g->map.grid);
 	temp = load_map_from_cub(g, path);
+	san(temp);
 	if (!temp)
 		exit_game(EXIT_MAP, g, "parse() has not found a grid");
 	g->map.height = ytile(temp);
@@ -224,7 +269,7 @@ void	init_map(t_game *g, const char *path)
 		return;
 	map_flood_fill(g);
 	map_validate_chars(g);
-	map_validate_inside_spaces(g);
+	map_validate_wrap_portals(g);
 	map_validate_closed(g);
 }
 
