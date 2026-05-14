@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_validate_grid.c                                :+:      :+:    :+:   */
+/*   validate_grid.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:53:00 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/13 10:54:01 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 22:11:57 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,52 +32,52 @@ static int	map_is_valid_tile(t_game *g, char c)
 	return (0);
 }
 
-void	map_validate_chars(t_game *game)
+void	map_validate_tiles(t_game *g)
 {
-	int		row;
-	int		col;
+	int		y;
+	int		x;
 	char	tile;
 
-	if (!game || !game->map.grid)
-		exit_game(EXIT_MAP, game, "map_validate_chars: missing grid");
-	row = 0;
-	while (game->map.grid[row])
+	if (!g || !g->map.grid)
+		exit_game(EXIT_MAP, g, "map_validate_tiles: missing grid");
+	y = 0;
+	while (g->map.grid[y])
 	{
-		col = 0;
-		while (game->map.grid[row][col])
+		x = 0;
+		while (g->map.grid[y][x])
 		{
-			tile = game->map.grid[row][col];
-			if (!map_is_valid_tile(game, tile))
-				exit_game(EXIT_MAP, game, "map_validate_chars: invalid tile");
-			col++;
+			tile = g->map.grid[y][x];
+			if (!map_is_valid_tile(g, tile))
+				exit_game(EXIT_MAP, g, "map_validate_tiles: invalid tile");
+			x++;
 		}
-		row++;
+		y++;
 	}
 }
 
-void	map_validate_closed(t_game *g)
+void	map_validate_bounds(t_game *g)
 {
-	int		row;
-	int		col;
+	int		y;
+	int		x;
 	char	tile;
 
 	if (!g || !g->map.grid)
 		exit_game(EXIT_MAP, g, "map_validate_closed: missing grid");
-	row = -1;
-	while (++row < g->map.height)
+	y = -1;
+	while (++y < g->map.height)
 	{
-		col = -1;
-		while (++col < g->map.width)
+		x = -1;
+		while (++x < g->map.width)
 		{
-			tile = map_get_tile_raw(g, row, col);
+			tile = map_get_tile_raw(g, y, x);
 			if (!map_tile_type(tile, TILE_WALKABLE))
 				continue ;
-			if (tile == WRAP_PORTS && map_is_wrap_tile(g, row, col))
+			if (tile == WRAP_PORTS && map_is_wrap_tile(g, y, x))
 				continue ;
-			if (map_tile_type(map_get_tile_raw(g, row, col + 1), TILE_VOID)
-				|| map_tile_type(map_get_tile_raw(g, row, col - 1), TILE_VOID)
-				|| map_tile_type(map_get_tile_raw(g, row + 1, col), TILE_VOID)
-				|| map_tile_type(map_get_tile_raw(g, row - 1, col), TILE_VOID))
+			if (map_tile_type(map_get_tile_raw(g, y, x + 1), TILE_VOID)
+				|| map_tile_type(map_get_tile_raw(g, y, x - 1), TILE_VOID)
+				|| map_tile_type(map_get_tile_raw(g, y + 1, x), TILE_VOID)
+				|| map_tile_type(map_get_tile_raw(g, y - 1, x), TILE_VOID))
 				exit_game(EXIT_MAP, g, "map_validate_closed: map not closed");
 		}
 	}

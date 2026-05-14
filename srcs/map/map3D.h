@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:48:48 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/14 18:52:31 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 22:17:27 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ typedef struct s_map
 #endif
 
 char					**load_map_from_cub(t_game *g, const char *path);
-void					map_validate_chars(t_game *g);
-void					map_validate_closed(t_game *g);
+void	map_validate_bounds(t_game *g);
 
 int						map_is_map_line(t_game *g, char *line);
 int						map_is_empty_line(char *s);
@@ -71,8 +70,10 @@ double					get_sprite_wrap_offset_x(t_game *g, double sprite_x,
 int						is_whitespace(char c);
 char					**copy_map(char **map_grid);
 char	map_get_tile_raw(t_game *game, int row, int col);
-void	map_validate_inside_spaces(t_game *g);
+void	map_validate_tiles(t_game *g);
 int	is_token_end(char c);
 int	map_is_config_line(t_game *g, char *line);
 void map_flood_fill(t_game *game);
 int	is_cub_file(const char *path);
+void map_validate_wrap_portals(t_game *game);
+double	wrap_value(double x, double width);

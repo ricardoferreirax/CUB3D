@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/05/14 13:37:40 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/05/14 22:14:55 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRC_FILES = main.c \
 	srcs/init/init_base.c \
 	srcs/init/init_ghosts.c \
 	srcs/init/parse.c \
+	srcs/init/init_map.c \
 	srcs/map/read.c \
 	srcs/map/utils.c \
 	srcs/map/load.c \

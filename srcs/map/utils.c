@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_utils.c                                        :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:41:18 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/13 11:15:06 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 22:14:32 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,13 @@ int	map_is_empty_line(char *s)
 		i++;
 	}
 	return (1);
+}
+
+double	wrap_value(double x, double width)
+{
+	while (x < 0.0)
+		x += width;
+	while (x >= width)
+		x -= width;
+	return (x);
 }
