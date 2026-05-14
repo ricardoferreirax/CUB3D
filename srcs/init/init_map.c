@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 22:12:34 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/14 22:17:05 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 22:33:22 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,49 @@ static void san(char **temp)
 	}
 }
 
+static int	map_is_valid_tile(t_game *g, char c)
+{
+	if (c == '\0')
+		return (0);
+	if (c == '\n')
+		return (1);
+	if (c == WALL || c == OPEN_SPACE || c == VOID || c == 'M')
+		return (1);
+	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+		return (1);
+	if (g->mode == MODE_PACMAN)
+	{
+		if (c == PACDOT || c == ENERGIZER || c == WRAP_PORTS || c == BLINKY_T
+			|| c == PINKY_T || c == INKY_T || c == CLYDE_T || c == GATE
+			|| c == PLAYER)
+			return (1);
+	}
+	return (0);
+}
+
+void	map_validate_tiles(t_game *g)
+{
+	int		y;
+	int		x;
+	char	tile;
+
+	if (!g || !g->map.grid)
+		exit_game(EXIT_MAP, g, "map_validate_tiles: missing grid");
+	y = 0;
+	while (g->map.grid[y])
+	{
+		x = 0;
+		while (g->map.grid[y][x])
+		{
+			tile = g->map.grid[y][x];
+			if (!map_is_valid_tile(g, tile))
+				exit_game(EXIT_MAP, g, "map_validate_tiles: invalid tile");
+			x++;
+		}
+		y++;
+	}
+}
+
 void	init_map(t_game *g, const char *path)
 {
 	char	**temp;
@@ -74,5 +117,4 @@ void	init_map(t_game *g, const char *path)
 	map_validate_tiles(g);
 	map_validate_wrap_portals(g);
 	map_validate_bounds(g);
-	map_flood_fill(g);
 }

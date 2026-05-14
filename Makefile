@@ -6,7 +6,7 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/05/14 22:14:55 by rmedeiro         ###   ########.fr        #
+#    Updated: 2026/05/14 22:36:07 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,10 +44,9 @@ SRC_FILES = main.c \
 	srcs/map/load.c \
 	srcs/map/wrap.c \
 	srcs/map/ghost.c \
-	srcs/map/validate_grid.c \
 	srcs/map/parse_lines.c \
 	srcs/map/grid.c \
-	srcs/map/flood_fill.c \
+	srcs/map/validate_bounds.c \
 	srcs/player/collision.c \
 	srcs/player/collect_pacdots.c \
 	srcs/player/controller.c \

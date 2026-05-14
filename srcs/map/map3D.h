@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:48:48 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/14 22:17:27 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 22:31:07 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int						map_tile_type(char t, int tile_type);
 char					**map_read_file(const char *path);
 
 int						map_is_wrap_tile(t_game *g, int row, int col);
-int						ray_wrap_x(t_game *g);
 void					player_wrap_position(t_game *g);
 
 void					ghost_wrap_position(t_game *g, t_ghost *ghost);
@@ -70,10 +69,9 @@ double					get_sprite_wrap_offset_x(t_game *g, double sprite_x,
 int						is_whitespace(char c);
 char					**copy_map(char **map_grid);
 char	map_get_tile_raw(t_game *game, int row, int col);
-void	map_validate_tiles(t_game *g);
 int	is_token_end(char c);
 int	map_is_config_line(t_game *g, char *line);
-void map_flood_fill(t_game *game);
+void	map_validate_bounds(t_game *g);
 int	is_cub_file(const char *path);
 void map_validate_wrap_portals(t_game *game);
 double	wrap_value(double x, double width);
