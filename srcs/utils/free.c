@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 11:43:18 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/12 11:34:56 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 17:44:29 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ static void	free_texture_paths(t_game *g)
 	free_str(&g->tex.ea);
 	free_str(&g->tex.floor);
 	free_str(&g->tex.ceiling);
+	free_str(&g->map.floor_path);
+	free_str(&g->map.ceiling_path);
 	free_str(&g->tex.pacdot);
 	free_str(&g->tex.energizer);
 	free_str(&g->tex.blinky[0]);

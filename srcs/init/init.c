@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/14 17:25:17 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 17:56:45 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,10 +269,10 @@ void	init_map(t_game *g, const char *path)
 	free_2d((void **)temp);
 	if(g->debug_mode)
 		return;
-	map_flood_fill(g);
 	map_validate_chars(g);
 	map_validate_wrap_portals(g);
 	map_validate_closed(g);
+	map_flood_fill(g);
 }
 
 void	init(t_game *g, char *path)
