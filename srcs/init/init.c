@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/14 13:41:19 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 17:08:03 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,8 @@ static void	init_defaults(t_game *g)
 	g->player.collected_dots = 0;
 	g->map.floor_color = -1;
 	g->map.ceiling_color = -1;
+	g->map.floor_path = NULL;
+	g->map.ceiling_path = NULL;
 	g->gate_passable = 0;
 	g->level = 1;
 	g->timer.mode_timer = 0;

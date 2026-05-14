@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:19:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/14 14:48:54 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 17:07:16 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ static void	validate_required_textures(t_game *g)
 {
 	if (!g->tex.no || !g->tex.so || !g->tex.we || !g->tex.ea)
 		exit_game(EXIT_MAP, g, "parse_texture_path: missing wall texture");
-	if (g->map.floor_color == -1)
+	if (g->map.floor_color == -1 && !g->map.floor_path)
 		exit_game(EXIT_MAP, g, "parse_texture_path: missing floor parameter");
-	if (g->map.ceiling_color == -1)
+	if (g->map.ceiling_color == -1 && !g->map.ceiling_path)
 		exit_game(EXIT_MAP, g, "parse_texture_path: missing ceiling parameter");
 	if (g->mode == MODE_PACMAN && (!g->tex.pacdot || !g->tex.energizer
 			|| !g->tex.blinky[0] || !g->tex.blinky[1] || !g->tex.pinky[0]

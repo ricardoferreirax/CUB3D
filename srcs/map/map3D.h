@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:48:48 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/14 14:50:00 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 16:50:01 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ typedef struct s_map
 	int					height;
 	int					ceiling_color;
 	int					floor_color;
+	char	*floor_path;
+	char	*ceiling_path;
 }						t_map;
 
 #endif

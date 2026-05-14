@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_grid.c                                         :+:      :+:    :+:   */
+/*   grid.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 18:40:00 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/13 10:59:56 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 16:51:04 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,27 +64,4 @@ char	map_get_tile_raw(t_game *game, int row, int col)
 	if (game->map.grid[row][col] <= ' ')
 		return (VOID);
 	return (game->map.grid[row][col]);
-}
-
-void	map_validate_inside_spaces(t_game *g)
-{
-	int	row;
-	int	col;
-	int	last;
-
-	if (!g || !g->map.grid)
-		exit_game(EXIT_MAP, g, "map_validate_spaces: missing grid");
-	row = -1;
-	while (++row < g->map.height)
-	{
-		last = map_row_last_col(g, row, 0);
-		col = 0;
-		while (++col < last)
-		{
-			if (g->map.grid[row][col] == ' '
-				&& g->map.grid[row][col - 1] != ' '
-				&& g->map.grid[row][col + 1] != ' ')
-				exit_game(EXIT_MAP, g, "map_validate_spaces: space on map");
-		}
-	}
 }
