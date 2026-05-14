@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player_collision.c                                 :+:      :+:    :+:   */
+/*   collision.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 22:42:10 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/08 18:36:42 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 22:54:42 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	player_hits_wall(t_game *g, int row, int col)
 {
 	char	tile;
 
-	tile = map_get_tile(g, row, col);
+	tile = map_get_tile(g, row, col, 1);
 	if (tile == WALL || tile == 'M' || tile == VOID)
 		return (1);
 	if (tile == GATE && g->gate_passable == 0)
@@ -29,7 +29,7 @@ int	ghost_hits_wall(t_game *g, int row, int col)
 {
 	char	tile;
 
-	tile = map_get_tile(g, row, col);
+	tile = map_get_tile(g, row, col, 1);
 	if (tile == WALL || tile == 'M' || tile == VOID)
 		return (1);
 	if (tile == GATE && g->gate_passable == 0)

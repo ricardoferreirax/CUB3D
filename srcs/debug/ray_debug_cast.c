@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 18:46:34 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/06 18:45:14 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 22:58:02 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	debug_tile_color(t_game *g, int x, int y)
 {
 	char	tile;
 
-	tile = map_get_tile(g, y, x);
+	tile = map_get_tile(g, y, x, 0);
 	if (map_tile_type(tile, TILE_SOLID) || tile == GATE)
 		return (DEBUG_WALL);
 	return (DEBUG_BG);

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 21:39:40 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/08 18:09:45 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 22:57:08 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	raycast_find_wall(t_game *g)
 		advance_ray_step(g);
 		if (!handle_ray_horizontal_wrap(g))
 			break ;
-		tile = map_get_tile(g, g->ray.map_y, g->ray.map_x);
+		tile = map_get_tile(g, g->ray.map_y, g->ray.map_x, 1);
 		if ((tile == GATE && g->gate_passable == 0) || (tile != GATE
 				&& map_tile_type(tile, TILE_SOLID)))
 		{

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flood_fill.c                                       :+:      :+:    :+:   */
+/*   validate_bounds.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 15:57:15 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/14 22:27:24 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 22:52:00 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 
 static int	is_walkable_open(t_game *g, int y, int x)
 {
-	if (map_tile_type(map_get_tile_raw(g, y, x + 1), TILE_VOID))
+	if (map_tile_type(map_get_tile(g, y, x + 1, 0), TILE_VOID))
 		return (1);
-	if (map_tile_type(map_get_tile_raw(g, y, x - 1), TILE_VOID))
+	if (map_tile_type(map_get_tile(g, y, x - 1, 0), TILE_VOID))
 		return (1);
-	if (map_tile_type(map_get_tile_raw(g, y + 1, x), TILE_VOID))
+	if (map_tile_type(map_get_tile(g, y + 1, x, 0), TILE_VOID))
 		return (1);
-	if (map_tile_type(map_get_tile_raw(g, y - 1, x), TILE_VOID))
+	if (map_tile_type(map_get_tile(g, y - 1, x, 0), TILE_VOID))
 		return (1);
 	return (0);
 }
@@ -40,7 +40,7 @@ static void	check_walkable_bounds(t_game *g)
 		x = -1;
 		while (++x < g->map.width)
 		{
-			tile = map_get_tile_raw(g, y, x);
+			tile = map_get_tile(g, y, x, 0);
 			if (!map_tile_type(tile, TILE_WALKABLE))
 				continue ;
 			if (tile == WRAP_PORTS && map_is_wrap_tile(g, y, x))

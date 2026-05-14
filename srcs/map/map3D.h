@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:48:48 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/14 22:31:07 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 22:50:32 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int						map_is_map_line(t_game *g, char *line);
 int						map_is_empty_line(char *s);
 int						map_row_last_col(t_game *g, int row, int want_wrap);
 
-char					map_get_tile(t_game *g, int y, int x);
+char	map_get_tile(t_game *game, int row, int col, int wrap);
 int						map_tile_type(char t, int tile_type);
 char					**map_read_file(const char *path);
 
@@ -68,7 +68,6 @@ double					get_sprite_wrap_offset_x(t_game *g, double sprite_x,
 							double sprite_y);
 int						is_whitespace(char c);
 char					**copy_map(char **map_grid);
-char	map_get_tile_raw(t_game *game, int row, int col);
 int	is_token_end(char c);
 int	map_is_config_line(t_game *g, char *line);
 void	map_validate_bounds(t_game *g);

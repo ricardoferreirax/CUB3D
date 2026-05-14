@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 18:40:00 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/14 17:26:54 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 22:50:10 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ int	map_row_last_col(t_game *g, int row, int want_wrap)
 	return (last);
 }
 
-char	map_get_tile(t_game *game, int row, int col)
+char	map_get_tile(t_game *game, int row, int col, int wrap)
 {
 	int	last_col;
 
 	if (!game || !game->map.grid || row < 0 || row >= game->map.height)
 		return (VOID);
-	last_col = map_row_last_col(game, row, 1);
-	if (last_col >= 0)
+	last_col = map_row_last_col(game, row, wrap);
+	if (wrap && last_col >= 0)
 	{
 		if (col < 0)
 			col = last_col;
@@ -47,18 +47,6 @@ char	map_get_tile(t_game *game, int row, int col)
 	}
 	else
 		last_col = map_row_last_col(game, row, 0);
-	if (col < 0 || col > last_col || game->map.grid[row][col] <= ' ')
-		return (VOID);
-	return (game->map.grid[row][col]);
-}
-
-char	map_get_tile_raw(t_game *game, int row, int col)
-{
-	int	last_col;
-
-	if (!game || !game->map.grid || row < 0 || row >= game->map.height)
-		return (VOID);
-	last_col = map_row_last_col(game, row, 0);
 	if (col < 0 || col > last_col)
 		return (VOID);
 	if (game->map.grid[row][col] <= ' ')
