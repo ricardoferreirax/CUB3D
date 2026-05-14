@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_ghost.c                                        :+:      :+:    :+:   */
+/*   ghost.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 22:37:05 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/12 17:55:19 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 17:26:17 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static void	copy_map_row(char *row_dst, const char *row_src)
 	{
 		if (row_src[col] == 'M')
 			row_dst[col] = WALL;
-		else if (row_src[col] == 'D')
-			row_dst[col] = '0';
+		// else if (row_src[col] == 'D')
+		// 	row_dst[col] = '0';
 		else if (row_src[col] == '\n')
 			row_dst[col] = '\0';
 		else
