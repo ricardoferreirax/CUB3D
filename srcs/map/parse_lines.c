@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 22:38:39 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/14 14:49:48 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 18:04:52 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ int	map_is_map_line(t_game *g, char *line)
 		if (*p != ' ' && *p != '\t')
 		{
 			if (!map_is_valid_char_in_line(*p, g->mode))
-				exit_game(EXIT_MAP, g, "map_is_map_line: invalid char in map");
+				return (0);
 			has_tile = 1;
 		}
 		p++;

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:19:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/14 17:07:16 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 18:27:01 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,32 +17,38 @@
 static int	parse_cube_texture_line(t_game *g, char *p)
 {
 	if (!ft_strncmp(p, "NO", 2) && is_token_end(p[2]))
-		return (set_texture_path(&g->tex.no, p + 2, g), 1);
+		return (set_texture_path(&g->tex.no, p + 2));
 	if (!ft_strncmp(p, "SO", 2) && is_token_end(p[2]))
-		return (set_texture_path(&g->tex.so, p + 2, g), 1);
+		return (set_texture_path(&g->tex.so, p + 2));
 	if (!ft_strncmp(p, "WE", 2) && is_token_end(p[2]))
-		return (set_texture_path(&g->tex.we, p + 2, g), 1);
+		return (set_texture_path(&g->tex.we, p + 2));
 	if (!ft_strncmp(p, "EA", 2) && is_token_end(p[2]))
-		return (set_texture_path(&g->tex.ea, p + 2, g), 1);
+		return (set_texture_path(&g->tex.ea, p + 2));
 	if (*p == 'F' && is_token_end(p[1]))
 		return (parse_floor_ceiling_line(g, 'F', p + 1));
 	if (*p == 'C' && is_token_end(p[1]))
 		return (parse_floor_ceiling_line(g, 'C', p + 1));
-	return (0);
+	return (-1);
 }
 
 static int	parse_texture_line(t_game *g, char *line)
 {
 	char	*p;
+	int		ret;
 
 	p = skip_whitespace(line);
 	if (!*p || *p == '\n')
 		return (1);
-	if (parse_cube_texture_line(g, p))
-		return (1);
-	if (g->mode == MODE_PACMAN && parse_pacman_texture_line(g, p))
-		return (1);
-	return (0);
+	ret = parse_cube_texture_line(g, p);
+	if (ret != -1)
+		return (ret);
+	if (g->mode == MODE_PACMAN)
+	{
+		ret = parse_pacman_texture_line(g, p);
+		if (ret != -1)
+			return (ret);
+	}
+	return (-1);
 }
 
 static void	texture_parse_error(t_game *g, int fd, char *line, char *msg)
@@ -50,6 +56,26 @@ static void	texture_parse_error(t_game *g, int fd, char *line, char *msg)
 	free(line);
 	close(fd);
 	exit_game(EXIT_MAP, g, msg);
+}
+
+static void	parse_texture_line_state(t_game *g, int fd, char *line, 
+	int map_started)
+{
+	int	ret;
+
+	if (map_started)
+	{
+		if (map_is_config_line(g, line))
+			texture_parse_error(g, fd, line, "Map must be last");
+		if (!map_is_empty_line(line))
+			texture_parse_error(g, fd, line, "Invalid char in map");
+		return ;
+	}
+	ret = parse_texture_line(g, line);
+	if (ret == 0)
+		texture_parse_error(g, fd, line, "Repeated texture or invalid path");
+	if (ret == -1)
+		texture_parse_error(g, fd, line, "Invalid config");
 }
 
 static void	parse_texture_file(t_game *g, int fd)
@@ -66,16 +92,12 @@ static void	parse_texture_file(t_game *g, int fd)
 			has_content = 1;
 		if (map_is_map_line(g, line))
 			map_started = 1;
-		else if (map_started && map_is_config_line(g, line))
-			texture_parse_error(g, fd, line,
-				"parse_texture_path: map must be last in .cub");
-		if (!map_started && !parse_texture_line(g, line))
-			texture_parse_error(g, fd, line,
-				"parse_texture_path: invalid config");
+		else
+			parse_texture_line_state(g, fd, line, map_started);
 		free(line);
 	}
 	if (!has_content)
-		texture_parse_error(g, fd, NULL, "parse_texture_path: empty file");
+		texture_parse_error(g, fd, NULL, "Empty file");
 }
 
 static void	validate_required_textures(t_game *g)
