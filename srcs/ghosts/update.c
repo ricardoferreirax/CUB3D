@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 11:11:58 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/13 11:21:48 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/15 14:00:42 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,10 @@ void	update_target(t_game *game, t_ghost *ghost)
 		update_cruise_elroy(game, ghost);
 }
 
-int	update_ghost(t_game *game, t_ghost *ghost)
+int	handle_ghost(t_game *game, t_ghost *ghost)
 {
 	t_double_point	next;
 
-	if (!ghost)
-		return (-1);
-	if (ghost->name == DISABLED || game->mode == MODE_CUBE)
-		return (0);
-	if (ghost_in_penhouse(ghost, ghost->mental_map.grid))
-		return (ghost_penhouse_dance(game, ghost, find_c(ghost->mental_map.grid,
-					'G')));
 	if (ghost->state == FRIGHTENED && get_time_us()
 		- game->timer.frightened_time_start > (long)(game->timer.frightened_time
 		* 1000000.0))
@@ -82,6 +75,20 @@ int	update_ghost(t_game *game, t_ghost *ghost)
 		ghost_set_pixel_pos(ghost, next.x, next.y);
 		return (0);
 	}
+	return (1);
+}
+
+int	update_ghost(t_game *game, t_ghost *ghost)
+{
+	if (!ghost)
+		return (-1);
+	if (ghost->name == DISABLED || game->mode == MODE_CUBE)
+		return (0);
+	if (ghost_in_penhouse(ghost, ghost->mental_map.grid))
+		return (ghost_penhouse_dance(game, ghost, find_c(ghost->mental_map.grid,
+					'G')));
+	if (handle_ghost(game, ghost))
+		return (0);
 	ghost->invalid_dir = chose_next_move(game, ghost, &ghost->mental_map);
 	if (ghost->invalid_dir == -1)
 		return (-1);

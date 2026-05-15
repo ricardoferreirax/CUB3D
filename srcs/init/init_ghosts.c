@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:28:58 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/04/23 14:49:10 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/15 13:40:06 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,80 +14,7 @@
 #include "../ghosts/ghosts.h"
 #include "../render/render3D.h"
 #include "initializer.h"
-
-static void	ghost_info(int i, int *name, char *spawn)
-{
-	if (i == 0)
-	{
-		*name = BLINKY;
-		*spawn = BLINKY_T;
-	}
-	else if (i == 1)
-	{
-		*name = PINKY;
-		*spawn = PINKY_T;
-	}
-	else if (i == 2)
-	{
-		*name = INKY;
-		*spawn = INKY_T;
-	}
-	else
-	{
-		*name = CLYDE;
-		*spawn = CLYDE_T;
-	}
-}
-
-t_point	find_spawn(char **map, char ghost)
-{
-	t_point	gate_pos;
-
-	gate_pos = find_c(map, GATE);
-	if (gate_pos.x < 0 || gate_pos.y < 0)
-		return (gate_pos);
-	if (ghost == BLINKY_T)
-	{
-		gate_pos.y -= 1;
-		return (gate_pos);
-	}
-	gate_pos.y += 1;
-	if (ghost == PINKY_T)
-		return (gate_pos);
-	if (ghost == INKY_T)
-		gate_pos.x += 1;
-	if (ghost == CLYDE_T)
-		gate_pos.x -= 1;
-	return (gate_pos);
-}
-
-static int	init_dot_counter(t_ghost *gh)
-{
-	if (gh->name == BLINKY)
-	{
-		gh->cruiser.is_blinky = 1;
-		gh->cruiser.one.enabled = 0;
-		gh->cruiser.two.enabled = 0;
-	}
-	else if (gh->name == PINKY)
-	{
-		gh->dot_counter = 7;
-		gh->cruiser.is_blinky = 0;
-	}
-	else if (gh->name == INKY)
-	{
-		gh->dot_counter = 17;
-		gh->cruiser.is_blinky = 0;
-	}
-	else if (gh->name == CLYDE)
-	{
-		gh->dot_counter = 32;
-		gh->cruiser.is_blinky = 0;
-	}
-	else
-		return (-1);
-	return (0);
-}
+#include "../utils/helpers.h"
 
 static int	init_ghots_pos(t_game *g, t_ghost *gh, char tc, int is_death)
 {
@@ -127,25 +54,13 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char,
 		exit_game(EXIT_MALLOC, g, "init_one_ghost() was unable to copy map");
 	if (init_ghots_pos(g, gh, target_char, is_death))
 		return (-1);
-	if(init_dot_counter(gh))
+	if (init_dot_counter(gh))
 		return (-1);
 	if (is_death)
 		return (0);
 	ghost_sprites(g, gh->name);
 	ghost_color(gh);
 	return (0);
-}
-
-void	annouce_disabled(int i)
-{
-	if (i == 0)
-		ft_printf("Blinky was disabled\n");
-	if (i == 1)
-		ft_printf("Pinky was disabled\n");
-	if (i == 2)
-		ft_printf("Inky was disabled\n");
-	if (i == 3)
-		ft_printf("ClydE was disabled\n");
 }
 
 void	init_ghosts(t_game *g, int is_death)

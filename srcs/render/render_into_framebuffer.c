@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 14:06:33 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/15 11:43:34 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/15 13:52:59 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	render_sprite_into_framebuffer(t_game *game, t_point coord,
 	}
 }
 
-
 void	render_player(t_game *game, t_point coord)
 {
 	if ((game->player.target_dir.y) == 1)
@@ -89,7 +88,6 @@ void	render_player_into_framebuffer(t_game *game)
 	game->player.pos.pixel_pos.y = coord.y;
 	render_player(game, coord);
 }
-
 
 void	render_into_framebuffer(t_game *game)
 {

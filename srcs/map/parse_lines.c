@@ -6,74 +6,13 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 22:38:39 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/14 18:04:52 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/15 13:52:34 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 #include "../textures/textures3D.h"
 #include "map3D.h"
-
-static int	map_cube_mode_prefix(char *p)
-{
-	if (!p)
-		return (0);
-	if (!ft_strncmp(p, "NO", 2) && is_token_end(p[2]))
-		return (1);
-	if (!ft_strncmp(p, "SO", 2) && is_token_end(p[2]))
-		return (1);
-	if (!ft_strncmp(p, "WE", 2) && is_token_end(p[2]))
-		return (1);
-	if (!ft_strncmp(p, "EA", 2) && is_token_end(p[2]))
-		return (1);
-	if (*p == 'F' && is_token_end(p[1]))
-		return (1);
-	if (*p == 'C' && is_token_end(p[1]))
-		return (1);
-	return (0);
-}
-
-static int	map_pacman_mode_prefix(char *p)
-{
-	if (!p)
-		return (0);
-	if (!ft_strncmp(p, "PD", 2) && is_token_end(p[2]))
-		return (1);
-	if (!ft_strncmp(p, "EN", 2) && is_token_end(p[2]))
-		return (1);
-	if (!ft_strncmp(p, "GC", 2) && is_token_end(p[2]))
-		return (1);
-	if (!ft_strncmp(p, "SC", 2) && is_token_end(p[2]))
-		return (1);
-	if (!ft_strncmp(p, "ET", 2) && is_token_end(p[2]))
-		return (1);
-	if (!ft_strncmp(p, "BL0", 3) && is_token_end(p[3]))
-		return (1);
-	if (!ft_strncmp(p, "BL1", 3) && is_token_end(p[3]))
-		return (1);
-	if (!ft_strncmp(p, "PI0", 3) && is_token_end(p[3]))
-		return (1);
-	if (!ft_strncmp(p, "PI1", 3) && is_token_end(p[3]))
-		return (1);
-	if (!ft_strncmp(p, "IN0", 3) && is_token_end(p[3]))
-		return (1);
-	if (!ft_strncmp(p, "IN1", 3) && is_token_end(p[3]))
-		return (1);
-	if (!ft_strncmp(p, "CL0", 3) && is_token_end(p[3]))
-		return (1);
-	if (!ft_strncmp(p, "CL1", 3) && is_token_end(p[3]))
-		return (1);
-	return (0);
-}
-
-static int	map_is_cub_prefix(char *p)
-{
-	if (map_cube_mode_prefix(p))
-		return (1);
-	if (map_pacman_mode_prefix(p))
-		return (1);
-	return (0);
-}
 
 bool	target_tile(char c)
 {

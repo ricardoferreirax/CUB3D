@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:20:35 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/14 18:11:53 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/15 13:55:49 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,8 @@ int						parse_floor_ceiling_color(t_game *g, const char *s,
 							int *dest);
 int						set_texture_path(char **dest, char *value);
 
+int						parse_cube_texture_line(t_game *g, char *p);
+int						parse_texture_line(t_game *g, char *line);
+void					texture_parse_error(t_game *g, int fd, char *line,
+							char *msg);
 #endif

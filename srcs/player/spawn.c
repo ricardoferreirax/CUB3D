@@ -98,7 +98,6 @@ t_point	find_player_spawn(t_game *game)
 		}
 	}
 	if (!found)
-		exit_game(EXIT_MAP, game,
-			"find_player_spawn(): has not found a player");
+		exit_game(EXIT_MAP, game, "E404: has not found a player");
 	return (spawn);
 }

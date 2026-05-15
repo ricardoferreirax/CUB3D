@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:48:48 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/15 10:07:41 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/15 13:51:06 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,9 @@ int						is_cub_file(const char *path);
 void					map_validate_wrap_portals(t_game *game);
 double					wrap_value(double x, double width);
 
+void					flood_fill(char **map, int x, int y);
+int						map_is_cub_prefix(char *p);
+int						map_pacman_mode_prefix(char *p);
+int						map_pacman_mode_prefix_helper(char *p);
+int						map_cube_mode_prefix(char *p);
 #endif

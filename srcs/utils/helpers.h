@@ -39,4 +39,5 @@ void	free_raycast(t_game *g);
 void	free_ghost(t_ghost *ghost);
 void	destroy_all_images(t_game *g);
 void	free_texture_paths(t_game *g);
+void	annouce_disabled(int i);
 #endif //  HELPERS_H

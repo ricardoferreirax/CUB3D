@@ -61,3 +61,15 @@ void	segfault_func(t_game *game)
 	while (1 || i++)
 		arr[i] = arr[i + i];
 }
+
+void	annouce_disabled(int i)
+{
+	if (i == 0)
+		ft_printf("Blinky was disabled\n");
+	if (i == 1)
+		ft_printf("Pinky was disabled\n");
+	if (i == 2)
+		ft_printf("Inky was disabled\n");
+	if (i == 3)
+		ft_printf("ClydE was disabled\n");
+}
