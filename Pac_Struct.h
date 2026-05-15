@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/08 17:46:25 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/15 10:09:16 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,20 +112,17 @@ typedef struct s_fc
 
 typedef struct s_sprite
 {
-	double dist;      // distancia do sprite ao player
-	double cam_x;    // posição do sprite no espaço da câmera (x)
-	double cam_y;    // posição do sprite no espaço da câmera (y)
+	double dist;
+	double cam_x;
+	double cam_y;
 	int screen_x;    
-		// posição horizontal do sprite na tela (coluna onde o centro do sprite deve ser desenhado)
-	int size;         // tamanho do sprite projetado na tela
-	int draw_start_x; // coluna inicial onde o sprite começa a desenhar
-	int draw_end_x;   // coluna final onde o sprite termina de desenhar
-	int draw_start_y; // linha inicial onde o sprite começa a desenhar
-	int draw_end_y;   // linha final onde o sprite termina de desenhar
+	int size;
+	int draw_start_x;
+	int draw_end_x;
+	int draw_start_y;
+	int draw_end_y;
 	int tex_start_x; 
-		// coordenada x da textura correspondente à coluna draw_start_x do sprite
 	int tex_start_y; 
-		// coordenada y da textura correspondente à linha draw_start_y do
 }					t_sprite;
 
 typedef struct s_raycasting
@@ -171,14 +168,11 @@ typedef struct s_sprite_ref
 
 typedef struct s_anim_cord
 {
-	// Coordinates to find the sprites in the sprite sheet.
-	// Each entity has 2 animations per direction, they alternate
 	t_sprite_ref	up[4];
 	t_sprite_ref	left[4];
 	t_sprite_ref	down[4];
 	t_sprite_ref	right[4];
 	t_sprite_ref	scared[2];
-	// Death animation ofr th eplayer has 12 frames
 	t_sprite_ref	death[12];
 
 }					t_anim;
@@ -187,24 +181,20 @@ typedef struct s_control
 {
 	int				current_dir;
 	int				input_buffer;
-	// int cycle_count;
 }					t_control;
 
 typedef struct s_player
 {
-	// vou precisar para a execução 3D
-
-	// vou precisar para a execução 3D
 	t_double_point	dir;
 	t_double_point	target_dir;
 	t_double_point	plane;
 	t_double_point	target_plane;
 	t_point			target_map;
-	char target_tile;     // id do tile que o player está a apontar
-	char target_wall_dir; // 'N', 'S', 'E', 'W'
-	double target_dist;   // distância perpendicular
+	char target_tile;
+	char target_wall_dir;
+	double target_dist;
 
-	t_pos pos; // para o 2d (tile/pixel)
+	t_pos pos;
 	int				lives;
 	int				speed_multiplier;
 	int				collected_dots;
@@ -274,12 +264,10 @@ typedef struct s_time
 	double			level_time;
 	double			mode_timer;
 	double			mode_time_start;
-	// starts when ghosts are in the pen and pac-man refuses to eat dots
 	double			timeout_timer;
 	int				energizer;
 	double			frightened_time;
 	double			frightened_time_start;
-	// timers related to making sure the game updates at 60Hz
 	long			last_time_up;
 	long			accumulator;
 	long			start_time;
