@@ -1,4 +1,5 @@
 # **************************************************************************** #
+#
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
@@ -26,74 +27,80 @@ MLX_PATH = minilibx-linux
 MLX = $(MLX_PATH)/libmlx.a
 
 SRC_FILES = main.c \
-	srcs/hooks/handle_close.c \
-	srcs/hooks/handle_gate_toggle.c \
-	srcs/hooks/handle_keys.c \
-	srcs/hooks/handle_mouse.c \
-	srcs/hooks/controller_player.c \
-	srcs/init/init_mlx.c \
-	srcs/init/init_spritesheet.c \
-	srcs/init/init_sprites.c \
-	srcs/init/init.c \
-	srcs/init/init_base.c \
-	srcs/init/init_ghosts.c \
-	srcs/init/parse.c \
-	srcs/init/init_map.c \
-	srcs/map/read.c \
-	srcs/map/utils.c \
-	srcs/map/load.c \
-	srcs/map/wrap.c \
-	srcs/map/ghost.c \
-	srcs/map/parse_lines.c \
-	srcs/map/grid.c \
-	srcs/map/validate_bounds.c \
-	srcs/player/collision.c \
-	srcs/player/collect_pacdots.c \
-	srcs/player/controller.c \
-	srcs/player/touch_ghost.c \
-	srcs/player/actions.c \
-	srcs/player/apply_move.c \
-	srcs/player/move.c \
-	srcs/init/init_player.c \
-	srcs/player/spawn.c \
-	srcs/render/raycast_frame.c \
-	srcs/render/raycast_find_wall.c \
-	srcs/render/render_plane.c \
-	srcs/render/render_debug_symbols.c \
-	srcs/render/render_frame.c \
-	srcs/render/render_into_framebuffer.c \
-	srcs/draw/plane.c \
-	srcs/draw/background.c \
-	srcs/draw/wall_column.c \
-	srcs/draw/menu.c \
-	srcs/draw/build_sprite_box.c \
-	srcs/draw/pacman_sprites.c \
-	srcs/draw/utils.c \
-	srcs/draw/sprite_column.c \
-	srcs/textures/parse_color.c \
-	srcs/textures/utils.c \
-	srcs/textures/load.c \
-	srcs/textures/parse_pacman.c \
-	srcs/textures/parse_path.c \
-	srcs/textures/pick_wall.c \
-	srcs/debug/ray_debug_cast.c \
-	srcs/debug/ray_debug_draw.c \
-	srcs/utils/helpers.c \
-	srcs/utils/free.c \
-	srcs/utils/render_utils.c \
-	srcs/base/constructor.c \
-	srcs/base/bitmasking.c \
-	srcs/base/helpers.c \
-	srcs/base/disambiguation.c \
-	srcs/ghosts/chose_next_dir.c \
-	srcs/ghosts/math.c \
-	srcs/ghosts/penhouse.c \
-	srcs/ghosts/targetting.c \
-	srcs/ghosts/ghost_ai.c \
-	srcs/ghosts/update.c \
-	srcs/ghosts/sprites.c  \
-	srcs/ghosts/helpers.c \
-	srcs/clock/time.c
+srcs/hooks/handle_close.c \
+srcs/hooks/handle_mouse.c \
+srcs/hooks/handle_gate_toggle.c \
+srcs/hooks/controller_player.c \
+srcs/hooks/handle_keys.c \
+srcs/init/init_sprites.c \
+srcs/init/init_base.c \
+srcs/init/parse.c \
+srcs/init/init_mlx.c \
+srcs/init/init_spritesheet.c \
+srcs/init/init_ghosts.c \
+srcs/init/init_player.c \
+srcs/init/init_map.c \
+srcs/init/init.c \
+srcs/map/flood_fill.c \
+srcs/map/parse_lines.c \
+srcs/map/utils.c \
+srcs/map/ghost.c \
+srcs/map/read.c \
+srcs/map/validate_bounds.c \
+srcs/map/grid.c \
+srcs/map/wrap.c \
+srcs/map/load.c \
+srcs/player/actions.c \
+srcs/player/apply_move.c \
+srcs/player/collect_pacdots.c \
+srcs/player/controller.c \
+srcs/player/touch_ghost.c \
+srcs/player/collision.c \
+srcs/player/move.c \
+srcs/player/spawn.c \
+srcs/render/render_frame.c \
+srcs/render/render_plane.c \
+srcs/render/render_debug_symbols.c \
+srcs/render/raycast_find_wall.c \
+srcs/render/raycast_frame.c \
+srcs/render/render_ghosts.c \
+srcs/render/render_into_framebuffer.c \
+srcs/render/render_collectibles.c \
+srcs/textures/pick_wall.c \
+srcs/textures/parse_color.c \
+srcs/textures/parse_pacman.c \
+srcs/textures/utils.c \
+srcs/textures/load.c \
+srcs/textures/parse_path.c \
+srcs/base/bitmasking.c \
+srcs/base/constructor.c \
+srcs/base/helpers.c \
+srcs/base/disambiguation.c \
+srcs/clock/time.c \
+srcs/ghosts/sprites.c \
+srcs/ghosts/chose_next_dir.c \
+srcs/ghosts/ghost_ai.c \
+srcs/ghosts/helpers.c \
+srcs/ghosts/penhouse.c \
+srcs/ghosts/targetting.c \
+srcs/ghosts/update.c \
+srcs/ghosts/math.c \
+srcs/utils/render_utils.c \
+srcs/utils/funny_funcs.c \
+srcs/utils/free_helpers.c \
+srcs/utils/math_funcs.c \
+srcs/utils/free.c \
+srcs/utils/helpers.c \
+srcs/debug/ray_debug_draw.c \
+srcs/debug/ray_debug_cast.c \
+srcs/draw/background.c \
+srcs/draw/menu.c \
+srcs/draw/pacman_sprites.c \
+srcs/draw/plane.c \
+srcs/draw/utils.c \
+srcs/draw/wall_column.c \
+srcs/draw/sprite_column.c \
+srcs/draw/build_sprite_box.c
 
 OBJ_DIR   = objs
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))

@@ -61,37 +61,8 @@ t_point	find_spawn(char **map, char ghost)
 	return (gate_pos);
 }
 
-static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char,
-		int is_death)
+static int	init_dot_counter(t_ghost *gh)
 {
-	t_point	target_point;
-	t_point	spawn_point;
-
-	if (g->mode == MODE_CUBE)
-		return (-1);
-	if (!is_death)
-	{
-		gh->mental_map.grid = copy_map(g->map.grid);
-		gh->mental_map.height = ytile(gh->mental_map.grid);
-		gh->mental_map.width = xtile(gh->mental_map.grid);
-	}
-	if (!gh->mental_map.grid && !is_death)
-		exit_game(EXIT_MALLOC, g, "init_one_ghost() was unable to copy map");
-	target_point = find_c(g->map.grid, target_char);
-	spawn_point = find_spawn(g->map.grid, target_char);
-	if (target_point.x < 0 || target_point.y < 0 || spawn_point.x < 0
-		|| spawn_point.y < 0)
-		return (-1);
-	if (gh->name == BLINKY && !is_death)
-		g->targets.ghost_house = spawn_point;
-	g->targets.scatter_target[gh->name] = target_point;
-	gh->pos.tile_pos.x = (double)spawn_point.x + 0.5;
-	gh->pos.tile_pos.y = (double)spawn_point.y + 0.5;
-	gh->pos.pixel_pos.x = spawn_point.x * TILE_SIZE + TILE_SIZE / 2;
-	gh->pos.pixel_pos.y = spawn_point.y * TILE_SIZE + TILE_SIZE / 2;
-	gh->invalid_dir = 3;
-	gh->target_tile = target_point;
-	gh->state = SCATTER;
 	if (gh->name == BLINKY)
 	{
 		gh->cruiser.is_blinky = 1;
@@ -114,6 +85,49 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char,
 		gh->cruiser.is_blinky = 0;
 	}
 	else
+		return (-1);
+	return (0);
+}
+
+static int	init_ghots_pos(t_game *g, t_ghost *gh, char tc, int is_death)
+{
+	t_point	target_point;
+	t_point	spawn_point;
+
+	target_point = find_c(g->map.grid, tc);
+	spawn_point = find_spawn(g->map.grid, tc);
+	if (target_point.x < 0 || target_point.y < 0 || spawn_point.x < 0
+		|| spawn_point.y < 0)
+		return (-1);
+	g->targets.scatter_target[gh->name] = target_point;
+	gh->pos.tile_pos.x = (double)spawn_point.x + 0.5;
+	gh->pos.tile_pos.y = (double)spawn_point.y + 0.5;
+	gh->pos.pixel_pos.x = spawn_point.x * TILE_SIZE + TILE_SIZE / 2;
+	gh->pos.pixel_pos.y = spawn_point.y * TILE_SIZE + TILE_SIZE / 2;
+	gh->invalid_dir = 3;
+	gh->target_tile = target_point;
+	gh->state = SCATTER;
+	if (gh->name == BLINKY && !is_death)
+		g->targets.ghost_house = spawn_point;
+	return (0);
+}
+
+static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char,
+		int is_death)
+{
+	if (g->mode == MODE_CUBE)
+		return (-1);
+	if (!is_death)
+	{
+		gh->mental_map.grid = copy_map(g->map.grid);
+		gh->mental_map.height = ytile(gh->mental_map.grid);
+		gh->mental_map.width = xtile(gh->mental_map.grid);
+	}
+	if (!gh->mental_map.grid && !is_death)
+		exit_game(EXIT_MALLOC, g, "init_one_ghost() was unable to copy map");
+	if (init_ghots_pos(g, gh, target_char, is_death))
+		return (-1);
+	if(init_dot_counter(gh))
 		return (-1);
 	if (is_death)
 		return (0);

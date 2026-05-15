@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ghosts.h"
+#include "../utils/helpers.h"
 
 static int	chose_frightened_dir(t_ghost *ghost, t_map *map,
 		int direction[4][2])

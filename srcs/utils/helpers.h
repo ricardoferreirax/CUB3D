@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 11:02:12 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/08 14:17:58 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/15 11:39:07 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,11 @@ bool	is_time_up(t_game *game, long now);
 int		change_game_mode(t_game *game);
 void	segfault_func(t_game *game);
 void	print_2d(char **arr);
+
+void	free_str(char **s);
+void	destroy_img(t_game *g, t_image *img);
+void	free_raycast(t_game *g);
+void	free_ghost(t_ghost *ghost);
+void	destroy_all_images(t_game *g);
+void	free_texture_paths(t_game *g);
 #endif //  HELPERS_H

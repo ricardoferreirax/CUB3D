@@ -6,11 +6,10 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 14:06:33 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/04/23 14:50:04 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/15 11:43:34 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../ghosts/ghosts.h"
 #include "render3D.h"
 
 void	render_base_into_framebuffer(t_game *s)
@@ -59,84 +58,6 @@ void	render_sprite_into_framebuffer(t_game *game, t_point coord,
 	}
 }
 
-void	render_normal_ghost(t_game *game, t_point coord, t_ghost *ghost)
-{
-	if (ghost->invalid_dir == 0)
-		render_sprite_into_framebuffer(game, coord,
-			&ghost->frames.down[((ghost->pos.pixel_pos.x
-					+ ghost->pos.pixel_pos.y) % 2)]);
-	if (ghost->invalid_dir == 1)
-		render_sprite_into_framebuffer(game, coord,
-			&ghost->frames.right[((ghost->pos.pixel_pos.x
-					+ ghost->pos.pixel_pos.y) % 2)]);
-	if (ghost->invalid_dir == 2)
-		render_sprite_into_framebuffer(game, coord,
-			&ghost->frames.up[((ghost->pos.pixel_pos.x + ghost->pos.pixel_pos.y)
-				% 2)]);
-	if (ghost->invalid_dir == 3)
-		render_sprite_into_framebuffer(game, coord,
-			&ghost->frames.left[((ghost->pos.pixel_pos.x
-					+ ghost->pos.pixel_pos.y) % 2)]);
-}
-
-void	render_eaten_ghost(t_game *game, t_point coord, t_ghost *ghost)
-{
-	if (ghost->invalid_dir == 0)
-		render_sprite_into_framebuffer(game, coord, &ghost->frames.down[2]);
-	if (ghost->invalid_dir == 1)
-		render_sprite_into_framebuffer(game, coord, &ghost->frames.right[2]);
-	if (ghost->invalid_dir == 2)
-		render_sprite_into_framebuffer(game, coord, &ghost->frames.up[2]);
-	if (ghost->invalid_dir == 3)
-		render_sprite_into_framebuffer(game, coord, &ghost->frames.left[2]);
-}
-
-void	render_elroy_cruiser(t_game *game, t_point coord, t_ghost *ghost)
-{
-	if (ghost->invalid_dir == 0)
-		render_sprite_into_framebuffer(game, coord, &ghost->frames.down[3]);
-	if (ghost->invalid_dir == 1)
-		render_sprite_into_framebuffer(game, coord, &ghost->frames.right[3]);
-	if (ghost->invalid_dir == 2)
-		render_sprite_into_framebuffer(game, coord, &ghost->frames.up[3]);
-	if (ghost->invalid_dir == 3)
-		render_sprite_into_framebuffer(game, coord, &ghost->frames.left[3]);
-}
-
-void	render_ghost_into_framebuffer(t_game *game, t_point coord,
-		t_ghost *ghost)
-{
-	if (ghost->state == FRIGHTENED)
-		render_sprite_into_framebuffer(game, coord,
-			&ghost->frames.scared[((ghost->pos.pixel_pos.x
-					+ ghost->pos.pixel_pos.y) % 2)]);
-	else
-	{
-		if (game->debug_mode && (ghost->cruiser.is_blinky
-				&& (ghost->cruiser.one.enabled || ghost->cruiser.two.enabled)))
-			render_elroy_cruiser(game, coord, ghost);
-		else if (ghost->state != EATEN)
-			render_normal_ghost(game, coord, ghost);
-		else
-			render_eaten_ghost(game, coord, ghost);
-	}
-}
-
-void	render_ghosts_into_framebuffer(t_game *game)
-{
-	int		i;
-	t_point	coord;
-
-	i = -1;
-	while (++i < 4)
-	{
-		if (ghost_ai(game, &game->ghosts[i]))
-			continue ;
-		coord.x = (game->ghosts[i].pos.pixel_pos.x - TILE_SIZE + X_POS);
-		coord.y = (game->ghosts[i].pos.pixel_pos.y - TILE_SIZE + Y_POS);
-		render_ghost_into_framebuffer(game, coord, &game->ghosts[i]);
-	}
-}
 
 void	render_player(t_game *game, t_point coord)
 {
@@ -169,37 +90,6 @@ void	render_player_into_framebuffer(t_game *game)
 	render_player(game, coord);
 }
 
-void	render_pacdots_into_framebuffer(t_game *game)
-{
-	int	i;
-
-	i = 0;
-	while (i < game->pacdot_count)
-	{
-		if (game->pacdots[i].active)
-			render_sprite_into_framebuffer(game,
-				(t_point){.y = game->pacdots[i].pos.pixel_pos.y + Y_POS,
-				.x = game->pacdots[i].pos.pixel_pos.x + X_POS},
-				&game->sprite_sheet.sprites[37]);
-		i++;
-	}
-}
-
-void	render_energizers_into_framebuffer(t_game *game)
-{
-	int	i;
-
-	i = 0;
-	while (i < game->energizer_count)
-	{
-		if (game->energizers[i].active)
-			render_sprite_into_framebuffer(game,
-				(t_point){.y = game->energizers[i].pos.pixel_pos.y + Y_POS,
-				.x = game->energizers[i].pos.pixel_pos.x + X_POS},
-				&game->sprite_sheet.sprites[81]);
-		i++;
-	}
-}
 
 void	render_into_framebuffer(t_game *game)
 {

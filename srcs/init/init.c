@@ -15,17 +15,6 @@
 #include "../textures/textures3D.h"
 #include "initializer.h"
 
-t_elroy	set_values(int one_speed, int one_dots, int two_speed, int two_dots)
-{
-	t_elroy	return_val;
-
-	return_val.one.speed_multiplier = one_speed;
-	return_val.one.dots_left = one_dots;
-	return_val.two.speed_multiplier = two_speed;
-	return_val.two.dots_left = two_dots;
-	return (return_val);
-}
-
 const t_lvl_config	g_lvl_config[21] = {
 {{0, {0, 20, 80}, {0, 10, 85}}, 75, 50,
 	40, 80, 90, 6.0, 100, {7, 20, 7, 20, 5, 20, 5, -1}},

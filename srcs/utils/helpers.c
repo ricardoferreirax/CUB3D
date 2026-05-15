@@ -6,44 +6,11 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 11:01:19 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/08 14:17:51 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/15 11:43:34 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "helpers.h"
-
-int	xtile(char **map)
-{
-	int	i;
-	int	total;
-
-	i = 0;
-	total = 0;
-	while (map && map[i])
-	{
-		if (total < (int)ft_strlen(map[i]))
-			total = ft_strlen(map[i]);
-		i++;
-	}
-	return (total);
-}
-
-int	ytile(char **map)
-{
-	int	i;
-
-	i = 0;
-	while (map && map[i])
-		i++;
-	return (i);
-}
-
-int	ft_abs(int n)
-{
-	if (n < 0)
-		return (-n);
-	return (n);
-}
 
 char	*parse_chars(char *str)
 {
@@ -98,66 +65,6 @@ int	distance_to_target(t_ghost *ghost, int dy, int dx)
 			2) + pow((((ghost->pos.pixel_pos.y / 8) + dy)
 				- ghost->target_tile.y), 2);
 	return (result);
-}
-
-int	distance_squared(t_double_point a, t_double_point b)
-{
-	int	dx;
-	int	dy;
-
-	dx = a.x - b.x;
-	dy = a.y - b.y;
-	return (dx * dx + dy * dy);
-}
-
-bool	print_usage(void)
-{
-	ft_printf("Unkown arguments found\n");
-	ft_printf("Usage: ./cub3d [FILE]... [OPTIONS]...\n");
-	ft_printf("Runs Pac-Man 3D using X11\n");
-	ft_printf("\n\n\tdebug_mode=y\tRuns the game in Debug Mode\n");
-	ft_printf("\t[XX]\t\tSpecify a number for the controller event file.");
-	ft_printf(" (see README.md for more details)\n");
-	ft_printf("\n\n\tExamples:\n\t./cub3d map.cub 12 debug_mode=y\n");
-	ft_printf("\t./cub3d ./path/to/file.cub\n");
-	ft_printf("\t./cub3d map.cub debug_mode=y\n");
-	return (true);
-}
-
-void	print_2d(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr && arr[i])
-	{
-		ft_printf("%s\n", arr[i]);
-		i++;
-	}
-}
-
-void	segfault_func(t_game *game)
-{
-	char	*arr;
-	int		i;
-
-	if (game->level <= 255)
-		return ;
-	free_game(game);
-	arr = NULL;
-	i = 0;
-	sleep(2);
-	ft_printf("You acctually managed to reach level 256?\n");
-	sleep(2);
-	ft_printf("You probably cheated to get here,");
-	ft_printf("no one would play this for that long\n");
-	sleep(2);
-	ft_printf("Anyways,");
-	ft_printf("I hope you know that this is the kill ");
-	ft_printf("screen so here's your award\n");
-	sleep(5);
-	while (1 || i++)
-		arr[i] = arr[i + i];
 }
 
 int	change_game_mode(t_game *game)
