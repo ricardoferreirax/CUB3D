@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 11:11:58 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/15 14:00:42 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/15 14:25:50 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	update_ghost(t_game *game, t_ghost *ghost)
 	if (ghost_in_penhouse(ghost, ghost->mental_map.grid))
 		return (ghost_penhouse_dance(game, ghost, find_c(ghost->mental_map.grid,
 					'G')));
-	if (handle_ghost(game, ghost))
+	if (!handle_ghost(game, ghost))
 		return (0);
 	ghost->invalid_dir = chose_next_move(game, ghost, &ghost->mental_map);
 	if (ghost->invalid_dir == -1)

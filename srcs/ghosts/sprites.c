@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/23 11:22:45 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/04/23 11:37:30 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/15 14:42:21 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	change_pallete(t_point pallet_coord, t_anim *frames)
 
 void	ghost_color(t_ghost *ghost)
 {
+	apply_new_pallete((t_point){}, &ghost->frames.scared[0]);
+	apply_new_pallete((t_point){}, &ghost->frames.scared[1]);
 	if (ghost->name == BLINKY)
 		return ;
 	else if (ghost->name == PINKY)
