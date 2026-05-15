@@ -16,7 +16,7 @@ CL1 ./assets/textures/ghosts/clyde/clyde_1.xpm
 ET ./assets/textures/ghosts/eaten.xpm
 SC ./assets/textures/ghosts/scared.xpm
 
-F 999,43,10
+F 123;43,10
 C 12,0,0
 
 111111111111111111111111111111111111

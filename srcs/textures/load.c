@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   texture_load.c                                     :+:      :+:    :+:   */
+/*   load.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 17:59:33 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/13 11:37:57 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 17:15:11 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ void	texture_load_cube(t_game *g)
 	texture_load_xpm(g, &g->tex.so_img, g->tex.so);
 	texture_load_xpm(g, &g->tex.we_img, g->tex.we);
 	texture_load_xpm(g, &g->tex.ea_img, g->tex.ea);
-	if (g->tex.floor)
-		texture_load_xpm(g, &g->tex.floor_img, g->tex.floor);
-	if (g->tex.ceiling)
-		texture_load_xpm(g, &g->tex.ceiling_img, g->tex.ceiling);
+	if (g->map.floor_path)
+		texture_load_xpm(g, &g->tex.floor_img, g->map.floor_path);
+	if (g->map.ceiling_path)
+		texture_load_xpm(g, &g->tex.ceiling_img, g->map.ceiling_path);
 }
 
 void	texture_load_sprites(t_game *g)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_gate_toggle.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 13:36:59 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/03/17 13:37:00 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/14 22:52:54 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ void	handle_gate_toggle(t_game *g)
 	g->key.e_lock = 1;
 	if (!get_front_tile_coord(g, &map_x, &map_y))
 		return ;
-	if (map_get_tile(g, map_y, map_x) == GATE)
+	if (map_get_tile(g, map_y, map_x, 1) == GATE)
 		g->gate_passable = !g->gate_passable;
 }

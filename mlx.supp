@@ -37,3 +37,10 @@
    ...
    fun:mlx_new_window
 }
+{
+   glibc_loader_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:*/ld-linux-*
+}

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:48:48 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/13 15:58:26 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/15 10:07:41 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,6 @@
 # define TILE_SOLID 3
 # define TILE_WALKABLE 4
 
-//////// MINIMAP TEST ////////
-
-# define MINI_TILE 8    // tamanho de cada tile em pixels
-# define MINI_MARGIN 12 // margem do canto
-
-# define C_BG 0x00000000
-# define C_WALL 0x00000088
-# define C_WALL_SHADE 0x00000055
-# define C_DOT 0x00FFFFCC
-# define C_ENERGIZER 0x00FFFFFF
-# define C_PLAYER 0x00FFFF00
-# define C_PORT 0x0000CCFF
-
-////////////////////////////////
-
 typedef struct s_game	t_game;
 typedef struct s_ghost	t_ghost;
 
@@ -43,24 +28,24 @@ typedef struct s_map
 	int					height;
 	int					ceiling_color;
 	int					floor_color;
+	char	*floor_path;
+	char	*ceiling_path;
 }						t_map;
 
 #endif
 
 char					**load_map_from_cub(t_game *g, const char *path);
-void					map_validate_chars(t_game *g);
-void					map_validate_closed(t_game *g);
+void	map_validate_bounds(t_game *g);
 
 int						map_is_map_line(t_game *g, char *line);
 int						map_is_empty_line(char *s);
 int						map_row_last_col(t_game *g, int row, int want_wrap);
 
-char					map_get_tile(t_game *g, int y, int x);
+char	map_get_tile(t_game *game, int row, int col, int wrap);
 int						map_tile_type(char t, int tile_type);
 char					**map_read_file(const char *path);
 
 int						map_is_wrap_tile(t_game *g, int row, int col);
-int						ray_wrap_x(t_game *g);
 void					player_wrap_position(t_game *g);
 
 void					ghost_wrap_position(t_game *g, t_ghost *ghost);
@@ -68,8 +53,9 @@ double					get_sprite_wrap_offset_x(t_game *g, double sprite_x,
 							double sprite_y);
 int						is_whitespace(char c);
 char					**copy_map(char **map_grid);
-char	map_get_tile_raw(t_game *game, int row, int col);
-void	map_validate_inside_spaces(t_game *g);
 int	is_token_end(char c);
-
-void map_flood_fill(t_game *game);
+int	map_is_config_line(t_game *g, char *line);
+void	map_validate_bounds(t_game *g);
+int	is_cub_file(const char *path);
+void map_validate_wrap_portals(t_game *game);
+double	wrap_value(double x, double width);

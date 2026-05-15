@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   texture_parse_color.c                              :+:      :+:    :+:   */
+/*   parse_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 21:15:30 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/13 11:52:09 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 18:39:23 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ static void	skip_spaces(const char *s, int *i)
 		(*i)++;
 }
 
-static int	read_rgb_value(t_game *g, const char *s, int *i, int *out)
+static int	read_rgb_value(const char *s, int *i, int *out)
 {
 	int	n;
 
 	skip_spaces(s, i);
 	if (s[*i] == '-')
-		exit_game(EXIT_MAP, g, "read_rgb_value: RGB cannot be negative");
+		return (0);
 	if (s[*i] < '0' || s[*i] > '9')
-		exit_game(EXIT_MAP, g, "read_rgb_value: expected RGB number");
+		return (0);
 	n = 0;
 	while (s[*i] >= '0' && s[*i] <= '9')
 	{
@@ -40,17 +40,18 @@ static int	read_rgb_value(t_game *g, const char *s, int *i, int *out)
 		(*i)++;
 	}
 	if (n > 255)
-		exit_game(EXIT_MAP, g, "read_rgb_value: RGB value out of range");
+		return (0);
 	*out = n;
 	return (1);
 }
 
-static void	expect_comma(t_game *g, const char *s, int *i)
+static int	expect_comma(const char *s, int *i)
 {
 	skip_spaces(s, i);
 	if (s[*i] != ',')
-		exit_game(EXIT_MAP, g, "color error: expected comma");
+		return (0);
 	(*i)++;
+	return (1);
 }
 
 int	parse_floor_ceiling_color(t_game *g, const char *s, int *dest)
@@ -60,17 +61,23 @@ int	parse_floor_ceiling_color(t_game *g, const char *s, int *dest)
 	int	green;
 	int	blue;
 
+	(void)g;
 	if (*dest != -1)
-		exit_game(EXIT_MAP, g, "color error: duplicated F/C color");
+		return (0);
 	i = 0;
-	read_rgb_value(g, s, &i, &red);
-	expect_comma(g, s, &i);
-	read_rgb_value(g, s, &i, &green);
-	expect_comma(g, s, &i);
-	read_rgb_value(g, s, &i, &blue);
+	if (!read_rgb_value(s, &i, &red))
+		return (0);
+	if (!expect_comma(s, &i))
+		return (0);
+	if (!read_rgb_value(s, &i, &green))
+		return (0);
+	if (!expect_comma(s, &i))
+		return (0);
+	if (!read_rgb_value(s, &i, &blue))
+		return (0);
 	skip_spaces(s, &i);
 	if (s[i] && s[i] != '\n')
-		exit_game(EXIT_MAP, g, "color error: extra characters after RGB");
+		return (0);
 	*dest = rgb_to_int(red, green, blue);
 	return (1);
 }

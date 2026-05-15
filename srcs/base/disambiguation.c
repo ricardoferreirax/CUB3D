@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   disambiguation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/08 16:51:17 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/13 16:25:47 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/14 17:24:04 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

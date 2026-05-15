@@ -6,14 +6,14 @@
 #    By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/28 18:34:39 by rmedeiro          #+#    #+#              #
-#    Updated: 2026/05/13 16:26:28 by pfreire-         ###   ########.fr        #
+#    Updated: 2026/05/14 22:36:07 by rmedeiro         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME    = cub3d
 
 CC      = clang-12
-CFLAGS  = -O3 -Wall -Wextra -Werror -Wpedantic -Wshadow -Wdouble-promotion  \
+CFLAGS  = -O3 -Wall -Wextra -Werror -Wshadow -Wdouble-promotion  \
 		  -Wformat=2 -Wstrict-aliasing=2 -fno-omit-frame-pointer -g
 		   
 ASAN_FLAGS = -fsanitize=address
@@ -38,15 +38,15 @@ SRC_FILES = main.c \
 	srcs/init/init_base.c \
 	srcs/init/init_ghosts.c \
 	srcs/init/parse.c \
+	srcs/init/init_map.c \
 	srcs/map/read.c \
 	srcs/map/utils.c \
 	srcs/map/load.c \
 	srcs/map/wrap.c \
 	srcs/map/ghost.c \
-	srcs/map/validate_grid.c \
 	srcs/map/parse_lines.c \
 	srcs/map/grid.c \
-	srcs/map/flood_fill.c \
+	srcs/map/validate_bounds.c \
 	srcs/player/collision.c \
 	srcs/player/collect_pacdots.c \
 	srcs/player/controller.c \

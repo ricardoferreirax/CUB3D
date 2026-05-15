@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   texture_utils.c                                    :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:17:53 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/13 11:08:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 18:11:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,18 @@ int	is_map_start_line(t_game *g, char *line)
 	return (map_is_map_line(g, line));
 }
 
-void	set_texture_path(char **dest, char *value, t_game *g)
+int	set_texture_path(char **dest, char *value)
 {
 	value = skip_whitespace(value);
 	strip_newline(value);
 	if (!*value)
-		exit_game(EXIT_MAP, g, "set_texture_path: missing texture path");
+		return (0);
 	if (*dest)
-		exit_game(EXIT_MAP, g, "set_texture_path: repeated texture");
+		return (0);
 	*dest = ft_strdup(value);
 	if (!*dest)
-		exit_game(EXIT_MALLOC, g, "set_texture_path: failed allocate texture path");
+		return (-1);
+	return (1);
 }
 
 int	is_xpm_path(const char *s)

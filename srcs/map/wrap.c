@@ -1,24 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_wrap.c                                         :+:      :+:    :+:   */
+/*   wrap.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 21:54:56 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/06 18:02:01 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 22:53:49 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Pac_Struct.h"
 
-static double	wrap_value(double x, double width)
+void map_validate_wrap_portals(t_game *game)
 {
-	while (x < 0.0)
-		x += width;
-	while (x >= width)
-		x -= width;
-	return (x);
+	t_point coord;
+	coord.y = 0;
+	while(coord.y < game->map.height)
+	{
+		coord.x = 0;
+		while(coord.x < game->map.width)
+		{
+			if(game->map.grid[coord.y][coord.x] == 'D')
+			{
+				
+				if(coord.x != 0 && coord.x != game->map.width - 1)
+				{
+					printf("%s\n", game->map.grid[coord.y]);
+					while(coord.x--)
+						printf(" ");
+					printf("^\n");
+					exit_game(EXIT_MAP, game, "Wrap Portals  must be at the start or end of the line");
+				}
+			}
+			coord.x++;
+		}
+		coord.y++;
+	}
 }
 
 int	map_is_wrap_tile(t_game *g, int row, int col)
@@ -30,16 +48,16 @@ int	map_is_wrap_tile(t_game *g, int row, int col)
 		return (0);
 	if (col != 0 && col != last)
 		return (0);
-	if (map_get_tile(g, row, 0) != WRAP_PORTS)
+	if (map_get_tile(g, row, 0, 0) != WRAP_PORTS)
 		return (0);
-	if (map_get_tile(g, row, last) != WRAP_PORTS)
+	if (map_get_tile(g, row, last, 0) != WRAP_PORTS)
 		return (0);
-	if (map_tile_type(map_get_tile(g, row - 1, col), TILE_VOID)
-		|| map_tile_type(map_get_tile(g, row + 1, col), TILE_VOID))
+	if (map_tile_type(map_get_tile(g, row - 1, col, 0), TILE_VOID)
+		|| map_tile_type(map_get_tile(g, row + 1, col, 0), TILE_VOID))
 		return (0);
 	if (col == 0)
-		return (map_tile_type(map_get_tile(g, row, 1), TILE_WALKABLE));
-	return (map_tile_type(map_get_tile(g, row, last - 1), TILE_WALKABLE));
+		return (map_tile_type(map_get_tile(g, row, 1, 0), TILE_WALKABLE));
+	return (map_tile_type(map_get_tile(g, row, last - 1, 0), TILE_WALKABLE));
 }
 
 double	get_sprite_wrap_offset_x(t_game *g, double sprite_x, double sprite_y)

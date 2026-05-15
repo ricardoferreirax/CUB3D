@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/18 16:28:14 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/08 18:28:22 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 22:56:34 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	register_center_hit(t_game *g, int col, int found)
 		return (found);
 	if (col != (g->win.width - 1) / 2 && col != g->win.width / 2)
 		return (found);
-	tile = map_get_tile(g, g->ray.map_y, g->ray.map_x);
+	tile = map_get_tile(g, g->ray.map_y, g->ray.map_x, 1);
 	if (tile == OPEN_SPACE || tile == VOID)
 		return (found);
 	g->player.target_map.x = g->ray.map_x;

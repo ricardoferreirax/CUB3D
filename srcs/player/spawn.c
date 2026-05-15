@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player_spawn.c                                     :+:      :+:    :+:   */
+/*   spawn.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 21:11:27 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/12 19:17:47 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/14 22:55:37 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,10 @@ void	set_player_spawn(t_game *game, int col, int row, char dir)
 {
 	if (game->map.grid[row][col] == VOID)
 		exit_game(EXIT_MAP, game, "set_player_spawn(): player in VOID tile");
-	if (map_get_tile(game, row, col + 1) == VOID || map_get_tile(game, row, col
-			- 1) == VOID || map_get_tile(game, row + 1, col) == VOID
-		|| map_get_tile(game, row - 1, col) == VOID)
+	if (map_get_tile(game, row, col + 1, 0) == VOID
+		|| map_get_tile(game, row, col - 1, 0) == VOID
+		|| map_get_tile(game, row + 1, col, 0) == VOID
+		|| map_get_tile(game, row - 1, col, 0) == VOID)
 		exit_game(EXIT_MAP, game, "set_player_spawn(): player next VOID tile");
 	game->player.pos.tile_pos.x = (double)col + 0.5;
 	game->player.pos.tile_pos.y = (double)row + 0.5;
