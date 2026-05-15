@@ -53,4 +53,3 @@ char	map_get_tile(t_game *game, int row, int col, int wrap)
 		return (VOID);
 	return (game->map.grid[row][col]);
 }
-

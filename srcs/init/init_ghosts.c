@@ -85,8 +85,8 @@ static int	init_one_ghost(t_game *g, t_ghost *gh, char target_char,
 	if (gh->name == BLINKY && !is_death)
 		g->targets.ghost_house = spawn_point;
 	g->targets.scatter_target[gh->name] = target_point;
-	gh->pos.tile_pos.x = (double)spawn_point.x + 0.5;               
-	gh->pos.tile_pos.y = (double)spawn_point.y + 0.5;               
+	gh->pos.tile_pos.x = (double)spawn_point.x + 0.5;
+	gh->pos.tile_pos.y = (double)spawn_point.y + 0.5;
 	gh->pos.pixel_pos.x = spawn_point.x * TILE_SIZE + TILE_SIZE / 2;
 	gh->pos.pixel_pos.y = spawn_point.y * TILE_SIZE + TILE_SIZE / 2;
 	gh->invalid_dir = 3;
@@ -133,6 +133,7 @@ void	annouce_disabled(int i)
 	if (i == 3)
 		ft_printf("ClydE was disabled\n");
 }
+
 void	init_ghosts(t_game *g, int is_death)
 {
 	int		i;

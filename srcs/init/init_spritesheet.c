@@ -96,7 +96,8 @@ int	init_spritesheet(t_game *game)
 			&game->sprite_sheet.sprite_img.height);
 	if (!game->sprite_sheet.sprite_img.img_ptr)
 		exit(ft_printf("Did not found SpriteSheet.xpm\n"));
-	game->sprite_sheet.sprite_img.img_addr = mlx_get_data_addr(game->sprite_sheet.sprite_img.img_ptr,
+	game->sprite_sheet.sprite_img.img_addr
+		= mlx_get_data_addr(game->sprite_sheet.sprite_img.img_ptr,
 			&game->sprite_sheet.sprite_img.bpp,
 			&game->sprite_sheet.sprite_img.l_len,
 			&game->sprite_sheet.sprite_img.endian);

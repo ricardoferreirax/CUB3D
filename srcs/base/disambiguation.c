@@ -22,10 +22,10 @@ void	flood_fill(char **map, int x, int y)
 		map[y][x] = 'F';
 		return ;
 	}
-	if(map[y][x] == 'D')
+	if (map[y][x] == 'D')
 	{
 		map[y][x] = 'F';
-		if(x == 0 && map[y][xtile(map) - 1] == 'D')
+		if (x == 0 && map[y][xtile(map) - 1] == 'D')
 			flood_fill(map, xtile(map) - 1, y);
 		else if (x == xtile(map) - 1 && map[y][0] == 'D')
 			flood_fill(map, 0, y);

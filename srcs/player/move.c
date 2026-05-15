@@ -22,7 +22,7 @@ static bool	safe_is_wall(t_map map, int y, int x)
 		return (true);
 	if (x >= (int)ft_strlen(map.grid[y]))
 		return (true);
-	return (map.grid[y][x] == '1');
+	return (map.grid[y][x] == '1' || map.grid[y][x] == 'G');
 }
 
 bool	can_move(t_game *game, int dir)

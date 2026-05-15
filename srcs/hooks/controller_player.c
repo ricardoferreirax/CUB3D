@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "hooks.h"
-# include <linux/input.h>
+#include <linux/input.h>
 #include "../../Pac_Struct.h"
 
 static	void	d_pad_handler(t_game *game, struct input_event event)

@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdbool.h>
-
 #ifndef PLAYER3D_H
 # define PLAYER3D_H
+
+# include <stdbool.h>
 
 # define PLAYER_SPEED 0.12
 # define ROT_SPEED 0.06

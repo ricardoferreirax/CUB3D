@@ -29,7 +29,7 @@ int		distance_squared(t_double_point a, t_double_point b);
 bool	print_usage(void);
 
 bool	is_time_up(t_game *game, long now);
-int	change_game_mode(t_game *game);
+int		change_game_mode(t_game *game);
 void	segfault_func(t_game *game);
 void	print_2d(char **arr);
 #endif //  HELPERS_H

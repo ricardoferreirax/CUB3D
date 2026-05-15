@@ -20,7 +20,8 @@ void	init_framebuffer(t_game *g)
 	if (!g->win.frame_buffer.img_ptr)
 		exit_game(EXIT_MLX, g,
 			"init_framebuffer() was unable to create img_ptr");
-	g->win.frame_buffer.img_addr = mlx_get_data_addr(g->win.frame_buffer.img_ptr,
+	g->win.frame_buffer.img_addr
+		= mlx_get_data_addr(g->win.frame_buffer.img_ptr,
 			&g->win.frame_buffer.bpp, &g->win.frame_buffer.l_len,
 			&g->win.frame_buffer.endian);
 	if (!g->win.frame_buffer.img_addr)

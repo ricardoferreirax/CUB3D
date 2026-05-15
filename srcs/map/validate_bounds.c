@@ -27,7 +27,7 @@ static int	is_walkable_open(t_game *g, int y, int x)
 		return (1);
 	return (0);
 }
-	
+
 static void	check_walkable_bounds(t_game *g)
 {
 	int		y;

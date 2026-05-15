@@ -13,10 +13,23 @@
 #include "../../Pac_Struct.h"
 #include "initializer.h"
 
+static const int	g_death_frames[12] = {
+	225,
+	227,
+	228,
+	229,
+	230,
+	231,
+	236,
+	237,
+	238,
+	239,
+	239,
+	241
+};
+
 void	player_sprites(t_game *game)
 {
-	int	death_frames[12] = {226, 227, 228, 229, 230, 231, 236, 237, 238, 239,
-			240, 241};
 	int	i;
 
 	game->player.frames.up[0] = game->sprite_sheet.sprites[213];
@@ -34,7 +47,8 @@ void	player_sprites(t_game *game)
 	i = 0;
 	while (i < 12)
 	{
-		game->player.frames.death[i] = game->sprite_sheet.sprites[death_frames[i]];
+		game->player.frames.death[i]
+			= game->sprite_sheet.sprites[g_death_frames[i]];
 		i++;
 	}
 }

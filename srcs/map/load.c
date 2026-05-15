@@ -67,7 +67,8 @@ static char	**extract_map(char **file_lines, int start, int end, t_game *g)
 		{
 			map[j] = NULL;
 			free_2d((void *)map);
-			exit_game(EXIT_MALLOC, g, "extract_map() unable allocate memory E2");
+			exit_game(EXIT_MALLOC, g,
+				"extract_map() unable allocate memory E2");
 		}
 	}
 	map[j + 1] = NULL;

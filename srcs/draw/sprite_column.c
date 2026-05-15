@@ -13,11 +13,12 @@
 #include "../../Pac_Struct.h"
 #include "draw.h"
 
-static unsigned int	get_sprite_color(t_sprite *sp, t_image *tex, int col, int row)
+static unsigned int	get_sprite_color(t_sprite *sp,
+							t_image *tex, int col, int row)
 {
 	unsigned int	*data;
-	int			tex_x;
-	int			tex_y;
+	int				tex_x;
+	int				tex_y;
 
 	data = (unsigned int *)tex->img_addr;
 	tex_x = (col - sp->tex_start_x) * tex->width / sp->size;

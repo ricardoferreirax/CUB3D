@@ -26,8 +26,8 @@ void	texture_load_xpm(t_game *g, t_image *img, const char *path)
 	img->img_ptr = mlx_xpm_file_to_image(g->mlx_ptr, (char *)path, &w, &h);
 	if (!img->img_ptr)
 		exit_game(EXIT_MLX, g, "texture_load_xpm: invalid xpm texture");
-	img->img_addr = mlx_get_data_addr(img->img_ptr, &img->bpp, &img->l_len, 
-					&img->endian);
+	img->img_addr = mlx_get_data_addr(img->img_ptr, &img->bpp, &img->l_len,
+			&img->endian);
 	if (!img->img_addr)
 	{
 		mlx_destroy_image(g->mlx_ptr, img->img_ptr);

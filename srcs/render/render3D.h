@@ -28,8 +28,8 @@
 # define FLOOR_START_OFFSET 2
 # define FLOOR_MIN_DIST 4.0
 
-# define X_POS 1920 / 2 - 100
-# define Y_POS 1080 / 2 + 100
+# define X_POS 860
+# define Y_POS 640 
 
 typedef struct s_game	t_game;
 typedef struct s_image	t_image;

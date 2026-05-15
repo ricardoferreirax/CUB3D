@@ -12,25 +12,26 @@
 
 #include "../../Pac_Struct.h"
 
-void map_validate_wrap_portals(t_game *game)
+void	map_validate_wrap_portals(t_game *game)
 {
-	t_point coord;
+	t_point	coord;
+
 	coord.y = 0;
-	while(coord.y < game->map.height)
+	while (coord.y < game->map.height)
 	{
 		coord.x = 0;
-		while(coord.x < game->map.width)
+		while (coord.x < game->map.width)
 		{
-			if(game->map.grid[coord.y][coord.x] == 'D')
+			if (game->map.grid[coord.y][coord.x] == 'D')
 			{
-				
-				if(coord.x != 0 && coord.x != game->map.width - 1)
+				if (coord.x != 0 && coord.x != game->map.width - 1)
 				{
 					printf("%s\n", game->map.grid[coord.y]);
-					while(coord.x--)
+					while (coord.x--)
 						printf(" ");
 					printf("^\n");
-					exit_game(EXIT_MAP, game, "Wrap Portals  must be at the start or end of the line");
+					exit_game(EXIT_MAP, game,
+						"Wrap Portals must be at the start or end of the line");
 				}
 			}
 			coord.x++;
@@ -96,7 +97,7 @@ void	ghost_wrap_position(t_game *g, t_ghost *ghost)
 	last = map_row_last_col(g, row, 1);
 	if (last < 0)
 		return ;
-	width = (double)(last + 1) * TILE_SIZE;
+	width = (double)(last + 1) *TILE_SIZE;
 	ghost->pos.pixel_pos.x = wrap_value(ghost->pos.pixel_pos.x, width);
 	ghost->pos.tile_pos.x = ghost->pos.pixel_pos.x / TILE_SIZE;
 }

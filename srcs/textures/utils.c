@@ -62,11 +62,11 @@ int	is_xpm_path(const char *s)
 	while (s[i] == ' ' || s[i] == '\t')
 		i++;
 	len = 0;
-	while (s[i + len] && s[i + len] != '\n' && s[i + len] != '\r' 
+	while (s[i + len] && s[i + len] != '\n' && s[i + len] != '\r'
 		&& s[i + len] != ' ' && s[i + len] != '\t')
 		len++;
 	if (len < 4)
 		return (0);
-	return (s[i + len - 4] == '.' && s[i + len - 3] == 'x' 
+	return (s[i + len - 4] == '.' && s[i + len - 3] == 'x'
 		&& s[i + len - 2] == 'p' && s[i + len - 1] == 'm');
 }

@@ -45,7 +45,6 @@ int	ft_abs(int n)
 	return (n);
 }
 
-
 char	*parse_chars(char *str)
 {
 	char	*dup;

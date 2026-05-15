@@ -60,5 +60,5 @@ int						handle_mouse_move(int x, int y, t_game *g);
 void					center_mouse(t_game *g);
 void					toggle_mouse_capture(t_game *g);
 
-void	controller_player(t_game *game);
+void					controller_player(t_game *game);
 #endif

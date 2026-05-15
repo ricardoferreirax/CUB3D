@@ -28,8 +28,8 @@ int	sprite_project(t_game *g, double wx, double wy, t_sprite *sp)
 			+ g->player.plane.x * sp->cam_y) / det;
 	if (sp->dist <= 0.01)
 		return (0);
-	camera_x = (g->player.dir.y * sp->cam_x - g->player.dir.x 
-				* sp->cam_y) / (det * sp->dist);
+	camera_x = (g->player.dir.y * sp->cam_x - g->player.dir.x
+			* sp->cam_y) / (det * sp->dist);
 	sp->screen_x = (g->win.width / 2) * (1 + camera_x);
 	return (1);
 }
@@ -50,6 +50,8 @@ int	build_sprite_box(t_game *g, t_sprite *sp, int scale)
 	sp->draw_start_x = clamp_int(sp->tex_start_x, 0, g->win.width - 1);
 	sp->draw_end_x = clamp_int(sp->tex_start_x + sp->size, 0, g->win.width - 1);
 	sp->draw_start_y = clamp_int(sp->tex_start_y, 0, g->win.height - 1);
-	sp->draw_end_y = clamp_int(sp->tex_start_y + sp->size, 0, g->win.height - 1);
-	return (sp->draw_start_x < sp->draw_end_x && sp->draw_start_y < sp->draw_end_y);
+	sp->draw_end_y = clamp_int(sp->tex_start_y + sp->size,
+			0, g->win.height - 1);
+	return (sp->draw_start_x < sp->draw_end_x
+		&& sp->draw_start_y < sp->draw_end_y);
 }

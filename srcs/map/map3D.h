@@ -28,20 +28,18 @@ typedef struct s_map
 	int					height;
 	int					ceiling_color;
 	int					floor_color;
-	char	*floor_path;
-	char	*ceiling_path;
+	char				*floor_path;
+	char				*ceiling_path;
 }						t_map;
 
-#endif
-
 char					**load_map_from_cub(t_game *g, const char *path);
-void	map_validate_bounds(t_game *g);
+void					map_validate_bounds(t_game *g);
 
 int						map_is_map_line(t_game *g, char *line);
 int						map_is_empty_line(char *s);
 int						map_row_last_col(t_game *g, int row, int want_wrap);
 
-char	map_get_tile(t_game *game, int row, int col, int wrap);
+char					map_get_tile(t_game *game, int row, int col, int wrap);
 int						map_tile_type(char t, int tile_type);
 char					**map_read_file(const char *path);
 
@@ -53,9 +51,11 @@ double					get_sprite_wrap_offset_x(t_game *g, double sprite_x,
 							double sprite_y);
 int						is_whitespace(char c);
 char					**copy_map(char **map_grid);
-int	is_token_end(char c);
-int	map_is_config_line(t_game *g, char *line);
-void	map_validate_bounds(t_game *g);
-int	is_cub_file(const char *path);
-void map_validate_wrap_portals(t_game *game);
-double	wrap_value(double x, double width);
+int						is_token_end(char c);
+int						map_is_config_line(t_game *g, char *line);
+void					map_validate_bounds(t_game *g);
+int						is_cub_file(const char *path);
+void					map_validate_wrap_portals(t_game *game);
+double					wrap_value(double x, double width);
+
+#endif

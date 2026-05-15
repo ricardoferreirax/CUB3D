@@ -58,7 +58,7 @@ static void	texture_parse_error(t_game *g, int fd, char *line, char *msg)
 	exit_game(EXIT_MAP, g, msg);
 }
 
-static void	parse_texture_line_state(t_game *g, int fd, char *line, 
+static void	parse_texture_line_state(t_game *g, int fd, char *line,
 	int map_started)
 {
 	int	ret;
@@ -86,7 +86,8 @@ static void	parse_texture_file(t_game *g, int fd)
 
 	has_content = 0;
 	map_started = 0;
-	while ((line = get_next_line(fd)))
+	line = get_next_line(fd);
+	while (line != NULL)
 	{
 		if (!map_is_empty_line(line))
 			has_content = 1;
@@ -95,6 +96,7 @@ static void	parse_texture_file(t_game *g, int fd)
 		else
 			parse_texture_line_state(g, fd, line, map_started);
 		free(line);
+		line = get_next_line(fd);
 	}
 	if (!has_content)
 		texture_parse_error(g, fd, NULL, "Empty file");
@@ -123,7 +125,8 @@ void	parse_texture_path(t_game *g, const char *path)
 		ft_printf("Opening file: %s\n", path);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		exit_game(EXIT_MAP, g, "parse_texture_path(): has not found a valid fd");
+		exit_game(EXIT_MAP, g,
+			"parse_texture_path(): has not found a valid fd");
 	parse_texture_file(g, fd);
 	close(fd);
 	validate_required_textures(g);

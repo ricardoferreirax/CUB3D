@@ -20,7 +20,7 @@ void	ft_pixel_put(t_image *s, int x, int y, unsigned int color)
 	*(unsigned int *)dest = color;
 }
 
-int	pixeL_get_coord(t_sprite_sheet *sheet, int i, int x, int y)
+int	pixel_get_coord(t_sprite_sheet *sheet, int i, int x, int y)
 {
 	char	*dest;
 

@@ -55,10 +55,12 @@ static int	count_lines(const char *path)
 	if (fd < 0)
 		return (-1);
 	line_count = 0;
-	while ((line = get_next_line(fd)))
+	line = get_next_line(fd);
+	while (line != NULL)
 	{
 		line_count++;
 		free(line);
+		line = get_next_line(fd);
 	}
 	close(fd);
 	return (line_count);

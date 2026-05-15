@@ -34,16 +34,19 @@ static int	init_game_grid(t_game *game, char **temp)
 	return (0);
 }
 
-static void san(char **temp)
+static void	san(char **temp)
 {
-	int i = 0;
-	int j = 0;
-	while(temp[j])
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (temp[j])
 	{
 		i = 0;
-		while(temp[j][i])
+		while (temp[j][i])
 		{
-			if(temp[j][i] == '\n' && !temp[j][i + 1])
+			if (temp[j][i] == '\n' && !temp[j][i + 1])
 				temp[j][i] = '\0';
 			i++;
 		}

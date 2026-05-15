@@ -141,9 +141,8 @@ void	free_ghost(t_ghost *ghost)
 	free_2d((void **)ghost->mental_map.grid);
 }
 
-void free_raycast(t_game *g)
+void	free_raycast(t_game *g)
 {
-
 	if (g->ray.z_buffer)
 		free(g->ray.z_buffer);
 	g->ray.z_buffer = NULL;

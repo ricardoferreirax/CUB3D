@@ -51,7 +51,7 @@ static void	draw_wall_texture(t_game *g, t_image *tex, int x)
 	{
 		put_pixel_fast(&g->win.frame_buffer, x, y,
 			data[clamp_int((int)tex_pos, 0, tex->height - 1)
-				* (tex->l_len / 4) + tex_x]);
+			* (tex->l_len / 4) + tex_x]);
 		tex_pos += step;
 		y++;
 	}

@@ -26,7 +26,7 @@ void	init_menu(t_game *g);
 void	init_base(t_game *s);
 int		init_spritesheet(t_game *game);
 
-int	controller_finder(char *argv);
+int		controller_finder(char *argv);
 bool	wrong_args(t_game *game, int ac, char **argv);
 void	init_player(t_game *game, int is_death);
 void	player_sprites(t_game *game);

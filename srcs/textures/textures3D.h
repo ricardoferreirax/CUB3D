@@ -13,9 +13,9 @@
 #ifndef TEXTURES3D_H
 # define TEXTURES3D_H
 
-typedef struct s_ghost	t_ghost;
-
 # include "../../Pac_Struct.h"
+
+typedef struct s_ghost	t_ghost;
 
 void					texture_load_xpm(t_game *g, t_image *img,
 							const char *path);
@@ -25,16 +25,18 @@ unsigned int			tex_pixel(t_image *tex, int x, int y);
 t_image					*texture_pick_wall(t_game *g);
 int						is_map_start_line(t_game *g, char *line);
 
-int	read_rgb(const char *s, int *i, int *out);
-int rgb_to_int(int r, int g, int b);
-int	is_xpm_path(const char *s);
-void	strip_newline(char *s);
-char	*skip_whitespace(char *s);
-int	parse_floor_ceiling_line(t_game *g, char id, char *value);
-void	draw_wall_column(t_game *g, int x);
-int	parse_pacman_texture_line(t_game *g, char *p);
-void	parse_texture_path(t_game *g, const char *path);
-int	parse_floor_ceiling_color(t_game *g, const char *s, int *dest);
-int	set_texture_path(char **dest, char *value);
+int						read_rgb(const char *s, int *i, int *out);
+int						rgb_to_int(int r, int g, int b);
+int						is_xpm_path(const char *s);
+void					strip_newline(char *s);
+char					*skip_whitespace(char *s);
+int						parse_floor_ceiling_line(t_game *g, char id,
+							char *value);
+void					draw_wall_column(t_game *g, int x);
+int						parse_pacman_texture_line(t_game *g, char *p);
+void					parse_texture_path(t_game *g, const char *path);
+int						parse_floor_ceiling_color(t_game *g, const char *s,
+							int *dest);
+int						set_texture_path(char **dest, char *value);
 
 #endif
