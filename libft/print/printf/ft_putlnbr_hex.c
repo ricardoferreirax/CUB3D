@@ -21,4 +21,3 @@ void	ft_putlnbr_hex(unsigned int nb, int *n)
 		ft_putlnbr_hex(nb / 16, n);
 	ft_putlchar(hex[nb % 16], n);
 }
-

@@ -34,4 +34,3 @@ char	*ft_strchr(const char *s, int b)
 	}
 	return (NULL);
 }
-
