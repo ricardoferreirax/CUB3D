@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 17:59:33 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/14 17:15:11 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/16 18:46:54 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	texture_load_xpm(t_game *g, t_image *img, const char *path)
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		exit_game(EXIT_MAP, g, "texture_load_xpm: texture path not found");
+	{
+		perror(path);
+		exit_game(EXIT_MAP, g, "texture_load_xpm: unable to open texture");
+	}
 	close(fd);
 	img->img_ptr = mlx_xpm_file_to_image(g->mlx_ptr, (char *)path, &w, &h);
 	if (!img->img_ptr)

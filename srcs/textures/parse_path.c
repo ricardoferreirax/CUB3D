@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:19:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/15 13:55:41 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/16 18:43:13 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,11 @@ void	parse_texture_path(t_game *g, const char *path)
 		ft_printf("Opening file: %s\n", path);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
+	{
+		perror(path);
 		exit_game(EXIT_MAP, g,
-			"parse_texture_path(): has not found a valid fd");
+			"Unable to open texture/map file");
+	}
 	parse_texture_file(g, fd);
 	close(fd);
 	validate_required_textures(g);

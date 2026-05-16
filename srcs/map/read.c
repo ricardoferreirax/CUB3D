@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 11:33:47 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/14 18:52:15 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/16 18:39:38 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ static int	count_lines(const char *path)
 
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
+	{
+		perror(path);
 		return (-1);
+	}
 	line_count = 0;
 	line = get_next_line(fd);
 	while (line != NULL)
@@ -81,7 +84,7 @@ char	**map_read_file(const char *path)
 		return (NULL);
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		return (free(lines), NULL);
+		return (perror(path), free(lines), NULL);
 	i = 0;
 	while (i < line_count)
 	{
