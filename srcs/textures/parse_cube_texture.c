@@ -3,14 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cube_texture.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42lisboa.com>   +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 13:54:17 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/15 13:55:20 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/16 19:39:49 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "textures3D.h"
+
+int	is_xpm_path(const char *s)
+{
+	int	i;
+	int	len;
+
+	if (!s)
+		return (0);
+	i = 0;
+	while (s[i] == ' ' || s[i] == '\t')
+		i++;
+	len = 0;
+	while (s[i + len] && s[i + len] != '\n' && s[i + len] != '\r'
+		&& s[i + len] != ' ' && s[i + len] != '\t')
+		len++;
+	if (len < 4)
+		return (0);
+	return (s[i + len - 4] == '.' && s[i + len - 3] == 'x'
+		&& s[i + len - 2] == 'p' && s[i + len - 1] == 'm');
+}
 
 int	parse_cube_texture_line(t_game *g, char *p)
 {

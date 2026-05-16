@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:19:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/16 19:14:04 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/16 19:41:43 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ static void	parse_texture_line_state(t_game *g, int fd, char *line,
 	if (ret == TEX_REPEATED)
 		texture_parse_error(g, fd, line, "Repeated texture");
 	if (ret == TEX_BAD_PATH)
-		texture_parse_error(g, fd, line, "Invalid texture path");
+		texture_parse_error(g, fd, line, "Invalid texture: file not found");
 	if (ret == TEX_INVALID)
 	{
 		if (is_missing_space_after_id(line))
 			texture_parse_error(g, fd, line, "Missing space after identifier");
-		texture_parse_error(g, fd, line, "Unknown identifier or bad format");
+		texture_parse_error(g, fd, line, "Unknown identifier");
 	}
 }
 
