@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/15 10:09:16 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/16 20:41:42 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include <sys/time.h>
+
 // Controller support
 # include <linux/input.h>
 
@@ -31,6 +32,7 @@
 # include "srcs/hooks/hooks.h"
 # include "srcs/map/map3D.h"
 # include "srcs/player/player3D.h"
+
 # define TILE_SIZE 8
 
 # define TEXTURES "./assets/textures/"
@@ -44,7 +46,6 @@
 # define PLAYER 'J'
 # define WALL '1'
 # define OPEN_SPACE '0'
-// #define PACDOT 'D'
 
 # define ENERGIZER 'R'
 # define WRAP_PORTS 'D'
@@ -386,38 +387,21 @@ typedef struct s_game
 	t_sprite_sheet	sprite_sheet;
 }					t_game;
 
-#endif // !DEBUG
-
 int					gameloop(t_game *game);
 long				get_time_us(void);
-void				switch_mode_and_parse(t_game *g, t_mode mode,
-						const char *path);
 void				start_game_mode(t_game *g, t_mode mode);
 char				**copy_map(char **map);
 t_point				find_c(char **map, char c);
-int					ghost_tick_ready(t_game *g, long now);
-int					ghost_opposite_dir(int dir);
-
-// =========================
-// Free & Exit
-// =========================
 void				exit_game(int errcode, t_game *g, char *str);
 void				free_game(t_game *g);
-
-// =========================
-// Ghost / AI / Utils
-// =========================
 t_point				find_c(char **map, char c);
-
 int					xtile(char **map);
 int					ytile(char **map);
-
 int					pixel_get(t_image *data, int x, int y);
 int					pixeL_get_coord(t_sprite_sheet *sheet, int i, int x, int y);
 void				ft_pixel_put(t_image *s, int x, int y, unsigned int color);
-
 void				print_2d(char **arr);
-void				breakpoint(void);
-
 void				reset_game(t_game *game, int is_death);
 void				change_pallete(t_point pallet_coord, t_anim *frames);
+
+#endif

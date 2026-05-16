@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:48:48 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/15 13:51:06 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/16 20:39:12 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,14 @@ typedef struct s_map
 
 char					**load_map_from_cub(t_game *g, const char *path);
 void					map_validate_bounds(t_game *g);
-
 int						map_is_map_line(t_game *g, char *line);
 int						map_is_empty_line(char *s);
 int						map_row_last_col(t_game *g, int row, int want_wrap);
-
 char					map_get_tile(t_game *game, int row, int col, int wrap);
 int						map_tile_type(char t, int tile_type);
 char					**map_read_file(const char *path);
-
 int						map_is_wrap_tile(t_game *g, int row, int col);
 void					player_wrap_position(t_game *g);
-
 void					ghost_wrap_position(t_game *g, t_ghost *ghost);
 double					get_sprite_wrap_offset_x(t_game *g, double sprite_x,
 							double sprite_y);
@@ -57,10 +53,10 @@ void					map_validate_bounds(t_game *g);
 int						is_cub_file(const char *path);
 void					map_validate_wrap_portals(t_game *game);
 double					wrap_value(double x, double width);
-
 void					flood_fill(char **map, int x, int y);
 int						map_is_cub_prefix(char *p);
 int						map_pacman_mode_prefix(char *p);
 int						map_pacman_mode_prefix_helper(char *p);
 int						map_cube_mode_prefix(char *p);
+
 #endif

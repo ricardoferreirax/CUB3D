@@ -6,27 +6,12 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 23:18:06 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/13 14:46:16 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/16 20:39:24 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HOOKS_H
 # define HOOKS_H
-
-// # define KEY_ESC 65307
-// # define KEY_W 119
-// # define KEY_A 97
-// # define KEY_S 115
-// # define KEY_D 100
-// # define KEY_LEFT 65361
-// # define KEY_RIGHT 65363
-// # define KEY_UP 65362
-// # define KEY_DOWN 65364
-// # define KEY_E 101
-// # define KEY_H 104
-// #define KEY_M 109
-// # define KEY_1 49
-// # define KEY_2 50
 
 # define MOUSE_SENS 0.00035
 
@@ -61,4 +46,5 @@ void					center_mouse(t_game *g);
 void					toggle_mouse_capture(t_game *g);
 
 void					controller_player(t_game *game);
+
 #endif

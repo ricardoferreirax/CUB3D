@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:20:35 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/16 19:38:18 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/16 20:39:40 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void					texture_load_sprites(t_game *g);
 unsigned int			tex_pixel(t_image *tex, int x, int y);
 t_image					*texture_pick_wall(t_game *g);
 int						is_map_start_line(t_game *g, char *line);
-
-int						read_rgb(const char *s, int *i, int *out);
 int						rgb_to_int(int r, int g, int b);
 int						is_xpm_path(const char *s);
 void					strip_newline(char *s);
@@ -48,4 +46,5 @@ int						parse_cube_texture_line(t_game *g, char *p);
 int						parse_texture_line(t_game *g, char *line);
 void					texture_parse_error(t_game *g, int fd, char *line,
 							char *msg);
+							
 #endif
