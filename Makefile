@@ -13,7 +13,7 @@
 
 NAME    = cub3d
 
-CC      = clang-12
+CC      = gcc
 CFLAGS  = -O3 -Wall -Wextra -Werror -Wshadow -Wdouble-promotion  \
 		  -Wformat=2 -Wstrict-aliasing=2 -fno-omit-frame-pointer -g
 		   

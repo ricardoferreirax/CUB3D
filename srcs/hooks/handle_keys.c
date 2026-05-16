@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 14:59:32 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/12 17:51:13 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/16 16:22:11 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int	handle_key_press(int keycode, t_game *g)
 
 int	handle_key_release(int keycode, t_game *g)
 {
+	if (keycode == 109)
+		return (0);
 	key_case(g, keycode, 0);
 	return (0);
 }
