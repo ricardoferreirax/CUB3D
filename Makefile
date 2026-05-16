@@ -72,6 +72,7 @@ srcs/textures/pick_wall.c \
 srcs/textures/parse_color.c \
 srcs/textures/parse_pacman.c \
 srcs/textures/load.c \
+srcs/textures/set_texture_path.c \
 srcs/textures/parse_cube_texture.c \
 srcs/textures/parse_path.c \
 srcs/textures/utils.c \

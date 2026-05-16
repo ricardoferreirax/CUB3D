@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/08 15:23:37 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/16 19:39:38 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/16 20:20:16 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,23 +55,33 @@ int	parse_pacman_texture_line(t_game *g, char *p)
 	return (-1);
 }
 
+static int	parse_floor_line(t_game *g, char *value)
+{
+	if (g->map.floor_color != -1 || g->map.floor_path)
+		return (TEX_REPEATED);
+	if (is_xpm_path(value))
+		return (set_texture_path(&g->map.floor_path, value));
+	return (parse_floor_ceiling_color(g, value, &g->map.floor_color));
+}
+
+static int	parse_ceiling_line(t_game *g, char *value)
+{
+	if (g->map.ceiling_color != -1 || g->map.ceiling_path)
+		return (TEX_REPEATED);
+	if (is_xpm_path(value))
+		return (set_texture_path(&g->map.ceiling_path, value));
+	return (parse_floor_ceiling_color(g, value, &g->map.ceiling_color));
+}
+
 int	parse_floor_ceiling_line(t_game *g, char id, char *value)
 {
 	value = skip_whitespace(value);
 	strip_newline(value);
 	if (!*value)
-		return (0);
+		return (TEX_INVALID);
 	if (id == 'F')
-	{
-		if (is_xpm_path(value))
-			return (set_texture_path(&g->map.floor_path, value));
-		return (parse_floor_ceiling_color(g, value, &g->map.floor_color));
-	}
+		return (parse_floor_line(g, value));
 	if (id == 'C')
-	{
-		if (is_xpm_path(value))
-			return (set_texture_path(&g->map.ceiling_path, value));
-		return (parse_floor_ceiling_color(g, value, &g->map.ceiling_color));
-	}
-	return (-1);
+		return (parse_ceiling_line(g, value));
+	return (TEX_INVALID);
 }

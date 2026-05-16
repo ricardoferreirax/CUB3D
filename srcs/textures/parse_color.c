@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 21:15:30 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/14 18:39:23 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/16 20:16:31 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,21 @@ int	parse_floor_ceiling_color(t_game *g, const char *s, int *dest)
 
 	(void)g;
 	if (*dest != -1)
-		return (0);
+		return (TEX_REPEATED);
 	i = 0;
 	if (!read_rgb_value(s, &i, &red))
-		return (0);
+		return (TEX_INVALID);
 	if (!expect_comma(s, &i))
-		return (0);
+		return (TEX_INVALID);
 	if (!read_rgb_value(s, &i, &green))
-		return (0);
+		return (TEX_INVALID);
 	if (!expect_comma(s, &i))
-		return (0);
+		return (TEX_INVALID);
 	if (!read_rgb_value(s, &i, &blue))
-		return (0);
+		return (TEX_INVALID);
 	skip_spaces(s, &i);
 	if (s[i] && s[i] != '\n')
-		return (0);
+		return (TEX_INVALID);
 	*dest = rgb_to_int(red, green, blue);
 	return (1);
 }

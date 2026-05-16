@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 11:40:08 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/15 13:52:18 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/16 20:24:37 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static char	**extract_map(char **file_lines, int start, int end, t_game *g)
 	line_count = end - start + 1;
 	map = ft_calloc((size_t)line_count + 1, sizeof(char *));
 	if (!map)
-		exit_game(EXIT_MALLOC, g, "extract_map() unable allocate memory E1");
+		exit_game(EXIT_MALLOC, g, "extract_map(): unable allocate memory E1");
 	i = start - 1;
 	j = -1;
 	while (++i <= end)
@@ -84,20 +84,20 @@ char	**load_map_from_cub(t_game *g, const char *path)
 	file_lines = map_read_file(path);
 	if (!file_lines)
 		exit_game(EXIT_MAP, g,
-			"load_map_from_cub() was unable to read file_lines");
+			"load_map_from_cub(): was unable to read file_lines");
 	start = find_map_start(g, file_lines);
 	if (start < 0)
 		return (free_2d((void *)file_lines), exit_game(EXIT_MAP, g,
-				"load_map_from_cub() has found an invalid start"), NULL);
+				"load_map_from_cub(): No map found"), NULL);
 	end = find_map_end(g, file_lines, start);
 	if (end < 0)
 		return (free_2d((void *)file_lines), exit_game(EXIT_MAP, g,
-				"load_map_from_cub() has found an invalid end"), NULL);
+				"load_map_from_cub(): Has found an invalid end"), NULL);
 	if (g->debug_mode)
 		ft_printf("Maps ends at line number %d\n", end);
 	map = extract_map(file_lines, start, end, g);
 	free_2d((void *)file_lines);
 	if (!map)
-		exit_game(EXIT_MAP, g, "load_map_from_cub() unable allocte memory");
+		exit_game(EXIT_MAP, g, "load_map_from_cub(): unable allocate memory");
 	return (map);
 }

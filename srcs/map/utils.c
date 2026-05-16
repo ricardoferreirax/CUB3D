@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 21:41:18 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/14 22:14:32 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/16 20:02:35 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	is_token_end(char c)
 {
-	return (c == '\0' || c == '\n' || c == ' ' || c == '\t');
+	return (c == '\0' || c == '\n' || c == ' ');
 }
 
 int	is_whitespace(char c)
