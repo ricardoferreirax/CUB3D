@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/16 20:41:42 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/16 20:51:00 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,17 +113,17 @@ typedef struct s_fc
 
 typedef struct s_sprite
 {
-	double dist;
-	double cam_x;
-	double cam_y;
-	int screen_x;    
-	int size;
-	int draw_start_x;
-	int draw_end_x;
-	int draw_start_y;
-	int draw_end_y;
-	int tex_start_x; 
-	int tex_start_y; 
+	double			dist;
+	double			cam_x;
+	double			cam_y;
+	int				screen_x;
+	int				size;
+	int				draw_start_x;
+	int				draw_end_x;
+	int				draw_start_y;
+	int				draw_end_y;
+	int				tex_start_x;
+	int				tex_start_y;
 }					t_sprite;
 
 typedef struct s_raycasting
@@ -191,11 +191,11 @@ typedef struct s_player
 	t_double_point	plane;
 	t_double_point	target_plane;
 	t_point			target_map;
-	char target_tile;
-	char target_wall_dir;
-	double target_dist;
+	char			target_tile;
+	char			target_wall_dir;
+	double			target_dist;
 
-	t_pos pos;
+	t_pos			pos;
 	int				lives;
 	int				speed_multiplier;
 	int				collected_dots;
@@ -211,7 +211,7 @@ typedef enum e_ghost
 	INKY,
 	CLYDE,
 	DISABLED
-}					e_ghost;
+}					t_ghost;
 
 typedef enum e_state
 {
@@ -220,7 +220,7 @@ typedef enum e_state
 	FRIGHTENED,
 	EATEN,
 	SPAWN
-}					e_state;
+}					t_state;
 
 typedef struct s_elroy_level
 {
@@ -237,9 +237,8 @@ typedef struct s_elroy
 }					t_elroy;
 
 typedef struct s_ghost
-
 {
-	e_ghost			name;
+	t_ghost			name;
 	t_pos			pos;
 	double			speed;
 	int				dot_counter;
@@ -255,7 +254,7 @@ typedef struct s_ghost
 	t_map			mental_map;
 	t_sprite_ref	sprite;
 	t_elroy			cruiser;
-	e_state			state;
+	t_state			state;
 	t_anim			frames;
 
 }					t_ghost;

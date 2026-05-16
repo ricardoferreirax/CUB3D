@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:19:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/16 20:09:55 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/16 20:49:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	is_missing_space_after_id(char *line)
 }
 
 static void	parse_texture_line_state(t_game *g, int fd, char *line,
-	int map_started)
+		int map_started)
 {
 	int	ret;
 
@@ -54,7 +54,7 @@ static void	parse_texture_line_state(t_game *g, int fd, char *line,
 	if (ret == TEX_INVALID)
 	{
 		if (is_missing_space_after_id(line))
-			texture_parse_error(g, fd, line, 
+			texture_parse_error(g, fd, line,
 				"Bad texture format: expected identifier followed by a space");
 		texture_parse_error(g, fd, line, "Unknown identifier");
 	}
@@ -109,8 +109,7 @@ void	parse_texture_path(t_game *g, const char *path)
 	if (fd < 0)
 	{
 		perror(path);
-		exit_game(EXIT_MAP, g,
-			"Unable to open texture/map file");
+		exit_game(EXIT_MAP, g, "Unable to open texture/map file");
 	}
 	parse_texture_file(g, fd);
 	close(fd);

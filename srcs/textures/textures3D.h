@@ -6,17 +6,17 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:20:35 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/16 20:39:40 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/16 20:49:08 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TEXTURES3D_H
 # define TEXTURES3D_H
 
-#define TEX_INVALID		-1
-#define TEX_OK			1
-#define TEX_REPEATED	2
-#define TEX_BAD_PATH	3
+# define TEX_INVALID -1
+# define TEX_OK 1
+# define TEX_REPEATED 2
+# define TEX_BAD_PATH 3
 
 # include "../../Pac_Struct.h"
 
@@ -46,5 +46,5 @@ int						parse_cube_texture_line(t_game *g, char *p);
 int						parse_texture_line(t_game *g, char *line);
 void					texture_parse_error(t_game *g, int fd, char *line,
 							char *msg);
-							
+
 #endif
