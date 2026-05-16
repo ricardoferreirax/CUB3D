@@ -6,12 +6,17 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/14 23:20:35 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/15 13:55:49 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/16 19:11:19 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TEXTURES3D_H
 # define TEXTURES3D_H
+
+#define TEX_INVALID		-1
+#define TEX_OK			1
+#define TEX_REPEATED	2
+#define TEX_BAD_PATH	3
 
 # include "../../Pac_Struct.h"
 

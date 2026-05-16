@@ -6,13 +6,32 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:19:04 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/16 18:43:13 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/16 19:14:04 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Pac_Struct.h"
 #include "../render/render3D.h"
 #include "textures3D.h"
+
+static int	is_missing_space_after_id(char *line)
+{
+	if (!line)
+		return (0);
+	if (!ft_strncmp(line, "NO", 2) && line[2] && line[2] != ' ')
+		return (1);
+	if (!ft_strncmp(line, "SO", 2) && line[2] && line[2] != ' ')
+		return (1);
+	if (!ft_strncmp(line, "WE", 2) && line[2] && line[2] != ' ')
+		return (1);
+	if (!ft_strncmp(line, "EA", 2) && line[2] && line[2] != ' ')
+		return (1);
+	if (!ft_strncmp(line, "F", 1) && line[1] && line[1] != ' ')
+		return (1);
+	if (!ft_strncmp(line, "C", 1) && line[1] && line[1] != ' ')
+		return (1);
+	return (0);
+}
 
 static void	parse_texture_line_state(t_game *g, int fd, char *line,
 	int map_started)
@@ -28,10 +47,16 @@ static void	parse_texture_line_state(t_game *g, int fd, char *line,
 		return ;
 	}
 	ret = parse_texture_line(g, line);
-	if (ret == 0)
-		texture_parse_error(g, fd, line, "Repeated texture or invalid path");
-	if (ret == -1)
-		texture_parse_error(g, fd, line, "Invalid config");
+	if (ret == TEX_REPEATED)
+		texture_parse_error(g, fd, line, "Repeated texture");
+	if (ret == TEX_BAD_PATH)
+		texture_parse_error(g, fd, line, "Invalid texture path");
+	if (ret == TEX_INVALID)
+	{
+		if (is_missing_space_after_id(line))
+			texture_parse_error(g, fd, line, "Missing space after identifier");
+		texture_parse_error(g, fd, line, "Unknown identifier or bad format");
+	}
 }
 
 static void	parse_texture_file(t_game *g, int fd)
@@ -61,16 +86,16 @@ static void	parse_texture_file(t_game *g, int fd)
 static void	validate_required_textures(t_game *g)
 {
 	if (!g->tex.no || !g->tex.so || !g->tex.we || !g->tex.ea)
-		exit_game(EXIT_MAP, g, "parse_texture_path: missing wall texture");
+		exit_game(EXIT_MAP, g, "parse_texture_path: Missing wall texture");
 	if (g->map.floor_color == -1 && !g->map.floor_path)
-		exit_game(EXIT_MAP, g, "parse_texture_path: missing floor parameter");
+		exit_game(EXIT_MAP, g, "parse_texture_path: Missing floor parameter");
 	if (g->map.ceiling_color == -1 && !g->map.ceiling_path)
-		exit_game(EXIT_MAP, g, "parse_texture_path: missing ceiling parameter");
+		exit_game(EXIT_MAP, g, "parse_texture_path: Missing ceiling parameter");
 	if (g->mode == MODE_PACMAN && (!g->tex.pacdot || !g->tex.energizer
 			|| !g->tex.blinky[0] || !g->tex.blinky[1] || !g->tex.pinky[0]
 			|| !g->tex.pinky[1] || !g->tex.inky[0] || !g->tex.inky[1]
 			|| !g->tex.clyde[0] || !g->tex.clyde[1]))
-		exit_game(EXIT_MAP, g, "parse_texture_path: missing pacman texture");
+		exit_game(EXIT_MAP, g, "parse_texture_path: Missing pacman texture");
 }
 
 void	parse_texture_path(t_game *g, const char *path)

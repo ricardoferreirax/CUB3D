@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:17:53 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/14 18:11:28 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/16 19:18:25 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,16 @@ int	set_texture_path(char **dest, char *value)
 {
 	value = skip_whitespace(value);
 	strip_newline(value);
-	if (!*value)
-		return (0);
 	if (*dest)
-		return (0);
+		return (TEX_REPEATED);
+	if (!*value)
+		return (TEX_BAD_PATH);
+	if (!is_xpm_path(value))
+		return (TEX_BAD_PATH);
 	*dest = ft_strdup(value);
 	if (!*dest)
-		return (-1);
-	return (1);
+		return (TEX_INVALID);
+	return (TEX_OK);
 }
 
 int	is_xpm_path(const char *s)
