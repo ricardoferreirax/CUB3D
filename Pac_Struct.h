@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/16 20:51:00 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/16 20:55:42 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,7 +211,7 @@ typedef enum e_ghost
 	INKY,
 	CLYDE,
 	DISABLED
-}					t_ghost;
+}					e_ghost;
 
 typedef enum e_state
 {
@@ -220,7 +220,7 @@ typedef enum e_state
 	FRIGHTENED,
 	EATEN,
 	SPAWN
-}					t_state;
+}					e_state;
 
 typedef struct s_elroy_level
 {
@@ -238,7 +238,7 @@ typedef struct s_elroy
 
 typedef struct s_ghost
 {
-	t_ghost			name;
+	e_ghost			name;
 	t_pos			pos;
 	double			speed;
 	int				dot_counter;
@@ -254,7 +254,7 @@ typedef struct s_ghost
 	t_map			mental_map;
 	t_sprite_ref	sprite;
 	t_elroy			cruiser;
-	t_state			state;
+	e_state			state;
 	t_anim			frames;
 
 }					t_ghost;
