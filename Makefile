@@ -14,8 +14,8 @@
 NAME    = cub3d
 
 CC      = clang-12
-CFLAGS  = -O3 -Wall -Wextra -Werror \
-		# -Wshadow -Wdouble-promotion  -Wformat=2 -Wstrict-aliasing=2 -fno-omit-frame-pointer -g
+CFLAGS  = -O3 -Wall -Wextra -Werror
+DFLAGS  = -Wshadow -Wdouble-promotion  -Wformat=2 -Wstrict-aliasing=2 -fno-omit-frame-pointer -g
 
 ASAN_FLAGS = -fsanitize=address
 UBSAN_FLAGS = -fsanitize=undefined
@@ -145,5 +145,7 @@ a:
 
 u:
 	$(MAKE) CFLAGS="$(CFLAGS) $(UBSAN_FLAGS)" e
+d: 
+	$(MAKE) CFLAGS="$(CFLAGS) $(DFLAGS)" e
 	
 .PHONY: all clean fclean re val
