@@ -42,7 +42,6 @@ bool	can_ghost_exit_penhouse(t_game *game, t_ghost *ghost)
 void	goto_penhouse(t_game *game, t_ghost *ghost)
 {
 	ghost->target_tile = game->targets.ghost_house;
-	ghost->speed_multiplier = 99;
 }
 
 int	ghost_penhouse_dance(t_game *game, t_ghost *ghost, t_point gate)
