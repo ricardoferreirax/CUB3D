@@ -102,7 +102,7 @@ void	put_tile_inbase(t_game *g, int tile_code, unsigned int color,
 		{
 			color = find_sprite_and_return(g, tx, ty, tile_code);
 			if ((color >> 24) != 0xFF)
-				ft_pixel_put(&g->base, point.x * 8 + tx, point.y * 8 + ty,
+				ft_pixel_put(&g->base, (point.x * 8 + tx) % g->win.width, (point.y * 8 + ty) % g->win.height,
 					color);
 			tx++;
 		}

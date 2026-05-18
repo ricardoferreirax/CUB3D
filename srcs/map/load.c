@@ -90,7 +90,7 @@ char	**load_map_from_cub(t_game *g, const char *path)
 		return (free_2d((void *)file_lines), exit_game(EXIT_MAP, g,
 				"load_map_from_cub(): No map found"), NULL);
 	end = find_map_end(g, file_lines, start);
-	if (end < 0)
+	if (end < 0 || end > 255)
 		return (free_2d((void *)file_lines), exit_game(EXIT_MAP, g,
 				"load_map_from_cub(): Has found an invalid end"), NULL);
 	if (g->debug_mode)
