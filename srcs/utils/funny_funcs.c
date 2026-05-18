@@ -49,10 +49,10 @@ void	segfault_func(t_game *game)
 	sleep(2);
 	ft_printf("You acctually managed to reach level 256?\n");
 	sleep(2);
-	ft_printf("You probably cheated to get here,");
+	ft_printf("You probably cheated to get here, ");
 	ft_printf("no one would play this for that long\n");
 	sleep(2);
-	ft_printf("Anyways,");
+	ft_printf("Anyways, ");
 	ft_printf("I hope you know that this is the kill ");
 	ft_printf("screen so here's your award\n");
 	sleep(5);
