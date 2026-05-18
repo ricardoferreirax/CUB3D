@@ -13,10 +13,10 @@
 
 NAME    = cub3d
 
-CC      = gcc
-CFLAGS  = -O3 -Wall -Wextra -Werror -Wshadow -Wdouble-promotion  \
-		  -Wformat=2 -Wstrict-aliasing=2 -fno-omit-frame-pointer -g
-		   
+CC      = clang-12
+CFLAGS  = -O3 -Wall -Wextra -Werror \
+		# -Wshadow -Wdouble-promotion  -Wformat=2 -Wstrict-aliasing=2 -fno-omit-frame-pointer -g
+
 ASAN_FLAGS = -fsanitize=address
 UBSAN_FLAGS = -fsanitize=undefined
 

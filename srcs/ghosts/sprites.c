@@ -12,7 +12,7 @@
 
 #include "ghosts.h"
 
-void	ghost_sprites(t_game *game, e_ghost ghost)
+void	ghost_sprites(t_game *game, t_ghost_name ghost)
 {
 	game->ghosts[ghost].frames.up[0] = game->sprite_sheet.sprites[202];
 	game->ghosts[ghost].frames.up[1] = game->sprite_sheet.sprites[203];
