@@ -46,6 +46,11 @@ In this example, you'd run:
 - [How Frightened Ghosts Decide Where to Go (YouTube)](https://youtu.be/eFP0_rkjwlY?si=0KCkQxVCgE_LzqHW)
 - [Pac-Man Kill Screen Explained (YouTube)](https://youtu.be/NKKfW8X9uYk?si=LQhQqmPGesiZVzuQ)
 - [Splitting Apart the Split Screen](http://www.donhodges.com/how_high_can_you_get2.htm)
+- [Cub3d Raycasting Documentation](https://lodev.org/cgtutor/raycasting.html)
+- [Ray-Casting Tutorial For Game Development And Other Purposes](https://permadi.com/1996/05/ray-casting-tutorial-table-of-contents/)
+- [Make Your Own Raycaster Part 1 (Youtube)](https://youtu.be/gYRrGTC7GtA?si=RKOOumMSeJnccLKd)
+- [Make Your Own Raycaster Part 2 (Youtube)](https://youtu.be/PC1RaETIx3Y?si=7_02axAxdvBRIpHg)
+- [Make Your Own Raycaster Part 3 (Youtube)](https://youtu.be/w0Bm4IA-Ii8?si=Myy0ayYVxRt9w0oh)
 
 ### AI Usage
 
