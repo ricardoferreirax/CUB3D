@@ -1,4 +1,5 @@
 /* ************************************************************************** */
+
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   funny_funcs.c                                      :+:      :+:    :+:   */
@@ -40,14 +41,11 @@ void	print_2d(char **arr)
 
 void	segfault_func(t_game *game)
 {
-	char	*arr;
-	int		i;
+	volatile char	*p;
 
 	if (game->level <= 255)
 		return ;
 	free_game(game);
-	arr = NULL;
-	i = 0;
 	sleep(2);
 	ft_printf("You acctually managed to reach level 256?\n");
 	sleep(2);
@@ -58,8 +56,8 @@ void	segfault_func(t_game *game)
 	ft_printf("I hope you know that this is the kill ");
 	ft_printf("screen so here's your award\n");
 	sleep(5);
-	while (1 || i++)
-		arr[i] = arr[i + i];
+	p = (char *)0;
+	*p = 42;
 }
 
 void	annouce_disabled(int i)

@@ -37,7 +37,7 @@ void	reset_game(t_game *game, int is_death)
 	while (++i < game->energizer_count)
 		game->energizers[i].active = true;
 	game->level++;
-	if (game->level > 255)
+	if (game->level > 255 || game->level >=2)
 		segfault_func(game);
 	game->player.collected_dots = 0;
 }
