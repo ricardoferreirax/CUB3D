@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 18:46:34 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/14 22:58:02 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/17 16:44:47 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,26 @@ int	debug_ray(t_game *g, int col, t_raycasting *ray)
 static void	debug_draw_ray(t_game *g, t_point start, t_raycasting ray)
 {
 	t_point	end;
+	double	x;
+	double	y;
 
-	end = debug_pos(g->player.pos.tile_pos.x
-			+ ray.perp_wall_dist * ray.ray_dir_x,
-			g->player.pos.tile_pos.y
-			+ ray.perp_wall_dist * ray.ray_dir_y);
+	x = g->player.pos.tile_pos.x + ray.perp_wall_dist
+		* ray.ray_dir_x;
+	y = g->player.pos.tile_pos.y + ray.perp_wall_dist
+		* ray.ray_dir_y;
+	if (x < 0)
+	{
+		debug_line(g, start, debug_pos(0, y));
+		start = debug_pos(g->map.width - 1, y);
+		x += g->map.width;
+	}
+	else if (x >= g->map.width)
+	{
+		debug_line(g, start, debug_pos(g->map.width - 1, y));
+		start = debug_pos(0, y);
+		x -= g->map.width;
+	}
+	end = debug_pos(x, y);
 	debug_line(g, start, end);
 	debug_square(g, (t_point){end.x - 1, end.y - 1}, 3, DEBUG_HIT);
 }
