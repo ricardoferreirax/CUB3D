@@ -381,7 +381,7 @@ typedef struct s_game
 	int				score;
 	int				level;
 	int				controller_fd;
-	t_ghost_state			global_state;
+	t_ghost_state	global_state;
 	// SpriteShit is 200x186
 	t_sprite_sheet	sprite_sheet;
 }					t_game;
