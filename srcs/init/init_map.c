@@ -6,7 +6,7 @@
 /*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 22:12:34 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/21 15:00:01 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/21 16:18:15 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ static void	san(char **temp)
 
 	i = 0;
 	j = 0;
+	if (!temp)
+		return ;
 	while (temp[j])
 	{
 		i = 0;
@@ -97,7 +99,7 @@ void	map_validate_tiles(t_game *g)
 	}
 }
 
-void	init_map(t_game *g, const char *path)
+int	init_map(t_game *g, const char *path)
 {
 	char	**temp;
 
@@ -112,12 +114,14 @@ void	init_map(t_game *g, const char *path)
 		exit_game(EXIT_MAP, g, "parse() has not found a grid");
 	g->map.height = ytile(temp);
 	g->map.width = xtile(temp);
-	if (g->map.height > 255 || g->map.width > 255)
-		exit_game(EXIT_MAP, g, "Map is too big");
+	if (g->map.height > 255 || g->map.width > 255 || g->map.width
+		* g->map.height > 16256)
+		return (free_2d((void **)temp), exit_game(EXIT_MAP, g,
+				"Map is too big"), -1);
 	if (init_game_grid(g, temp))
 		exit_game(EXIT_MALLOC, g, "Something broke");
 	if (g->debug_mode)
-		return ;
+		return (0);
 	map_validate_tiles(g);
 	map_validate_wrap_portals(g);
 	map_validate_bounds(g);
