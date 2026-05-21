@@ -125,4 +125,5 @@ int	init_map(t_game *g, const char *path)
 	map_validate_tiles(g);
 	map_validate_wrap_portals(g);
 	map_validate_bounds(g);
+	return (0);
 }
