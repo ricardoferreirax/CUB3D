@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_map.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/14 22:12:34 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/14 22:33:22 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/21 15:00:01 by pfreire-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ static int	init_game_grid(t_game *game, char **temp)
 
 	game->map.grid = ft_calloc(sizeof(char *), game->map.height + 1);
 	if (!game->map.grid)
-		return (-1);
+		return (free_2d((void **)temp), -1);
 	i = 0;
 	while (temp && temp[i])
 	{
 		game->map.grid[i] = ft_calloc(sizeof(char), game->map.width + 1);
 		if (!game->map.grid[i])
-			return (-1);
+			return (free_2d((void **)temp), -1);
 		ft_memcpy(game->map.grid[i], temp[i], ft_strlen(temp[i]));
 		i++;
 	}
-	return (0);
+	return (free_2d((void **)temp), 0);
 }
 
 static void	san(char **temp)
@@ -116,7 +116,6 @@ void	init_map(t_game *g, const char *path)
 		exit_game(EXIT_MAP, g, "Map is too big");
 	if (init_game_grid(g, temp))
 		exit_game(EXIT_MALLOC, g, "Something broke");
-	free_2d((void **)temp);
 	if (g->debug_mode)
 		return ;
 	map_validate_tiles(g);
