@@ -13,9 +13,9 @@
       "objs/main.o",
       "main.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/main.c",
-    "output": "/var/home/pedro/CUB3D/objs/main.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/main.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/main.o"
   },
   {
     "arguments": [
@@ -31,9 +31,9 @@
       "objs/srcs/hooks/handle_close.o",
       "srcs/hooks/handle_close.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/hooks/handle_close.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/hooks/handle_close.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/hooks/handle_close.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/hooks/handle_close.o"
   },
   {
     "arguments": [
@@ -49,9 +49,9 @@
       "objs/srcs/hooks/handle_mouse.o",
       "srcs/hooks/handle_mouse.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/hooks/handle_mouse.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/hooks/handle_mouse.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/hooks/handle_mouse.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/hooks/handle_mouse.o"
   },
   {
     "arguments": [
@@ -67,9 +67,9 @@
       "objs/srcs/hooks/handle_gate_toggle.o",
       "srcs/hooks/handle_gate_toggle.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/hooks/handle_gate_toggle.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/hooks/handle_gate_toggle.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/hooks/handle_gate_toggle.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/hooks/handle_gate_toggle.o"
   },
   {
     "arguments": [
@@ -85,9 +85,9 @@
       "objs/srcs/hooks/controller_player.o",
       "srcs/hooks/controller_player.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/hooks/controller_player.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/hooks/controller_player.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/hooks/controller_player.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/hooks/controller_player.o"
   },
   {
     "arguments": [
@@ -103,9 +103,9 @@
       "objs/srcs/hooks/handle_keys.o",
       "srcs/hooks/handle_keys.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/hooks/handle_keys.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/hooks/handle_keys.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/hooks/handle_keys.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/hooks/handle_keys.o"
   },
   {
     "arguments": [
@@ -121,9 +121,9 @@
       "objs/srcs/init/init_sprites.o",
       "srcs/init/init_sprites.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/init/init_sprites.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/init/init_sprites.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/init/init_sprites.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/init/init_sprites.o"
   },
   {
     "arguments": [
@@ -139,9 +139,9 @@
       "objs/srcs/init/init_base.o",
       "srcs/init/init_base.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/init/init_base.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/init/init_base.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/init/init_base.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/init/init_base.o"
   },
   {
     "arguments": [
@@ -157,9 +157,9 @@
       "objs/srcs/init/parse.o",
       "srcs/init/parse.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/init/parse.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/init/parse.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/init/parse.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/init/parse.o"
   },
   {
     "arguments": [
@@ -175,9 +175,9 @@
       "objs/srcs/init/helper.o",
       "srcs/init/helper.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/init/helper.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/init/helper.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/init/helper.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/init/helper.o"
   },
   {
     "arguments": [
@@ -193,9 +193,9 @@
       "objs/srcs/init/init.o",
       "srcs/init/init.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/init/init.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/init/init.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/init/init.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/init/init.o"
   },
   {
     "arguments": [
@@ -211,9 +211,9 @@
       "objs/srcs/init/init_ghosts.o",
       "srcs/init/init_ghosts.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/init/init_ghosts.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/init/init_ghosts.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/init/init_ghosts.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/init/init_ghosts.o"
   },
   {
     "arguments": [
@@ -229,9 +229,9 @@
       "objs/srcs/init/init_map.o",
       "srcs/init/init_map.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/init/init_map.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/init/init_map.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/init/init_map.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/init/init_map.o"
   },
   {
     "arguments": [
@@ -247,9 +247,9 @@
       "objs/srcs/init/init_mlx.o",
       "srcs/init/init_mlx.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/init/init_mlx.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/init/init_mlx.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/init/init_mlx.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/init/init_mlx.o"
   },
   {
     "arguments": [
@@ -265,9 +265,9 @@
       "objs/srcs/init/init_player.o",
       "srcs/init/init_player.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/init/init_player.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/init/init_player.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/init/init_player.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/init/init_player.o"
   },
   {
     "arguments": [
@@ -283,9 +283,9 @@
       "objs/srcs/init/init_spritesheet.o",
       "srcs/init/init_spritesheet.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/init/init_spritesheet.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/init/init_spritesheet.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/init/init_spritesheet.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/init/init_spritesheet.o"
   },
   {
     "arguments": [
@@ -301,9 +301,9 @@
       "objs/srcs/map/utils.o",
       "srcs/map/utils.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/map/utils.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/map/utils.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/map/utils.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/map/utils.o"
   },
   {
     "arguments": [
@@ -319,9 +319,9 @@
       "objs/srcs/map/grid.o",
       "srcs/map/grid.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/map/grid.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/map/grid.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/map/grid.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/map/grid.o"
   },
   {
     "arguments": [
@@ -337,9 +337,9 @@
       "objs/srcs/map/flood_fill.o",
       "srcs/map/flood_fill.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/map/flood_fill.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/map/flood_fill.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/map/flood_fill.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/map/flood_fill.o"
   },
   {
     "arguments": [
@@ -355,9 +355,9 @@
       "objs/srcs/map/ghost.o",
       "srcs/map/ghost.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/map/ghost.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/map/ghost.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/map/ghost.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/map/ghost.o"
   },
   {
     "arguments": [
@@ -373,9 +373,9 @@
       "objs/srcs/map/load.o",
       "srcs/map/load.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/map/load.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/map/load.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/map/load.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/map/load.o"
   },
   {
     "arguments": [
@@ -391,9 +391,9 @@
       "objs/srcs/map/map_cub_prefix.o",
       "srcs/map/map_cub_prefix.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/map/map_cub_prefix.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/map/map_cub_prefix.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/map/map_cub_prefix.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/map/map_cub_prefix.o"
   },
   {
     "arguments": [
@@ -409,9 +409,9 @@
       "objs/srcs/map/parse_lines.o",
       "srcs/map/parse_lines.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/map/parse_lines.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/map/parse_lines.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/map/parse_lines.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/map/parse_lines.o"
   },
   {
     "arguments": [
@@ -427,9 +427,9 @@
       "objs/srcs/map/read.o",
       "srcs/map/read.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/map/read.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/map/read.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/map/read.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/map/read.o"
   },
   {
     "arguments": [
@@ -445,9 +445,9 @@
       "objs/srcs/map/validate_bounds.o",
       "srcs/map/validate_bounds.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/map/validate_bounds.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/map/validate_bounds.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/map/validate_bounds.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/map/validate_bounds.o"
   },
   {
     "arguments": [
@@ -463,9 +463,9 @@
       "objs/srcs/map/wrap.o",
       "srcs/map/wrap.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/map/wrap.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/map/wrap.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/map/wrap.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/map/wrap.o"
   },
   {
     "arguments": [
@@ -481,9 +481,9 @@
       "objs/srcs/player/actions.o",
       "srcs/player/actions.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/player/actions.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/player/actions.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/player/actions.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/player/actions.o"
   },
   {
     "arguments": [
@@ -499,9 +499,9 @@
       "objs/srcs/player/apply_move.o",
       "srcs/player/apply_move.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/player/apply_move.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/player/apply_move.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/player/apply_move.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/player/apply_move.o"
   },
   {
     "arguments": [
@@ -517,9 +517,9 @@
       "objs/srcs/player/collect_pacdots.o",
       "srcs/player/collect_pacdots.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/player/collect_pacdots.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/player/collect_pacdots.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/player/collect_pacdots.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/player/collect_pacdots.o"
   },
   {
     "arguments": [
@@ -535,9 +535,9 @@
       "objs/srcs/player/controller.o",
       "srcs/player/controller.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/player/controller.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/player/controller.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/player/controller.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/player/controller.o"
   },
   {
     "arguments": [
@@ -553,9 +553,9 @@
       "objs/srcs/player/touch_ghost.o",
       "srcs/player/touch_ghost.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/player/touch_ghost.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/player/touch_ghost.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/player/touch_ghost.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/player/touch_ghost.o"
   },
   {
     "arguments": [
@@ -571,9 +571,9 @@
       "objs/srcs/player/collision.o",
       "srcs/player/collision.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/player/collision.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/player/collision.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/player/collision.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/player/collision.o"
   },
   {
     "arguments": [
@@ -589,9 +589,9 @@
       "objs/srcs/player/move.o",
       "srcs/player/move.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/player/move.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/player/move.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/player/move.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/player/move.o"
   },
   {
     "arguments": [
@@ -607,9 +607,9 @@
       "objs/srcs/player/spawn.o",
       "srcs/player/spawn.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/player/spawn.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/player/spawn.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/player/spawn.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/player/spawn.o"
   },
   {
     "arguments": [
@@ -625,9 +625,9 @@
       "objs/srcs/render/render_frame.o",
       "srcs/render/render_frame.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/render/render_frame.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/render/render_frame.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/render/render_frame.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/render/render_frame.o"
   },
   {
     "arguments": [
@@ -643,9 +643,9 @@
       "objs/srcs/render/render_plane.o",
       "srcs/render/render_plane.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/render/render_plane.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/render/render_plane.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/render/render_plane.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/render/render_plane.o"
   },
   {
     "arguments": [
@@ -661,9 +661,9 @@
       "objs/srcs/render/render_debug_symbols.o",
       "srcs/render/render_debug_symbols.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/render/render_debug_symbols.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/render/render_debug_symbols.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/render/render_debug_symbols.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/render/render_debug_symbols.o"
   },
   {
     "arguments": [
@@ -679,9 +679,9 @@
       "objs/srcs/render/raycast_find_wall.o",
       "srcs/render/raycast_find_wall.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/render/raycast_find_wall.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/render/raycast_find_wall.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/render/raycast_find_wall.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/render/raycast_find_wall.o"
   },
   {
     "arguments": [
@@ -697,9 +697,9 @@
       "objs/srcs/render/raycast_frame.o",
       "srcs/render/raycast_frame.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/render/raycast_frame.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/render/raycast_frame.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/render/raycast_frame.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/render/raycast_frame.o"
   },
   {
     "arguments": [
@@ -715,9 +715,9 @@
       "objs/srcs/render/render_collectibles.o",
       "srcs/render/render_collectibles.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/render/render_collectibles.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/render/render_collectibles.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/render/render_collectibles.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/render/render_collectibles.o"
   },
   {
     "arguments": [
@@ -733,9 +733,9 @@
       "objs/srcs/render/render_ghosts.o",
       "srcs/render/render_ghosts.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/render/render_ghosts.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/render/render_ghosts.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/render/render_ghosts.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/render/render_ghosts.o"
   },
   {
     "arguments": [
@@ -751,9 +751,9 @@
       "objs/srcs/render/render_into_framebuffer.o",
       "srcs/render/render_into_framebuffer.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/render/render_into_framebuffer.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/render/render_into_framebuffer.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/render/render_into_framebuffer.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/render/render_into_framebuffer.o"
   },
   {
     "arguments": [
@@ -769,9 +769,9 @@
       "objs/srcs/textures/pick_wall.o",
       "srcs/textures/pick_wall.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/textures/pick_wall.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/textures/pick_wall.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/textures/pick_wall.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/textures/pick_wall.o"
   },
   {
     "arguments": [
@@ -787,9 +787,9 @@
       "objs/srcs/textures/parse_color.o",
       "srcs/textures/parse_color.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/textures/parse_color.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/textures/parse_color.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/textures/parse_color.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/textures/parse_color.o"
   },
   {
     "arguments": [
@@ -805,9 +805,9 @@
       "objs/srcs/textures/parse_pacman.o",
       "srcs/textures/parse_pacman.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/textures/parse_pacman.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/textures/parse_pacman.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/textures/parse_pacman.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/textures/parse_pacman.o"
   },
   {
     "arguments": [
@@ -823,9 +823,9 @@
       "objs/srcs/textures/load.o",
       "srcs/textures/load.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/textures/load.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/textures/load.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/textures/load.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/textures/load.o"
   },
   {
     "arguments": [
@@ -841,9 +841,9 @@
       "objs/srcs/textures/set_texture_path.o",
       "srcs/textures/set_texture_path.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/textures/set_texture_path.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/textures/set_texture_path.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/textures/set_texture_path.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/textures/set_texture_path.o"
   },
   {
     "arguments": [
@@ -859,9 +859,9 @@
       "objs/srcs/textures/parse_cube_texture.o",
       "srcs/textures/parse_cube_texture.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/textures/parse_cube_texture.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/textures/parse_cube_texture.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/textures/parse_cube_texture.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/textures/parse_cube_texture.o"
   },
   {
     "arguments": [
@@ -877,9 +877,9 @@
       "objs/srcs/textures/parse_path.o",
       "srcs/textures/parse_path.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/textures/parse_path.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/textures/parse_path.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/textures/parse_path.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/textures/parse_path.o"
   },
   {
     "arguments": [
@@ -895,9 +895,9 @@
       "objs/srcs/textures/utils.o",
       "srcs/textures/utils.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/textures/utils.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/textures/utils.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/textures/utils.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/textures/utils.o"
   },
   {
     "arguments": [
@@ -913,9 +913,9 @@
       "objs/srcs/base/bitmasking.o",
       "srcs/base/bitmasking.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/base/bitmasking.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/base/bitmasking.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/base/bitmasking.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/base/bitmasking.o"
   },
   {
     "arguments": [
@@ -931,9 +931,9 @@
       "objs/srcs/base/constructor.o",
       "srcs/base/constructor.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/base/constructor.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/base/constructor.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/base/constructor.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/base/constructor.o"
   },
   {
     "arguments": [
@@ -949,9 +949,9 @@
       "objs/srcs/base/helpers.o",
       "srcs/base/helpers.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/base/helpers.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/base/helpers.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/base/helpers.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/base/helpers.o"
   },
   {
     "arguments": [
@@ -967,9 +967,9 @@
       "objs/srcs/base/disambiguation.o",
       "srcs/base/disambiguation.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/base/disambiguation.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/base/disambiguation.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/base/disambiguation.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/base/disambiguation.o"
   },
   {
     "arguments": [
@@ -985,9 +985,9 @@
       "objs/srcs/clock/time.o",
       "srcs/clock/time.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/clock/time.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/clock/time.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/clock/time.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/clock/time.o"
   },
   {
     "arguments": [
@@ -1003,9 +1003,9 @@
       "objs/srcs/ghosts/sprites.o",
       "srcs/ghosts/sprites.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/ghosts/sprites.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/ghosts/sprites.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/ghosts/sprites.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/ghosts/sprites.o"
   },
   {
     "arguments": [
@@ -1021,9 +1021,9 @@
       "objs/srcs/ghosts/ghost_ai.o",
       "srcs/ghosts/ghost_ai.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/ghosts/ghost_ai.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/ghosts/ghost_ai.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/ghosts/ghost_ai.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/ghosts/ghost_ai.o"
   },
   {
     "arguments": [
@@ -1039,9 +1039,9 @@
       "objs/srcs/ghosts/helpers.o",
       "srcs/ghosts/helpers.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/ghosts/helpers.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/ghosts/helpers.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/ghosts/helpers.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/ghosts/helpers.o"
   },
   {
     "arguments": [
@@ -1057,9 +1057,9 @@
       "objs/srcs/ghosts/math.o",
       "srcs/ghosts/math.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/ghosts/math.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/ghosts/math.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/ghosts/math.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/ghosts/math.o"
   },
   {
     "arguments": [
@@ -1075,9 +1075,9 @@
       "objs/srcs/ghosts/penhouse.o",
       "srcs/ghosts/penhouse.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/ghosts/penhouse.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/ghosts/penhouse.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/ghosts/penhouse.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/ghosts/penhouse.o"
   },
   {
     "arguments": [
@@ -1093,9 +1093,9 @@
       "objs/srcs/ghosts/targetting.o",
       "srcs/ghosts/targetting.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/ghosts/targetting.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/ghosts/targetting.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/ghosts/targetting.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/ghosts/targetting.o"
   },
   {
     "arguments": [
@@ -1111,9 +1111,9 @@
       "objs/srcs/ghosts/chose_next_dir.o",
       "srcs/ghosts/chose_next_dir.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/ghosts/chose_next_dir.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/ghosts/chose_next_dir.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/ghosts/chose_next_dir.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/ghosts/chose_next_dir.o"
   },
   {
     "arguments": [
@@ -1129,9 +1129,9 @@
       "objs/srcs/ghosts/update.o",
       "srcs/ghosts/update.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/ghosts/update.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/ghosts/update.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/ghosts/update.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/ghosts/update.o"
   },
   {
     "arguments": [
@@ -1147,9 +1147,9 @@
       "objs/srcs/utils/free.o",
       "srcs/utils/free.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/utils/free.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/utils/free.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/utils/free.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/utils/free.o"
   },
   {
     "arguments": [
@@ -1165,9 +1165,9 @@
       "objs/srcs/utils/free_helpers.o",
       "srcs/utils/free_helpers.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/utils/free_helpers.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/utils/free_helpers.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/utils/free_helpers.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/utils/free_helpers.o"
   },
   {
     "arguments": [
@@ -1183,9 +1183,9 @@
       "objs/srcs/utils/funny_funcs.o",
       "srcs/utils/funny_funcs.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/utils/funny_funcs.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/utils/funny_funcs.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/utils/funny_funcs.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/utils/funny_funcs.o"
   },
   {
     "arguments": [
@@ -1201,9 +1201,9 @@
       "objs/srcs/utils/helpers.o",
       "srcs/utils/helpers.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/utils/helpers.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/utils/helpers.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/utils/helpers.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/utils/helpers.o"
   },
   {
     "arguments": [
@@ -1219,9 +1219,9 @@
       "objs/srcs/utils/math_funcs.o",
       "srcs/utils/math_funcs.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/utils/math_funcs.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/utils/math_funcs.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/utils/math_funcs.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/utils/math_funcs.o"
   },
   {
     "arguments": [
@@ -1237,9 +1237,9 @@
       "objs/srcs/utils/render_utils.o",
       "srcs/utils/render_utils.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/utils/render_utils.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/utils/render_utils.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/utils/render_utils.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/utils/render_utils.o"
   },
   {
     "arguments": [
@@ -1255,9 +1255,9 @@
       "objs/srcs/debug/ray_debug_draw.o",
       "srcs/debug/ray_debug_draw.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/debug/ray_debug_draw.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/debug/ray_debug_draw.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/debug/ray_debug_draw.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/debug/ray_debug_draw.o"
   },
   {
     "arguments": [
@@ -1273,9 +1273,9 @@
       "objs/srcs/debug/ray_debug_cast.o",
       "srcs/debug/ray_debug_cast.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/debug/ray_debug_cast.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/debug/ray_debug_cast.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/debug/ray_debug_cast.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/debug/ray_debug_cast.o"
   },
   {
     "arguments": [
@@ -1291,9 +1291,9 @@
       "objs/srcs/draw/background.o",
       "srcs/draw/background.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/draw/background.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/draw/background.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/draw/background.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/draw/background.o"
   },
   {
     "arguments": [
@@ -1309,9 +1309,9 @@
       "objs/srcs/draw/menu.o",
       "srcs/draw/menu.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/draw/menu.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/draw/menu.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/draw/menu.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/draw/menu.o"
   },
   {
     "arguments": [
@@ -1327,9 +1327,9 @@
       "objs/srcs/draw/pacman_sprites.o",
       "srcs/draw/pacman_sprites.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/draw/pacman_sprites.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/draw/pacman_sprites.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/draw/pacman_sprites.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/draw/pacman_sprites.o"
   },
   {
     "arguments": [
@@ -1345,9 +1345,9 @@
       "objs/srcs/draw/plane.o",
       "srcs/draw/plane.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/draw/plane.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/draw/plane.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/draw/plane.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/draw/plane.o"
   },
   {
     "arguments": [
@@ -1363,9 +1363,9 @@
       "objs/srcs/draw/utils.o",
       "srcs/draw/utils.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/draw/utils.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/draw/utils.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/draw/utils.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/draw/utils.o"
   },
   {
     "arguments": [
@@ -1381,9 +1381,9 @@
       "objs/srcs/draw/build_sprite_box.o",
       "srcs/draw/build_sprite_box.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/draw/build_sprite_box.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/draw/build_sprite_box.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/draw/build_sprite_box.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/draw/build_sprite_box.o"
   },
   {
     "arguments": [
@@ -1399,9 +1399,9 @@
       "objs/srcs/draw/sprite_column.o",
       "srcs/draw/sprite_column.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/draw/sprite_column.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/draw/sprite_column.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/draw/sprite_column.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/draw/sprite_column.o"
   },
   {
     "arguments": [
@@ -1417,8 +1417,8 @@
       "objs/srcs/draw/wall_column.o",
       "srcs/draw/wall_column.c"
     ],
-    "directory": "/var/home/pedro/CUB3D",
-    "file": "/var/home/pedro/CUB3D/srcs/draw/wall_column.c",
-    "output": "/var/home/pedro/CUB3D/objs/srcs/draw/wall_column.o"
+    "directory": "/var/home/pedro/Code/Work/CUB3D",
+    "file": "/var/home/pedro/Code/Work/CUB3D/srcs/draw/wall_column.c",
+    "output": "/var/home/pedro/Code/Work/CUB3D/objs/srcs/draw/wall_column.o"
   }
 ]
