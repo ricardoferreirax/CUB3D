@@ -28,7 +28,7 @@ int		controller_finder(char *argv);
 bool	wrong_args(t_game *game, int ac, char **argv);
 void	init_player(t_game *game, int is_death);
 void	player_sprites(t_game *game);
-void	init_map(t_game *g, const char *path);
+int		init_map(t_game *g, const char *path);
 void	map_validate_tiles(t_game *g);
 void	ghost_info(int i, int *name, char *spawn);
 t_point	find_spawn(char **map, char ghost);

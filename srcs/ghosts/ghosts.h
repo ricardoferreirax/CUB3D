@@ -34,7 +34,7 @@ t_point			inky_target(t_game *game);
 t_point			pinky_target(t_game *game, int n);
 void			goto_penhouse(t_game *game, t_ghost *ghost);
 bool			ghost_ai(t_game *game, t_ghost *ghost);
-void			ghost_sprites(t_game *game, e_ghost ghost);
+void			ghost_sprites(t_game *game, t_ghost_name ghost);
 void			ghost_color(t_ghost *ghost);
 bool			in_bounds(t_map *map, t_point coord);
 bool			is_not_blocked(t_ghost *ghost, t_map *map, int direction[4][2],

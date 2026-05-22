@@ -211,7 +211,7 @@ typedef enum e_ghost
 	INKY,
 	CLYDE,
 	DISABLED
-}					e_ghost;
+}					t_ghost_name;
 
 typedef enum e_state
 {
@@ -220,7 +220,7 @@ typedef enum e_state
 	FRIGHTENED,
 	EATEN,
 	SPAWN
-}					e_state;
+}					t_ghost_state;
 
 typedef struct s_elroy_level
 {
@@ -238,7 +238,7 @@ typedef struct s_elroy
 
 typedef struct s_ghost
 {
-	e_ghost			name;
+	t_ghost_name	name;
 	t_pos			pos;
 	double			speed;
 	int				dot_counter;
@@ -254,7 +254,7 @@ typedef struct s_ghost
 	t_map			mental_map;
 	t_sprite_ref	sprite;
 	t_elroy			cruiser;
-	e_state			state;
+	t_ghost_state	state;
 	t_anim			frames;
 
 }					t_ghost;
@@ -381,7 +381,7 @@ typedef struct s_game
 	int				score;
 	int				level;
 	int				controller_fd;
-	e_state			global_state;
+	t_ghost_state	global_state;
 	// SpriteShit is 200x186
 	t_sprite_sheet	sprite_sheet;
 }					t_game;
