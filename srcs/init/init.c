@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/22 13:35:14 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/22 15:10:49 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,16 +97,24 @@ void	init_execution(t_game *g)
 
 void	init(t_game *g, char *path)
 {
-	int	sprites;
+	int		sprites;
+	t_mode	detected_mode;
 
 	if (!g)
 		return ;
 	init_defaults(g);
 	g->map_path = path;
+	detected_mode = detect_map_mode(g, path);
+	g->mode = detected_mode;
 	init_minilib(g);
 	init_execution(g);
-	init_menu(g);
 	sprites = init_spritesheet(g);
 	if (g->debug_mode)
 		ft_printf("Loaded %d sprites\n", sprites);
+	if (detected_mode == MODE_CUBE)
+	{
+		start_game_mode(g, MODE_CUBE);
+		return ;
+	}
+	init_menu(g);
 }

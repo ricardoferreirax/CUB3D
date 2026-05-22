@@ -44,6 +44,7 @@ srcs/init/init_map.c \
 srcs/init/init_mlx.c \
 srcs/init/init_player.c \
 srcs/init/init_spritesheet.c \
+srcs/init/init_mode.c \
 srcs/map/utils.c \
 srcs/map/grid.c \
 srcs/map/flood_fill.c \
@@ -137,7 +138,7 @@ mlx: $(MLX)
 
 val: all
 	 valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes --suppressions=mlx.supp -s \
-	 ./$(NAME) maps/Pacman.cub
+	 ./$(NAME) maps/Cube.cub
 
 clean:
 	rm -rf $(OBJ_DIR)

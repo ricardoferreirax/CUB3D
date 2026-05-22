@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:25:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/15 14:19:48 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/22 14:15:50 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,7 @@ void	ghost_info(int i, int *name, char *spawn);
 t_point	find_spawn(char **map, char ghost);
 int		init_dot_counter(t_ghost *gh);
 void	set_lvl(t_game *game);
+void	free_texture_paths(t_game *g);
+t_mode	detect_map_mode(t_game *g, char *path);
+
 #endif
