@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/22 11:03:07 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/22 13:34:18 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -372,7 +372,7 @@ typedef struct s_game
 	int				pacdot_count;
 	int				energizer_count;
 	int				gate_passable;
-
+	char			*map_path;
 	bool			debug_mode;
 	double			timeout;
 	t_timer			timer;

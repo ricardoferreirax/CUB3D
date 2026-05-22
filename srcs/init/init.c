@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/22 11:35:28 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/22 13:35:14 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,13 @@ void	start_game_mode(t_game *g, t_mode mode)
 	if (!g)
 		return ;
 	g->mode = mode;
+	init_map(g, g->map_path);
+	init_player(g, 0);
+	init_base(g);
+	set_lvl(g);
 	init_assets(g);
 	g->state = PLAY;
 	g->timer.start_time = get_time_us();
-
 	if (g->mode == MODE_CUBE)
 	{
 		g->key.mouse_hidden = 1;
@@ -99,14 +102,11 @@ void	init(t_game *g, char *path)
 	if (!g)
 		return ;
 	init_defaults(g);
+	g->map_path = path;
 	init_minilib(g);
-	init_map(g, path);
 	init_execution(g);
 	init_menu(g);
 	sprites = init_spritesheet(g);
 	if (g->debug_mode)
 		ft_printf("Loaded %d sprites\n", sprites);
-	init_player(g, 0);
-	init_base(g);
-	set_lvl(g);
 }
