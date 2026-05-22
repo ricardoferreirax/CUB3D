@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/22 15:10:49 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/22 16:03:21 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	start_game_mode(t_game *g, t_mode mode)
 	if (!g)
 		return ;
 	g->mode = mode;
-	init_map(g, g->map_path);
 	init_player(g, 0);
 	init_base(g);
 	set_lvl(g);
@@ -106,6 +105,7 @@ void	init(t_game *g, char *path)
 	g->map_path = path;
 	detected_mode = detect_map_mode(g, path);
 	g->mode = detected_mode;
+	init_map(g, path);
 	init_minilib(g);
 	init_execution(g);
 	sprites = init_spritesheet(g);
