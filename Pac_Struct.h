@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/16 20:55:42 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/22 11:03:07 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "./libft/libft.h"
 # include "minilibx-linux/mlx.h"
-# include "minilibx-linux/mlx_int.h"
 # include "stdio.h"
 # include "stdlib.h"
 # include "string.h"

@@ -13,16 +13,18 @@
 
 NAME    = cub3D
 
-CC      = clang-12
+CC      = gcc
 CFLAGS  = -O3 -Wall -Wextra -Werror
 DFLAGS  = -Wshadow -Wdouble-promotion  -Wformat=2 -Wstrict-aliasing=2 -fno-omit-frame-pointer -g
 
 ASAN_FLAGS = -fsanitize=address
 UBSAN_FLAGS = -fsanitize=undefined
 
-INCS    = -Iinclude -Ilibft
+INCS    = -Iinclude -Ilibft -I$(MLX_PATH)
 
 LIBFT   = libft/libft.a
+
+MLX_REPO = https://github.com/42Paris/minilibx-linux.git
 MLX_PATH = minilibx-linux
 MLX = $(MLX_PATH)/libmlx.a
 
@@ -122,6 +124,11 @@ $(LIBFT):
 	$(MAKE) -C libft
 
 $(MLX):
+	@test -d $(MLX_PATH) || git clone $(MLX_REPO) $(MLX_PATH)
+	$(MAKE) -C $(MLX_PATH)
+
+mlx:
+	@test -d $(MLX_PATH) || git clone $(MLX_REPO) $(MLX_PATH)
 	$(MAKE) -C $(MLX_PATH)
 
 val: all
@@ -136,6 +143,9 @@ fclean: clean
 	rm -f $(NAME)
 	$(MAKE) -C libft fclean
 
+del:
+	rm -rf $(MLX_PATH)
+
 re: fclean all
 
 e: all clean
@@ -148,4 +158,4 @@ u:
 d: 
 	$(MAKE) CFLAGS="$(CFLAGS) $(DFLAGS)" e
 	
-.PHONY: all clean fclean re val
+.PHONY: all clean fclean re mlx val del a u d
