@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfreire- <pfreire-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/21 14:45:08 by pfreire-         ###   ########.fr       */
+/*   Updated: 2026/05/22 11:35:28 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	init_assets(t_game *g)
 	if (!g || !g->mlx_ptr)
 		exit_game(EXIT_MLX, g, "init_assets() has not found a game");
 	texture_load_cube(g);
-	texture_load_sprites(g);
 	if (g->mode == MODE_PACMAN)
 	{
+		texture_load_sprites(g);
 		init_sprites(g);
 		init_ghosts(g, 0);
 	}
@@ -35,12 +35,23 @@ void	start_game_mode(t_game *g, t_mode mode)
 	g->mode = mode;
 	init_assets(g);
 	g->state = PLAY;
-	g->key.mouse_hidden = 1;
-	g->key.mouse_lock = 1;
-	g->key.mouse_captured = 1;
-	mlx_mouse_hide(g->mlx_ptr, g->win.win_ptr);
 	g->timer.start_time = get_time_us();
-	center_mouse(g);
+
+	if (g->mode == MODE_CUBE)
+	{
+		g->key.mouse_hidden = 1;
+		g->key.mouse_lock = 1;
+		g->key.mouse_captured = 1;
+		mlx_mouse_hide(g->mlx_ptr, g->win.win_ptr);
+		center_mouse(g);
+	}
+	else
+	{
+		g->key.mouse_hidden = 0;
+		g->key.mouse_lock = 0;
+		g->key.mouse_captured = 0;
+		mlx_mouse_show(g->mlx_ptr, g->win.win_ptr);
+	}
 }
 
 static void	init_defaults(t_game *g)
@@ -48,7 +59,7 @@ static void	init_defaults(t_game *g)
 	if (!g)
 		return ;
 	g->state = MENU;
-	g->mode = MODE_PACMAN;
+	g->mode = MODE_CUBE;
 	g->ray.hit_side = -1;
 	g->player.target_map.x = -1;
 	g->player.target_map.y = -1;
