@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 14:59:32 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/22 15:52:20 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/23 11:07:32 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ static int	handle_menu_key(int keycode, t_game *g)
 {
 	if (keycode == 65307)
 		handle_close(g);
-	else if (keycode == 32 || g->key.controller_start == 1)
+	else if (keycode == 49)
 		start_game_mode(g, MODE_PACMAN);
+	else if (keycode == 50)
+		start_game_mode(g, MODE_FREE_ROAM);
 	return (0);
 }
 

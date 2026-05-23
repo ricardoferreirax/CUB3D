@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/22 16:03:21 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/23 11:15:08 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ void	init_assets(t_game *g)
 	if (!g || !g->mlx_ptr)
 		exit_game(EXIT_MLX, g, "init_assets() has not found a game");
 	texture_load_cube(g);
+	if (g->mode == MODE_PACMAN || g->mode == MODE_FREE_ROAM)
+		texture_load_sprites(g);
 	if (g->mode == MODE_PACMAN)
 	{
-		texture_load_sprites(g);
 		init_sprites(g);
 		init_ghosts(g, 0);
 	}
@@ -39,7 +40,7 @@ void	start_game_mode(t_game *g, t_mode mode)
 	init_assets(g);
 	g->state = PLAY;
 	g->timer.start_time = get_time_us();
-	if (g->mode == MODE_CUBE)
+	if (g->mode == MODE_CUBE || g->mode == MODE_FREE_ROAM)
 	{
 		g->key.mouse_hidden = 1;
 		g->key.mouse_lock = 1;
