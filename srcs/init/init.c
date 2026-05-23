@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 15:20:03 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/23 11:30:21 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/23 11:48:38 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ static void	init_defaults(t_game *g)
 	g->key.mouse_hidden = 0;
 	g->key.mouse_lock = 0;
 	g->key.mouse_captured = 0;
-	g->key.show_minimap = 1;
 	g->key.show_raycast = 0;
 }
 

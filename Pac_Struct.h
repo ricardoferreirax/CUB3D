@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 16:16:02 by pfreire-          #+#    #+#             */
-/*   Updated: 2026/05/23 11:07:06 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/23 11:58:24 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define PAC_STRUCT_H
 
 # include "./libft/libft.h"
-# include "minilibx-linux/mlx.h"
+# include "mlx.h"
 # include "stdio.h"
 # include "stdlib.h"
 # include "string.h"

@@ -6,7 +6,7 @@
 /*   By: rmedeiro <rmedeiro@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/17 14:59:32 by rmedeiro          #+#    #+#             */
-/*   Updated: 2026/05/23 11:42:48 by rmedeiro         ###   ########.fr       */
+/*   Updated: 2026/05/23 11:47:59 by rmedeiro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,14 @@ static void	key_case_move(t_game *g, int keycode, int value)
 
 static void	key_case_toggle(t_game *g, int keycode, int value)
 {
-	if (keycode == 101 && (g->mode == MODE_CUBE || g->mode == MODE_FREE_ROAM))
+	if (keycode == 101 && (g->mode == MODE_CUBE
+			|| g->mode == MODE_FREE_ROAM))
 	{
 		g->key.e = value;
 		g->key.e_lock = 0;
 	}
 	else if (keycode == 109 && value == 1)
 		toggle_mouse_capture(g);
-	else if (keycode == 104 && value == 1)
-		g->key.show_minimap = !g->key.show_minimap;
 	else if (keycode == 114 && value == 1)
 		g->key.show_raycast = !g->key.show_raycast;
 }
@@ -76,8 +75,8 @@ int	handle_key_release(int keycode, t_game *g)
 {
 	if (!g)
 		return (0);
-	if (keycode == 109 || keycode == 104 || keycode == 114)
-		return (0);
+	if (keycode == 109 || keycode == 114)
+	return (0);
 	key_case_move(g, keycode, 0);
 	key_case_toggle(g, keycode, 0);
 	return (0);
