@@ -114,7 +114,7 @@ int	init_map(t_game *g, const char *path)
 		exit_game(EXIT_MAP, g, "parse() has not found a grid");
 	g->map.height = ytile(temp);
 	g->map.width = xtile(temp);
-	if (g->map.height > 255 || g->map.width > 255 || g->map.width
+	if (g->map.height > 200 || g->map.width > 255 || g->map.width
 		* g->map.height > 16256)
 		return (free_2d((void **)temp), exit_game(EXIT_MAP, g,
 				"Map is too big"), -1);

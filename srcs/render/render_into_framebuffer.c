@@ -47,7 +47,7 @@ void	render_sprite_into_framebuffer(t_game *game, t_point coord,
 		while (point.x < sprite->width)
 		{
 			color = pixel_get(&game->sprite_sheet.sprite_img, point.x
-					+ sprite->coord.x, point.y + sprite->coord.y);
+					+ sprite->coord.x % game->win.frame_buffer.width, point.y + sprite->coord.y);
 			if ((color >> 24) != 0xFF)
 				ft_pixel_put(&game->win.frame_buffer, (point.x + coord.x)
 					% game->win.frame_buffer.width, (point.y + coord.y)
