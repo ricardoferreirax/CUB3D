@@ -31,6 +31,9 @@ void	init_assets(t_game *g)
 
 void	start_game_mode(t_game *g, t_mode mode)
 {
+	int i;
+
+	i = 0;
 	if (!g)
 		return ;
 	g->mode = mode;
@@ -54,6 +57,11 @@ void	start_game_mode(t_game *g, t_mode mode)
 		g->key.mouse_lock = 0;
 		g->key.mouse_captured = 0;
 		mlx_mouse_show(g->mlx_ptr, g->win.win_ptr);
+	}
+	while(i < 4 && g->mode == MODE_FREE_ROAM)
+	{
+		g->ghosts[i].name = DISABLED;
+		i++;
 	}
 }
 
@@ -79,6 +87,12 @@ static void	init_defaults(t_game *g)
 	g->key.mouse_lock = 0;
 	g->key.mouse_captured = 0;
 	g->key.show_raycast = 0;
+	g->key.scheme_change = 0;
+	g->scheme.x_pos = 672;
+	g->scheme.y_pos = 188;
+	g->scheme.scale_factor = 2;
+	g->player.cycles = 0;
+	g->player.player_radius = 0.18;
 }
 
 void	init_execution(t_game *g)

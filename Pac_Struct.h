@@ -70,6 +70,7 @@
 
 # define MAP_PACMAN "./maps/Pacman.cub"
 # define MAP_CUBE "./maps/cube.cub"
+# define PACADE "./assets/sprites/Frame.xpm"
 
 typedef struct s_point
 {
@@ -200,8 +201,11 @@ typedef struct s_player
 	int				speed_multiplier;
 	int				collected_dots;
 	int				frightened_speed;
+	int				facing;
+	unsigned int	cycles;
 	t_anim			frames;
 	t_control		controller;
+	double			player_radius;
 }					t_player;
 
 typedef enum e_ghost
@@ -353,6 +357,13 @@ typedef struct s_interest_points
 	t_point			player_spawn;
 }					t_target_points;
 
+typedef struct s_scheme
+{
+	int y_pos;
+	int x_pos;
+	int scale_factor;
+} t_scheme;
+
 typedef struct s_game
 {
 	void			*mlx_ptr;
@@ -376,6 +387,7 @@ typedef struct s_game
 	int				gate_passable;
 	char			*map_path;
 	bool			debug_mode;
+	bool			is_pacman_map;
 	double			timeout;
 	t_timer			timer;
 	int				global_dot_counter;
@@ -383,8 +395,8 @@ typedef struct s_game
 	int				level;
 	int				controller_fd;
 	t_ghost_state	global_state;
-	// SpriteShit is 200x186
 	t_sprite_sheet	sprite_sheet;
+	t_scheme		scheme;
 }					t_game;
 
 int					gameloop(t_game *game);
@@ -404,5 +416,6 @@ void				print_2d(char **arr);
 void				reset_game(t_game *game, int is_death);
 void				change_pallete(t_point pallet_coord, t_anim *frames);
 void	render_frame(t_game *game);
+uint32_t	hash_file(const char *path);
 
 #endif
