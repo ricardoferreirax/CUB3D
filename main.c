@@ -1,4 +1,5 @@
 /* ************************************************************************** */
+
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
@@ -110,8 +111,6 @@ int	main(int ac, char **av)
 		exit_game(EXIT_FAILURE, game, "Wrong Args");
 	if(hash_file(av[1]) == 2274426481)
 		game->is_pacman_map = true;
-	if(game->is_pacman_map)
-		printf("PACCCCCCCCCCCCMANNNN\n");
 	init(game, av[1]);
 	mlx_hook(game->win.win_ptr, 2, 1L << 0, handle_key_press, game);
 	mlx_hook(game->win.win_ptr, 3, 1L << 1, handle_key_release, game);

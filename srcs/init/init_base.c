@@ -33,7 +33,7 @@ void	init_base(t_game *s)
 	s->base.img_ptr = mlx_new_image(s->mlx_ptr, s->win.width, s->win.height);
 	s->base.img_addr = mlx_get_data_addr(s->base.img_ptr, &s->base.bpp,
 			&s->base.l_len, &s->base.endian);
-	if(s->is_pacman_map)
+	if(s->is_pacman_map && s->mode == MODE_PACMAN)
 	{
 		printf("Map height: %d, Map Width: %d \n", s->map.height, s->map.width);
 		s->base.width = (s->map.width * TILE_SIZE) + (4 * TILE_SIZE * s->scheme.scale_factor);
@@ -47,7 +47,7 @@ void	init_base(t_game *s)
 		s->base.height = (s->map.height) * TILE_SIZE;
 		printf("Base height: %d, Base Width: %d \n", s->base.height, s->base.width);
 	}
-	while(s->is_pacman_map && ++point.y < pacade.height * s->scheme.scale_factor)
+	while(s->is_pacman_map && s->mode == MODE_PACMAN && ++point.y < pacade.height * s->scheme.scale_factor)
 	{
 		// printf("point x before reset is %d\n", point.x);
 		point.x = -1;
@@ -60,7 +60,7 @@ void	init_base(t_game *s)
 	}
 	point.x = -1;
 	point.y = -1;
-	if(s->is_pacman_map)
+	if(s->is_pacman_map && s->mode == MODE_PACMAN)
 	{
 		offset.x = (16 / TILE_SIZE) * s->scheme.scale_factor;
 		offset.y = (16 / TILE_SIZE) * s->scheme.scale_factor;

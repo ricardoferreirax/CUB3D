@@ -21,7 +21,7 @@ void	render_base_into_framebuffer(t_game *s)
 
 	y = 0;
 	offset = 0;
-	if(s->is_pacman_map)
+	if(s->is_pacman_map && s->mode == MODE_PACMAN)
 		offset = 32 * s->scheme.scale_factor;
 	while (y < s->base.height * s->scheme.scale_factor)
 	{
